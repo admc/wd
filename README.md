@@ -9,6 +9,7 @@ npm install wd
 ## Usage
 
 <pre>
+): cd lib
 ): node
 > var wd = require("./main")
 > wd.createWebDriver() or wd.createWebDriver("ondemand.saucelabs.com", 80)
