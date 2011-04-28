@@ -1,6 +1,6 @@
 var wd = require("../lib/main")
 
-var browser = wd.createWebDriver();
+var browser = wd.remoteWebDriver();
 browser.init(function() {
   browser.get("http://www.jelly.io", function() {
     browser.exec("window.location.href", function(o) {
