@@ -1,6 +1,6 @@
-var wd = require("../lib/main")
+var webdriver = require("../lib/main")
 
-var browser = wd.remoteWebDriver("ondemand.saucelabs.com", 80, "username", "accesskey");
+var browser = webdriver.remote("ondemand.saucelabs.com", 80, "username", "accesskey");
 browser.init(function() {
   browser.get("http://www.jelly.io", function() {
     browser.exec("window.location.href", function(o) {
