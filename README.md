@@ -14,7 +14,7 @@ npm install wd
 
 <pre>
 ): wd shell
-> x = wd.createWebDriver() or wd.createWebDriver("ondemand.saucelabs.com", 80, "username", "apikey")
+> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 > x.init() or x.init({desired capabilities ovveride})
 > x.url("http://www.url.com")
 > x.exec("window.location.href", function(o) { console.log(o) })
@@ -26,13 +26,13 @@ npm install wd
 ## Writing a test!
 
 <pre>
-var wd = require("wd")
+var webdriver = require("wd")
 
 //get a new intsance
-var browser = wd.createWebDriver();
+var browser = webdriver.remote();
 
 //instantiate the session
-browser.init(function() {
+browser.init({browserName:"chrome"}, function() {
   //goto url
   browser.get("http://www.jelly.io", function() {
     //exec js
