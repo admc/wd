@@ -1,7 +1,7 @@
 { "name" : "wd"
 , "description" : "WebDriver/Selenium 2 node.js client"
 , "tags" : ["web", "automation", "browser", "javascript"]
-, "version" : "0.0.5"
+, "version" : "0.0.6"
 , "author" : "Adam Christian <adam.christian@gmail.com>"
 , "repository" :
   { "type" : "git"
