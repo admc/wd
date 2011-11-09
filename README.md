@@ -10,6 +10,11 @@ http://nodejs.org/#download
 npm install wd
 </pre>
 
+## Authors
+
+Adam Christian ([admc](http://github.com/admc))
+Ruben Daniels ([javruben](https://github.com/javruben))
+
 ## Usage
 
 <pre>
