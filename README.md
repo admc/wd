@@ -12,8 +12,8 @@ npm install wd
 
 ## Authors
 
-Adam Christian ([admc](http://github.com/admc))
-Ruben Daniels ([javruben](https://github.com/javruben))
+  - Adam Christian ([admc](http://github.com/admc))
+  - Ruben Daniels ([javruben](https://github.com/javruben))
 
 ## Usage
 
