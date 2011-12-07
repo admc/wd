@@ -1,6 +1,6 @@
 # WD.js -- A super light weight WebDriver/Selenium 2 client for node.js
 
-## Update node to 4.latest
+## Update node to latest
 
 http://nodejs.org/#download
 
