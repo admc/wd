@@ -8,7 +8,7 @@
   , "url" : "https://github.com/admc/wd.git"
   }
 , "bugs" :
-  { "web" : "https://github.com/admc/wd/issues" }
+  { "url" : "https://github.com/admc/wd/issues" }
 , "engines" : ["node"]
 , "main" : "./lib/main"
 , "bin" : { "wd" : "./lib/bin.js" }
