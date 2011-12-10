@@ -24,7 +24,6 @@ npm install wd
 > x.init() or x.init({desired capabilities ovveride})
 > x.url("http://www.url.com")
 > x.eval("window.location.href", function(e, o) { console.log(o) })
-> x.close();
 > x.quit()
 </pre>
 
@@ -47,10 +46,10 @@ browser.init({browserName:"chrome"}, function() {
       console.log(o);
       //goto another url
       browser.get("http://www.seleniumhq.org", function() {
-        //close the browser
-        browser.close(function() {
+        //kill the session and browser
+        browser.quit(function() {
           //kill the session
-          browser.quit()
+          console.log("DONE!");
         })
       })
     })
