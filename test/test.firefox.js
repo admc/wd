@@ -6,8 +6,8 @@ browser.init({browserName:"firefox"}, function() {
     browser.eval("window.location.href", function(a, o) {
       console.log(o);
       browser.get("http://www.seleniumhq.org", function() {
-        browser.close(function() {
-          browser.quit()
+        browser.quit(function() {
+          console.log("DONE");
         })
       })
     })
