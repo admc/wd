@@ -79,3 +79,9 @@ browser.init({browserName:"chrome"}, function() {
   - 'active': Get the element on the page currently with focus
   - 'keyToggle': Press a keyboard key (takes an element and a key character'
 </pre>
+
+## More docs!
+<pre>
+WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
+ - http://code.google.com/p/selenium/wiki/JsonWireProtocol
+</pre>
