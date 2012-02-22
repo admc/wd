@@ -1,4 +1,4 @@
-# WD.js -- A super light weight WebDriver/Selenium 2 client for node.js
+# WD.js -- A light weight WebDriver/Se2 client for node.js
 
 ## Update node to latest
 
@@ -83,5 +83,5 @@ browser.init({browserName:"chrome"}, function() {
 ## More docs!
 <pre>
 WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
- - http://code.google.com/p/selenium/wiki/JsonWireProtocol
+ - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
 </pre>
