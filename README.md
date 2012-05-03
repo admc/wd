@@ -87,6 +87,7 @@ browser.init({browserName:"chrome"}, function() {
   - 'type': Type! (takes an element, a key character, or an array of char keys)
   - 'active': Get the element on the page currently with focus
   - 'keyToggle': Press a keyboard key (takes an element and a key character'
+  - 'setCookie': Sets a <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object">cookie</a>
 </pre>
 
 ## More docs!
