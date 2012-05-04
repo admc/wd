@@ -15,7 +15,8 @@ npm install wd
   - Adam Christian ([admc](http://github.com/admc))
   - Ruben Daniels ([javruben](https://github.com/javruben))
   - Peter Braden ([peterbraden](https://github.com/peterbraden))
-
+  - Seb Vincent ([sebv](https://github.com/sebv))
+  
 ## License
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
@@ -87,6 +88,7 @@ browser.init({browserName:"chrome"}, function() {
   - 'type': Type! (takes an element, a key character, or an array of char keys)
   - 'active': Get the element on the page currently with focus
   - 'keyToggle': Press a keyboard key (takes an element and a key character'
+  - 'setCookie': Sets a <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object">cookie</a>
 </pre>
 
 ## More docs!
