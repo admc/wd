@@ -15,7 +15,8 @@ npm install wd
   - Adam Christian ([admc](http://github.com/admc))
   - Ruben Daniels ([javruben](https://github.com/javruben))
   - Peter Braden ([peterbraden](https://github.com/peterbraden))
-
+  - Seb Vincent ([sebv](https://github.com/sebv))
+  
 ## License
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
