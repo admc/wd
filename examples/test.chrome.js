@@ -1,4 +1,3 @@
-// @todo separate example and tests
 var webdriver;
 try{ webdriver = require('wd'); }catch( err ) { 
   webdriver = require('../lib/main'); }
