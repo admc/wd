@@ -1,16 +1,24 @@
-{ "name" : "wd"
-, "description" : "WebDriver/Selenium 2 node.js client"
-, "tags" : ["web", "automation", "browser", "javascript"]
-, "version" : "0.0.12"
-, "author" : "Adam Christian <adam.christian@gmail.com>"
-, "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/admc/wd.git"
+{ 
+    "name" : "wd"
+  , "description" : "WebDriver/Selenium 2 node.js client"
+  , "tags" : ["web", "automation", "browser", "javascript"]
+  , "version" : "0.0.12"
+  , "author" : "Adam Christian <adam.christian@gmail.com>"
+  , "repository" :
+    { "type" : "git"
+    , "url" : "https://github.com/admc/wd.git"
+    }
+  , "bugs" :
+    { "url" : "https://github.com/admc/wd/issues" }
+  , "engines" : ["node"]
+  , "main" : "./lib/main"
+  , "bin" : { "wd" : "./lib/bin.js" }
+  , "directories" : { "lib" : "./lib" }
+  , "devDependencies" : {
+    "nodeunit" : "latest"
+    ,"should": "latest"
+    ,"coffee-script": "latest"    
+    ,"express": "latest"    
+    ,"async": "latest"    
   }
-, "bugs" :
-  { "url" : "https://github.com/admc/wd/issues" }
-, "engines" : ["node"]
-, "main" : "./lib/main"
-, "bin" : { "wd" : "./lib/bin.js" }
-, "directories" : { "lib" : "./lib" }
 }
