@@ -28,8 +28,8 @@ npm install wd
 > x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
 //Adding additional desired capabilities
-x.desiredCapabilities.public = true;
-x.desiredCapabilities.tags = ["one", "boom"];
+x.defaultCapabilities.public = true;
+x.defaultCapabilities.tags = ["one", "boom"];
 
 > x.init() or x.init({desired capabilities ovveride})
 > x.get("http://www.url.com")
@@ -53,10 +53,13 @@ browser.on('command', function(meth, path){
   console.log(' > \x1b[33m%s\x1b[0m: %s', meth, path);
 });
 
-browser.desiredCapabilities.tags = ["examples"];
-browser.desiredCapabilities.name = "This is an example test";
+desired = {
+  browserName:'chrome'
+  , tags: ["examples"]
+  , name = "This is an example test"
+}
 
-browser.init({browserName:'chrome'}, function() {
+browser.init(desired, function() {
   browser.get("http://saucelabs.com/test/guinea-pig", function() {
     browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
