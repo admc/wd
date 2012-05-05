@@ -106,8 +106,10 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 </pre>
 
 ## Run the tests!
+<pre>
   - Run the selenium server: java -jar selenium-server.jar
   - cd wd
   - npm install .
   - make
   - look at the results!
+</pre>
