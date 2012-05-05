@@ -1,6 +1,9 @@
-var webdriver = require('wd')
-  , assert = require('assert');
-
+// @todo separate example and tests
+var webdriver;
+try{ webdriver = require('wd'); }catch( err ) { 
+  webdriver = require('../lib/main'); }
+var assert = require('assert');
+ 
 var browser = webdriver.remote();
 
 browser.on('status', function(info){
@@ -10,10 +13,11 @@ browser.on('command', function(meth, path){
   console.log(' > \x1b[33m%s\x1b[0m: %s', meth, path);
 });
 
-browser.desiredCapabilities.tags = ["examples"];
-browser.desiredCapabilities.name = "This is an example test";
-
-browser.init({browserName:'chrome'}, function() {
+browser.init({
+    browserName:'chrome'
+    , tags : ["examples"]
+    , name: "This is an example test"
+  }, function() {
 
   browser.get("http://saucelabs.com/test/guinea-pig", function() {
     browser.title(function(err, title) {
