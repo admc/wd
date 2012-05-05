@@ -12,21 +12,11 @@ evalShouldEqual = (browser,formula,expected) ->
     res.should.equal expected
     done(null)      
 
-execute = (browser,script) ->  
-  (done) ->  browser.execute script, (err) ->
-    should.not.exist err
-    done(null)      
-
 executeCoffee = (browser, script) ->  
   scriptAsJs = CoffeeScript.compile script, bare:'on'      
   (done) ->  browser.execute scriptAsJs, (err) ->
     should.not.exist err
     done(null)      
-
-setImplicitWaitTimeout = (browser, ms) ->
-  (done) -> browser.setImplicitWaitTimeout ms, (err) ->
-    should.not.exist err
-    done null     
 
 elementByCss = (browser,env,css,name) ->
   (done) -> browser.elementByCss css, (err, res) ->
@@ -47,8 +37,7 @@ valueShouldEqual = (browser,element,expected, done) ->
     done null      
 
 runTestWith = (browserName) -> 
-  browser = null;
-  
+  browser = null;  
   {
     "wd.remote": (test) ->
       browser = wd.remote(mode:'sync')    
@@ -114,7 +103,9 @@ runTestWith = (browserName) ->
 
     "execute": (test) ->
       async.series [
-        execute browser, "window.wd_sync_execute_test = 'It worked!'"
+        (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
+          should.not.exist err
+          done(null)      
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
       ], (err) ->
         should.not.exist err
@@ -150,14 +141,18 @@ runTestWith = (browserName) ->
             should.exist err
             err.status.should.equal 7
             done(null)  
-        setImplicitWaitTimeout browser, 2000
+        (done) -> browser.setImplicitWaitTimeout 2000, (err) ->
+          should.not.exist err
+          done null             
         (done) ->
           browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
             # now it works
             should.not.exist err
             should.exist res
             done(null)          
-        setImplicitWaitTimeout browser, 0
+        (done) -> browser.setImplicitWaitTimeout 0, (err) ->
+          should.not.exist err
+          done null             
       ], (err) ->
         should.not.exist err
         test.done()        
@@ -314,20 +309,12 @@ runTestWith = (browserName) ->
                 a.click ->
                   a.html 'clicked'              
             '''
-          (done) ->
-            browser.text anchor, (err,res) ->
-              should.not.exist err
-              res.should.equal "not clicked"
-              done null
+          (done) -> textShouldEqual browser, anchor, "not clicked", done
           (done) ->
             browser.clickElement anchor, (err) ->
               should.not.exist err
               done null
-          (done) ->
-            browser.text anchor, (err,res) ->
-              should.not.exist err
-              res.should.equal "clicked"
-              done null
+          (done) -> textShouldEqual browser, anchor, "clicked", done
         ], (err) ->
           should.not.exist err
           test.done()        
