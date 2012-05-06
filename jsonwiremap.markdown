@@ -656,7 +656,7 @@ Work in progress on this doc
         Double-clicks at the current mouse coordinates (set by moveto).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        doubleclick(button, cb)
+        doubleclick(button, cb) <br>
         buttons: {left: 0, middle: 1 , right: 2}
       </td>      
     </tr>
