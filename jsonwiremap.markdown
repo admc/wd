@@ -35,12 +35,8 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>
-            all&nbsp;sessions:&nbsp;NA
-          </li>
-          <li>
-            current&nbsp;session:&nbsp;altSessionCapabilities(cb)
-          </li>
+          <li>all&nbsp;sessions:&nbsp;NA</li>
+          <li>current&nbsp;session:&nbsp;altSessionCapabilities(cb)</li>
         </ul>
       </td>      
     </tr>
@@ -70,11 +66,10 @@ Work in progress on this doc
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
           <li>
-            configurable type: NA (but setImplicitWaitTimeout(ms, cb) and setAsyncScriptTimeout(ms, cb) do the same)<br>
+            configurable type: NA (but setImplicitWaitTimeout(ms, cb) and 
+            setAsyncScriptTimeout(ms, cb) do the same)
           </li>
-          <li>
-            page load timeout: setPageLoadTimeout(ms, cb)
-          </li>
+          <li>page load timeout: setPageLoadTimeout(ms, cb)</li>
         </ul>         
       </td>      
     </tr>
@@ -364,11 +359,13 @@ Work in progress on this doc
         Search for an element on the page, starting from the document root.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        element(using, value, cb)
-        elementByLinkText(value, cb)
-        elementById(value, cb)
-        elementByName(value, cb)
-        elementByCss(value, cb)
+        <ul>
+          <li>element(using, value, cb)</li>
+          <li>elementByLinkText(value, cb)</li>
+          <li>elementById(value, cb)</li>
+          <li>elementByName(value, cb)</li>
+          <li>elementByCss(value, cb)</li>
+        <ul>
       </td>      
     </tr>
     <tr>
@@ -632,7 +629,7 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         click(button, cb)  <br>
-        buttons: LEFT = 0, MIDDLE = 1 , RIGHT = 2
+        buttons: {left: 0, middle: 1 , right: 2}
       </td>      
     </tr>
     <tr>
@@ -660,6 +657,7 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         doubleclick(button, cb)
+        buttons: {left: 0, middle: 1 , right: 2}
       </td>      
     </tr>
     <tr>
