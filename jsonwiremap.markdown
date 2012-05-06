@@ -37,8 +37,8 @@ Work in progress on this doc
         <ul>
           <li>all sessions: NA</li>
           <li>
-            current session: 
-            altSessionCapabilities(cb)&nbsp;->&nbsp;cb(err,&nbsp;capabilities)
+            current session: <br>
+            &nbsp;&nbsp;altSessionCapabilities(cb) -> cb(err, capabilities)
           </li>
         </ul>
       </td>      
