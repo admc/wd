@@ -38,7 +38,7 @@ Work in progress on this doc
           <li>all sessions: NA</li>
           <li>
             current session: <br>
-            &nbsp;&nbsp;altSessionCapabilities(cb) -> cb(err, capabilities)
+            altSessionCapabilities(cb) -> cb(err, capabilities)
           </li>
         </ul>
       </td>      
@@ -49,7 +49,7 @@ Work in progress on this doc
         Retrieve the capabilities of the specified session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        sessionCapabilities(cb)
+        sessionCapabilities(cb) -> cb(err, capabilities)
       </td>      
     </tr>
     <tr>
@@ -58,7 +58,7 @@ Work in progress on this doc
         Delete the session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        quit(cb)
+        quit(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -69,10 +69,13 @@ Work in progress on this doc
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
           <li>
-            configurable type: NA (but setImplicitWaitTimeout(ms, cb) and 
-            setAsyncScriptTimeout(ms, cb) do the same)
+            configurable type: NA (but setImplicitWaitTimeout and 
+            setAsyncScriptTimeout do the same)
           </li>
-          <li>page load timeout: setPageLoadTimeout(ms, cb)</li>
+          <li>
+              page load timeout: <br>
+              setPageLoadTimeout(ms, cb) -> cb(err)
+          </li>
         </ul>         
       </td>      
     </tr>
@@ -82,7 +85,7 @@ Work in progress on this doc
         Set the amount of time, in milliseconds, that asynchronous scripts executed by <tt>/session/:sessionId/execute_async</tt> are permitted to run before they are aborted and a |Timeout| error is returned to the client.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        setAsyncScriptTimeout(ms, cb)
+        setAsyncScriptTimeout(ms, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -91,7 +94,7 @@ Work in progress on this doc
         Set the amount of time the driver should wait when searching for elements.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        setImplicitWaitTimeout(ms, cb)
+        setImplicitWaitTimeout(ms, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -118,7 +121,7 @@ Work in progress on this doc
         Retrieve the URL of the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        url(cb)
+        url(cb) -> cb(err, url)
       </td>      
     </tr>
     <tr>
@@ -127,7 +130,7 @@ Work in progress on this doc
         Navigate to a new URL.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        get(url,cb)
+        get(url,cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -154,7 +157,7 @@ Work in progress on this doc
         Refresh the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        refresh(cb)
+        refresh(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -163,8 +166,16 @@ Work in progress on this doc
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        execute(code, cb)
-        eval(code, cb)
+        <ul>
+          <li>
+            execute script: <br>
+            execute(code, cb) -> cb(code, value returned)
+          </li>
+          <li>
+            evaluate expression: <br>
+            eval(code, cb) -> cb(code, value)
+          </li>
+        </ul>
       </td>      
     </tr>
     <tr>
@@ -173,7 +184,7 @@ Work in progress on this doc
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code, cb)
+        executeAsync(code, cb) -> cb(code, value returned)
       </td>      
     </tr>
     <tr>
@@ -254,7 +265,7 @@ Work in progress on this doc
         Close the current window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        close(cb)
+        close(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -308,7 +319,7 @@ Work in progress on this doc
         Retrieve all cookies visible to the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        allCookies()
+        allCookies() -> cb(err, cookies)
       </td>      
     </tr>
     <tr>
@@ -317,7 +328,7 @@ Work in progress on this doc
         Set a cookie.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        setCookie(cookie, cb)
+        setCookie(cookie, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -326,7 +337,7 @@ Work in progress on this doc
         Delete all cookies visible to the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        deleteAllCookies(cb)
+        deleteAllCookies(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -335,7 +346,7 @@ Work in progress on this doc
         Delete the cookie with the given name.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        deleteCookie(name, cb)
+        deleteCookie(name, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -353,7 +364,7 @@ Work in progress on this doc
         Get the current page title.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        title(cb)
+        title(cb) -> cb(err, title)
       </td>      
     </tr>
     <tr>
@@ -363,11 +374,11 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>element(using, value, cb)</li>
-          <li>elementByLinkText(value, cb)</li>
-          <li>elementById(value, cb)</li>
-          <li>elementByName(value, cb)</li>
-          <li>elementByCss(value, cb)</li>
+          <li>element(using, value, cb) -> cb(err, element)</li>
+          <li>elementByLinkText(value, cb) -> cb(err, element)</li>
+          <li>elementById(value, cb) -> cb(err, element)</li>
+          <li>elementByName(value, cb) -> cb(err, element)</li>
+          <li>elementByCss(value, cb) -> cb(err, element)</li>
         <ul>
       </td>      
     </tr>
@@ -386,7 +397,7 @@ Work in progress on this doc
         Get the element on the page that currently has focus.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        active(cb)
+        active(cb) -> cb(err, element)
       </td>      
     </tr>
     <tr>
@@ -422,7 +433,7 @@ Work in progress on this doc
         Click on an element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        clickElement(element, cb)
+        clickElement(element, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -440,8 +451,8 @@ Work in progress on this doc
         Returns the visible text for the element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        text(element, cb)
-        textPresent(searchText, element, cb)
+        text(element, cb) -> (err, text)
+        textPresent(searchText, element, cb) -> (err, boolean)
       </td>      
     </tr>
     <tr>
@@ -450,7 +461,7 @@ Work in progress on this doc
         Send a sequence of key strokes to an element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        type(element, keys, cb)
+        type(element, keys, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -477,7 +488,7 @@ Work in progress on this doc
         Clear a <tt>TEXTAREA</tt> or <tt>text INPUT</tt> element's value.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        clear(element, cb)
+        clear(element, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -504,8 +515,8 @@ Work in progress on this doc
         Get the value of an element's attribute.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        getAttribute(element, attrName, cb)
-        getValue(element, cb)
+        getAttribute(element, attrName, cb) -> cb(err, value)
+        getValue(element, cb) -> cb(err, value)
       </td>      
     </tr>
     <tr>
@@ -604,7 +615,7 @@ Work in progress on this doc
         Accepts the currently displayed alert dialog.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        acceptAlert(cb)
+        acceptAlert(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -613,7 +624,7 @@ Work in progress on this doc
         Dismisses the currently displayed alert dialog.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        dismissAlert(cb)
+        dismissAlert(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -622,7 +633,7 @@ Work in progress on this doc
         Move the mouse by an offset of the specificed element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        moveTo(element, xoffset, yoffset, cb)
+        moveTo(element, xoffset, yoffset, cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -631,7 +642,7 @@ Work in progress on this doc
         Click any mouse button (at the coordinates set by the last moveto command).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        click(button, cb)  <br>
+        click(button, cb) -> cb(err)  <br>
         buttons: {left: 0, middle: 1 , right: 2}
       </td>      
     </tr>
@@ -641,7 +652,7 @@ Work in progress on this doc
         Click and hold the left mouse button (at the coordinates set by the last moveto command).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        buttonDown(cb)
+        buttonDown(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -650,7 +661,7 @@ Work in progress on this doc
         Releases the mouse button previously held (where the mouse is currently at).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        buttonUp(cb)
+        buttonUp(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -659,7 +670,7 @@ Work in progress on this doc
         Double-clicks at the current mouse coordinates (set by moveto).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        doubleclick(button, cb) <br>
+        doubleclick(button, cb) -> cb(err) <br>
         buttons: {left: 0, middle: 1 , right: 2}
       </td>      
     </tr>
