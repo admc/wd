@@ -449,8 +449,14 @@
         Returns the visible text for the element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        text(element, cb) -> (err, text)
-        textPresent(searchText, element, cb) -> (err, boolean)
+        <ul>
+          <li>
+            text(element, cb) -> (err, text)
+          </li>
+          <li>
+            textPresent(searchText, element, cb) -> (err, boolean)
+          </li>  
+        </ul>
       </td>      
     </tr>
     <tr>
@@ -513,8 +519,14 @@
         Get the value of an element's attribute.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        getAttribute(element, attrName, cb) -> cb(err, value)
-        getValue(element, cb) -> cb(err, value)
+        <ul>
+          <li>
+            getAttribute(element, attrName, cb) -> cb(err, value)
+          </li>
+          <li>
+            getValue(element, cb) -> cb(err, value)
+          </li>
+        </ul>
       </td>      
     </tr>
     <tr>
