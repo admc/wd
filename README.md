@@ -104,3 +104,12 @@ browser.init(desired, function() {
 WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
  - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
 </pre>
+
+## Run the tests!
+<pre>
+  - Run the selenium server: java -jar selenium-server.jar
+  - cd wd
+  - npm install .
+  - make
+  - look at the results!
+</pre>
