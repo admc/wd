@@ -1,5 +1,3 @@
-Work in progress on this doc
-
 <table class="wikitable">
   <tbody>
     <tr>
