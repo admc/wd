@@ -36,7 +36,10 @@ Work in progress on this doc
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
           <li>all sessions: NA</li>
-          <li>current session: altSessionCapabilities(cb) -> cb(err, capabilities)</li>
+          <li>
+            current session: 
+            altSessionCapabilities(cb)&nbsp;->&nbsp;cb(err, capabilities)
+          </li>
         </ul>
       </td>      
     </tr>
