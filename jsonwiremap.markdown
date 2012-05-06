@@ -1,3 +1,5 @@
+Work in progress on this doc
+
 <table class="wikitable">
   <tbody>
     <tr>
@@ -11,7 +13,7 @@
         <strong>Summary</strong>
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        <strong>wd equivalent</strong>
+        <strong>wd&nbsp;equivalent</strong>
       </td>
     </tr>
     <tr>
@@ -39,7 +41,7 @@
         Create a new session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        init(desired, cb)
+        init(desired,&nbsp;cb)
       </td>
     </tr>
     <tr>
@@ -53,7 +55,8 @@
         Returns a list of the currently active sessions.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        all&nbsp;sessions:&nbsp;NA<br>
+        current&nbsp;session:&nbsp;altSessionCapabilities(cb)
       </td>      
     </tr>
     <tr>
@@ -67,7 +70,7 @@
         Retrieve the capabilities of the specified session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        sessionCapabilities(cb)
       </td>      
     </tr>
     <tr>
