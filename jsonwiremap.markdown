@@ -494,7 +494,7 @@ Work in progress on this doc
         Determine if an element is currently enabled.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -503,7 +503,7 @@ Work in progress on this doc
         Get the value of an element's attribute.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        getAttribute(element, attrName, cb)
       </td>      
     </tr>
     <tr>
@@ -512,7 +512,7 @@ Work in progress on this doc
         Test if two element IDs refer to the same DOM element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -521,7 +521,7 @@ Work in progress on this doc
         Determine if an element is currently displayed.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -530,7 +530,7 @@ Work in progress on this doc
         Determine an element's location on the page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -539,7 +539,7 @@ Work in progress on this doc
         Determine an element's location on the screen once it has been scrolled into view.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -548,7 +548,7 @@ Work in progress on this doc
         Determine an element's size in pixels.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -557,7 +557,7 @@ Work in progress on this doc
         Query the value of an element's computed CSS property.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -566,7 +566,7 @@ Work in progress on this doc
         Get the current browser orientation.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -575,7 +575,7 @@ Work in progress on this doc
         Set the browser orientation.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -584,7 +584,7 @@ Work in progress on this doc
         Gets the text of the currently displayed JavaScript <tt>alert()</tt>, <tt>confirm()</tt>, or <tt>prompt()</tt> dialog.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -593,7 +593,7 @@ Work in progress on this doc
         Sends keystrokes to a JavaScript <tt>prompt()</tt> dialog.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -602,7 +602,7 @@ Work in progress on this doc
         Accepts the currently displayed alert dialog.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        acceptAlert(cb)
       </td>      
     </tr>
     <tr>
@@ -611,7 +611,7 @@ Work in progress on this doc
         Dismisses the currently displayed alert dialog.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        dismissAlert(cb)
       </td>      
     </tr>
     <tr>
@@ -620,7 +620,7 @@ Work in progress on this doc
         Move the mouse by an offset of the specificed element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        moveTo(element, xoffset, yoffset, cb)
       </td>      
     </tr>
     <tr>
@@ -629,7 +629,8 @@ Work in progress on this doc
         Click any mouse button (at the coordinates set by the last moveto command).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        click(button, cb)  <br>
+        buttons: LEFT = 0, MIDDLE = 1 , RIGHT = 2
       </td>      
     </tr>
     <tr>
@@ -638,7 +639,7 @@ Work in progress on this doc
         Click and hold the left mouse button (at the coordinates set by the last moveto command).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        buttonDown(cb)
       </td>      
     </tr>
     <tr>
@@ -647,7 +648,7 @@ Work in progress on this doc
         Releases the mouse button previously held (where the mouse is currently at).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        buttonUp(cb)
       </td>      
     </tr>
     <tr>
@@ -656,7 +657,7 @@ Work in progress on this doc
         Double-clicks at the current mouse coordinates (set by moveto).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        doubleclick(button, cb)
       </td>      
     </tr>
     <tr>
@@ -665,7 +666,7 @@ Work in progress on this doc
         Single tap on the touch enabled device.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -674,7 +675,7 @@ Work in progress on this doc
         Finger down on the screen.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -683,7 +684,7 @@ Work in progress on this doc
         Finger up on the screen.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -692,7 +693,7 @@ Work in progress on this doc
         Finger move on the screen.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -701,7 +702,7 @@ Work in progress on this doc
         Scroll on the touch screen using finger based motion events.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -710,7 +711,7 @@ Work in progress on this doc
         Scroll on the touch screen using finger based motion events.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -719,7 +720,7 @@ Work in progress on this doc
         Double tap on the touch screen using finger motion events.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -728,7 +729,7 @@ Work in progress on this doc
         Long press on the touch screen using finger motion events.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -737,7 +738,7 @@ Work in progress on this doc
         Flick on the touch screen using finger motion events.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -746,7 +747,7 @@ Work in progress on this doc
         Flick on the touch screen using finger motion events.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -755,7 +756,7 @@ Work in progress on this doc
         Get the current geo location.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -764,7 +765,7 @@ Work in progress on this doc
         Set the current geo location.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -773,7 +774,7 @@ Work in progress on this doc
         Get all keys of the storage.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -782,7 +783,7 @@ Work in progress on this doc
         Set the storage item for the given key.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -791,7 +792,7 @@ Work in progress on this doc
         Clear the storage.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -800,7 +801,7 @@ Work in progress on this doc
         Get the storage item for the given key.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -809,7 +810,7 @@ Work in progress on this doc
         Remove the storage item for the given key.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -818,7 +819,7 @@ Work in progress on this doc
         Get the number of items in the storage.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -827,7 +828,7 @@ Work in progress on this doc
         Get all keys of the storage.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -836,7 +837,7 @@ Work in progress on this doc
         Set the storage item for the given key.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -845,7 +846,7 @@ Work in progress on this doc
         Clear the storage.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -854,7 +855,7 @@ Work in progress on this doc
         Get the storage item for the given key.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -863,7 +864,7 @@ Work in progress on this doc
         Remove the storage item for the given key.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -872,7 +873,7 @@ Work in progress on this doc
         Get the number of items in the storage.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
   </tbody>
