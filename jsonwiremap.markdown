@@ -3,10 +3,10 @@ Work in progress on this doc
 <table class="wikitable">
   <tbody>
     <tr>
-      <td style="border: 1px solid #ccc; padding: 5px;">
+      <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
         <strong>JsonWireProtocol</strong>
       </td>
-      <td style="border: 1px solid #ccc; padding: 5px;">
+      <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
         <strong>wd</strong>
       </td>
     </tr>
@@ -34,8 +34,14 @@ Work in progress on this doc
         Returns a list of the currently active sessions.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        all&nbsp;sessions:&nbsp;NA<br>
-        current&nbsp;session:&nbsp;altSessionCapabilities(cb)
+        <ul>
+          <li>
+            all&nbsp;sessions:&nbsp;NA
+          </li>
+          <li>
+            current&nbsp;session:&nbsp;altSessionCapabilities(cb)
+          </li>
+        </ul>
       </td>      
     </tr>
     <tr>
@@ -53,7 +59,7 @@ Work in progress on this doc
         Delete the session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        quit(cb)
       </td>      
     </tr>
     <tr>
@@ -62,7 +68,14 @@ Work in progress on this doc
         Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        <ul>
+          <li>
+            configurable type: NA (but setImplicitWaitTimeout(ms, cb) and setAsyncScriptTimeout(ms, cb) do the same)<br>
+          </li>
+          <li>
+            page load timeout: setPageLoadTimeout(ms, cb)
+          </li>
+        </ul>         
       </td>      
     </tr>
     <tr>
