@@ -84,7 +84,7 @@ Work in progress on this doc
         Set the amount of time, in milliseconds, that asynchronous scripts executed by <tt>/session/:sessionId/execute_async</tt> are permitted to run before they are aborted and a |Timeout| error is returned to the client.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        setAsyncScriptTimeout(ms, cb)
       </td>      
     </tr>
     <tr>
@@ -93,7 +93,7 @@ Work in progress on this doc
         Set the amount of time the driver should wait when searching for elements.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        setImplicitWaitTimeout(ms, cb)
       </td>      
     </tr>
     <tr>
@@ -102,7 +102,7 @@ Work in progress on this doc
         Retrieve the current window handle.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -111,7 +111,7 @@ Work in progress on this doc
         Retrieve the list of all window handles available to the session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -120,7 +120,7 @@ Work in progress on this doc
         Retrieve the URL of the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        url(cb)
       </td>      
     </tr>
     <tr>
@@ -129,7 +129,7 @@ Work in progress on this doc
         Navigate to a new URL.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        get(url,cb)
       </td>      
     </tr>
     <tr>
@@ -138,7 +138,7 @@ Work in progress on this doc
         Navigate forwards in the browser history, if possible.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -147,7 +147,7 @@ Work in progress on this doc
         Navigate backwards in the browser history, if possible.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -156,7 +156,7 @@ Work in progress on this doc
         Refresh the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        refresh(cb)
       </td>      
     </tr>
     <tr>
