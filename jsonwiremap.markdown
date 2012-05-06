@@ -16,7 +16,7 @@ Work in progress on this doc
         Query the server's current status.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        status(cb)
+        status(cb) -> cb(err, status)
       </td>
     </tr>
     <tr>
@@ -25,7 +25,7 @@ Work in progress on this doc
         Create a new session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        init(desired,&nbsp;cb)
+        init(desired, cb) -> cb(err, sessionID)
       </td>
     </tr>
     <tr>
@@ -35,8 +35,8 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>all&nbsp;sessions:&nbsp;NA</li>
-          <li>current&nbsp;session:&nbsp;altSessionCapabilities(cb)</li>
+          <li>all sessions: NA</li>
+          <li>current session: altSessionCapabilities(cb) -> cb(err, capabilities)</li>
         </ul>
       </td>      
     </tr>
