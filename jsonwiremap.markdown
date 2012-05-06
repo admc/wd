@@ -441,6 +441,7 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         text(element, cb)
+        textPresent(searchText, element, cb)
       </td>      
     </tr>
     <tr>
@@ -504,6 +505,7 @@ Work in progress on this doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         getAttribute(element, attrName, cb)
+        getValue(element, cb)
       </td>      
     </tr>
     <tr>
