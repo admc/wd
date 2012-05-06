@@ -165,7 +165,8 @@ Work in progress on this doc
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        execute(code, cb)
+        eval(code, cb)
       </td>      
     </tr>
     <tr>
@@ -174,7 +175,7 @@ Work in progress on this doc
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        executeAsync(code, cb)
       </td>      
     </tr>
     <tr>
@@ -183,7 +184,7 @@ Work in progress on this doc
         Take a screenshot of the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -192,7 +193,7 @@ Work in progress on this doc
         List all available engines on the machine.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -201,7 +202,7 @@ Work in progress on this doc
         Get the name of the active IME engine.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -210,7 +211,7 @@ Work in progress on this doc
         Indicates whether IME input is active at the moment (not if it's available.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -219,7 +220,7 @@ Work in progress on this doc
         De-activates the currently-active IME engine.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -228,7 +229,7 @@ Work in progress on this doc
         Make an engines that is available (appears on the listreturned by getAvailableEngines) active.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -237,7 +238,7 @@ Work in progress on this doc
         Change focus to another frame on the page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -246,7 +247,7 @@ Work in progress on this doc
         Change focus to another window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -255,7 +256,7 @@ Work in progress on this doc
         Close the current window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        close(cb)
       </td>      
     </tr>
     <tr>
@@ -264,7 +265,7 @@ Work in progress on this doc
         Change the size of the specified window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -273,7 +274,7 @@ Work in progress on this doc
         Get the size of the specified window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -282,7 +283,7 @@ Work in progress on this doc
         Change the position of the specified window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -291,7 +292,7 @@ Work in progress on this doc
         Get the position of the specified window.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -300,7 +301,7 @@ Work in progress on this doc
         Maximize the specified window if not already maximized.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -309,7 +310,7 @@ Work in progress on this doc
         Retrieve all cookies visible to the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        allCookies()
       </td>      
     </tr>
     <tr>
@@ -318,7 +319,7 @@ Work in progress on this doc
         Set a cookie.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        setCookie(cookie, cb)
       </td>      
     </tr>
     <tr>
@@ -327,7 +328,7 @@ Work in progress on this doc
         Delete all cookies visible to the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        deleteAllCookies(cb)
       </td>      
     </tr>
     <tr>
@@ -336,7 +337,7 @@ Work in progress on this doc
         Delete the cookie with the given name.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        deleteCookie(name, cb)
       </td>      
     </tr>
     <tr>
@@ -345,7 +346,7 @@ Work in progress on this doc
         Get the current page source.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -354,7 +355,7 @@ Work in progress on this doc
         Get the current page title.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        title(cb)
       </td>      
     </tr>
     <tr>
@@ -363,7 +364,11 @@ Work in progress on this doc
         Search for an element on the page, starting from the document root.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        element(using, value, cb)
+        elementByLinkText(value, cb)
+        elementById(value, cb)
+        elementByName(value, cb)
+        elementByCss(value, cb)
       </td>      
     </tr>
     <tr>
@@ -372,7 +377,7 @@ Work in progress on this doc
         Search for multiple elements on the page, starting from the document root.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -381,7 +386,7 @@ Work in progress on this doc
         Get the element on the page that currently has focus.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        active(cb)
       </td>      
     </tr>
     <tr>
@@ -390,7 +395,7 @@ Work in progress on this doc
         Describe the identified element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -399,7 +404,7 @@ Work in progress on this doc
         Search for an element on the page, starting from the identified element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -408,7 +413,7 @@ Work in progress on this doc
         Search for multiple elements on the page, starting from the identified element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -417,7 +422,7 @@ Work in progress on this doc
         Click on an element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        clickElement(element, cb)
       </td>      
     </tr>
     <tr>
@@ -426,7 +431,7 @@ Work in progress on this doc
         Submit a <tt>FORM</tt> element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -435,7 +440,7 @@ Work in progress on this doc
         Returns the visible text for the element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        text(element, cb)
       </td>      
     </tr>
     <tr>
@@ -444,7 +449,7 @@ Work in progress on this doc
         Send a sequence of key strokes to an element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        type(element, keys, cb)
       </td>      
     </tr>
     <tr>
@@ -453,7 +458,7 @@ Work in progress on this doc
         Send a sequence of key strokes to the active element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -462,7 +467,7 @@ Work in progress on this doc
         Query for an element's tag name.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
@@ -471,7 +476,7 @@ Work in progress on this doc
         Clear a <tt>TEXTAREA</tt> or <tt>text INPUT</tt> element's value.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        clear(element, cb)
       </td>      
     </tr>
     <tr>
@@ -480,7 +485,7 @@ Work in progress on this doc
         Determine if an <tt>OPTION</tt> element, or an <tt>INPUT</tt> element of type <tt>checkbox</tt> or <tt>radiobutton</tt> is currently selected.<br>
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        NA
       </td>      
     </tr>
     <tr>
