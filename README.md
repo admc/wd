@@ -99,6 +99,11 @@ browser.init(desired, function() {
   - 'setCookie': Sets a <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object">cookie</a>
 </pre>
 
+### JsonWireProtocol mapping:
+
+* [supported method mapping](https://github.com/sebv/wd/blob/master/doc/jsonwiremap-supported.md)<br>
+* [full mapping](https://github.com/sebv/wd/blob/master/doc/jsonwiremap-all.md)
+
 ## More docs!
 <pre>
 WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
