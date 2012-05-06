@@ -39,7 +39,7 @@
         Create a new session.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        &nbsp;
+        init(desired, cb)
       </td>
     </tr>
     <tr>
