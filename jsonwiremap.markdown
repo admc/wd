@@ -38,7 +38,7 @@ Work in progress on this doc
           <li>all sessions: NA</li>
           <li>
             current session: 
-            altSessionCapabilities(cb)&nbsp;->&nbsp;cb(err, capabilities)
+            altSessionCapabilities(cb)&nbsp;->&nbsp;cb(err,&nbsp;capabilities)
           </li>
         </ul>
       </td>      
