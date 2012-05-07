@@ -137,7 +137,7 @@
         Navigate forwards in the browser history, if possible.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        NA
+        forward(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -146,7 +146,7 @@
         Navigate backwards in the browser history, if possible.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        NA
+        back(cb) -> cb(err)
       </td>      
     </tr>
     <tr>
@@ -386,7 +386,13 @@
         Search for multiple elements on the page, starting from the document root.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        NA
+        <ul>
+          <li>elements(using, value, cb) -> cb(err, elements)</li>
+          <li>elementsByLinkText(value, cb) -> cb(err, elements)</li>
+          <li>elementsById(value, cb) -> cb(err, elements)</li>
+          <li>elementsByName(value, cb) -> cb(err, elements)</li>
+          <li>elementsByCss(value, cb) -> cb(err, elements)</li>
+        <ul>
       </td>      
     </tr>
     <tr>

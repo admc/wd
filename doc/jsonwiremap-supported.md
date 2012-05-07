@@ -100,6 +100,24 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/forward">/session/:sessionId/forward</a><br>
+        Navigate forwards in the browser history, if possible.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        forward(cb) -> cb(err)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/back">/session/:sessionId/back</a><br>
+        Navigate backwards in the browser history, if possible.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        back(cb) -> cb(err)
+      </td>      
+    </tr>    
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/refresh">/session/:sessionId/refresh</a><br>
         Refresh the current page.
       </td>
@@ -203,6 +221,21 @@
         <ul>
       </td>      
     </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/elements">/session/:sessionId/elements</a><br>
+        Search for multiple elements on the page, starting from the document root.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        <ul>
+          <li>elements(using, value, cb) -> cb(err, elements)</li>
+          <li>elementsByLinkText(value, cb) -> cb(err, elements)</li>
+          <li>elementsById(value, cb) -> cb(err, elements)</li>
+          <li>elementsByName(value, cb) -> cb(err, elements)</li>
+          <li>elementsByCss(value, cb) -> cb(err, elements)</li>
+        <ul>
+      </td>      
+    </tr>    
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
         POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active">/session/:sessionId/element/active</a><br>
