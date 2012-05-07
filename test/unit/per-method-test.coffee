@@ -85,7 +85,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         test.done()
-    
+
     "refresh": (test) ->
       browser.refresh (err) ->
         should.not.exist err
@@ -292,6 +292,86 @@ runTestWith = (remoteWdConfig, desired) ->
           browser.elementByCss "#elementByCss2", (err,res) ->
             should.exist err
             err.status.should.equal 7
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "elements": (test) ->      
+      async.series [
+        (done) ->
+          browser.elements "name", "elementsByName", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elements "name", "elementsByName2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "elementsById": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsById "elementsById", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elementsById "elementsById2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    "elementsByName": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsByName "elementsByName", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elementsByName "elementsByName2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    "elementsByCss": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsByCss "#elementsByCss", (err,res) ->
+            should.not.exist err
+            res.should.have.length 2
+            done null
+        (done) ->
+          browser.elementsByCss "#elementsByCss2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    "elementsByLinkText": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsByLinkText "click elementsByLinkText", (err,res) ->
+            should.not.exist err
+            res.should.have.length 2
+            done null
+        (done) ->
+          browser.elementsByLinkText "click elementsByLinkText2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
             done null
       ], (err) ->
         should.not.exist err
@@ -725,7 +805,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "quit": (test) ->        
       browser.quit ->
         test.done()

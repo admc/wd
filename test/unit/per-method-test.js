@@ -360,6 +360,106 @@
           return test.done();
         });
       },
+      "elements": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elements("name", "elementsByName", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elements("name", "elementsByName2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsById": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsById("elementsById", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsById("elementsById2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsByName": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsByName("elementsByName", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsByName("elementsByName2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsByCss": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsByCss("#elementsByCss", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(2);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsByCss("#elementsByCss2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsByLinkText": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsByLinkText("click elementsByLinkText", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(2);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsByLinkText("click elementsByLinkText2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
       "getAttribute": function(test) {
         return browser.elementById("getAttribute", function(err, testDiv) {
           should.not.exist(err);
