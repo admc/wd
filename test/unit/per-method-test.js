@@ -61,14 +61,12 @@
     });
   };
 
-  runTestWith = function(browserName) {
+  runTestWith = function(remoteWdConfig, desired) {
     var browser;
     browser = null;
     return {
       "wd.remote": function(test) {
-        browser = wd.remote({
-          mode: 'sync'
-        });
+        browser = wd.remote(remoteWdConfig);
         browser.on("status", function(info) {
           return console.log("\u001b[36m%s\u001b[0m", info);
         });
@@ -85,9 +83,7 @@
         });
       },
       "init": function(test) {
-        return browser.init({
-          browserName: browserName
-        }, function(err) {
+        return browser.init(desired, function(err) {
           should.not.exist(err);
           return test.done();
         });
@@ -798,15 +794,19 @@
   app = null;
 
   exports.wd = {
-    "per method": {
+    "per method test": {
       'starting express': function(test) {
         app = express.createServer();
         app.use(express["static"](__dirname + '/assets'));
         app.listen(8181);
         return test.done();
       },
-      "with chrome": runTestWith('chrome'),
-      "with firefox": runTestWith('firefox'),
+      chrome: runTestWith({}, {
+        browserName: 'chrome'
+      }),
+      firefox: runTestWith({}, {
+        browserName: 'firefox'
+      }),
       'stopping express': function(test) {
         app.close();
         return test.done();
