@@ -452,7 +452,7 @@ browser.init(desired, function() {
   </tbody>
 </table>
 
-### FullJsonWireProtocol mapping:
+### Full JsonWireProtocol mapping:
 
 [full mapping](https://github.com/sebv/wd/blob/master/doc/jsonwiremap-all.md)
 
