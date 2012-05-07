@@ -2,7 +2,7 @@
 (function() {
   var runTestWith;
 
-  runTestWith = require('../common/basic-test').runTestWith;
+  runTestWith = require('../common/basic-test-base').runTestWith;
 
   exports.wd = {
     'basic test': {
