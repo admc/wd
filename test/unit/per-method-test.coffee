@@ -36,11 +36,11 @@ valueShouldEqual = (browser,element,expected, done) ->
     res.should.equal expected
     done null      
 
-runTestWith = (browserName) -> 
+runTestWith = (remoteWdConfig, desired) -> 
   browser = null;  
   {
     "wd.remote": (test) ->
-      browser = wd.remote(mode:'sync')    
+      browser = wd.remote remoteWdConfig    
       browser.on "status", (info) ->
         console.log "\u001b[36m%s\u001b[0m", info
       browser.on "command", (meth, path) ->
@@ -54,7 +54,7 @@ runTestWith = (browserName) ->
         test.done()
         
     "init": (test) ->
-      browser.init browserName: browserName, (err) ->
+      browser.init desired, (err) ->
         should.not.exist err
         test.done()
 
@@ -85,9 +85,46 @@ runTestWith = (browserName) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         test.done()
-    
+
     "refresh": (test) ->
       browser.refresh (err) ->
+        should.not.exist err
+        test.done()
+
+    "back / forward": (test) ->
+      async.series [
+        (done) ->
+          browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.include "?p=2"
+            done null
+        (done) ->
+          browser.back  (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.not.include "?p=2"
+            done null
+        (done) ->
+          browser.forward  (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.include "?p=2"
+            done null
+        (done) ->
+          browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
+            should.not.exist err
+            done null
+      ], (err) ->
         should.not.exist err
         test.done()
     
@@ -255,6 +292,86 @@ runTestWith = (browserName) ->
           browser.elementByCss "#elementByCss2", (err,res) ->
             should.exist err
             err.status.should.equal 7
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "elements": (test) ->      
+      async.series [
+        (done) ->
+          browser.elements "name", "elementsByName", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elements "name", "elementsByName2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "elementsById": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsById "elementsById", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elementsById "elementsById2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    "elementsByName": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsByName "elementsByName", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elementsByName "elementsByName2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    "elementsByCss": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsByCss "#elementsByCss", (err,res) ->
+            should.not.exist err
+            res.should.have.length 2
+            done null
+        (done) ->
+          browser.elementsByCss "#elementsByCss2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    "elementsByLinkText": (test) ->      
+      async.series [
+        (done) ->
+          browser.elementsByLinkText "click elementsByLinkText", (err,res) ->
+            should.not.exist err
+            res.should.have.length 2
+            done null
+        (done) ->
+          browser.elementsByLinkText "click elementsByLinkText2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
             done null
       ], (err) ->
         should.not.exist err
@@ -688,7 +805,7 @@ runTestWith = (browserName) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "quit": (test) ->        
       browser.quit ->
         test.done()
@@ -697,9 +814,7 @@ runTestWith = (browserName) ->
 app = null      
 
 exports.wd =
-
-
-  "per method":    
+  "per method test":    
     
     'starting express': (test) ->
       app = express.createServer()
@@ -707,9 +822,9 @@ exports.wd =
       app.listen 8181
       test.done()
     
-    "with chrome": runTestWith 'chrome'
+    chrome: (runTestWith {}, {browserName: 'chrome'})
 
-    "with firefox": runTestWith 'firefox'
+    firefox: (runTestWith {}, {browserName: 'firefox'})
 
     'stopping express': (test) ->
       app.close()
