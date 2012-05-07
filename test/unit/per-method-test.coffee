@@ -36,11 +36,11 @@ valueShouldEqual = (browser,element,expected, done) ->
     res.should.equal expected
     done null      
 
-runTestWith = (browserName) -> 
+runTestWith = (remoteWdConfig, desired) -> 
   browser = null;  
   {
     "wd.remote": (test) ->
-      browser = wd.remote(mode:'sync')    
+      browser = wd.remote remoteWdConfig    
       browser.on "status", (info) ->
         console.log "\u001b[36m%s\u001b[0m", info
       browser.on "command", (meth, path) ->
@@ -54,7 +54,7 @@ runTestWith = (browserName) ->
         test.done()
         
     "init": (test) ->
-      browser.init browserName: browserName, (err) ->
+      browser.init desired, (err) ->
         should.not.exist err
         test.done()
 
@@ -697,9 +697,7 @@ runTestWith = (browserName) ->
 app = null      
 
 exports.wd =
-
-
-  "per method":    
+  "per method test":    
     
     'starting express': (test) ->
       app = express.createServer()
@@ -707,9 +705,9 @@ exports.wd =
       app.listen 8181
       test.done()
     
-    "with chrome": runTestWith 'chrome'
+    chrome: (runTestWith {}, {browserName: 'chrome'})
 
-    "with firefox": runTestWith 'firefox'
+    firefox: (runTestWith {}, {browserName: 'firefox'})
 
     'stopping express': (test) ->
       app.close()

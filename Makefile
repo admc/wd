@@ -1,3 +1,6 @@
+TEST_DIR = test/common test/unit
+TEST_COFFEE_FILES = $(shell find test/common/*.coffee test/unit/*.coffee)
+ 
 DEFAULT:
 	@echo
 	@echo '  make test -> run the unit tests (start selenium with chromedriver first).'
@@ -13,15 +16,13 @@ test:
 
 # remove all the generated js 
 cleanGenJs: 
-	rm test/unit/*.js
+	@rm -f test/common/*.js test/unit/*.js
 
 # compile once
 compile2js:
-	./node_modules/.bin/coffee --compile test/unit/*.coffee
-
+	@./node_modules/.bin/coffee --compile $(TEST_DIR)
 # compile, and then watch for changes
 compile2js_watch:
-	./node_modules/.bin/coffee --compile --watch test/unit/*.coffee
+	./node_modules/.bin/coffee --compile --watch $(TEST_DIR)
 	  
 .PHONY: test compile2js compile2js_watch cleanGenJs DEFAULT
-  
