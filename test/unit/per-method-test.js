@@ -124,6 +124,52 @@
           return test.done();
         });
       },
+      "back / forward": function(test) {
+        return async.series([
+          function(done) {
+            return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.back(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.not.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.forward(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
       "eval": function(test) {
         return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
           should.not.exist(err);
