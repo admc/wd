@@ -1,6 +1,6 @@
 # nodeunit test
 
-{runTestWith} = require '../common/basic-test'
+{runTestWith} = require '../common/basic-test-base'
 
 exports.wd =
   'basic test':  
