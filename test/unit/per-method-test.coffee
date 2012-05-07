@@ -90,6 +90,43 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.refresh (err) ->
         should.not.exist err
         test.done()
+
+    "back / forward": (test) ->
+      async.series [
+        (done) ->
+          browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.include "?p=2"
+            done null
+        (done) ->
+          browser.back  (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.not.include "?p=2"
+            done null
+        (done) ->
+          browser.forward  (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.include "?p=2"
+            done null
+        (done) ->
+          browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
+            should.not.exist err
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()
     
     "eval": (test) ->
       async.series [
