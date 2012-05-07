@@ -61,14 +61,12 @@
     });
   };
 
-  runTestWith = function(browserName) {
+  runTestWith = function(remoteWdConfig, desired) {
     var browser;
     browser = null;
     return {
       "wd.remote": function(test) {
-        browser = wd.remote({
-          mode: 'sync'
-        });
+        browser = wd.remote(remoteWdConfig);
         browser.on("status", function(info) {
           return console.log("\u001b[36m%s\u001b[0m", info);
         });
@@ -85,9 +83,7 @@
         });
       },
       "init": function(test) {
-        return browser.init({
-          browserName: browserName
-        }, function(err) {
+        return browser.init(desired, function(err) {
           should.not.exist(err);
           return test.done();
         });
@@ -124,6 +120,52 @@
       },
       "refresh": function(test) {
         return browser.refresh(function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "back / forward": function(test) {
+        return async.series([
+          function(done) {
+            return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.back(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.not.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.forward(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
           should.not.exist(err);
           return test.done();
         });
@@ -310,6 +352,106 @@
             return browser.elementByCss("#elementByCss2", function(err, res) {
               should.exist(err);
               err.status.should.equal(7);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elements": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elements("name", "elementsByName", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elements("name", "elementsByName2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsById": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsById("elementsById", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsById("elementsById2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsByName": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsByName("elementsByName", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsByName("elementsByName2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsByCss": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsByCss("#elementsByCss", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(2);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsByCss("#elementsByCss2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "elementsByLinkText": function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementsByLinkText("click elementsByLinkText", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(2);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementsByLinkText("click elementsByLinkText2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
               return done(null);
             });
           }
@@ -798,15 +940,19 @@
   app = null;
 
   exports.wd = {
-    "per method": {
+    "per method test": {
       'starting express': function(test) {
         app = express.createServer();
         app.use(express["static"](__dirname + '/assets'));
         app.listen(8181);
         return test.done();
       },
-      "with chrome": runTestWith('chrome'),
-      "with firefox": runTestWith('firefox'),
+      chrome: runTestWith({}, {
+        browserName: 'chrome'
+      }),
+      firefox: runTestWith({}, {
+        browserName: 'firefox'
+      }),
       'stopping express': function(test) {
         app.close();
         return test.done();
