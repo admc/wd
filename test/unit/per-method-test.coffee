@@ -57,7 +57,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.init desired, (err) ->
         should.not.exist err
         test.done()
-
+    
     "sessionCapabilities": (test) ->
       browser.sessionCapabilities (err,capabilities) ->
         should.not.exist err
@@ -599,7 +599,7 @@ runTestWith = (remoteWdConfig, desired) ->
         title.should.equal "TEST PAGE"
         test.done()        
 
-    "text": (test) -> 
+    "text (passing element)": (test) -> 
       browser.elementByCss "#text", (err,textDiv) ->
         should.not.exist err
         should.exist textDiv
@@ -608,6 +608,36 @@ runTestWith = (remoteWdConfig, desired) ->
           res.should.include "text content" 
           res.should.not.include "div" 
           test.done()        
+
+    "text (passing undefined)": (test) -> 
+      browser.text undefined, (err, res) ->
+        should.not.exist err
+        # the whole page text is returned
+        res.should.include "text content" 
+        res.should.include "sunny" 
+        res.should.include "click elementsByLinkText"
+        res.should.not.include "div" 
+        test.done()        
+
+    "text (passing body)": (test) -> 
+      browser.text 'body', (err, res) ->
+        should.not.exist err
+        # the whole page text is returned
+        res.should.include "text content" 
+        res.should.include "sunny" 
+        res.should.include "click elementsByLinkText"
+        res.should.not.include "div" 
+        test.done()        
+
+    "text (passing null)": (test) -> 
+      browser.text null, (err, res) ->
+        should.not.exist err
+        # the whole page text is returned
+        res.should.include "text content" 
+        res.should.include "sunny" 
+        res.should.include "click elementsByLinkText"
+        res.should.not.include "div" 
+        test.done()        
 
     "textPresent": (test) -> 
       browser.elementByCss "#textPresent", (err,textDiv) ->
@@ -805,7 +835,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-    
+
     "quit": (test) ->        
       browser.quit ->
         test.done()
