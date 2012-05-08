@@ -694,7 +694,7 @@
           return test.done();
         });
       },
-      "text": function(test) {
+      "text (passing element)": function(test) {
         return browser.elementByCss("#text", function(err, textDiv) {
           should.not.exist(err);
           should.exist(textDiv);
@@ -704,6 +704,36 @@
             res.should.not.include("div");
             return test.done();
           });
+        });
+      },
+      "text (passing undefined)": function(test) {
+        return browser.text(void 0, function(err, res) {
+          should.not.exist(err);
+          res.should.include("text content");
+          res.should.include("sunny");
+          res.should.include("click elementsByLinkText");
+          res.should.not.include("div");
+          return test.done();
+        });
+      },
+      "text (passing body)": function(test) {
+        return browser.text('body', function(err, res) {
+          should.not.exist(err);
+          res.should.include("text content");
+          res.should.include("sunny");
+          res.should.include("click elementsByLinkText");
+          res.should.not.include("div");
+          return test.done();
+        });
+      },
+      "text (passing null)": function(test) {
+        return browser.text(null, function(err, res) {
+          should.not.exist(err);
+          res.should.include("text content");
+          res.should.include("sunny");
+          res.should.include("click elementsByLinkText");
+          res.should.not.include("div");
+          return test.done();
         });
       },
       "textPresent": function(test) {
