@@ -189,7 +189,7 @@
           return test.done();
         });
       },
-      "executeAsync (async mode)": function(test) {
+      "executeAsync": function(test) {
         var scriptAsCoffee, scriptAsJs;
         scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {

@@ -148,7 +148,7 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         test.done()        
 
-    "executeAsync (async mode)": (test) ->
+    "executeAsync": (test) ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
