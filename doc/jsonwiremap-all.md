@@ -167,11 +167,11 @@
         <ul>
           <li>
             execute script: <br>
-            execute(code, cb) -> cb(code, value returned)
+            execute(code, cb) -> cb(err, value returned)
           </li>
           <li>
             evaluate expression: <br>
-            eval(code, cb) -> cb(code, value)
+            eval(code, cb) -> cb(err, value)
           </li>
         </ul>
       </td>      
