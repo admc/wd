@@ -182,7 +182,7 @@
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code, cb) -> cb(code, value returned)
+        executeAsync(code, cb) -> cb(err, value returned)
       </td>      
     </tr>
     <tr>
