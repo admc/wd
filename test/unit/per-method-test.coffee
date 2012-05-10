@@ -85,7 +85,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         test.done()
-
+    
     "refresh": (test) ->
       browser.refresh (err) ->
         should.not.exist err
@@ -435,7 +435,7 @@ runTestWith = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           test.done()        
-
+    
     "moveTo": (test) -> 
       env = {}
       async.series [
@@ -456,7 +456,7 @@ runTestWith = (remoteWdConfig, desired) ->
           '''
         (done) -> textShouldEqual browser, env.current, '', done
         (done) ->
-          browser.moveTo env.a1, undefined, undefined, (err) ->            
+          browser.moveTo env.a1, 5, 5, (err) ->            
             should.not.exist err
             done null
         (done) -> textShouldEqual browser, env.current, 'a1', done
@@ -465,10 +465,15 @@ runTestWith = (remoteWdConfig, desired) ->
             should.not.exist err
             done null
         (done) -> textShouldEqual browser, env.current, 'a2', done        
+        (done) ->
+          browser.moveTo env.a1, (err) ->            
+            should.not.exist err
+            done null
+        (done) -> textShouldEqual browser, env.current, 'a1', done
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     # @todo waiting for implementation
     # it "scroll", (test) ->
     
@@ -514,9 +519,11 @@ runTestWith = (remoteWdConfig, desired) ->
           executeCoffee browser,
             '''
               jQuery ->
+                window.numOfClick = 0
                 a = $('#click a')
                 a.click ->
-                  a.html 'clicked'              
+                  window.numOfClick = window.numOfClick + 1
+                  a.html "clicked #{window.numOfClick}"              
             '''
           (done) -> textShouldEqual browser, anchor, "not clicked", done
           (done) ->
@@ -527,7 +534,16 @@ runTestWith = (remoteWdConfig, desired) ->
             browser.click 0, (err) ->
               should.not.exist err
               done null
-          (done) -> textShouldEqual browser, anchor, "clicked", done
+          (done) -> textShouldEqual browser, anchor, "clicked 1", done
+          (done) ->
+            browser.moveTo anchor, undefined, undefined, (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            browser.click (err) ->
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, anchor, "clicked 2", done
         ], (err) ->
           should.not.exist err
           test.done()        
@@ -835,7 +851,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "quit": (test) ->        
       browser.quit ->
         test.done()
