@@ -52,7 +52,13 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         should.exist status
         test.done()
-        
+
+    "sessions": (test) ->
+      browser.sessions (err,sessions) ->        
+        should.not.exist err
+        should.exist sessions
+        test.done()
+
     "init": (test) ->
       browser.init desired, (err) ->
         should.not.exist err

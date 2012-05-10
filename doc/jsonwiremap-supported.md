@@ -28,6 +28,21 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessions">/sessions</a><br>
+        Returns a list of the currently active sessions.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        <ul>
+          <li>all sessions: sessions(cb) -> cb(err, sessions)</li>
+          <li>
+            current session: <br>
+            altSessionCapabilities(cb) -> cb(err, capabilities)
+          </li>
+        </ul>
+      </td>      
+    </tr>    
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId">/session/:sessionId</a><br>
         Retrieve the capabilities of the specified session.
       </td>
