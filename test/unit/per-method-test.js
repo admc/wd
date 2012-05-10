@@ -82,6 +82,13 @@
           return test.done();
         });
       },
+      "sessions": function(test) {
+        return browser.sessions(function(err, sessions) {
+          should.not.exist(err);
+          should.exist(sessions);
+          return test.done();
+        });
+      },
       "init": function(test) {
         return browser.init(desired, function(err) {
           should.not.exist(err);
@@ -536,7 +543,7 @@
           }, executeCoffee(browser, 'jQuery ->\n  a1 = $(\'#moveTo .a1\')\n  a2 = $(\'#moveTo .a2\')\n  current = $(\'#moveTo .current\')\n  a1.hover ->\n    current.html \'a1\'\n  a2.hover ->\n    current.html \'a2\''), function(done) {
             return textShouldEqual(browser, env.current, '', done);
           }, function(done) {
-            return browser.moveTo(env.a1, void 0, void 0, function(err) {
+            return browser.moveTo(env.a1, 5, 5, function(err) {
               should.not.exist(err);
               return done(null);
             });
@@ -549,6 +556,13 @@
             });
           }, function(done) {
             return textShouldEqual(browser, env.current, 'a2', done);
+          }, function(done) {
+            return browser.moveTo(env.a1, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.current, 'a1', done);
           }
         ], function(err) {
           should.not.exist(err);
@@ -591,7 +605,7 @@
           should.not.exist(err);
           should.exist(anchor);
           return async.series([
-            executeCoffee(browser, 'jQuery ->\n  a = $(\'#click a\')\n  a.click ->\n    a.html \'clicked\'              '), function(done) {
+            executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  a = $(\'#click a\')\n  a.click ->\n    window.numOfClick = window.numOfClick + 1\n    a.html "clicked #{window.numOfClick}"              '), function(done) {
               return textShouldEqual(browser, anchor, "not clicked", done);
             }, function(done) {
               return browser.moveTo(anchor, void 0, void 0, function(err) {
@@ -604,7 +618,19 @@
                 return done(null);
               });
             }, function(done) {
-              return textShouldEqual(browser, anchor, "clicked", done);
+              return textShouldEqual(browser, anchor, "clicked 1", done);
+            }, function(done) {
+              return browser.moveTo(anchor, void 0, void 0, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.click(function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return textShouldEqual(browser, anchor, "clicked 2", done);
             }
           ], function(err) {
             should.not.exist(err);
