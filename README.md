@@ -328,6 +328,10 @@ browser.init(desired, function() {
               ByName, ByLinkText, ByPartialLinkText, 
               ByTagName, ByXPath, ByCss</i>
           </li>
+          <li>
+            see also elementOrNull, element<i>suffix</i>OrNull, elementIfExists, element<i>suffix</i>IfExists in
+            elements section.
+          </li>
         <ul>
       </td>      
     </tr>
@@ -343,6 +347,30 @@ browser.init(desired, function() {
           </li>
           <li>
             elements<i>suffix</i>(value, cb) -> cb(err, elements) <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            elementOrNull(using, value, cb) -> cb(err, element) <br>
+            (avoids not found error throw and returns null instead)   
+          </li>
+          <li>
+            elements<i>suffix</i>OrNull(value, cb) -> cb(err, element) <br> 
+            (avoids not found error throw and returns null instead) <br>
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            elementIfExists(using, value, cb) -> cb(err, element) <br>
+            (avoids not found error throw and returns undefined instead)   
+          </li>
+          <li>
+            elements<i>suffix</i>IfExists(value, cb) -> cb(err, element) <br> 
+            (avoids not found error throw and returns undefined instead) <br>
               <i>suffix:  
               ByClassName, ByCssSelector, ById,  
               ByName, ByLinkText, ByPartialLinkText, 
