@@ -28,6 +28,21 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessions">/sessions</a><br>
+        Returns a list of the currently active sessions.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        <ul>
+          <li>all sessions: sessions(cb) -> cb(err, sessions)</li>
+          <li>
+            current session: <br>
+            altSessionCapabilities(cb) -> cb(err, capabilities)
+          </li>
+        </ul>
+      </td>      
+    </tr>    
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId">/session/:sessionId</a><br>
         Retrieve the capabilities of the specified session.
       </td>
@@ -134,11 +149,11 @@
         <ul>
           <li>
             execute script: <br>
-            execute(code, cb) -> cb(code, value returned)
+            execute(code, cb) -> cb(err, value returned)
           </li>
           <li>
             evaluate expression: <br>
-            eval(code, cb) -> cb(code, value)
+            eval(code, cb) -> cb(err, value)
           </li>
         </ul>
       </td>      
@@ -149,7 +164,7 @@
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code, cb) -> cb(code, value returned)
+        executeAsync(code, cb) -> cb(err, value returned)
       </td>      
     </tr>
     <tr>
@@ -213,11 +228,30 @@
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>element(using, value, cb) -> cb(err, element)</li>
-          <li>elementByLinkText(value, cb) -> cb(err, element)</li>
-          <li>elementById(value, cb) -> cb(err, element)</li>
-          <li>elementByName(value, cb) -> cb(err, element)</li>
-          <li>elementByCss(value, cb) -> cb(err, element)</li>
+          <li>
+            element(using, value, cb) -> cb(err, element) <br>
+          </li>
+          <li>
+            element<i>suffix</i>(value, cb) -> cb(err, element) <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            hasElement(using, value, cb) -> cb(err, boolean) <br>
+          </li>
+          <li>
+            hasElement<i>suffix</i>(value, cb) -> cb(err, boolean) <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            see also elementOrNull, element<i>suffix</i>OrNull, elementIfExists, element<i>suffix</i>IfExists in
+            elements section.
+          </li>
         <ul>
       </td>      
     </tr>
@@ -228,14 +262,43 @@
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>elements(using, value, cb) -> cb(err, elements)</li>
-          <li>elementsByLinkText(value, cb) -> cb(err, elements)</li>
-          <li>elementsById(value, cb) -> cb(err, elements)</li>
-          <li>elementsByName(value, cb) -> cb(err, elements)</li>
-          <li>elementsByCss(value, cb) -> cb(err, elements)</li>
+          <li>
+            elements(using, value, cb) -> cb(err, elements) <br>
+          </li>
+          <li>
+            elements<i>suffix</i>(value, cb) -> cb(err, elements) <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            elementOrNull(using, value, cb) -> cb(err, element) <br>
+            (avoids not found error throw and returns null instead)   
+          </li>
+          <li>
+            element<i>suffix</i>OrNull(value, cb) -> cb(err, element) <br> 
+            (avoids not found error throw and returns null instead) <br>
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            elementIfExists(using, value, cb) -> cb(err, element) <br>
+            (avoids not found error throw and returns undefined instead)   
+          </li>
+          <li>
+            element<i>suffix</i>IfExists(value, cb) -> cb(err, element) <br> 
+            (avoids not found error throw and returns undefined instead) <br>
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
         <ul>
       </td>      
-    </tr>    
+    </tr>     
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
         POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active">/session/:sessionId/element/active</a><br>
