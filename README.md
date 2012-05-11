@@ -357,7 +357,7 @@ browser.init(desired, function() {
             (avoids not found error throw and returns null instead)   
           </li>
           <li>
-            elements<i>suffix</i>OrNull(value, cb) -> cb(err, element) <br> 
+            element<i>suffix</i>OrNull(value, cb) -> cb(err, element) <br> 
             (avoids not found error throw and returns null instead) <br>
               <i>suffix:  
               ByClassName, ByCssSelector, ById,  
@@ -369,7 +369,7 @@ browser.init(desired, function() {
             (avoids not found error throw and returns undefined instead)   
           </li>
           <li>
-            elements<i>suffix</i>IfExists(value, cb) -> cb(err, element) <br> 
+            element<i>suffix</i>IfExists(value, cb) -> cb(err, element) <br> 
             (avoids not found error throw and returns undefined instead) <br>
               <i>suffix:  
               ByClassName, ByCssSelector, ById,  
