@@ -383,18 +383,8 @@
               ByTagName, ByXPath, ByCss</i>
           </li>
           <li>
-            hasElement(using, value, cb) -> cb(err, boolean) <br>
-          </li>
-          <li>
-            hasElement<i>suffix</i>(value, cb) -> cb(err, boolean) <br> 
-              <i>suffix:  
-              ByClassName, ByCssSelector, ById,  
-              ByName, ByLinkText, ByPartialLinkText, 
-              ByTagName, ByXPath, ByCss</i>
-          </li>
-          <li>
-            see also elementOrNull, element<i>suffix</i>OrNull, elementIfExists, element<i>suffix</i>IfExists in
-            elements section.
+            see also hasElement, hasElement<i>suffix</i>, elementOrNull, element<i>suffix</i>OrNull, 
+            elementIfExists, element<i>suffix</i>IfExists, in the elements section.
           </li>
         <ul>
       </td>      
@@ -416,6 +406,16 @@
               ByName, ByLinkText, ByPartialLinkText, 
               ByTagName, ByXPath, ByCss</i>
           </li>
+          <li>
+            hasElement(using, value, cb) -> cb(err, boolean) <br>
+          </li>
+          <li>
+            hasElement<i>suffix</i>(value, cb) -> cb(err, boolean) <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>                    
           <li>
             elementOrNull(using, value, cb) -> cb(err, element) <br>
             (avoids not found error throw and returns null instead)   
@@ -442,7 +442,7 @@
           </li>
         <ul>
       </td>      
-    </tr> 
+    </tr>    
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
         POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active">/session/:sessionId/element/active</a><br>
