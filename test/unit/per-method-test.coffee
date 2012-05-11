@@ -133,6 +133,38 @@ runTestWith = (remoteWdConfig, desired) ->
             should.not.exist err
             test.done()        
 
+        tests[elementFuncName + 'OrNull'] = (test) ->          		
+          async.series [
+            (done) ->
+              browser[elementFuncName + 'OrNull'] searchText, (err,res) ->
+                should.not.exist err
+                should.exist res
+                done null
+            (done) ->
+              browser[elementFuncName + 'OrNull'] searchText2  , (err,res) ->
+                should.not.exist err
+                (res is null).should.be.true
+                done null
+          ], (err) ->
+            should.not.exist err
+            test.done()        
+
+        tests[elementFuncName + 'IfExists'] = (test) ->          		
+          async.series [
+            (done) ->
+              browser[elementFuncName + 'IfExists'] searchText, (err,res) ->
+                should.not.exist err
+                should.exist res
+                done null
+            (done) ->
+              browser[elementFuncName + 'IfExists'] searchText2  , (err,res) ->
+                should.not.exist err
+                (res is undefined).should.be.true
+                done null
+          ], (err) ->
+            should.not.exist err
+            test.done()        
+
         tests[hasElementFuncName] = (test) ->          		
           async.series [
             (done) ->
@@ -850,7 +882,7 @@ exports.wd =
     
     chrome: (runTestWith {}, {browserName: 'chrome'})
 
-    #firefox: (runTestWith {}, {browserName: 'firefox'})
+    firefox: (runTestWith {}, {browserName: 'firefox'})
 
     'stopping express': (test) ->
       app.close()

@@ -175,6 +175,46 @@
             return test.done();
           });
         };
+        tests[elementFuncName + 'OrNull'] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[elementFuncName + 'OrNull'](searchText, function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                return done(null);
+              });
+            }, function(done) {
+              return browser[elementFuncName + 'OrNull'](searchText2, function(err, res) {
+                should.not.exist(err);
+                (res === null).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
+        tests[elementFuncName + 'IfExists'] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[elementFuncName + 'IfExists'](searchText, function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                return done(null);
+              });
+            }, function(done) {
+              return browser[elementFuncName + 'IfExists'](searchText2, function(err, res) {
+                should.not.exist(err);
+                (res === void 0).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
         tests[hasElementFuncName] = function(test) {
           return async.series([
             function(done) {
@@ -968,6 +1008,9 @@
       },
       chrome: runTestWith({}, {
         browserName: 'chrome'
+      }),
+      firefox: runTestWith({}, {
+        browserName: 'firefox'
       }),
       'stopping express': function(test) {
         app.close();
