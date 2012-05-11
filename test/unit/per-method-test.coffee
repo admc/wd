@@ -91,7 +91,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         test.done()
-    
+    ###
     "refresh": (test) ->
       browser.refresh (err) ->
         should.not.exist err
@@ -222,7 +222,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    ###
     "element": (test) ->      
       async.series [
         (done) ->
@@ -254,7 +254,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "elementById": (test) ->      
       async.series [
         (done) ->
@@ -382,7 +382,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "getAttribute": (test) -> 
       browser.elementById "getAttribute", (err,testDiv) ->
         should.not.exist err

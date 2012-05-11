@@ -125,148 +125,139 @@
           return test.done();
         });
       },
-      "refresh": function(test) {
-        return browser.refresh(function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "back / forward": function(test) {
-        return async.series([
-          function(done) {
-            return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.url(function(err, url) {
-              should.not.exist(err);
-              url.should.include("?p=2");
-              return done(null);
-            });
-          }, function(done) {
-            return browser.back(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.url(function(err, url) {
-              should.not.exist(err);
-              url.should.not.include("?p=2");
-              return done(null);
-            });
-          }, function(done) {
-            return browser.forward(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.url(function(err, url) {
-              should.not.exist(err);
-              url.should.include("?p=2");
-              return done(null);
-            });
-          }, function(done) {
-            return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "eval": function(test) {
-        return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "execute": function(test) {
-        return async.series([
-          function(done) {
-            return browser.execute("window.wd_sync_execute_test = 'It worked!'", function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, evalShouldEqual(browser, "window.wd_sync_execute_test", 'It worked!')
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "executeAsync": function(test) {
-        var scriptAsCoffee, scriptAsJs;
-        scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
-        scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-          bare: 'on'
-        });
-        return browser.executeAsync(scriptAsJs, function(err, res) {
-          should.not.exist(err);
-          res.should.equal("OK");
-          return test.done();
-        });
-      },
-      "setWaitTimeout / setImplicitWaitTimeout": function(test) {
-        return async.series([
-          function(done) {
-            return browser.setWaitTimeout(0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, executeCoffee(browser, "setTimeout ->\n  $('#setWaitTimeout').html '<div class=\"child\">a child</div>'\n, 1000"), function(done) {
-            return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setImplicitWaitTimeout(2000, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setImplicitWaitTimeout(0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "setAsyncScriptTimeout": function(test) {
-        return async.series([
-          function(done) {
-            return browser.setAsyncScriptTimeout(2000, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 1000";
-            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-              bare: 'on'
-            });
-            return browser.executeAsync(scriptAsJs, function(err, res) {
-              should.not.exist(err);
-              res.should.equal("OK");
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
+      /*
+          "refresh": (test) ->
+            browser.refresh (err) ->
+              should.not.exist err
+              test.done()
+      
+          "back / forward": (test) ->
+            async.series [
+              (done) ->
+                browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
+                  should.not.exist err
+                  done null
+              (done) ->
+                browser.url (err, url) ->
+                  should.not.exist err            
+                  url.should.include "?p=2"
+                  done null
+              (done) ->
+                browser.back  (err) ->
+                  should.not.exist err
+                  done null
+              (done) ->
+                browser.url (err, url) ->
+                  should.not.exist err            
+                  url.should.not.include "?p=2"
+                  done null
+              (done) ->
+                browser.forward  (err) ->
+                  should.not.exist err
+                  done null
+              (done) ->
+                browser.url (err, url) ->
+                  should.not.exist err            
+                  url.should.include "?p=2"
+                  done null
+              (done) ->
+                browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
+                  should.not.exist err
+                  done null
+            ], (err) ->
+              should.not.exist err
+              test.done()
+          
+          "eval": (test) ->
+            async.series [
+              evalShouldEqual browser, "1+2", 3
+              evalShouldEqual browser, "document.title", "TEST PAGE"
+              evalShouldEqual browser, "$('#eval').length", 1
+              evalShouldEqual browser, "$('#eval li').length", 2        
+            ], (err) ->
+              should.not.exist err
+              test.done()
+      
+          "execute": (test) ->
+            async.series [
+              (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
+                should.not.exist err
+                done(null)      
+              evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
+            ], (err) ->
+              should.not.exist err
+              test.done()        
+      
+          "executeAsync": (test) ->
+            scriptAsCoffee =
+              """
+                [args...,done] = arguments
+                done "OK"              
+              """
+            scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+            browser.executeAsync scriptAsJs, (err,res) ->          
+              should.not.exist err
+              res.should.equal "OK"
+              test.done()
+      
+              
+          "setWaitTimeout / setImplicitWaitTimeout": (test) ->
+            async.series [
+              # using old name
+              (done) -> browser.setWaitTimeout 0, (err) ->
+                should.not.exist err
+                done null     
+              executeCoffee browser,   
+                """
+                  setTimeout ->
+                    $('#setWaitTimeout').html '<div class="child">a child</div>'
+                  , 1000
+                """
+              (done) ->
+                browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
+                  should.exist err
+                  err.status.should.equal 7
+                  done(null)  
+              (done) -> browser.setImplicitWaitTimeout 2000, (err) ->
+                should.not.exist err
+                done null             
+              (done) ->
+                browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
+                  # now it works
+                  should.not.exist err
+                  should.exist res
+                  done(null)          
+              (done) -> browser.setImplicitWaitTimeout 0, (err) ->
+                should.not.exist err
+                done null             
+            ], (err) ->
+              should.not.exist err
+              test.done()        
+      
+            
+          "setAsyncScriptTimeout": (test) ->
+            async.series [
+              (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
+                should.not.exist err
+                done null     
+              (done) -> 
+                scriptAsCoffee =
+                  """
+                    [args...,done] = arguments
+                    setTimeout ->
+                      done "OK"
+                    , 1000
+                  """
+                scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+                browser.executeAsync scriptAsJs, (err,res) ->          
+                  should.not.exist err
+                  res.should.equal "OK"
+                  done null
+            ], (err) ->
+              should.not.exist err
+              test.done()
+      */
+
       "element": function(test) {
         return async.series([
           function(done) {
