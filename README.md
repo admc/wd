@@ -27,10 +27,6 @@ npm install wd
 ): wd shell
 > x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
-//Adding additional desired capabilities
-x.defaultCapabilities.public = true;
-x.defaultCapabilities.tags = ["one", "boom"];
-
 > x.init() or x.init({desired capabilities ovveride})
 > x.get("http://www.url.com")
 > x.eval("window.location.href", function(e, o) { console.log(o) })
