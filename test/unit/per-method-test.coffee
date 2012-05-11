@@ -35,9 +35,141 @@ valueShouldEqual = (browser,element,expected, done) ->
     should.not.exist err
     res.should.equal expected
     done null      
-
+    
 runTestWith = (remoteWdConfig, desired) -> 
   browser = null;  
+  elementFunctionTests = () ->
+    tests = {}
+    tests.element = (test) ->      
+      async.series [
+        (done) ->
+          browser.element "name", "elementByName", (err,res) ->
+            should.not.exist err
+            should.exist res
+            done null
+        (done) ->
+          browser.element "name", "elementByName2", (err,res) ->
+            should.exist err
+            err.status.should.equal 7
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()      
+          
+    tests.hasElement = (test) ->      
+      async.series [
+        (done) ->
+          browser.hasElement "name", "elementByName", (err,res) ->
+            should.not.exist err
+            res.should.be.true
+            done null
+        (done) ->
+          browser.hasElement "name", "elementByName2", (err,res) ->
+            should.not.exist err
+            res.should.be.false
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    tests.elements = (test) ->      
+      async.series [
+        (done) ->
+          browser.elements "name", "elementsByName", (err,res) ->
+            should.not.exist err
+            res.should.have.length 3
+            done null
+        (done) ->
+          browser.elements "name", "elementsByName2", (err,res) ->
+            should.not.exist err
+            res.should.eql []
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+
+    for funcSuffix in [
+      'ByClassName'
+      , 'ByCssSelector' 
+      , 'ById'
+      , 'ByName' 
+      , 'ByLinkText'
+      , 'ByPartialLinkText'
+      , 'ByTagName' 
+      , 'ByXPath' 
+      , 'ByCss'
+    ]     
+      do ->
+        elementFuncName = 'element' + funcSuffix
+        hasElementFuncName = 'hasElement' + funcSuffix
+        elementsFuncName = 'elements' + funcSuffix
+
+        searchText = elementFuncName;
+        searchText = "click #{searchText}" if searchText.match /ByLinkText/
+        searchText = "##{searchText}" if searchText.match /ByCss/
+        searchText = "//div[@id='elementByXPath']/input" if searchText.match /ByXPath/
+        searchText = "span" if searchText.match /ByTagName/
+          
+        searchText2 = elementFuncName + '2';
+        searchText2 = "//div[@id='elementByXPath2']/input" if searchText.match /ByXPath/
+        searchText2 = "span2" if searchText.match /ByTagName/
+        
+        searchSeveralText = searchText.replace('element','elements') 
+        searchSeveralText2 = searchText2.replace('element','elements') 
+        
+        tests[elementFuncName] = (test) ->          		
+          async.series [
+            (done) ->
+              browser[elementFuncName] searchText, (err,res) ->
+                should.not.exist err
+                should.exist res
+                done null
+            (done) ->
+              browser[elementFuncName] searchText2  , (err,res) ->
+                should.exist err
+                err.status.should.equal 7
+                done null
+          ], (err) ->
+            should.not.exist err
+            test.done()        
+
+        tests[hasElementFuncName] = (test) ->          		
+          async.series [
+            (done) ->
+              browser[hasElementFuncName] searchText, (err,res) ->
+                should.not.exist err
+                res.should.be.true
+                done null
+            (done) ->
+              browser[hasElementFuncName] searchText2  , (err,res) ->
+                should.not.exist err
+                res.should.be.false
+                done null
+          ], (err) ->
+            should.not.exist err
+            test.done()        
+        
+        tests[elementsFuncName] = (test) ->          		            
+          async.series [
+            (done) ->
+              browser[elementsFuncName] searchSeveralText, (err,res) ->
+                should.not.exist err
+                unless(elementsFuncName.match /ByTagName/)
+                  res.should.have.length 3
+                else
+                  (res.length > 1).should.be.true
+                done null
+            (done) ->
+              browser[elementsFuncName] searchSeveralText2, (err,res) ->
+                should.not.exist err
+                res.should.eql []
+                done null
+          ], (err) ->
+            should.not.exist err
+            test.done()        
+            
+    tests
+
   {
     "wd.remote": (test) ->
       browser = wd.remote remoteWdConfig    
@@ -91,7 +223,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         test.done()
-    ###
+    
     "refresh": (test) ->
       browser.refresh (err) ->
         should.not.exist err
@@ -222,167 +354,9 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-    ###
-    "element": (test) ->      
-      async.series [
-        (done) ->
-          browser.element "name", "elementByName", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.element "name", "elementByName2", (err,res) ->
-            should.exist err
-            err.status.should.equal 7
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
 
-    "elementByLinkText": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementByLinkText "click helloByLinkText", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.elementByLinkText "click helloByLinkText2", (err,res) ->
-            should.exist err
-            err.status.should.equal 7
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-    
-    "elementById": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementById "elementById", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.elementById "elementById2", (err,res) ->
-            should.exist err
-            err.status.should.equal 7
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
-    "elementByName": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementByName "elementByName", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.elementByName "elementByName2", (err,res) ->
-            should.exist err
-            err.status.should.equal 7
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
-    "elementByCss": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementByCss "#elementByCss", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.elementByCss "#elementByCss2", (err,res) ->
-            should.exist err
-            err.status.should.equal 7
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-    
-    "elements": (test) ->      
-      async.series [
-        (done) ->
-          browser.elements "name", "elementsByName", (err,res) ->
-            should.not.exist err
-            res.should.have.length 3
-            done null
-        (done) ->
-          browser.elements "name", "elementsByName2", (err,res) ->
-            should.not.exist err
-            res.should.eql []
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-    
-    "elementsById": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementsById "elementsById", (err,res) ->
-            should.not.exist err
-            res.should.have.length 3
-            done null
-        (done) ->
-          browser.elementsById "elementsById2", (err,res) ->
-            should.not.exist err
-            res.should.eql []
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
-    "elementsByName": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementsByName "elementsByName", (err,res) ->
-            should.not.exist err
-            res.should.have.length 3
-            done null
-        (done) ->
-          browser.elementsByName "elementsByName2", (err,res) ->
-            should.not.exist err
-            res.should.eql []
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
-    "elementsByCss": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementsByCss "#elementsByCss", (err,res) ->
-            should.not.exist err
-            res.should.have.length 2
-            done null
-        (done) ->
-          browser.elementsByCss "#elementsByCss2", (err,res) ->
-            should.not.exist err
-            res.should.eql []
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
-    "elementsByLinkText": (test) ->      
-      async.series [
-        (done) ->
-          browser.elementsByLinkText "click elementsByLinkText", (err,res) ->
-            should.not.exist err
-            res.should.have.length 2
-            done null
-        (done) ->
-          browser.elementsByLinkText "click elementsByLinkText2", (err,res) ->
-            should.not.exist err
-            res.should.eql []
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-    
+    "element function tests": elementFunctionTests()
+   
     "getAttribute": (test) -> 
       browser.elementById "getAttribute", (err,testDiv) ->
         should.not.exist err
@@ -876,7 +850,7 @@ exports.wd =
     
     chrome: (runTestWith {}, {browserName: 'chrome'})
 
-    firefox: (runTestWith {}, {browserName: 'firefox'})
+    #firefox: (runTestWith {}, {browserName: 'firefox'})
 
     'stopping express': (test) ->
       app.close()
