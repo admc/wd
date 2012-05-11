@@ -62,8 +62,210 @@
   };
 
   runTestWith = function(remoteWdConfig, desired) {
-    var browser;
+    var browser, elementFunctionTests;
     browser = null;
+    elementFunctionTests = function() {
+      var funcSuffix, tests, _fn, _i, _len, _ref;
+      tests = {};
+      tests.element = function(test) {
+        return async.series([
+          function(done) {
+            return browser.element("name", "elementByName", function(err, res) {
+              should.not.exist(err);
+              should.exist(res);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.element("name", "elementByName2", function(err, res) {
+              should.exist(err);
+              err.status.should.equal(7);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      };
+      tests.hasElement = function(test) {
+        return async.series([
+          function(done) {
+            return browser.hasElement("name", "elementByName", function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(null);
+            });
+          }, function(done) {
+            return browser.hasElement("name", "elementByName2", function(err, res) {
+              should.not.exist(err);
+              res.should.be["false"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      };
+      tests.elements = function(test) {
+        return async.series([
+          function(done) {
+            return browser.elements("name", "elementsByName", function(err, res) {
+              should.not.exist(err);
+              res.should.have.length(3);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elements("name", "elementsByName2", function(err, res) {
+              should.not.exist(err);
+              res.should.eql([]);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      };
+      _ref = ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText', 'ByPartialLinkText', 'ByTagName', 'ByXPath', 'ByCss'];
+      _fn = function() {
+        var elementFuncName, elementsFuncName, hasElementFuncName, searchSeveralText, searchSeveralText2, searchText, searchText2;
+        elementFuncName = 'element' + funcSuffix;
+        hasElementFuncName = 'hasElement' + funcSuffix;
+        elementsFuncName = 'elements' + funcSuffix;
+        searchText = elementFuncName;
+        if (searchText.match(/ByLinkText/)) {
+          searchText = "click " + searchText;
+        }
+        if (searchText.match(/ByCss/)) {
+          searchText = "#" + searchText;
+        }
+        if (searchText.match(/ByXPath/)) {
+          searchText = "//div[@id='elementByXPath']/input";
+        }
+        if (searchText.match(/ByTagName/)) {
+          searchText = "span";
+        }
+        searchText2 = elementFuncName + '2';
+        if (searchText.match(/ByXPath/)) {
+          searchText2 = "//div[@id='elementByXPath2']/input";
+        }
+        if (searchText.match(/ByTagName/)) {
+          searchText2 = "span2";
+        }
+        searchSeveralText = searchText.replace('element', 'elements');
+        searchSeveralText2 = searchText2.replace('element', 'elements');
+        tests[elementFuncName] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[elementFuncName](searchText, function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                return done(null);
+              });
+            }, function(done) {
+              return browser[elementFuncName](searchText2, function(err, res) {
+                should.exist(err);
+                err.status.should.equal(7);
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
+        tests[elementFuncName + 'OrNull'] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[elementFuncName + 'OrNull'](searchText, function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                return done(null);
+              });
+            }, function(done) {
+              return browser[elementFuncName + 'OrNull'](searchText2, function(err, res) {
+                should.not.exist(err);
+                (res === null).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
+        tests[elementFuncName + 'IfExists'] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[elementFuncName + 'IfExists'](searchText, function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                return done(null);
+              });
+            }, function(done) {
+              return browser[elementFuncName + 'IfExists'](searchText2, function(err, res) {
+                should.not.exist(err);
+                (res === void 0).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
+        tests[hasElementFuncName] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[hasElementFuncName](searchText, function(err, res) {
+                should.not.exist(err);
+                res.should.be["true"];
+                return done(null);
+              });
+            }, function(done) {
+              return browser[hasElementFuncName](searchText2, function(err, res) {
+                should.not.exist(err);
+                res.should.be["false"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
+        return tests[elementsFuncName] = function(test) {
+          return async.series([
+            function(done) {
+              return browser[elementsFuncName](searchSeveralText, function(err, res) {
+                should.not.exist(err);
+                if (!(elementsFuncName.match(/ByTagName/))) {
+                  res.should.have.length(3);
+                } else {
+                  (res.length > 1).should.be["true"];
+                }
+                return done(null);
+              });
+            }, function(done) {
+              return browser[elementsFuncName](searchSeveralText2, function(err, res) {
+                should.not.exist(err);
+                res.should.eql([]);
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        };
+      };
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        funcSuffix = _ref[_i];
+        _fn();
+      }
+      return tests;
+    };
     return {
       "wd.remote": function(test) {
         browser = wd.remote(remoteWdConfig);
@@ -79,6 +281,13 @@
         return browser.status(function(err, status) {
           should.not.exist(err);
           should.exist(status);
+          return test.done();
+        });
+      },
+      "sessions": function(test) {
+        return browser.sessions(function(err, sessions) {
+          should.not.exist(err);
+          should.exist(sessions);
           return test.done();
         });
       },
@@ -189,7 +398,7 @@
           return test.done();
         });
       },
-      "executeAsync (async mode)": function(test) {
+      "executeAsync": function(test) {
         var scriptAsCoffee, scriptAsJs;
         scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
@@ -260,206 +469,7 @@
           return test.done();
         });
       },
-      "element": function(test) {
-        return async.series([
-          function(done) {
-            return browser.element("name", "elementByName", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.element("name", "elementByName2", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementByLinkText": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementByLinkText("click helloByLinkText", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementByLinkText("click helloByLinkText2", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementById": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementById("elementById", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementById("elementById2", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementByName": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementByName("elementByName", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementByName("elementByName2", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementByCss": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementByCss("#elementByCss", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementByCss("#elementByCss2", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elements": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elements("name", "elementsByName", function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(3);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elements("name", "elementsByName2", function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementsById": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementsById("elementsById", function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(3);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementsById("elementsById2", function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementsByName": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementsByName("elementsByName", function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(3);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementsByName("elementsByName2", function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementsByCss": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementsByCss("#elementsByCss", function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(2);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementsByCss("#elementsByCss2", function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
-      "elementsByLinkText": function(test) {
-        return async.series([
-          function(done) {
-            return browser.elementsByLinkText("click elementsByLinkText", function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(2);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementsByLinkText("click elementsByLinkText2", function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return test.done();
-        });
-      },
+      "element function tests": elementFunctionTests(),
       "getAttribute": function(test) {
         return browser.elementById("getAttribute", function(err, testDiv) {
           should.not.exist(err);
@@ -536,7 +546,7 @@
           }, executeCoffee(browser, 'jQuery ->\n  a1 = $(\'#moveTo .a1\')\n  a2 = $(\'#moveTo .a2\')\n  current = $(\'#moveTo .current\')\n  a1.hover ->\n    current.html \'a1\'\n  a2.hover ->\n    current.html \'a2\''), function(done) {
             return textShouldEqual(browser, env.current, '', done);
           }, function(done) {
-            return browser.moveTo(env.a1, void 0, void 0, function(err) {
+            return browser.moveTo(env.a1, 5, 5, function(err) {
               should.not.exist(err);
               return done(null);
             });
@@ -549,6 +559,13 @@
             });
           }, function(done) {
             return textShouldEqual(browser, env.current, 'a2', done);
+          }, function(done) {
+            return browser.moveTo(env.a1, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.current, 'a1', done);
           }
         ], function(err) {
           should.not.exist(err);
@@ -591,7 +608,7 @@
           should.not.exist(err);
           should.exist(anchor);
           return async.series([
-            executeCoffee(browser, 'jQuery ->\n  a = $(\'#click a\')\n  a.click ->\n    a.html \'clicked\'              '), function(done) {
+            executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  a = $(\'#click a\')\n  a.click ->\n    window.numOfClick = window.numOfClick + 1\n    a.html "clicked #{window.numOfClick}"              '), function(done) {
               return textShouldEqual(browser, anchor, "not clicked", done);
             }, function(done) {
               return browser.moveTo(anchor, void 0, void 0, function(err) {
@@ -604,7 +621,19 @@
                 return done(null);
               });
             }, function(done) {
-              return textShouldEqual(browser, anchor, "clicked", done);
+              return textShouldEqual(browser, anchor, "clicked 1", done);
+            }, function(done) {
+              return browser.moveTo(anchor, void 0, void 0, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.click(function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return textShouldEqual(browser, anchor, "clicked 2", done);
             }
           ], function(err) {
             should.not.exist(err);
