@@ -87,6 +87,46 @@
           return test.done();
         });
       };
+      tests.elementOrNull = function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementOrNull("name", "elementByName", function(err, res) {
+              should.not.exist(err);
+              should.exist(res);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementOrNull("name", "elementByName2", function(err, res) {
+              should.not.exist(err);
+              (res === null).should.be["true"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      };
+      tests.elementIfExists = function(test) {
+        return async.series([
+          function(done) {
+            return browser.elementIfExists("name", "elementByName", function(err, res) {
+              should.not.exist(err);
+              should.exist(res);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementIfExists("name", "elementByName2", function(err, res) {
+              should.not.exist(err);
+              (res === void 0).should.be["true"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      };
       tests.hasElement = function(test) {
         return async.series([
           function(done) {

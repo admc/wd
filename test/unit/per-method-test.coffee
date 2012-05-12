@@ -55,6 +55,38 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()      
+
+    tests.elementOrNull = (test) ->      
+      async.series [
+        (done) ->
+          browser.elementOrNull "name", "elementByName", (err,res) ->
+            should.not.exist err
+            should.exist res
+            done null
+        (done) ->
+          browser.elementOrNull "name", "elementByName2", (err,res) ->
+            should.not.exist err
+            (res is null).should.be.true
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()      
+
+    tests.elementIfExists = (test) ->      
+      async.series [
+        (done) ->
+          browser.elementIfExists "name", "elementByName", (err,res) ->
+            should.not.exist err
+            should.exist res
+            done null
+        (done) ->
+          browser.elementIfExists "name", "elementByName2", (err,res) ->
+            should.not.exist err
+            (res is undefined).should.be.true
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()      
           
     tests.hasElement = (test) ->      
       async.series [
