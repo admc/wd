@@ -617,15 +617,22 @@ runTestWith = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           test.done()        
-
+    
     "type": (test) -> 
+      altKey = wd.SPECIAL_KEYS['Alt']
+      nullKey = wd.SPECIAL_KEYS['NULL']
       browser.elementByCss "#type input", (err,inputField) ->
         should.not.exist err
         should.exist inputField
         async.series [
           (done) -> valueShouldEqual browser, inputField, "", done
           (done) ->
-            browser.type inputField, "Hello World" , (err) ->
+            browser.type inputField, "Hello" , (err) ->
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello", done
+          (done) ->
+            browser.type inputField, [altKey, nullKey, " World"] , (err) ->
               should.not.exist err
               done null
           (done) -> valueShouldEqual browser, inputField, "Hello World", done
@@ -637,7 +644,38 @@ runTestWith = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           test.done()        
-
+    
+    "keys": (test) -> 
+      altKey = wd.SPECIAL_KEYS['Alt']
+      nullKey = wd.SPECIAL_KEYS['NULL']
+      browser.elementByCss "#keys input", (err,inputField) ->
+        should.not.exist err
+        should.exist inputField
+        async.series [
+          (done) -> valueShouldEqual browser, inputField, "", done
+          (done) ->
+            browser.clickElement inputField, (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            browser.keys "Hello" , (err) ->
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello", done
+          (done) ->
+            browser.keys [altKey, nullKey, " World"] , (err) ->
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello World", done
+          (done) ->
+            browser.keys "\n" , (err) -> # no effect
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello World", done
+        ], (err) ->
+          should.not.exist err
+          test.done()        
+    
     "clear": (test) -> 
       browser.elementByCss "#clear input", (err,inputField) ->
         should.not.exist err

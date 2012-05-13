@@ -708,6 +708,9 @@
         });
       },
       "type": function(test) {
+        var altKey, nullKey;
+        altKey = wd.SPECIAL_KEYS['Alt'];
+        nullKey = wd.SPECIAL_KEYS['NULL'];
         return browser.elementByCss("#type input", function(err, inputField) {
           should.not.exist(err);
           should.exist(inputField);
@@ -715,7 +718,14 @@
             function(done) {
               return valueShouldEqual(browser, inputField, "", done);
             }, function(done) {
-              return browser.type(inputField, "Hello World", function(err) {
+              return browser.type(inputField, "Hello", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return valueShouldEqual(browser, inputField, "Hello", done);
+            }, function(done) {
+              return browser.type(inputField, [altKey, nullKey, " World"], function(err) {
                 should.not.exist(err);
                 return done(null);
               });
@@ -723,6 +733,49 @@
               return valueShouldEqual(browser, inputField, "Hello World", done);
             }, function(done) {
               return browser.type(inputField, "\n", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return valueShouldEqual(browser, inputField, "Hello World", done);
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return test.done();
+          });
+        });
+      },
+      "keys": function(test) {
+        var altKey, nullKey;
+        altKey = wd.SPECIAL_KEYS['Alt'];
+        nullKey = wd.SPECIAL_KEYS['NULL'];
+        return browser.elementByCss("#keys input", function(err, inputField) {
+          should.not.exist(err);
+          should.exist(inputField);
+          return async.series([
+            function(done) {
+              return valueShouldEqual(browser, inputField, "", done);
+            }, function(done) {
+              return browser.clickElement(inputField, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.keys("Hello", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return valueShouldEqual(browser, inputField, "Hello", done);
+            }, function(done) {
+              return browser.keys([altKey, nullKey, " World"], function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return valueShouldEqual(browser, inputField, "Hello World", done);
+            }, function(done) {
+              return browser.keys("\n", function(err) {
                 should.not.exist(err);
                 return done(null);
               });
