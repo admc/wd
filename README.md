@@ -415,7 +415,30 @@ browser.init(desired, function() {
         Send a sequence of key strokes to an element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        type(element, keys, cb) -> cb(err)
+        <ul>
+          <li>
+            type(element, keys, cb) -> cb(err)
+          </li>
+          <li>
+            special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
+          </li>
+        </ul>
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/keys">/session/:sessionId/keys</a><br>
+        Send a sequence of key strokes to the active element.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        <ul>
+          <li>
+            keys(keys, cb) -> cb(err)
+          </li>
+          <li>
+            special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
+          </li>
+        </ul>
       </td>      
     </tr>
     <tr>
