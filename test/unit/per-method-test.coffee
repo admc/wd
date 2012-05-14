@@ -935,6 +935,7 @@ runTestWith = (remoteWdConfig, desired) ->
         test.done()        
 
     "waitForCondition": (test) ->
+      exprCond = "$('#waitForCondition .child').length > 0"
       async.series [
         executeCoffee browser,   
           """
@@ -948,19 +949,16 @@ runTestWith = (remoteWdConfig, desired) ->
             err.status.should.equal 7
             done(null)
         (done) ->
-          exprCond = "$('#waitForCondition .child').length > 0"
           browser.waitForCondition exprCond, 2000, 200, (err,res) ->            
             should.not.exist err
             res.should.be.true
             done(err)
         (done) ->
-          exprCond = "$('#waitForCondition .child').length > 0"
           browser.waitForCondition exprCond, 2000, (err,res) ->            
             should.not.exist err
             res.should.be.true
             done(err)
         (done) ->
-          exprCond = "$('#waitForCondition .child').length > 0"
           browser.waitForCondition exprCond, (err,res) ->            
             should.not.exist err
             res.should.be.true

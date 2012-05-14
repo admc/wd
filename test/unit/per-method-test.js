@@ -1082,6 +1082,8 @@
         });
       },
       "waitForCondition": function(test) {
+        var exprCond;
+        exprCond = "$('#waitForCondition .child').length > 0";
         return async.series([
           executeCoffee(browser, "setTimeout ->\n  $('#waitForCondition').html '<div class=\"child\">a waitForCondition child</div>'\n, 1500"), function(done) {
             return browser.elementByCss("#waitForCondition .child", function(err, res) {
@@ -1090,24 +1092,18 @@
               return done(null);
             });
           }, function(done) {
-            var exprCond;
-            exprCond = "$('#waitForCondition .child').length > 0";
             return browser.waitForCondition(exprCond, 2000, 200, function(err, res) {
               should.not.exist(err);
               res.should.be["true"];
               return done(err);
             });
           }, function(done) {
-            var exprCond;
-            exprCond = "$('#waitForCondition .child').length > 0";
             return browser.waitForCondition(exprCond, 2000, function(err, res) {
               should.not.exist(err);
               res.should.be["true"];
               return done(err);
             });
           }, function(done) {
-            var exprCond;
-            exprCond = "$('#waitForCondition .child').length > 0";
             return browser.waitForCondition(exprCond, function(err, res) {
               should.not.exist(err);
               res.should.be["true"];
