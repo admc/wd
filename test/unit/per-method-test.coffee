@@ -992,12 +992,54 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()
+    
+    "waitForConditionInBrowser": (test) ->
+      exprCond = "$('#waitForConditionInBrowser .child').length > 0"
+      async.series [
+        executeCoffee browser,   
+          """
+            setTimeout ->
+              $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
+            , 1500
+          """
+        (done) ->
+          browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
+            should.exist err
+            err.status.should.equal 7
+            done(null)
+        (done) ->
+          browser.setAsyncScriptTimeout 5000, (err,res) ->            
+            should.not.exist err
+            done(null)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, 2000, 200, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, 2000, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.setAsyncScriptTimeout 0, (err,res) ->            
+            should.not.exist err
+            done(null)
+      ], (err) ->
+        should.not.exist err
+        test.done()
 
+    
     "close": (test) ->        
       browser.close (err) ->
         should.not.exist err
         test.done()
-            
+          
     "quit": (test) ->        
       browser.quit (err) ->
         should.not.exist err
