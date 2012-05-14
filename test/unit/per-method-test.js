@@ -1119,8 +1119,15 @@
           return test.done();
         });
       },
+      "close": function(test) {
+        return browser.close(function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
       "quit": function(test) {
-        return browser.quit(function() {
+        return browser.quit(function(err) {
+          should.not.exist(err);
           return test.done();
         });
       }

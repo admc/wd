@@ -968,9 +968,15 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()
+
+    "close": (test) ->        
+      browser.close (err) ->
+        should.not.exist err
+        test.done()
                 
     "quit": (test) ->        
-      browser.quit ->
+      browser.quit (err) ->
+        should.not.exist err
         test.done()
     
   }
