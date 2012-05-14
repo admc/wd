@@ -540,7 +540,7 @@ browser.init(desired, function() {
         <ul>
         <li>conditionExpr should return a boolean</li>
         <li>timeout and pollFreq are optional (default: 1000, 100).</li>
-        <li>returns true if condition satisfied, error otherwise.</li>
+        <li>return true if condition satisfied, error otherwise.</li>
         </ul>
       </td>      
     </tr>
