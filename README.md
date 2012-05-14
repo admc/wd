@@ -225,7 +225,10 @@ browser.init(desired, function() {
         <ul>
           <li>
             execute script: <br>
-            execute(code, cb) -> cb(err, value returned)
+            execute(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
           </li>
           <li>
             evaluate expression: <br>
@@ -240,7 +243,10 @@ browser.init(desired, function() {
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code, cb) -> cb(err, value returned)
+        executeAsync(code, args, cb) -> cb(err, value returned)
+        <ul>
+          <li>args is an optional Array</li>
+        </ul>        
       </td>      
     </tr>
     <tr>
