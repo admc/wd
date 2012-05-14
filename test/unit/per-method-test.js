@@ -419,7 +419,7 @@
           return test.done();
         });
       },
-      "eval (no args)": function(test) {
+      "eval": function(test) {
         return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
           should.not.exist(err);
           return test.done();

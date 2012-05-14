@@ -330,7 +330,7 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         test.done()
     
-    "eval (no args)": (test) ->
+    "eval": (test) ->
       async.series [
         evalShouldEqual browser, "1+2", 3
         evalShouldEqual browser, "document.title", "TEST PAGE"
@@ -339,7 +339,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()    
-
+    
     "execute (no args)": (test) ->
       async.series [
         (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
