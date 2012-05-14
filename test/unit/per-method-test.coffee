@@ -933,10 +933,46 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-    
+
+    "waitForCondition": (test) ->
+      async.series [
+        executeCoffee browser,   
+          """
+            setTimeout ->
+              $('#waitForCondition').html '<div class="child">a waitForCondition child</div>'
+            , 1500
+          """
+        (done) ->
+          browser.elementByCss "#waitForCondition .child", (err,res) ->            
+            should.exist err
+            err.status.should.equal 7
+            done(null)
+        (done) ->
+          exprCond = "$('#waitForCondition .child').length > 0"
+          browser.waitForCondition exprCond, 2000, 200, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          exprCond = "$('#waitForCondition .child').length > 0"
+          browser.waitForCondition exprCond, 2000, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          exprCond = "$('#waitForCondition .child').length > 0"
+          browser.waitForCondition exprCond, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)            
+      ], (err) ->
+        should.not.exist err
+        test.done()
+                
     "quit": (test) ->        
       browser.quit ->
         test.done()
+    
   }
 
 app = null      
