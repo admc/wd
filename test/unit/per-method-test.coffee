@@ -335,7 +335,11 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "1+2", 3
         evalShouldEqual browser, "document.title", "TEST PAGE"
         evalShouldEqual browser, "$('#eval').length", 1
-        evalShouldEqual browser, "$('#eval li').length", 2        
+        evalShouldEqual browser, "$('#eval li').length", 2     
+        (done) ->  browser.eval 'wrong formula +', (err,res) ->
+          should.exist err
+          (err instanceof Error).should.be.true          
+          done(null)                 
       ], (err) ->
         should.not.exist err
         test.done()    
