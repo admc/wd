@@ -419,13 +419,13 @@
           return test.done();
         });
       },
-      "eval": function(test) {
+      "eval (no args)": function(test) {
         return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
           should.not.exist(err);
           return test.done();
         });
       },
-      "execute": function(test) {
+      "execute (no args)": function(test) {
         return async.series([
           function(done) {
             return browser.execute("window.wd_sync_execute_test = 'It worked!'", function(err) {
@@ -438,7 +438,22 @@
           return test.done();
         });
       },
-      "executeAsync": function(test) {
+      "execute (with args)": function(test) {
+        var jsScript;
+        jsScript = 'var a = arguments[0], b = arguments[1];\nwindow.wd_sync_execute_test = \'It worked! \' + (a+b)';
+        return async.series([
+          function(done) {
+            return browser.execute(jsScript, [6, 4], function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, evalShouldEqual(browser, "window.wd_sync_execute_test", 'It worked! 10')
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "executeAsync (no args)": function(test) {
         var scriptAsCoffee, scriptAsJs;
         scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
@@ -447,6 +462,18 @@
         return browser.executeAsync(scriptAsJs, function(err, res) {
           should.not.exist(err);
           res.should.equal("OK");
+          return test.done();
+        });
+      },
+      "executeAsync (with args)": function(test) {
+        var scriptAsCoffee, scriptAsJs;
+        scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
+        scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+          bare: 'on'
+        });
+        return browser.executeAsync(scriptAsJs, [10, 5], function(err, res) {
+          should.not.exist(err);
+          res.should.equal("OK 15");
           return test.done();
         });
       },
