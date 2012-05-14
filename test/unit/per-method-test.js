@@ -1142,6 +1142,50 @@
           return test.done();
         });
       },
+      "waitForConditionInBrowser": function(test) {
+        var exprCond;
+        exprCond = "$('#waitForConditionInBrowser .child').length > 0";
+        return async.series([
+          executeCoffee(browser, "setTimeout ->\n  $('#waitForConditionInBrowser').html '<div class=\"child\">a waitForCondition child</div>'\n, 1500"), function(done) {
+            return browser.elementByCss("#waitForConditionInBrowser .child", function(err, res) {
+              should.exist(err);
+              err.status.should.equal(7);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setAsyncScriptTimeout(5000, function(err, res) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser(exprCond, 2000, 200, function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(err);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser(exprCond, 2000, function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(err);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser(exprCond, function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(err);
+            });
+          }, function(done) {
+            return browser.setAsyncScriptTimeout(0, function(err, res) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
       "close": function(test) {
         return browser.close(function(err) {
           should.not.exist(err);
