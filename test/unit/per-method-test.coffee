@@ -330,7 +330,7 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         test.done()
     
-    "eval": (test) ->
+    "eval (no args)": (test) ->
       async.series [
         evalShouldEqual browser, "1+2", 3
         evalShouldEqual browser, "document.title", "TEST PAGE"
@@ -338,9 +338,9 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "$('#eval li').length", 2        
       ], (err) ->
         should.not.exist err
-        test.done()
-
-    "execute": (test) ->
+        test.done()    
+    
+    "execute (no args)": (test) ->
       async.series [
         (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
           should.not.exist err
@@ -348,9 +348,24 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
       ], (err) ->
         should.not.exist err
+        test.done()
+                
+    "execute (with args)": (test) ->
+      jsScript = 
+        '''
+        var a = arguments[0], b = arguments[1];
+        window.wd_sync_execute_test = 'It worked! ' + (a+b)
+        '''
+      async.series [
+        (done) ->  browser.execute jsScript, [6,4], (err) ->
+          should.not.exist err
+          done(null)      
+        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
+      ], (err) ->
+        should.not.exist err
         test.done()        
-
-    "executeAsync": (test) ->
+    
+    "executeAsync (no args)": (test) ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
@@ -361,8 +376,19 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         res.should.equal "OK"
         test.done()
+    
+    "executeAsync (with args)": (test) ->
+      scriptAsCoffee =
+        """
+          [a,b,done] = arguments
+          done("OK " + (a+b))              
+        """
+      scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+      browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
+        should.not.exist err
+        res.should.equal "OK 15"
+        test.done()
 
-        
     "setWaitTimeout / setImplicitWaitTimeout": (test) ->
       async.series [
         # using old name
@@ -971,7 +997,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.close (err) ->
         should.not.exist err
         test.done()
-                
+            
     "quit": (test) ->        
       browser.quit (err) ->
         should.not.exist err
