@@ -967,5 +967,18 @@
         NA
       </td>      
     </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForCondition<br>
+        Waits for JavaScript condition to be true.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        <ul>
+        <li>waitForCondition(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)</li>
+        <li>timeout and pollFreq are optional (default: 1000, 100).</li>
+        <li>returns true if condition satisfied, error otherwise.</li>
+        </ul>
+      </td>      
+    </tr>    
   </tbody>
 </table>
