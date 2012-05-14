@@ -340,41 +340,12 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         test.done()    
 
-    "rawExecute (no args)": (test) ->
-      async.series [
-        (done) ->  browser.rawExecute "window.wd_sync_execute_test = 'It worked!'", (err) ->
-          should.not.exist err
-          done(null)      
-        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
-      ], (err) ->
-        should.not.exist err
-        test.done()
-                
-    "rawExecute (with args)": (test) ->
-      jsScript = 
-        '''
-        var a = arguments[0], b = arguments[1];
-        window.wd_sync_execute_test = 'It worked! ' + (a+b)
-        '''
-      async.series [
-        (done) ->  browser.rawExecute jsScript, [6,4], (err) ->
-          should.not.exist err
-          done(null)      
-        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-    
     "execute (no args)": (test) ->
       async.series [
         (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
           should.not.exist err
           done(null)      
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
-        (done) ->  browser.execute "invalid-code> here", (err) ->
-          should.exist err
-          (err instanceof Error).should.be.true
-          done(null)      
       ], (err) ->
         should.not.exist err
         test.done()
@@ -390,7 +361,36 @@ runTestWith = (remoteWdConfig, desired) ->
           should.not.exist err
           done(null)      
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
-        (done) ->  browser.execute "invalid-code> here", [6,4], (err) ->
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "safeExecute (no args)": (test) ->
+      async.series [
+        (done) ->  browser.safeExecute "window.wd_sync_execute_test = 'It worked!'", (err) ->
+          should.not.exist err
+          done(null)      
+        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
+        (done) ->  browser.safeExecute "invalid-code> here", (err) ->
+          should.exist err
+          (err instanceof Error).should.be.true
+          done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()
+                
+    "safeExecute (with args)": (test) ->
+      jsScript = 
+        '''
+        var a = arguments[0], b = arguments[1];
+        window.wd_sync_execute_test = 'It worked! ' + (a+b)
+        '''
+      async.series [
+        (done) ->  browser.safeExecute jsScript, [6,4], (err) ->
+          should.not.exist err
+          done(null)      
+        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
+        (done) ->  browser.safeExecute "invalid-code> here", [6,4], (err) ->
           should.exist err
           (err instanceof Error).should.be.true
           done(null)      

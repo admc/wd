@@ -453,6 +453,46 @@
           return test.done();
         });
       },
+      "safeExecute (no args)": function(test) {
+        return async.series([
+          function(done) {
+            return browser.safeExecute("window.wd_sync_execute_test = 'It worked!'", function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, evalShouldEqual(browser, "window.wd_sync_execute_test", 'It worked!'), function(done) {
+            return browser.safeExecute("invalid-code> here", function(err) {
+              should.exist(err);
+              (err instanceof Error).should.be["true"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "safeExecute (with args)": function(test) {
+        var jsScript;
+        jsScript = 'var a = arguments[0], b = arguments[1];\nwindow.wd_sync_execute_test = \'It worked! \' + (a+b)';
+        return async.series([
+          function(done) {
+            return browser.safeExecute(jsScript, [6, 4], function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, evalShouldEqual(browser, "window.wd_sync_execute_test", 'It worked! 10'), function(done) {
+            return browser.safeExecute("invalid-code> here", [6, 4], function(err) {
+              should.exist(err);
+              (err instanceof Error).should.be["true"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
       "executeAsync (no args)": function(test) {
         var scriptAsCoffee, scriptAsJs;
         scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
