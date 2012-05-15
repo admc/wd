@@ -231,6 +231,13 @@ browser.init(desired, function() {
             </ul>
           </li>
           <li>
+            execute script within try/catch using eval(code): <br>
+            safeExecute(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+          <li>
             evaluate expression: <br>
             eval(code, cb) -> cb(err, value)
           </li>
@@ -243,10 +250,22 @@ browser.init(desired, function() {
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code, args, cb) -> cb(err, value returned)
         <ul>
-          <li>args is an optional Array</li>
-        </ul>        
+          <li>
+            execute async script: <br>
+            executeAsync(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+          <li>
+            execute async script within try/catch using eval(code): <br>
+            safeExecuteAsync(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+        </ul>   
       </td>      
     </tr>
     <tr>
