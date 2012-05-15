@@ -1304,6 +1304,7 @@
         return browser.safeExecute("invalid-code> here", function(err) {
           should.exist(err);
           (err instanceof Error).should.be["true"];
+          should.exist(err['jsonwire-error']);
           err.inspect().should.include('"screen": "[hidden]"');
           return test.done();
         });
