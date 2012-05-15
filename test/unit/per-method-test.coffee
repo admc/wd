@@ -12,6 +12,12 @@ evalShouldEqual = (browser,formula,expected) ->
     res.should.equal expected
     done(null)      
 
+safeEvalShouldEqual = (browser,formula,expected) ->  
+  (done) ->  browser.safeEval formula, (err,res) ->
+    should.not.exist err
+    res.should.equal expected
+    done(null)      
+
 executeCoffee = (browser, script) ->  
   scriptAsJs = CoffeeScript.compile script, bare:'on'      
   (done) ->  browser.execute scriptAsJs, (err) ->
@@ -329,14 +335,24 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()
-    
+
     "eval": (test) ->
       async.series [
         evalShouldEqual browser, "1+2", 3
         evalShouldEqual browser, "document.title", "TEST PAGE"
         evalShouldEqual browser, "$('#eval').length", 1
         evalShouldEqual browser, "$('#eval li').length", 2     
-        (done) ->  browser.eval 'wrong formula +', (err,res) ->
+      ], (err) ->
+        should.not.exist err
+        test.done()    
+    
+    "safeEval": (test) ->
+      async.series [
+        safeEvalShouldEqual browser, "1+2", 3
+        safeEvalShouldEqual browser, "document.title", "TEST PAGE"
+        safeEvalShouldEqual browser, "$('#eval').length", 1
+        safeEvalShouldEqual browser, "$('#eval li').length", 2     
+        (done) ->  browser.safeEval 'wrong formula +', (err,res) ->
           should.exist err
           (err instanceof Error).should.be.true          
           done(null)                 
