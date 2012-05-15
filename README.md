@@ -238,8 +238,12 @@ browser.init(desired, function() {
             </ul>
           </li>
           <li>
-            evaluate expression: <br>
+            evaluate expression (using execute): <br>
             eval(code, cb) -> cb(err, value)
+          </li>
+          <li>
+            evaluate expression (using safeExecute): <br>
+            safeEval(code, cb) -> cb(err, value)
           </li>
         </ul>
       </td>      
