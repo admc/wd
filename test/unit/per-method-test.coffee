@@ -12,6 +12,12 @@ evalShouldEqual = (browser,formula,expected) ->
     res.should.equal expected
     done(null)      
 
+safeEvalShouldEqual = (browser,formula,expected) ->  
+  (done) ->  browser.safeEval formula, (err,res) ->
+    should.not.exist err
+    res.should.equal expected
+    done(null)      
+
 executeCoffee = (browser, script) ->  
   scriptAsJs = CoffeeScript.compile script, bare:'on'      
   (done) ->  browser.execute scriptAsJs, (err) ->
@@ -51,6 +57,38 @@ runTestWith = (remoteWdConfig, desired) ->
           browser.element "name", "elementByName2", (err,res) ->
             should.exist err
             err.status.should.equal 7
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()      
+
+    tests.elementOrNull = (test) ->      
+      async.series [
+        (done) ->
+          browser.elementOrNull "name", "elementByName", (err,res) ->
+            should.not.exist err
+            should.exist res
+            done null
+        (done) ->
+          browser.elementOrNull "name", "elementByName2", (err,res) ->
+            should.not.exist err
+            (res is null).should.be.true
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()      
+
+    tests.elementIfExists = (test) ->      
+      async.series [
+        (done) ->
+          browser.elementIfExists "name", "elementByName", (err,res) ->
+            should.not.exist err
+            should.exist res
+            done null
+        (done) ->
+          browser.elementIfExists "name", "elementByName2", (err,res) ->
+            should.not.exist err
+            (res is undefined).should.be.true
             done null
       ], (err) ->
         should.not.exist err
@@ -297,18 +335,32 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()
-    
+
     "eval": (test) ->
       async.series [
         evalShouldEqual browser, "1+2", 3
         evalShouldEqual browser, "document.title", "TEST PAGE"
         evalShouldEqual browser, "$('#eval').length", 1
-        evalShouldEqual browser, "$('#eval li').length", 2        
+        evalShouldEqual browser, "$('#eval li').length", 2     
       ], (err) ->
         should.not.exist err
-        test.done()
-
-    "execute": (test) ->
+        test.done()    
+    
+    "safeEval": (test) ->
+      async.series [
+        safeEvalShouldEqual browser, "1+2", 3
+        safeEvalShouldEqual browser, "document.title", "TEST PAGE"
+        safeEvalShouldEqual browser, "$('#eval').length", 1
+        safeEvalShouldEqual browser, "$('#eval li').length", 2     
+        (done) ->  browser.safeEval 'wrong formula +', (err,res) ->
+          should.exist err
+          (err instanceof Error).should.be.true          
+          done(null)                 
+      ], (err) ->
+        should.not.exist err
+        test.done()    
+    
+    "execute (no args)": (test) ->
       async.series [
         (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
           should.not.exist err
@@ -316,9 +368,57 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
       ], (err) ->
         should.not.exist err
+        test.done()
+                
+    "execute (with args)": (test) ->
+      jsScript = 
+        '''
+        var a = arguments[0], b = arguments[1];
+        window.wd_sync_execute_test = 'It worked! ' + (a+b)
+        '''
+      async.series [
+        (done) ->  browser.execute jsScript, [6,4], (err) ->
+          should.not.exist err
+          done(null)      
+        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
+      ], (err) ->
+        should.not.exist err
         test.done()        
-
-    "executeAsync": (test) ->
+    
+    "safeExecute (no args)": (test) ->
+      async.series [
+        (done) ->  browser.safeExecute "window.wd_sync_execute_test = 'It worked!'", (err) ->
+          should.not.exist err
+          done(null)      
+        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
+        (done) ->  browser.safeExecute "invalid-code> here", (err) ->
+          should.exist err
+          (err instanceof Error).should.be.true
+          done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()
+                
+    "safeExecute (with args)": (test) ->
+      jsScript = 
+        '''
+        var a = arguments[0], b = arguments[1];
+        window.wd_sync_execute_test = 'It worked! ' + (a+b)
+        '''
+      async.series [
+        (done) ->  browser.safeExecute jsScript, [6,4], (err) ->
+          should.not.exist err
+          done(null)      
+        evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
+        (done) ->  browser.safeExecute "invalid-code> here", [6,4], (err) ->
+          should.exist err
+          (err instanceof Error).should.be.true
+          done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "executeAsync (no args)": (test) ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
@@ -329,8 +429,63 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         res.should.equal "OK"
         test.done()
+    
+    "executeAsync (with args)": (test) ->
+      scriptAsCoffee =
+        """
+          [a,b,done] = arguments
+          done("OK " + (a+b))              
+        """
+      scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+      browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
+        should.not.exist err
+        res.should.equal "OK 15"
+        test.done()
+    
+    "safeExecuteAsync (no args)": (test) ->
+      async.series [
+        (done) ->  
+          scriptAsCoffee =
+            """
+              [args...,done] = arguments
+              done "OK"              
+            """
+          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+          browser.safeExecuteAsync scriptAsJs, (err,res) ->          
+            should.not.exist err
+            res.should.equal "OK"
+            done(null)      
+        (done) ->  
+          browser.safeExecuteAsync "123 invalid<script", (err,res) ->          
+            should.exist err
+            (err instanceof Error).should.be.true
+            done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()        
 
-        
+    "safeExecuteAsync (with args)": (test) ->
+      async.series [
+        (done) ->  
+          scriptAsCoffee =
+            """
+              [a,b,done] = arguments
+              done("OK " + (a+b))              
+            """
+          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+          browser.safeExecuteAsync scriptAsJs, [10, 5], (err,res) ->          
+            should.not.exist err
+            res.should.equal "OK 15"
+            done(null)      
+        (done) ->  
+          browser.safeExecuteAsync "123 invalid<script", [10, 5], (err,res) ->          
+            should.exist err
+            (err instanceof Error).should.be.true
+            done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
     "setWaitTimeout / setImplicitWaitTimeout": (test) ->
       async.series [
         # using old name
@@ -585,15 +740,22 @@ runTestWith = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           test.done()        
-
+    
     "type": (test) -> 
+      altKey = wd.SPECIAL_KEYS['Alt']
+      nullKey = wd.SPECIAL_KEYS['NULL']
       browser.elementByCss "#type input", (err,inputField) ->
         should.not.exist err
         should.exist inputField
         async.series [
           (done) -> valueShouldEqual browser, inputField, "", done
           (done) ->
-            browser.type inputField, "Hello World" , (err) ->
+            browser.type inputField, "Hello" , (err) ->
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello", done
+          (done) ->
+            browser.type inputField, [altKey, nullKey, " World"] , (err) ->
               should.not.exist err
               done null
           (done) -> valueShouldEqual browser, inputField, "Hello World", done
@@ -605,7 +767,38 @@ runTestWith = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           test.done()        
-
+    
+    "keys": (test) -> 
+      altKey = wd.SPECIAL_KEYS['Alt']
+      nullKey = wd.SPECIAL_KEYS['NULL']
+      browser.elementByCss "#keys input", (err,inputField) ->
+        should.not.exist err
+        should.exist inputField
+        async.series [
+          (done) -> valueShouldEqual browser, inputField, "", done
+          (done) ->
+            browser.clickElement inputField, (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            browser.keys "Hello" , (err) ->
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello", done
+          (done) ->
+            browser.keys [altKey, nullKey, " World"] , (err) ->
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello World", done
+          (done) ->
+            browser.keys "\n" , (err) -> # no effect
+              should.not.exist err
+              done null
+          (done) -> valueShouldEqual browser, inputField, "Hello World", done
+        ], (err) ->
+          should.not.exist err
+          test.done()        
+    
     "clear": (test) -> 
       browser.elementByCss "#clear input", (err,inputField) ->
         should.not.exist err
@@ -863,10 +1056,91 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
+
+    "waitForCondition": (test) ->
+      exprCond = "$('#waitForCondition .child').length > 0"
+      async.series [
+        executeCoffee browser,   
+          """
+            setTimeout ->
+              $('#waitForCondition').html '<div class="child">a waitForCondition child</div>'
+            , 1500
+          """
+        (done) ->
+          browser.elementByCss "#waitForCondition .child", (err,res) ->            
+            should.exist err
+            err.status.should.equal 7
+            done(null)
+        (done) ->
+          browser.waitForCondition exprCond, 2000, 200, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForCondition exprCond, 2000, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForCondition exprCond, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)            
+      ], (err) ->
+        should.not.exist err
+        test.done()
+    
+    "waitForConditionInBrowser": (test) ->
+      exprCond = "$('#waitForConditionInBrowser .child').length > 0"
+      async.series [
+        executeCoffee browser,   
+          """
+            setTimeout ->
+              $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
+            , 1500
+          """
+        (done) ->
+          browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
+            should.exist err
+            err.status.should.equal 7
+            done(null)
+        (done) ->
+          browser.setAsyncScriptTimeout 5000, (err,res) ->            
+            should.not.exist err
+            done(null)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, 2000, 200, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, 2000, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.setAsyncScriptTimeout 0, (err,res) ->            
+            should.not.exist err
+            done(null)
+      ], (err) ->
+        should.not.exist err
+        test.done()
+
+    
+    "close": (test) ->        
+      browser.close (err) ->
+        should.not.exist err
+        test.done()
     
     "quit": (test) ->        
-      browser.quit ->
-        test.done()
+      browser.quit (err) ->
+        should.not.exist err
+        test.done()    
   }
 
 app = null      

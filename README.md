@@ -225,11 +225,25 @@ browser.init(desired, function() {
         <ul>
           <li>
             execute script: <br>
-            execute(code, cb) -> cb(err, value returned)
+            execute(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
           </li>
           <li>
-            evaluate expression: <br>
+            execute script within try/catch using eval(code): <br>
+            safeExecute(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+          <li>
+            evaluate expression (using execute): <br>
             eval(code, cb) -> cb(err, value)
+          </li>
+          <li>
+            evaluate expression (using safeExecute): <br>
+            safeEval(code, cb) -> cb(err, value)
           </li>
         </ul>
       </td>      
@@ -240,7 +254,22 @@ browser.init(desired, function() {
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code, cb) -> cb(err, value returned)
+        <ul>
+          <li>
+            execute async script: <br>
+            executeAsync(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+          <li>
+            execute async script within try/catch using eval(code): <br>
+            safeExecuteAsync(code, args, cb) -> cb(err, value returned)
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+        </ul>   
       </td>      
     </tr>
     <tr>
@@ -415,7 +444,30 @@ browser.init(desired, function() {
         Send a sequence of key strokes to an element.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        type(element, keys, cb) -> cb(err)
+        <ul>
+          <li>
+            type(element, keys, cb) -> cb(err)
+          </li>
+          <li>
+            special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
+          </li>
+        </ul>
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/keys">/session/:sessionId/keys</a><br>
+        Send a sequence of key strokes to the active element.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        <ul>
+          <li>
+            keys(keys, cb) -> cb(err)
+          </li>
+          <li>
+            special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)
+          </li>
+        </ul>
       </td>      
     </tr>
     <tr>
@@ -504,10 +556,38 @@ browser.init(desired, function() {
         Double-clicks at the current mouse coordinates (set by moveto).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        doubleclick(button, cb) -> cb(err) <br>
-        buttons: {left: 0, middle: 1 , right: 2}
+        doubleclick(cb) -> cb(err) <br>
+      </td>      
+    </tr>    
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForCondition<br>
+        Waits for JavaScript condition to be true (polling within wd client).
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        waitForCondition(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)
+        <ul>
+        <li>conditionExpr should return a boolean</li>
+        <li>timeout and pollFreq are optional (default: 1000, 100).</li>
+        <li>return true if condition satisfied, error otherwise.</li>
+        </ul>
       </td>      
     </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForConditionInBrowser<br>
+        Waits for JavaScript condition to be true. (async script polling within browser)
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)
+        <ul>
+        <li>setAsyncScriptTimeout must be set to value higher than timeout</li>
+        <li>conditionExpr should return a boolean</li>
+        <li>timeout and pollFreq are optional (default: 1000, 100).</li>
+        <li>return true if condition satisfied, error otherwise.</li>
+        </ul>
+      </td>      
+    </tr>    
   </tbody>
 </table>
 
