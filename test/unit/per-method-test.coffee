@@ -398,7 +398,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()
-                
+
     "safeExecute (with args)": (test) ->
       jsScript = 
         '''
@@ -1130,7 +1130,13 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()
-
+    
+    "err.inspect": (test) ->
+      browser.safeExecute "invalid-code> here", (err) ->
+        should.exist err
+        (err instanceof Error).should.be.true
+        err.inspect().should.include '"screen": "[hidden]"'
+        test.done()
     
     "close": (test) ->        
       browser.close (err) ->
