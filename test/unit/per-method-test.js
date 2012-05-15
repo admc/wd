@@ -525,6 +525,56 @@
           return test.done();
         });
       },
+      "safeExecuteAsync (no args)": function(test) {
+        return async.series([
+          function(done) {
+            var scriptAsCoffee, scriptAsJs;
+            scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
+            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+              bare: 'on'
+            });
+            return browser.safeExecuteAsync(scriptAsJs, function(err, res) {
+              should.not.exist(err);
+              res.should.equal("OK");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.safeExecuteAsync("123 invalid<script", function(err, res) {
+              should.exist(err);
+              (err instanceof Error).should.be["true"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "safeExecuteAsync (with args)": function(test) {
+        return async.series([
+          function(done) {
+            var scriptAsCoffee, scriptAsJs;
+            scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
+            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+              bare: 'on'
+            });
+            return browser.safeExecuteAsync(scriptAsJs, [10, 5], function(err, res) {
+              should.not.exist(err);
+              res.should.equal("OK 15");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.safeExecuteAsync("123 invalid<script", [10, 5], function(err, res) {
+              should.exist(err);
+              (err instanceof Error).should.be["true"];
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
       "setWaitTimeout / setImplicitWaitTimeout": function(test) {
         return async.series([
           function(done) {

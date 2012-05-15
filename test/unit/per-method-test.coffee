@@ -425,7 +425,51 @@ runTestWith = (remoteWdConfig, desired) ->
         should.not.exist err
         res.should.equal "OK 15"
         test.done()
+    
+    "safeExecuteAsync (no args)": (test) ->
+      async.series [
+        (done) ->  
+          scriptAsCoffee =
+            """
+              [args...,done] = arguments
+              done "OK"              
+            """
+          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+          browser.safeExecuteAsync scriptAsJs, (err,res) ->          
+            should.not.exist err
+            res.should.equal "OK"
+            done(null)      
+        (done) ->  
+          browser.safeExecuteAsync "123 invalid<script", (err,res) ->          
+            should.exist err
+            (err instanceof Error).should.be.true
+            done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()        
 
+    "safeExecuteAsync (with args)": (test) ->
+      async.series [
+        (done) ->  
+          scriptAsCoffee =
+            """
+              [a,b,done] = arguments
+              done("OK " + (a+b))              
+            """
+          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+          browser.safeExecuteAsync scriptAsJs, [10, 5], (err,res) ->          
+            should.not.exist err
+            res.should.equal "OK 15"
+            done(null)      
+        (done) ->  
+          browser.safeExecuteAsync "123 invalid<script", [10, 5], (err,res) ->          
+            should.exist err
+            (err instanceof Error).should.be.true
+            done(null)      
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
     "setWaitTimeout / setImplicitWaitTimeout": (test) ->
       async.series [
         # using old name
@@ -1076,12 +1120,11 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.close (err) ->
         should.not.exist err
         test.done()
-          
+    
     "quit": (test) ->        
       browser.quit (err) ->
         should.not.exist err
-        test.done()
-    
+        test.done()    
   }
 
 app = null      
