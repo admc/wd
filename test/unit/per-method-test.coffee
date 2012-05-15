@@ -1135,6 +1135,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.safeExecute "invalid-code> here", (err) ->
         should.exist err
         (err instanceof Error).should.be.true
+        should.exist err['jsonwire-error']
         err.inspect().should.include '"screen": "[hidden]"'
         test.done()
     
