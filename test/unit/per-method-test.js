@@ -1250,6 +1250,11 @@
               res.should.be["true"];
               return done(err);
             });
+          }, function(done) {
+            return browser.waitForCondition('$wrong expr!!!', function(err, res) {
+              should.exist(err);
+              return done(null);
+            });
           }
         ], function(err) {
           should.not.exist(err);
@@ -1290,6 +1295,11 @@
               return done(err);
             });
           }, function(done) {
+            return browser.waitForConditionInBrowser("totally #} wrong == expr", function(err, res) {
+              should.exist(err);
+              return done(null);
+            });
+          }, function(done) {
             return browser.setAsyncScriptTimeout(0, function(err, res) {
               should.not.exist(err);
               return done(null);
@@ -1306,6 +1316,7 @@
           (err instanceof Error).should.be["true"];
           should.exist(err['jsonwire-error']);
           err.inspect().should.include('"screen": "[hidden]"');
+          err.inspect().should.include('browser-error:');
           return test.done();
         });
       },

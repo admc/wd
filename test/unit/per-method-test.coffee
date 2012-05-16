@@ -463,7 +463,7 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "safeExecuteAsync (with args)": (test) ->
       async.series [
         (done) ->  
@@ -517,9 +517,8 @@ runTestWith = (remoteWdConfig, desired) ->
           done null             
       ], (err) ->
         should.not.exist err
-        test.done()        
-
-      
+        test.done()            
+    
     "setAsyncScriptTimeout": (test) ->
       async.series [
         (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
@@ -1056,16 +1055,16 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "waitForCondition": (test) ->
       exprCond = "$('#waitForCondition .child').length > 0"
-      async.series [
+      async.series [        
         executeCoffee browser,   
           """
             setTimeout ->
               $('#waitForCondition').html '<div class="child">a waitForCondition child</div>'
             , 1500
-          """
+          """  
         (done) ->
           browser.elementByCss "#waitForCondition .child", (err,res) ->            
             should.exist err
@@ -1085,7 +1084,11 @@ runTestWith = (remoteWdConfig, desired) ->
           browser.waitForCondition exprCond, (err,res) ->            
             should.not.exist err
             res.should.be.true
-            done(err)            
+            done(err)                    
+        (done) ->
+          browser.waitForCondition '$wrong expr!!!', (err,res) ->            
+            should.exist err
+            done(null)            
       ], (err) ->
         should.not.exist err
         test.done()
@@ -1124,19 +1127,24 @@ runTestWith = (remoteWdConfig, desired) ->
             res.should.be.true
             done(err)
         (done) ->
+          browser.waitForConditionInBrowser "totally #} wrong == expr", (err,res) ->            
+            should.exist err
+            done(null)
+        (done) ->
           browser.setAsyncScriptTimeout 0, (err,res) ->            
             should.not.exist err
             done(null)
       ], (err) ->
         should.not.exist err
         test.done()
-    
+  
     "err.inspect": (test) ->
       browser.safeExecute "invalid-code> here", (err) ->
         should.exist err
-        (err instanceof Error).should.be.true
+        (err instanceof Error).should.be.true        
         should.exist err['jsonwire-error']
         err.inspect().should.include '"screen": "[hidden]"'
+        err.inspect().should.include 'browser-error:'
         test.done()
     
     "close": (test) ->        
@@ -1148,6 +1156,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.quit (err) ->
         should.not.exist err
         test.done()    
+    
   }
 
 app = null      
