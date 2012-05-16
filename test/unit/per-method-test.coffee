@@ -1,10 +1,13 @@
 # nodeunit test
 
-wd = require '../../lib/main'
 should = require 'should'
 express = require 'express'
 CoffeeScript = require 'coffee-script'      
 async = require 'async'      
+
+leakDetector = (require '../common/leak-detector')()
+
+wd = require '../../lib/main'
 
 evalShouldEqual = (browser,formula,expected) ->  
   (done) ->  browser.eval formula, (err,res) ->
@@ -1178,4 +1181,4 @@ exports.wd =
       app.close()
       test.done()
 
-
+    'checking leaks': leakDetector.lookForLeaks

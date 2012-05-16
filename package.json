@@ -19,6 +19,7 @@
     ,"should": "latest"
     ,"coffee-script": "latest"    
     ,"express": "latest"    
-    ,"async": "latest"    
+    ,"async": "latest"
+    ,"gleak": "latest"        
   }
 }
