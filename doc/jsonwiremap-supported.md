@@ -155,7 +155,7 @@
             </ul>
           </li>
           <li>
-            execute script within try/catch using eval(code): <br>
+            execute script using eval(code): <br>
             safeExecute(code, args, cb) -> cb(err, value returned)
             <ul>
               <li>args is an optional Array</li>
@@ -187,7 +187,7 @@
             </ul>
           </li>
           <li>
-            execute async script within try/catch using eval(code): <br>
+            execute async script using eval(code): <br>
             safeExecuteAsync(code, args, cb) -> cb(err, value returned)
             <ul>
               <li>args is an optional Array</li>
