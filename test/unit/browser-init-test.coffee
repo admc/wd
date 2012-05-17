@@ -1,7 +1,10 @@
 # nodeunit test
+should = require 'should'
+
+leakDetector = (require '../common/leak-detector')()
 
 wd = require '../../lib/main'
-should = require 'should'
+
 exports.wd =
   'browser init test':
     default: (test) ->
@@ -72,6 +75,8 @@ exports.wd =
           browser.quit (err) ->
             should.not.exist err
             test.done()
+
+    'checking leaks': leakDetector.lookForLeaks
 
 
 

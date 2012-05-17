@@ -1,7 +1,10 @@
 # nodeunit test
 
-wd = require '../../lib/main'
 should = require 'should'
+
+leakDetector = (require '../common/leak-detector')()
+
+wd = require '../../lib/main'
 
 exports.wd =
   'remote init test':
@@ -102,6 +105,8 @@ exports.wd =
         browser.username.should.equal 'mickey' 
         browser.accessKey.should.equal 'mouse'
         test.done()
+
+    'checking leaks': leakDetector.lookForLeaks
 
       
 

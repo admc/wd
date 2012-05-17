@@ -1,4 +1,5 @@
 # nodeunit test
+leakDetector = (require '../common/leak-detector')()
 
 {runTestWith} = require '../common/basic-test-base'
 
@@ -8,7 +9,5 @@ exports.wd =
     
     firefox: (runTestWith {}, {browserName:'firefox'})
 
+    'checking leaks': leakDetector.lookForLeaks
 
-
-
-            
