@@ -52,7 +52,7 @@ browser.on('command', function(meth, path){
 desired = {
   browserName:'chrome'
   , tags: ["examples"]
-  , name = "This is an example test"
+  , name: "This is an example test"
 }
 
 browser.init(desired, function() {
