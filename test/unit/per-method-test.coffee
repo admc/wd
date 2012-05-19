@@ -147,11 +147,11 @@ runTestWith = (remoteWdConfig, desired) ->
 
         searchText = elementFuncName;
         searchText = "click #{searchText}" if searchText.match /ByLinkText/
-        searchText = "##{searchText}" if searchText.match /ByCss/
+        searchText = ".#{searchText}" if searchText.match /ByCss/
         searchText = "//div[@id='elementByXPath']/input" if searchText.match /ByXPath/
         searchText = "span" if searchText.match /ByTagName/
           
-        searchText2 = elementFuncName + '2';
+        searchText2 = searchText + '2';
         searchText2 = "//div[@id='elementByXPath2']/input" if searchText.match /ByXPath/
         searchText2 = "span2" if searchText.match /ByTagName/
         
