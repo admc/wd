@@ -292,10 +292,12 @@
             function(done) {
               return browser[elementsFuncName](searchSeveralText, function(err, res) {
                 should.not.exist(err);
-                if (!(elementsFuncName.match(/ByTagName/))) {
-                  res.should.have.length(3);
-                } else {
+                if (elementsFuncName.match(/ById/)) {
+                  res.should.have.length(1);
+                } else if (elementsFuncName.match(/ByTagName/)) {
                   (res.length > 1).should.be["true"];
+                } else {
+                  res.should.have.length(3);
                 }
                 return done(null);
               });
