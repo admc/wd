@@ -633,19 +633,40 @@
       "setAsyncScriptTimeout": function(test) {
         return async.series([
           function(done) {
+            return browser.setAsyncScriptTimeout(500, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            var scriptAsCoffee, scriptAsJs;
+            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 2000";
+            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+              bare: 'on'
+            });
+            return browser.executeAsync(scriptAsJs, function(err, res) {
+              should.exist(err);
+              err.status.should.equal(28);
+              return done(null);
+            });
+          }, function(done) {
             return browser.setAsyncScriptTimeout(2000, function(err) {
               should.not.exist(err);
               return done(null);
             });
           }, function(done) {
             var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 1000";
+            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 500";
             scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
               bare: 'on'
             });
             return browser.executeAsync(scriptAsJs, function(err, res) {
               should.not.exist(err);
               res.should.equal("OK");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setAsyncScriptTimeout(0, function(err) {
+              should.not.exist(err);
               return done(null);
             });
           }

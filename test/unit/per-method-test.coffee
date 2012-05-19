@@ -526,6 +526,22 @@ runTestWith = (remoteWdConfig, desired) ->
     
     "setAsyncScriptTimeout": (test) ->
       async.series [
+        (done) -> browser.setAsyncScriptTimeout 500, (err) ->
+          should.not.exist err
+          done null     
+        (done) -> 
+          scriptAsCoffee =
+            """
+              [args...,done] = arguments
+              setTimeout ->
+                done "OK"
+              , 2000
+            """
+          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+          browser.executeAsync scriptAsJs, (err,res) ->          
+            should.exist err
+            err.status.should.equal 28
+            done null
         (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
           should.not.exist err
           done null     
@@ -535,17 +551,20 @@ runTestWith = (remoteWdConfig, desired) ->
               [args...,done] = arguments
               setTimeout ->
                 done "OK"
-              , 1000
+              , 500
             """
           scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
           browser.executeAsync scriptAsJs, (err,res) ->          
             should.not.exist err
             res.should.equal "OK"
             done null
+        (done) -> browser.setAsyncScriptTimeout 0, (err) ->
+          should.not.exist err
+          done null     
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "element function tests": elementFunctionTests()
    
     "getAttribute": (test) -> 
