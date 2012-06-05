@@ -1,12 +1,13 @@
 // CONFIGURE SAUCE CREDENTIALS HERE
-var username = "<USERNAME>",
-accessKey = "<ACCESS_KEY>";
+var username = "msabourin",
+accessKey = "aae81464-8dd5-41b4-93e6-2c8426bbf5d6";
   
 var webdriver;
 try {
   webdriver = require('wd');
 } catch( err ) { 
   webdriver = require('../lib/main');
+  console.log('Using local code.');
 }
 var assert = require('assert');
 
@@ -22,7 +23,7 @@ browser.on('command', function(meth, path){
 
 var desired = {
   tags: ["examples"]
-  , name: "This is an example test"
+    , name: "This is an example test"
 }
 
 browser.init(desired, function() {
@@ -40,3 +41,5 @@ browser.init(desired, function() {
     })
   })
 })
+
+
