@@ -1095,8 +1095,13 @@
             });
           }, function(done) {
             return browser.active(function(err, res) {
+              var k, _i, _len;
               should.not.exist(err);
-              res.should.equal(env.i1);
+              for (_i = 0, _len = res.length; _i < _len; _i++) {
+                k = res[_i];
+                res.should.equal(env.i1[k]);
+                env.i1.should.have.property(k);
+              }
               return done(null);
             });
           }, function(done) {
@@ -1106,8 +1111,13 @@
             });
           }, function(done) {
             return browser.active(function(err, res) {
+              var k, _i, _len;
               should.not.exist(err);
-              res.should.equal(env.i2);
+              for (_i = 0, _len = res.length; _i < _len; _i++) {
+                k = res[_i];
+                res.should.equal(env.i2[k]);
+                env.i2.should.have.property(k);
+              }
               return done(null);
             });
           }
