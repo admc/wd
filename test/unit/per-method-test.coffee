@@ -953,7 +953,7 @@ runTestWith = (remoteWdConfig, desired) ->
         (done) ->
           browser.active (err,res) ->            
             should.not.exist err
-            res.should.equal env.i1
+            (res.should.equal env.i1[k]; env.i1.should.have.property k) for k in res
             done null
         (done) ->
           browser.clickElement env.i2, (err) ->            
@@ -962,7 +962,7 @@ runTestWith = (remoteWdConfig, desired) ->
         (done) ->
           browser.active (err,res) ->            
             should.not.exist err
-            res.should.equal env.i2
+            (res.should.equal env.i2[k]; env.i2.should.have.property k) for k in res
             done null
       ], (err) ->
         should.not.exist err
