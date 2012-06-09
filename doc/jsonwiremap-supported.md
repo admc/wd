@@ -488,11 +488,9 @@
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName">/session/:sessionId/element/:id/css/:propertyName</a><br>
         Query the value of an element's computed CSS property.
       </td>
-      <ul>
-        <li>
-          getComputedCSS(element, styleName, cb) -> cb(err, value)
-        </li>
-      </ul>   
+      <td style="border: 1px solid #ccc; padding: 5px;">
+         getComputedCSS(element, styleName, cb) -> cb(err, value)
+      </td>
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
