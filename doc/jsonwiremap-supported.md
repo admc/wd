@@ -485,6 +485,15 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForElement<br>
+        Waits for an element to be in the DOM.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        waitForElement(using, value, cb) -> cb(err)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         EXTRA: waitForCondition<br>
         Waits for JavaScript condition to be true (polling within wd client).
       </td>
