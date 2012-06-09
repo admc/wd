@@ -1000,6 +1000,15 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForElement<br>
+        Waits for an element to be in the DOM.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        waitForElement(using, value, cb) -> cb(err)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         EXTRA: isVisible<br>
         Checks if a element is in the dom and it's not display:none.
       </td>
