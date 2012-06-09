@@ -14,12 +14,14 @@
   , "main" : "./lib/main"
   , "bin" : { "wd" : "./lib/bin.js" }
   , "directories" : { "lib" : "./lib" }
+  , "dependencies" : {
+    "async" : "0.1.22"
+  }
   , "devDependencies" : {
     "nodeunit" : "latest"
     ,"should": "latest"
     ,"coffee-script": "latest"    
     ,"express": "latest"    
-    ,"async": "latest"
     ,"gleak": "latest"        
   }
 }
