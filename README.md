@@ -16,6 +16,7 @@ npm install wd
   - Ruben Daniels ([javruben](https://github.com/javruben))
   - Peter Braden ([peterbraden](https://github.com/peterbraden))
   - Seb Vincent ([sebv](https://github.com/sebv))
+  - Peter 'Pita' Martischka ([pita](https://github.com/Pita))
   
 ## License
 
