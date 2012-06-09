@@ -489,11 +489,7 @@
         Query the value of an element's computed CSS property.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        <ul>
-          <li>
-            getComputedCSS(element, styleName, cb) -> cb(err, value)
-          </li>
-        </ul>   
+         getComputedCSS(element, styleName, cb) -> cb(err, value)
       </td>
     </tr>
     <tr>
