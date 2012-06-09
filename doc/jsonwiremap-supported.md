@@ -494,6 +494,15 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: isVisible<br>
+        Checks if a element is in the dom and it's not display:none.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        isVisible(using, value, cb) -> cb(err, boolean)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         EXTRA: waitForCondition<br>
         Waits for JavaScript condition to be true (polling within wd client).
       </td>
