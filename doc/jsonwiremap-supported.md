@@ -485,6 +485,15 @@
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForElement<br>
+        Waits for an element to be in the DOM.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        waitForElement(using, value, cb) -> cb(err)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName">/session/:sessionId/element/:id/css/:propertyName</a><br>
         Query the value of an element's computed CSS property.
       </td>
