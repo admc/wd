@@ -676,9 +676,11 @@
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName">/session/:sessionId/element/:id/css/:propertyName</a><br>
         Query the value of an element's computed CSS property.
       </td>
-      <td style="border: 1px solid #ccc; padding: 5px;">
-        NA
-      </td>      
+      <ul>
+        <li>
+          getComputedCSS(element, styleName, cb) -> cb(err, value)
+        </li>
+      </ul>   
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
@@ -1003,6 +1005,15 @@
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         waitForElement(using, value, cb) -> cb(err)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: isVisible<br>
+        Checks if a element is in the dom and it's not display:none.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        isVisible(using, value, cb) -> cb(err, boolean)
       </td>      
     </tr>
     <tr>
