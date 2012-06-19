@@ -735,7 +735,7 @@ runTestWith = (remoteWdConfig, desired) ->
               should.not.exist err
               done null
           (done) ->
-            browser.doubleclick 0, (err) ->
+            browser.doubleclick (err) ->
               should.not.exist err
               done null
           (done) -> textShouldEqual browser, anchor, "doubleclicked", done
@@ -1175,7 +1175,7 @@ exports.wd =
     
     chrome: (runTestWith {}, {browserName: 'chrome'})
 
-    firefox: (runTestWith {}, {browserName: 'firefox'})
+    # firefox: (runTestWith {}, {browserName: 'firefox'})
 
     'stopping express': (test) ->
       app.close()
