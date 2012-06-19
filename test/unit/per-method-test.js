@@ -190,7 +190,7 @@
           searchText = "click " + searchText;
         }
         if (searchText.match(/ByCss/)) {
-          searchText = "#" + searchText;
+          searchText = "." + searchText;
         }
         if (searchText.match(/ByXPath/)) {
           searchText = "//div[@id='elementByXPath']/input";
@@ -198,7 +198,7 @@
         if (searchText.match(/ByTagName/)) {
           searchText = "span";
         }
-        searchText2 = elementFuncName + '2';
+        searchText2 = searchText + '2';
         if (searchText.match(/ByXPath/)) {
           searchText2 = "//div[@id='elementByXPath2']/input";
         }
@@ -292,10 +292,12 @@
             function(done) {
               return browser[elementsFuncName](searchSeveralText, function(err, res) {
                 should.not.exist(err);
-                if (!(elementsFuncName.match(/ByTagName/))) {
-                  res.should.have.length(3);
-                } else {
+                if (elementsFuncName.match(/ById/)) {
+                  res.should.have.length(1);
+                } else if (elementsFuncName.match(/ByTagName/)) {
                   (res.length > 1).should.be["true"];
+                } else {
+                  res.should.have.length(3);
                 }
                 return done(null);
               });
@@ -631,19 +633,40 @@
       "setAsyncScriptTimeout": function(test) {
         return async.series([
           function(done) {
+            return browser.setAsyncScriptTimeout(500, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            var scriptAsCoffee, scriptAsJs;
+            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 2000";
+            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+              bare: 'on'
+            });
+            return browser.executeAsync(scriptAsJs, function(err, res) {
+              should.exist(err);
+              err.status.should.equal(28);
+              return done(null);
+            });
+          }, function(done) {
             return browser.setAsyncScriptTimeout(2000, function(err) {
               should.not.exist(err);
               return done(null);
             });
           }, function(done) {
             var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 1000";
+            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 500";
             scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
               bare: 'on'
             });
             return browser.executeAsync(scriptAsJs, function(err, res) {
               should.not.exist(err);
               res.should.equal("OK");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setAsyncScriptTimeout(0, function(err) {
+              should.not.exist(err);
               return done(null);
             });
           }
@@ -704,7 +727,7 @@
           should.not.exist(err);
           should.exist(anchor);
           return async.series([
-            executeCoffee(browser, 'jQuery ->\n  a = $(\'#clickElement a\')\n  a.click ->\n    a.html \'clicked\'              '), function(done) {
+            executeCoffee(browser, 'jQuery ->\n  a = $(\'#clickElement a\')\n  a.click ->\n    a.html \'clicked\'\n    false              '), function(done) {
               return textShouldEqual(browser, anchor, "not clicked", done);
             }, function(done) {
               return browser.clickElement(anchor, function(err) {
@@ -762,7 +785,7 @@
           elementByCss(browser, env, "#mouseButton a", 'a'), elementByCss(browser, env, "#mouseButton div", 'resDiv'), executeCoffee(browser, 'jQuery ->\n  a = $(\'#mouseButton a\')\n  resDiv = $(\'#mouseButton div\')\n  a.mousedown ->\n    resDiv.html \'button down\'\n  a.mouseup ->\n    resDiv.html \'button up\''), function(done) {
             return textShouldEqual(browser, env.resDiv, '', done);
           }, function(done) {
-            return browser.moveTo(env.a, void 0, void 0, function(err) {
+            return browser.moveTo(env.a, function(err) {
               should.not.exist(err);
               return done(null);
             });
@@ -787,67 +810,67 @@
         });
       },
       "click": function(test) {
-        return browser.elementByCss("#click a", function(err, anchor) {
+        var env;
+        env = {};
+        return async.series([
+          elementByCss(browser, env, "#click .numOfClicks", 'numOfClicksDiv'), elementByCss(browser, env, "#click .buttonNumber", 'buttonNumberDiv'), executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"    \n    false                                         '), function(done) {
+            return textShouldEqual(browser, env.numOfClicksDiv, "not clicked", done);
+          }, function(done) {
+            return browser.moveTo(env.numOfClicksDiv, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.click(0, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.numOfClicksDiv, "clicked 1", done);
+          }, function(done) {
+            return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
+          }, function(done) {
+            return browser.moveTo(env.numOfClicksDiv, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.click(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.numOfClicksDiv, "clicked 2", done);
+          }, function(done) {
+            return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
+          }
+        ], function(err) {
           should.not.exist(err);
-          should.exist(anchor);
-          return async.series([
-            executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  a = $(\'#click a\')\n  a.click ->\n    window.numOfClick = window.numOfClick + 1\n    a.html "clicked #{window.numOfClick}"              '), function(done) {
-              return textShouldEqual(browser, anchor, "not clicked", done);
-            }, function(done) {
-              return browser.moveTo(anchor, void 0, void 0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.click(0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, anchor, "clicked 1", done);
-            }, function(done) {
-              return browser.moveTo(anchor, void 0, void 0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.click(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, anchor, "clicked 2", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return test.done();
-          });
+          return test.done();
         });
       },
       "doubleclick": function(test) {
-        return browser.elementByCss("#doubleclick a", function(err, anchor) {
+        var env;
+        env = {};
+        return async.series([
+          elementByCss(browser, env, "#doubleclick div", 'div'), executeCoffee(browser, 'jQuery ->\n  div = $(\'#doubleclick div\')\n  div.dblclick ->\n    div.html \'doubleclicked\'                                 '), function(done) {
+            return textShouldEqual(browser, env.div, "not clicked", done);
+          }, function(done) {
+            return browser.moveTo(env.div, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.doubleclick(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.div, "doubleclicked", done);
+          }
+        ], function(err) {
           should.not.exist(err);
-          should.exist(anchor);
-          return async.series([
-            executeCoffee(browser, 'jQuery ->\n  a = $(\'#doubleclick a\')\n  a.click ->\n    a.html \'doubleclicked\'              '), function(done) {
-              return textShouldEqual(browser, anchor, "not clicked", done);
-            }, function(done) {
-              return browser.moveTo(anchor, void 0, void 0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.doubleclick(0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, anchor, "doubleclicked", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return test.done();
-          });
+          return test.done();
         });
       },
       "type": function(test) {
@@ -1030,7 +1053,7 @@
           should.not.exist(err);
           should.exist(a);
           return async.series([
-            executeCoffee(browser, "jQuery ->            \n  a = $('#acceptAlert a')\n  a.click ->\n    alert \"coffee is running out\""), function(done) {
+            executeCoffee(browser, "jQuery ->            \n  a = $('#acceptAlert a')\n  a.click ->\n    alert \"coffee is running out\"\n    false"), function(done) {
               return browser.clickElement(a, function(err) {
                 should.not.exist(err);
                 return done(null);
@@ -1060,7 +1083,7 @@
                 capabilities = res;
                 return done(null);
               });
-            }, executeCoffee(browser, "jQuery ->                        \n  a = $('#dismissAlert a')\n  a.click ->\n    alert \"coffee is running out\""), function(done) {
+            }, executeCoffee(browser, "jQuery ->                        \n  a = $('#dismissAlert a')\n  a.click ->\n    alert \"coffee is running out\"\n    false"), function(done) {
               return browser.clickElement(a, function(err) {
                 should.not.exist(err);
                 return done(null);
