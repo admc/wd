@@ -147,11 +147,11 @@ runTestWith = (remoteWdConfig, desired) ->
 
         searchText = elementFuncName;
         searchText = "click #{searchText}" if searchText.match /ByLinkText/
-        searchText = "##{searchText}" if searchText.match /ByCss/
+        searchText = ".#{searchText}" if searchText.match /ByCss/
         searchText = "//div[@id='elementByXPath']/input" if searchText.match /ByXPath/
         searchText = "span" if searchText.match /ByTagName/
           
-        searchText2 = elementFuncName + '2';
+        searchText2 = searchText + '2';
         searchText2 = "//div[@id='elementByXPath2']/input" if searchText.match /ByXPath/
         searchText2 = "span2" if searchText.match /ByTagName/
         
@@ -227,10 +227,12 @@ runTestWith = (remoteWdConfig, desired) ->
             (done) ->
               browser[elementsFuncName] searchSeveralText, (err,res) ->
                 should.not.exist err
-                unless(elementsFuncName.match /ByTagName/)
-                  res.should.have.length 3
-                else
+                if (elementsFuncName.match /ById/)
+                  res.should.have.length 1
+                else if (elementsFuncName.match /ByTagName/)
                   (res.length > 1).should.be.true
+                else
+                  res.should.have.length 3
                 done null
             (done) ->
               browser[elementsFuncName] searchSeveralText2, (err,res) ->
@@ -524,6 +526,22 @@ runTestWith = (remoteWdConfig, desired) ->
     
     "setAsyncScriptTimeout": (test) ->
       async.series [
+        (done) -> browser.setAsyncScriptTimeout 500, (err) ->
+          should.not.exist err
+          done null     
+        (done) -> 
+          scriptAsCoffee =
+            """
+              [args...,done] = arguments
+              setTimeout ->
+                done "OK"
+              , 2000
+            """
+          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+          browser.executeAsync scriptAsJs, (err,res) ->          
+            should.exist err
+            err.status.should.equal 28
+            done null
         (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
           should.not.exist err
           done null     
@@ -533,17 +551,20 @@ runTestWith = (remoteWdConfig, desired) ->
               [args...,done] = arguments
               setTimeout ->
                 done "OK"
-              , 1000
+              , 500
             """
           scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
           browser.executeAsync scriptAsJs, (err,res) ->          
             should.not.exist err
             res.should.equal "OK"
             done null
+        (done) -> browser.setAsyncScriptTimeout 0, (err) ->
+          should.not.exist err
+          done null     
       ], (err) ->
         should.not.exist err
         test.done()        
-
+    
     "element function tests": elementFunctionTests()
    
     "getAttribute": (test) -> 
@@ -593,7 +614,8 @@ runTestWith = (remoteWdConfig, desired) ->
               jQuery ->
                 a = $('#clickElement a')
                 a.click ->
-                  a.html 'clicked'              
+                  a.html 'clicked'
+                  false              
             '''
           (done) -> textShouldEqual browser, anchor, "not clicked", done
           (done) ->
@@ -663,7 +685,7 @@ runTestWith = (remoteWdConfig, desired) ->
           '''          
         (done) -> textShouldEqual browser, env.resDiv, '', done
         (done) ->
-          browser.moveTo env.a, undefined, undefined, (err) ->            
+          browser.moveTo env.a, (err) ->            
             should.not.exist err
             done null
         (done) ->
@@ -679,69 +701,77 @@ runTestWith = (remoteWdConfig, desired) ->
       ], (err) ->
         should.not.exist err
         test.done()        
-
-    "click": (test) -> 
-      browser.elementByCss "#click a", (err,anchor) ->
-        should.not.exist err
-        should.exist anchor
-        async.series [
-          executeCoffee browser,
-            '''
-              jQuery ->
-                window.numOfClick = 0
-                a = $('#click a')
-                a.click ->
-                  window.numOfClick = window.numOfClick + 1
-                  a.html "clicked #{window.numOfClick}"              
-            '''
-          (done) -> textShouldEqual browser, anchor, "not clicked", done
-          (done) ->
-            browser.moveTo anchor, undefined, undefined, (err) ->
-              should.not.exist err
-              done null
-          (done) ->
-            browser.click 0, (err) ->
-              should.not.exist err
-              done null
-          (done) -> textShouldEqual browser, anchor, "clicked 1", done
-          (done) ->
-            browser.moveTo anchor, undefined, undefined, (err) ->
-              should.not.exist err
-              done null
-          (done) ->
-            browser.click (err) ->
-              should.not.exist err
-              done null
-          (done) -> textShouldEqual browser, anchor, "clicked 2", done
-        ], (err) ->
-          should.not.exist err
-          test.done()        
     
-    "doubleclick": (test) -> 
-      browser.elementByCss "#doubleclick a", (err,anchor) ->
+    "click": (test) -> 
+      env = {}
+      async.series [
+        elementByCss browser, env, "#click .numOfClicks", 'numOfClicksDiv'
+        elementByCss browser, env, "#click .buttonNumber", 'buttonNumberDiv'
+        executeCoffee browser,
+          '''
+            jQuery ->
+              window.numOfClick = 0
+              numOfClicksDiv = $('#click .numOfClicks')
+              buttonNumberDiv = $('#click .buttonNumber')
+              numOfClicksDiv.mousedown (eventObj) ->
+                button = eventObj.button
+                button = 'default' unless button?
+                window.numOfClick = window.numOfClick + 1
+                numOfClicksDiv.html "clicked #{window.numOfClick}"
+                buttonNumberDiv.html "#{button}"    
+                false                                         
+          '''
+        (done) -> textShouldEqual browser, env.numOfClicksDiv , "not clicked", done
+        (done) ->
+          browser.moveTo env.numOfClicksDiv, (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.click 0, (err) ->
+            should.not.exist err
+            done null
+        (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 1", done
+        (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
+        (done) ->
+          browser.moveTo env.numOfClicksDiv, (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.click (err) ->
+            should.not.exist err
+            done null
+        (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 2", done
+        (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
+        # not testing right click, cause not sure how to dismiss the right 
+        # click menu in chrome and firefox
+      ], (err) ->
         should.not.exist err
-        should.exist anchor
-        async.series [
-          executeCoffee browser,
-            '''
-              jQuery ->
-                a = $('#doubleclick a')
-                a.click ->
-                  a.html 'doubleclicked'              
-            '''
-          (done) -> textShouldEqual browser, anchor, "not clicked", done
-          (done) ->
-            browser.moveTo anchor, undefined, undefined, (err) ->
-              should.not.exist err
-              done null
-          (done) ->
-            browser.doubleclick (err) ->
-              should.not.exist err
-              done null
-          (done) -> textShouldEqual browser, anchor, "doubleclicked", done
-        ], (err) ->
-          should.not.exist err
-          test.done()        
+        test.done()   
+            
+    "doubleclick": (test) -> 
+      env = {}
+      async.series [ 
+        elementByCss browser, env, "#doubleclick div", 'div'       
+        executeCoffee browser,
+          '''
+            jQuery ->
+              div = $('#doubleclick div')
+              div.dblclick ->
+                div.html 'doubleclicked'                                 
+          '''
+        (done) -> textShouldEqual browser, env.div, "not clicked", done
+        (done) ->
+          browser.moveTo env.div, (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.doubleclick (err) ->
+            should.not.exist err
+            done null
+        (done) -> textShouldEqual browser, env.div, "doubleclicked", done            
+      ], (err) ->
+        should.not.exist err
+        test.done()        
     
     "type": (test) -> 
       altKey = wd.SPECIAL_KEYS['Alt']
@@ -892,6 +922,7 @@ runTestWith = (remoteWdConfig, desired) ->
                 a = $('#acceptAlert a')
                 a.click ->
                   alert "coffee is running out"
+                  false
             """          
           (done) -> 
             browser.clickElement a, (err) ->
@@ -922,6 +953,7 @@ runTestWith = (remoteWdConfig, desired) ->
                 a = $('#dismissAlert a')
                 a.click ->
                   alert "coffee is running out"
+                  false
             """          
           (done) -> 
             browser.clickElement a, (err) ->
@@ -1175,7 +1207,7 @@ exports.wd =
     
     chrome: (runTestWith {}, {browserName: 'chrome'})
 
-    # firefox: (runTestWith {}, {browserName: 'firefox'})
+    firefox: (runTestWith {}, {browserName: 'firefox'})
 
     'stopping express': (test) ->
       app.close()
