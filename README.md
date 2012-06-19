@@ -18,6 +18,8 @@ npm install wd
   - Seb Vincent ([sebv](https://github.com/sebv))
   - Peter 'Pita' Martischka ([pita](https://github.com/Pita))
   - Jonathan Lipps ([jlipps](https://github.com/jlipps))
+  - Phil Sarin ([pdsarin](https://github.com/pdsarin))
+  - Mathieu Sabourin ([OniOni](https://github.com/OniOni))
   
 ## License
 
