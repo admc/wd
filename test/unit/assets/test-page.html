@@ -8,14 +8,14 @@
 </head>
   <body>
     <div class="elementByClassName">Hello World!</div>          
-    <div id="elementByCssSelector">Hello World!</div>          
+    <div class="elementByCssSelector">Hello World!</div>          
     <div id="elementById">Hello World!</div>          
     <div name="elementByName">Hello World!</div>          
     <div id="elementByLinkText"><a>click elementByLinkText</a></div>          
     <div id="elementByPartialLinkText"><a>click elementByPartialLinkText</a></div>          
     <div id="elementByTagName"><span>Hello World!</span></div>          
     <div id="elementByXPath"/><input></div>          
-    <div id="elementByCss">Hello World!</div>          
+    <div class="elementByCss">Hello World!</div>          
 
     <div>
       <div class="elementsByClassName">Hello World!</div>          
@@ -23,13 +23,11 @@
       <div class="elementsByClassName">Hello World!</div>          
     </div>
     <div>
-      <div id="elementsByCssSelector">Hello World!</div>          
-      <div id="elementsByCssSelector">Hello World!</div>          
-      <div id="elementsByCssSelector">Hello World!</div>          
+      <div class="elementsByCssSelector">Hello World!</div>          
+      <div class="elementsByCssSelector">Hello World!</div>          
+      <div class="elementsByCssSelector">Hello World!</div>          
     </div>
     <div>
-      <div id="elementsById">Hello World!</div>          
-      <div id="elementsById">Hello World!</div>          
       <div id="elementsById">Hello World!</div>          
     </div>
     <div>
@@ -38,14 +36,14 @@
       <div name="elementsByName">Hello World!</div>          
     </div>
     <div>
-      <div id="elementsByLinkText"><a>click elementsByLinkText</a></div>          
-      <div id="elementsByLinkText"><a>click elementsByLinkText</a></div>          
-      <div id="elementsByLinkText"><a>click elementsByLinkText</a></div>          
+      <div class="elementsByLinkText"><a>click elementsByLinkText</a></div>          
+      <div class="elementsByLinkText"><a>click elementsByLinkText</a></div>          
+      <div class="elementsByLinkText"><a>click elementsByLinkText</a></div>          
     </div>
     <div>    
-      <div id="elementsByPartialLinkText"><a>click elementsByPartialLinkText</a></div>          
-      <div id="elementsByPartialLinkText"><a>click elementsByPartialLinkText</a></div>          
-      <div id="elementsByPartialLinkText"><a>click elementsByPartialLinkText</a></div>          
+      <div class="elementsByPartialLinkText"><a>click elementsByPartialLinkText</a></div>          
+      <div class="elementsByPartialLinkText"><a>click elementsByPartialLinkText</a></div>          
+      <div class="elementsByPartialLinkText"><a>click elementsByPartialLinkText</a></div>          
     </div>
     <div id="elementsByTagName">
       <span>Hello World!</span>
@@ -58,9 +56,9 @@
       <input>
     </div>
     <div>          
-      <div id="elementsByCss">Hello World!</div>          
-      <div id="elementsByCss">Hello World!</div>          
-      <div id="elementsByCss">Hello World!</div>          
+      <div class="elementsByCss">Hello World!</div>          
+      <div class="elementsByCss">Hello World!</div>          
+      <div class="elementsByCss">Hello World!</div>          
     </div>
 
     <div id="getAttribute" weather="sunny">Hi</div>          
@@ -79,8 +77,13 @@
       <a class="a2" href="#">a2</a><br>
       <div class='current'></div>
     </div> 
-    <div id="click"><a href="#">not clicked</a></div>          
-    <div id="doubleclick"><a href="#">not clicked</a></div>    
+    <div id="click">
+      <div class="numOfClicks">not clicked</div>
+      <div class="buttonNumber">not clicked</div>
+    </div>          
+    <div id="doubleclick">      
+      <div>not clicked</div>
+    </div>
     <div id="clear"><input class="input-text" type="text" value="not cleared"></div>          
     <div id="textPresent">weather is sunny</div>
     <div id="acceptAlert"><a>click me</a></div>
