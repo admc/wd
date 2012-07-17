@@ -1,5 +1,7 @@
 # WD.js -- A light weight WebDriver/Se2 client for node.js
 
+[![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
+
 ## Update node to latest
 
 http://nodejs.org/#download
