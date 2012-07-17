@@ -4,6 +4,7 @@ should = require 'should'
 express = require 'express'
 CoffeeScript = require 'coffee-script'      
 async = require 'async'      
+imageinfo = require 'imageinfo'
 
 leakDetector = (require '../common/leak-detector')()
 
@@ -1005,6 +1006,17 @@ runTestWith = (remoteWdConfig, desired) ->
         res.should.include "test-page.html"
         res.should.include "http://"
         test.done(); 
+
+    "takeScreenshot": (test) ->
+      browser.takeScreenshot (err,res) ->
+        should.not.exist err
+        data = new Buffer res, 'base64'
+        img = imageinfo data
+        img.should.not.be.false
+        img.format.should.equal 'PNG'
+        img.width.should.not.equal 0
+        img.height.should.not.equal 0
+        test.done();
     
     "allCookies / setCookies / deleteAllCookies / deleteCookie": (test) -> 
       async.series [
