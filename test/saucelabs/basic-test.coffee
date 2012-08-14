@@ -1,4 +1,5 @@
 # nodeunit test
+console.log('HOLY TESTING BATMAN')
 
 {runTestWith} = require '../common/basic-test-base'
 configHelper = require './config-helper' 
