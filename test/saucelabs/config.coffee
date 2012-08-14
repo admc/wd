@@ -1,5 +1,5 @@
 module.exports =
   saucelabs:
     username: 'wdjs'
-    accessKey: process.env.secure
+    accessKey: process.env.SECURE
   
