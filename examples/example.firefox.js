@@ -1,5 +1,4 @@
-var webdriver;
-webdriver = require('../lib/main');
+var webdriver  = require('wd');
 
 var assert = require('assert');
 var browser = webdriver.remote();
@@ -33,14 +32,14 @@ browser.init({
 				      el.text(function(err, text) {
 					  console.log(text);
 					  browser.quit();  
-				      })				      
+            })				      
 				  })
-			      })
+         })
 			  })
-		      })
+       })
 		  })
-              })
+     })
 	  })
-      })
+   })
   })
 });
