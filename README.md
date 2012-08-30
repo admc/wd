@@ -280,6 +280,15 @@ browser.init(desired, function() {
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window">/session/:sessionId/window</a><br>
+        Select a particular browser window by name.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+         window(name, cb) -> cb(err)
+      </td>      
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         DELETE&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/window">/session/:sessionId/window</a><br>
         Close the current window.
       </td>
