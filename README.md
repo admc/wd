@@ -298,6 +298,15 @@ browser.init(desired, function() {
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handles">/session/:sessionId/window_handles</a><br>
+        Get a list of all window handles in this session.
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        windowHandles(cb) -> cb(err, arrayOfHandles)
+      </td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
         Retrieve all cookies visible to the current page.
       </td>
