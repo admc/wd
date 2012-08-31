@@ -430,6 +430,15 @@ browser.init(desired, function() {
     </tr>
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
+        POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/displayed">/session/:sessionId/element/:id/displayed</a><br>
+        Determine if an element is currently displayed
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        displayed(cb) -> cb(err, displayed)
+      </td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
         GET&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/text">/session/:sessionId/element/:id/text</a><br>
         Returns the visible text for the element.
       </td>
