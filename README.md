@@ -281,7 +281,7 @@ browser.init(desired, function() {
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
         POST&nbsp;<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window">/session/:sessionId/window</a><br>
-        Select a particular browser window by name.
+        Select a particular browser window by name or selenium handle (see .windowHandles).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
          window(name, cb) -> cb(err)
