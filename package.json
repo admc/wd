@@ -21,8 +21,9 @@
     "nodeunit" : "latest"
     ,"should": "latest"
     ,"coffee-script": "latest"
-    ,"express": "latest"
+    ,"express": "2.x"
     ,"gleak": "latest"
+    ,"imageinfo": "latest"    
   }
   , "scripts" : {
     "test": "make test_saucelabs"
