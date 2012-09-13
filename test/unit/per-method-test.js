@@ -371,14 +371,64 @@
           return test.done();
         });
       },
-      "setPageLoadTimeout": function(test) {
-        return browser.setPageLoadTimeout(500, function(err) {
+      "get": function(test) {
+        return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
           should.not.exist(err);
           return test.done();
         });
       },
-      "get": function(test) {
+      "setPageLoadTimeout": function(test) {
+        var capabilities;
+        capabilities = null;
+        return async.series([
+          function(done) {
+            return browser.sessionCapabilities(function(err, res) {
+              should.not.exist(err);
+              capabilities = res;
+              return done(null);
+            });
+          }, function(done) {
+            if (capabilities.browserName !== 'chrome') {
+              return browser.setPageLoadTimeout(500, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            } else {
+              return done(null);
+            }
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "get (following setPageLoadTimeout)": function(test) {
         return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
+          should.not.exist(err);
+          return test.done();
+        });
+      },
+      "setPageLoadTimeout (disabling)": function(test) {
+        var capabilities;
+        capabilities = null;
+        return async.series([
+          function(done) {
+            return browser.sessionCapabilities(function(err, res) {
+              should.not.exist(err);
+              capabilities = res;
+              return done(null);
+            });
+          }, function(done) {
+            if (capabilities.browserName !== 'chrome') {
+              return browser.setPageLoadTimeout(-1, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            } else {
+              return done(null);
+            }
+          }
+        ], function(err) {
           should.not.exist(err);
           return test.done();
         });

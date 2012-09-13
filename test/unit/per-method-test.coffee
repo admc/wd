@@ -289,16 +289,56 @@ runTestWith = (remoteWdConfig, desired) ->
         should.exist capabilities.platform
         test.done()
   
-    # would do with better test, but can't be bothered
-    "setPageLoadTimeout": (test) ->
-      browser.setPageLoadTimeout 500, (err) ->
-        should.not.exist err
-        test.done()
-    
     "get": (test) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         test.done()
+
+    # would do with better test, but can't be bothered
+    "setPageLoadTimeout": (test) ->
+      capabilities = null
+      async.series [
+        (done) -> 
+          browser.sessionCapabilities (err,res) ->
+            should.not.exist err
+            capabilities = res
+            done null              
+        (done) -> 
+          # not working on chrome
+          unless capabilities.browserName is 'chrome'
+            browser.setPageLoadTimeout 500, (err) ->
+              should.not.exist err
+              done null
+          else
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
+    
+    "get (following setPageLoadTimeout)": (test) ->
+      browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
+        should.not.exist err
+        test.done()
+
+    "setPageLoadTimeout (disabling)": (test) ->
+      capabilities = null
+      async.series [
+        (done) -> 
+          browser.sessionCapabilities (err,res) ->
+            should.not.exist err
+            capabilities = res
+            done null              
+        (done) -> 
+          # not working on chrome
+          unless capabilities.browserName is 'chrome'
+            browser.setPageLoadTimeout -1, (err) ->
+              should.not.exist err
+              done null
+          else
+            done null
+      ], (err) ->
+        should.not.exist err
+        test.done()        
     
     "refresh": (test) ->
       browser.refresh (err) ->
@@ -941,7 +981,7 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.elementByCss "#dismissAlert a", (err,a) ->
         should.not.exist err
         should.exist a
-        capabilities = null;
+        capabilities = null
         async.series [
           (done) -> 
             browser.sessionCapabilities (err,res) ->
