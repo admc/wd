@@ -2,6 +2,8 @@
 (function() {
   var chromeDesired, configHelper, explorerDesired, firefoxDesired, nameBase, remoteWdConfig, runTestWith;
 
+  console.log('HOLY TESTING BATMAN');
+
   runTestWith = require('../common/basic-test-base').runTestWith;
 
   configHelper = require('./config-helper');
