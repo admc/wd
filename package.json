@@ -2,7 +2,7 @@
     "name" : "wd"
   , "description" : "WebDriver/Selenium 2 node.js client"
   , "tags" : ["web", "automation", "browser", "javascript"]
-  , "version" : "0.0.21"
+  , "version" : "0.0.22"
   , "author" : "Adam Christian <adam.christian@gmail.com>"
   , "repository" :
     { "type" : "git"
@@ -23,7 +23,7 @@
     ,"coffee-script": "latest"
     ,"express": "2.x"
     ,"gleak": "latest"
-    ,"imageinfo": "latest"    
+    ,"imageinfo": "latest"
   }
   , "scripts" : {
     "test": "make test_saucelabs"
