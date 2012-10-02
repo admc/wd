@@ -6,7 +6,7 @@
 
   leakDetector = (require('../common/leak-detector'))();
 
-  wd = require('../../lib/main');
+  wd = require('../common/wd-with-cov');
 
   describe("wd", function() {
     return describe("unit", function() {
@@ -153,7 +153,9 @@
           });
         });
       });
-      return leakDetector.lookForLeaks();
+      if (process.env.WD_COV == null) {
+        return leakDetector.lookForLeaks();
+      }
     });
   });
 

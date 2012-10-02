@@ -14,7 +14,7 @@
 
   leakDetector = (require('../common/leak-detector'))();
 
-  wd = require('../../lib/main');
+  wd = require('../common/wd-with-cov');
 
   evalShouldEqual = function(browser, formula, expected) {
     return function(done) {
@@ -344,12 +344,14 @@
     describe("wd.remote", function() {
       return it("should create browser object", function(done) {
         browser = wd.remote({});
-        browser.on("status", function(info) {
-          return console.log("\u001b[36m%s\u001b[0m", info);
-        });
-        browser.on("command", function(meth, path) {
-          return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
-        });
+        if (process.env.WD_COV == null) {
+          browser.on("status", function(info) {
+            return console.log("\u001b[36m%s\u001b[0m", info);
+          });
+          browser.on("command", function(meth, path) {
+            return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
+          });
+        }
         return done(null);
       });
     });
@@ -1574,7 +1576,9 @@
         describe("using firefox", function() {
           return test('firefox');
         });
-        return leakDetector.lookForLeaks();
+        if (process.env.WD_COV == null) {
+          return leakDetector.lookForLeaks();
+        }
       });
     });
   });

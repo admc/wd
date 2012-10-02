@@ -29,15 +29,16 @@
 
   describe("wd", function() {
     return describe("saucelabs", function() {
-      describe("basic tests", function() {});
-      describe("using chrome", function() {
-        return test(remoteWdConfig, chromeDesired);
-      });
-      describe("using firefox", function() {
-        return test(remoteWdConfig, firefoxDesired);
-      });
-      return describe("using explorer", function() {
-        return test(remoteWdConfig, explorerDesired);
+      return describe("basic tests", function() {
+        describe("using chrome", function() {
+          return test(remoteWdConfig, chromeDesired);
+        });
+        describe("using firefox", function() {
+          return test(remoteWdConfig, firefoxDesired);
+        });
+        return describe("using explorer", function() {
+          return test(remoteWdConfig, explorerDesired);
+        });
       });
     });
   });

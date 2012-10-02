@@ -2,7 +2,7 @@
 (function() {
   var configHelper, remoteWdConfig, should, wd;
 
-  wd = require('../../lib/main');
+  wd = require('../common/wd-with-cov');
 
   should = require('should');
 
