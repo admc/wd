@@ -643,3 +643,9 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
   - make test
   - look at the results!
 </pre>
+
+[test coverage](http://htmlpreview.github.com/?https://github.com/admc/wd/blob/master/coverage-ref.html)
+
+
+
+  
