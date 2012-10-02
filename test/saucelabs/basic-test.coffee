@@ -1,7 +1,6 @@
-# nodeunit test
-console.log('HOLY TESTING BATMAN')
+# mocha test
 
-{runTestWith} = require '../common/basic-test-base'
+{test} = require '../common/basic-test-base'
 configHelper = require './config-helper' 
 
 remoteWdConfig= configHelper.getRemoteWdConfig()
@@ -22,11 +21,16 @@ explorerDesired =
   version:'9'
   platform:'Windows 2008'
   
-exports.wd =  
-      
-  chrome: runTestWith( remoteWdConfig , chromeDesired)
+describe "wd", ->
+  describe "saucelabs", ->
+    describe "basic tests", ->
     
-  firefox: runTestWith(remoteWdConfig, firefoxDesired)
-
-  explorer: runTestWith(remoteWdConfig, explorerDesired)
+      describe "using chrome", ->
+        test remoteWdConfig , chromeDesired
+    
+      describe "using firefox", ->
+        test remoteWdConfig , firefoxDesired
+    
+      describe "using explorer", ->
+        test remoteWdConfig , explorerDesired
 

@@ -8,101 +8,115 @@
 
   wd = require('../../lib/main');
 
-  exports.wd = {
-    'browser init test': {
-      "default": function(test) {
-        var browser;
-        browser = wd.remote();
-        browser.defaultCapabilities.should.eql({
-          browserName: 'firefox',
-          version: '',
-          javascriptEnabled: true,
-          platform: 'ANY'
-        });
-        return browser.init(function(err) {
-          should.not.exist(err);
-          return browser.sessionCapabilities(function(err, capabilities) {
-            should.not.exist(err);
-            capabilities.browserName.should.equal('firefox');
-            return browser.quit(function(err) {
+  describe("wd", function() {
+    return describe("unit", function() {
+      describe("browser init tests", function() {
+        describe("default init", function() {
+          return it("should open firefox browser", function(done) {
+            var browser;
+            this.timeout(15000);
+            browser = wd.remote();
+            browser.defaultCapabilities.should.eql({
+              browserName: 'firefox',
+              version: '',
+              javascriptEnabled: true,
+              platform: 'ANY'
+            });
+            return browser.init(function(err) {
               should.not.exist(err);
-              return test.done();
+              return browser.sessionCapabilities(function(err, capabilities) {
+                should.not.exist(err);
+                capabilities.browserName.should.equal('firefox');
+                return browser.quit(function(err) {
+                  should.not.exist(err);
+                  return done(null);
+                });
+              });
             });
           });
         });
-      },
-      'using browser.defaultCapabilities': function(test) {
-        var browser;
-        browser = wd.remote();
-        browser.defaultCapabilities.browserName = 'chrome';
-        browser.defaultCapabilities.javascriptEnabled = false;
-        browser.defaultCapabilities.should.eql({
-          browserName: 'chrome',
-          version: '',
-          javascriptEnabled: false,
-          platform: 'ANY'
-        });
-        return browser.init(function(err) {
-          should.not.exist(err);
-          return browser.sessionCapabilities(function(err, capabilities) {
-            should.not.exist(err);
-            capabilities.browserName.should.equal('chrome');
-            return browser.quit(function(err) {
+        describe("browser.defaultCapabilities", function() {
+          return it("should open chrome browser", function(done) {
+            var browser;
+            this.timeout(15000);
+            browser = wd.remote();
+            browser.defaultCapabilities.browserName = 'chrome';
+            browser.defaultCapabilities.javascriptEnabled = false;
+            browser.defaultCapabilities.should.eql({
+              browserName: 'chrome',
+              version: '',
+              javascriptEnabled: false,
+              platform: 'ANY'
+            });
+            return browser.init(function(err) {
               should.not.exist(err);
-              return test.done();
+              return browser.sessionCapabilities(function(err, capabilities) {
+                should.not.exist(err);
+                capabilities.browserName.should.equal('chrome');
+                return browser.quit(function(err) {
+                  should.not.exist(err);
+                  return done(null);
+                });
+              });
             });
           });
         });
-      },
-      'desired only': function(test) {
-        var browser;
-        browser = wd.remote();
-        browser.defaultCapabilities.should.eql({
-          browserName: 'firefox',
-          version: '',
-          javascriptEnabled: true,
-          platform: 'ANY'
-        });
-        return browser.init({
-          browserName: 'chrome'
-        }, function(err) {
-          should.not.exist(err);
-          return browser.sessionCapabilities(function(err, capabilities) {
-            should.not.exist(err);
-            capabilities.browserName.should.equal('chrome');
-            return browser.quit(function(err) {
+        describe("desired only", function() {
+          return it("should open chrome browser", function(done) {
+            var browser;
+            this.timeout(15000);
+            browser = wd.remote();
+            browser.defaultCapabilities.should.eql({
+              browserName: 'firefox',
+              version: '',
+              javascriptEnabled: true,
+              platform: 'ANY'
+            });
+            return browser.init({
+              browserName: 'chrome'
+            }, function(err) {
               should.not.exist(err);
-              return test.done();
+              return browser.sessionCapabilities(function(err, capabilities) {
+                should.not.exist(err);
+                capabilities.browserName.should.equal('chrome');
+                return browser.quit(function(err) {
+                  should.not.exist(err);
+                  return done(null);
+                });
+              });
             });
           });
         });
-      },
-      'desired overiding defaultCapabilities': function(test) {
-        var browser;
-        browser = wd.remote();
-        browser.defaultCapabilities.browserName = 'chrome';
-        browser.defaultCapabilities.should.eql({
-          browserName: 'chrome',
-          version: '',
-          javascriptEnabled: true,
-          platform: 'ANY'
-        });
-        return browser.init({
-          browserName: 'firefox'
-        }, function(err) {
-          should.not.exist(err);
-          return browser.sessionCapabilities(function(err, capabilities) {
-            should.not.exist(err);
-            capabilities.browserName.should.equal('firefox');
-            return browser.quit(function(err) {
+        return describe("desired overiding defaultCapabilities", function() {
+          return it("should open firefox browser", function(done) {
+            var browser;
+            this.timeout(15000);
+            browser = wd.remote();
+            browser.defaultCapabilities.browserName = 'chrome';
+            browser.defaultCapabilities.should.eql({
+              browserName: 'chrome',
+              version: '',
+              javascriptEnabled: true,
+              platform: 'ANY'
+            });
+            return browser.init({
+              browserName: 'firefox'
+            }, function(err) {
               should.not.exist(err);
-              return test.done();
+              return browser.sessionCapabilities(function(err, capabilities) {
+                should.not.exist(err);
+                capabilities.browserName.should.equal('firefox');
+                return browser.quit(function(err) {
+                  should.not.exist(err);
+                  return done(null);
+                });
+              });
             });
           });
         });
-      },
-      'checking leaks': leakDetector.lookForLeaks
-    }
-  };
+      });
+      return leakDetector.lookForLeaks();
+    });
+  });
 
 }).call(this);

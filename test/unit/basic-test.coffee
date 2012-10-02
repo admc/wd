@@ -1,13 +1,15 @@
-# nodeunit test
-leakDetector = (require '../common/leak-detector')()
+# mocha test
 
-{runTestWith} = require '../common/basic-test-base'
+{test} = require '../common/basic-test-base'
 
-exports.wd =
-  'basic test':  
-    chrome: (runTestWith {}, {browserName:'chrome'})
-    
-    firefox: (runTestWith {}, {browserName:'firefox'})
+describe "wd", ->
+  describe "unit", ->
 
-    'checking leaks': leakDetector.lookForLeaks
-
+    describe "basic test", ->
+      
+      describe "using chrome", ->
+        test {}, {browserName:'chrome'}
+      
+      describe "using firefox", ->
+        test {}, {browserName:'firefox'}
+        

@@ -18,12 +18,13 @@
     "async" : "0.1.22"
   }
   , "devDependencies" : {
-    "nodeunit" : "latest"
+    "mocha" : "latest"
     ,"should": "latest"
     ,"coffee-script": "latest"
     ,"express": "2.x"
     ,"gleak": "latest"
     ,"imageinfo": "latest"
+    ,"covershot": "latest"
   }
   , "scripts" : {
     "test": "make test_saucelabs"

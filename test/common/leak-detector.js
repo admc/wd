@@ -7,13 +7,17 @@
     _detector = require('gleak')();
     _detector.detectNew();
     _detector.lookForLeaks = function(test) {
-      var leaks;
-      leaks = _detector.detectNew();
-      leaks.forEach(function(name) {
-        return console.warn('found global leak: %s', name);
+      return describe('look for leaks', function() {
+        return it("should not have leaks", function(done) {
+          var leaks;
+          leaks = _detector.detectNew();
+          leaks.forEach(function(name) {
+            return console.warn('found global leak: %s', name);
+          });
+          leaks.should.have.length(0, 'leak detected');
+          return done(null);
+        });
       });
-      leaks.should.have.length(0, 'leak detected');
-      return test.done();
     };
     return _detector;
   };

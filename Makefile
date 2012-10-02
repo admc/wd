@@ -12,11 +12,11 @@ DEFAULT:
 
 # run test, start selenium server first
 test:
-	./node_modules/.bin/nodeunit test/unit/*-test.coffee
+	./node_modules/.bin/mocha test/unit/*-test.coffee
 
 # run saucelabs test, configure username/key first
 test_saucelabs:
-	./node_modules/.bin/nodeunit test/saucelabs/*-test.coffee
+	./node_modules/.bin/mocha test/saucelabs/*-test.coffee
 
 # remove all the generated js
 cleanGenJs:

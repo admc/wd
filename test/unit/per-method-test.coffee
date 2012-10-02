@@ -1,13 +1,14 @@
-# nodeunit test
+# mocha test
+
+CoffeeScript = require 'coffee-script'
 
 should = require 'should'
-express = require 'express'
-CoffeeScript = require 'coffee-script'      
 async = require 'async'      
 imageinfo = require 'imageinfo'
 
-leakDetector = (require '../common/leak-detector')()
+{Express} = require './express'
 
+leakDetector = (require '../common/leak-detector')()
 wd = require '../../lib/main'
 
 evalShouldEqual = (browser,formula,expected) ->  
@@ -46,90 +47,95 @@ valueShouldEqual = (browser,element,expected, done) ->
     res.should.equal expected
     done null      
     
-runTestWith = (remoteWdConfig, desired) -> 
+test = (browserName) -> 
   browser = null;  
+  
   elementFunctionTests = () ->
-    tests = {}
-    tests.element = (test) ->      
-      async.series [
-        (done) ->
-          browser.element "name", "elementByName", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.element "name", "elementByName2", (err,res) ->
-            should.exist err
-            err.status.should.equal 7
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()      
+    describe "element", ->
+      it "should retrieve element", (done) ->
+        async.series [
+          (done) ->
+            browser.element "name", "elementByName", (err,res) ->
+              should.not.exist err
+              should.exist res
+              done null
+          (done) ->
+            browser.element "name", "elementByName2", (err,res) ->
+              should.exist err
+              err.status.should.equal 7
+              done null
+        ], (err) ->
+          should.not.exist err
+          done null   
 
-    tests.elementOrNull = (test) ->      
-      async.series [
-        (done) ->
-          browser.elementOrNull "name", "elementByName", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.elementOrNull "name", "elementByName2", (err,res) ->
-            should.not.exist err
-            (res is null).should.be.true
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()      
-
-    tests.elementIfExists = (test) ->      
-      async.series [
-        (done) ->
-          browser.elementIfExists "name", "elementByName", (err,res) ->
-            should.not.exist err
-            should.exist res
-            done null
-        (done) ->
-          browser.elementIfExists "name", "elementByName2", (err,res) ->
-            should.not.exist err
-            (res is undefined).should.be.true
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()      
-          
-    tests.hasElement = (test) ->      
-      async.series [
-        (done) ->
-          browser.hasElement "name", "elementByName", (err,res) ->
-            should.not.exist err
-            res.should.be.true
-            done null
-        (done) ->
-          browser.hasElement "name", "elementByName2", (err,res) ->
-            should.not.exist err
-            res.should.be.false
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
-    tests.elements = (test) ->      
-      async.series [
-        (done) ->
-          browser.elements "name", "elementsByName", (err,res) ->
-            should.not.exist err
-            res.should.have.length 3
-            done null
-        (done) ->
-          browser.elements "name", "elementsByName2", (err,res) ->
-            should.not.exist err
-            res.should.eql []
-            done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-
+    describe "elementOrNull", ->
+      it "should retrieve element or return null", (done) ->
+        async.series [
+          (done) ->
+            browser.elementOrNull "name", "elementByName", (err,res) ->
+              should.not.exist err
+              should.exist res
+              done null
+          (done) ->
+            browser.elementOrNull "name", "elementByName2", (err,res) ->
+              should.not.exist err
+              (res is null).should.be.true
+              done null
+        ], (err) ->
+          should.not.exist err
+          done null      
+    
+    describe "elementIfExists", ->
+      it "should retrieve element or return undefined", (done) ->
+        async.series [
+          (done) ->
+            browser.elementIfExists "name", "elementByName", (err,res) ->
+              should.not.exist err
+              should.exist res
+              done null
+          (done) ->
+            browser.elementIfExists "name", "elementByName2", (err,res) ->
+              should.not.exist err
+              (res is undefined).should.be.true
+              done null
+        ], (err) ->
+          should.not.exist err
+          done null      
+    
+    describe "hasElement", ->
+      it "should check if element exist", (done) ->
+        async.series [
+          (done) ->
+            browser.hasElement "name", "elementByName", (err,res) ->
+              should.not.exist err
+              res.should.be.true
+              done null
+          (done) ->
+            browser.hasElement "name", "elementByName2", (err,res) ->
+              should.not.exist err
+              res.should.be.false
+              done null
+        ], (err) ->
+          should.not.exist err
+          done null        
+    
+    describe "hasElement", ->
+      it "should retrieve several elements", (done) ->
+        async.series [
+          (done) ->
+            browser.elements "name", "elementsByName", (err,res) ->
+              should.not.exist err
+              res.should.have.length 3
+              done null
+          (done) ->
+            browser.elements "name", "elementsByName2", (err,res) ->
+              should.not.exist err
+              res.should.eql []
+              done null
+        ], (err) ->
+          should.not.exist err
+          done null        
+    
     for funcSuffix in [
       'ByClassName'
       , 'ByCssSelector' 
@@ -158,144 +164,157 @@ runTestWith = (remoteWdConfig, desired) ->
         
         searchSeveralText = searchText.replace('element','elements') 
         searchSeveralText2 = searchText2.replace('element','elements') 
+
+        describe elementFuncName, ->
+          it "should retrieve element", (done) ->
+            async.series [
+              (done) ->
+                browser[elementFuncName] searchText, (err,res) ->
+                  should.not.exist err
+                  should.exist res
+                  done null
+              (done) ->
+                browser[elementFuncName] searchText2  , (err,res) ->
+                  should.exist err
+                  err.status.should.equal 7
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null        
         
-        tests[elementFuncName] = (test) ->          		
-          async.series [
-            (done) ->
-              browser[elementFuncName] searchText, (err,res) ->
-                should.not.exist err
-                should.exist res
-                done null
-            (done) ->
-              browser[elementFuncName] searchText2  , (err,res) ->
-                should.exist err
-                err.status.should.equal 7
-                done null
-          ], (err) ->
-            should.not.exist err
-            test.done()        
-
-        tests[elementFuncName + 'OrNull'] = (test) ->          		
-          async.series [
-            (done) ->
-              browser[elementFuncName + 'OrNull'] searchText, (err,res) ->
-                should.not.exist err
-                should.exist res
-                done null
-            (done) ->
-              browser[elementFuncName + 'OrNull'] searchText2  , (err,res) ->
-                should.not.exist err
-                (res is null).should.be.true
-                done null
-          ], (err) ->
-            should.not.exist err
-            test.done()        
-
-        tests[elementFuncName + 'IfExists'] = (test) ->          		
-          async.series [
-            (done) ->
-              browser[elementFuncName + 'IfExists'] searchText, (err,res) ->
-                should.not.exist err
-                should.exist res
-                done null
-            (done) ->
-              browser[elementFuncName + 'IfExists'] searchText2  , (err,res) ->
-                should.not.exist err
-                (res is undefined).should.be.true
-                done null
-          ], (err) ->
-            should.not.exist err
-            test.done()        
-
-        tests[hasElementFuncName] = (test) ->          		
-          async.series [
-            (done) ->
-              browser[hasElementFuncName] searchText, (err,res) ->
-                should.not.exist err
-                res.should.be.true
-                done null
-            (done) ->
-              browser[hasElementFuncName] searchText2  , (err,res) ->
-                should.not.exist err
-                res.should.be.false
-                done null
-          ], (err) ->
-            should.not.exist err
-            test.done()        
+        describe  "#{elementFuncName}OrNull", ->
+          it "should retrieve element or null", (done) ->
+            async.series [
+              (done) ->
+                browser[elementFuncName + 'OrNull'] searchText, (err,res) ->
+                  should.not.exist err
+                  should.exist res
+                  done null
+              (done) ->
+                browser[elementFuncName + 'OrNull'] searchText2  , (err,res) ->
+                  should.not.exist err
+                  (res is null).should.be.true
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null        
         
-        tests[elementsFuncName] = (test) ->          		            
-          async.series [
-            (done) ->
-              browser[elementsFuncName] searchSeveralText, (err,res) ->
-                should.not.exist err
-                if (elementsFuncName.match /ById/)
-                  res.should.have.length 1
-                else if (elementsFuncName.match /ByTagName/)
-                  (res.length > 1).should.be.true
-                else
-                  res.should.have.length 3
-                done null
-            (done) ->
-              browser[elementsFuncName] searchSeveralText2, (err,res) ->
-                should.not.exist err
-                res.should.eql []
-                done null
-          ], (err) ->
-            should.not.exist err
-            test.done()        
-            
-    tests
+        describe  "#{elementFuncName}IfExists", ->
+          it "should retrieve element or undefined", (done) ->
+            async.series [
+              (done) ->
+                browser[elementFuncName + 'IfExists'] searchText, (err,res) ->
+                  should.not.exist err
+                  should.exist res
+                  done null
+              (done) ->
+                browser[elementFuncName + 'IfExists'] searchText2  , (err,res) ->
+                  should.not.exist err
+                  (res is undefined).should.be.true
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null        
+        
+        describe  hasElementFuncName, ->
+          it "should check if element exists", (done) ->
+            async.series [
+              (done) ->
+                browser[hasElementFuncName] searchText, (err,res) ->
+                  should.not.exist err
+                  res.should.be.true
+                  done null
+              (done) ->
+                browser[hasElementFuncName] searchText2  , (err,res) ->
+                  should.not.exist err
+                  res.should.be.false
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null        
 
-  {
-    "wd.remote": (test) ->
-      browser = wd.remote remoteWdConfig    
+        describe  elementsFuncName, ->
+          it "should retrieve several elements", (done) ->
+            async.series [
+              (done) ->
+                browser[elementsFuncName] searchSeveralText, (err,res) ->
+                  should.not.exist err
+                  if (elementsFuncName.match /ById/)
+                    res.should.have.length 1
+                  else if (elementsFuncName.match /ByTagName/)
+                    (res.length > 1).should.be.true
+                  else
+                    res.should.have.length 3
+                  done null
+              (done) ->
+                browser[elementsFuncName] searchSeveralText2, (err,res) ->
+                  should.not.exist err
+                  res.should.eql []
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null        
+         
+  describe "wd.remote", ->
+    it "should create browser object", (done) ->
+      browser = wd.remote {}    
       browser.on "status", (info) ->
         console.log "\u001b[36m%s\u001b[0m", info
       browser.on "command", (meth, path) ->
         console.log " > \u001b[33m%s\u001b[0m: %s", meth, path
-      test.done()
-    
-    "status": (test) ->
+      done null
+
+  describe "status", ->    
+    it "should retrieve selenium server status", (done) ->
       browser.status (err,status) ->        
         should.not.exist err
         should.exist status
-        test.done()
-
-    "sessions": (test) ->
+        done null
+  
+  describe "sessions", ->
+    it "should retrieve selenium server sessions", (done) ->
       browser.sessions (err,sessions) ->        
         should.not.exist err
         should.exist sessions
-        test.done()
-
-    "init": (test) ->
-      browser.init desired, (err) ->
+        done null
+  
+  describe "init", ->
+    it "should initialize browser and open browser window", (done)  ->
+      @timeout 10000
+      browser.init {browserName: browserName}, (err) ->
         should.not.exist err
-        test.done()
-    
-    "sessionCapabilities": (test) ->
+        done null
+
+  describe "sessionCapabilities", ->
+    it "should retrieve the session capabilities", (done) ->
       browser.sessionCapabilities (err,capabilities) ->
         should.not.exist err
         should.exist capabilities
         should.exist capabilities.browserName
         should.exist capabilities.platform
-        test.done()
+        done null
   
         
-    "altSessionCapabilities": (test) ->
+  describe "altSessionCapabilities", ->
+    it "should retrieve the session capabilities using alt method", (done) ->
       browser.altSessionCapabilities (err,capabilities) ->
         should.not.exist err
         should.exist capabilities
         should.exist capabilities.browserName
         should.exist capabilities.platform
-        test.done()
+        done null
   
-    "get": (test) ->
+  describe "get", ->
+    it "should navigate to the test page", (done)  ->
+      @timeout 10000
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
-        test.done()
+        done null
 
-    # would do with better test, but can't be bothered
-    "setPageLoadTimeout": (test) ->
+  # would do with better test, but can't be bothered
+  describe "setPageLoadTimeout", ->
+    it "should set the page load timeout, test get, and unset it", (done) ->
+      @timeout 10000
       capabilities = null
       async.series [
         (done) -> 
@@ -311,23 +330,19 @@ runTestWith = (remoteWdConfig, desired) ->
               done null
           else
             done null
-      ], (err) ->
-        should.not.exist err
-        test.done()        
-    
-    "get (following setPageLoadTimeout)": (test) ->
-      browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
-        should.not.exist err
-        test.done()
-
-    "setPageLoadTimeout (disabling)": (test) ->
-      capabilities = null
-      async.series [
         (done) -> 
-          browser.sessionCapabilities (err,res) ->
+          # not working on chrome
+          unless capabilities.browserName is 'chrome'
+            browser.setPageLoadTimeout 500, (err) ->
+              should.not.exist err
+              done null
+          else
+            done null
+        (done) -> 
+          # testing get
+          browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
             should.not.exist err
-            capabilities = res
-            done null              
+            done null
         (done) -> 
           # not working on chrome
           unless capabilities.browserName is 'chrome'
@@ -338,14 +353,18 @@ runTestWith = (remoteWdConfig, desired) ->
             done null
       ], (err) ->
         should.not.exist err
-        test.done()        
-    
-    "refresh": (test) ->
+        done null
+
+  describe "refresh", ->
+    it "should refresh page", (done) ->
+      @timeout 10000
       browser.refresh (err) ->
         should.not.exist err
-        test.done()
+        done null
 
-    "back / forward": (test) ->
+  describe "back forward", ->        
+    it "urls should be correct when navigating back/forward", (done) ->
+      @timeout 15000
       async.series [
         (done) ->
           browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
@@ -380,9 +399,10 @@ runTestWith = (remoteWdConfig, desired) ->
             done null
       ], (err) ->
         should.not.exist err
-        test.done()
+        done null
 
-    "eval": (test) ->
+  describe "eval", ->
+    it "should correctly evaluate various formulas", (done) ->
       async.series [
         evalShouldEqual browser, "1+2", 3
         evalShouldEqual browser, "document.title", "TEST PAGE"
@@ -390,9 +410,10 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "$('#eval li').length", 2     
       ], (err) ->
         should.not.exist err
-        test.done()    
+        done null    
     
-    "safeEval": (test) ->
+  describe "safeEval", ->
+    it "should correctly evaluate (with safeEval) various formulas", (done) ->
       async.series [
         safeEvalShouldEqual browser, "1+2", 3
         safeEvalShouldEqual browser, "document.title", "TEST PAGE"
@@ -404,9 +425,10 @@ runTestWith = (remoteWdConfig, desired) ->
           done(null)                 
       ], (err) ->
         should.not.exist err
-        test.done()    
+        done null
     
-    "execute (no args)": (test) ->
+  describe "execute (no args)", ->
+    it "should execute script", (done) ->
       async.series [
         (done) ->  browser.execute "window.wd_sync_execute_test = 'It worked!'", (err) ->
           should.not.exist err
@@ -414,9 +436,11 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked!'             
       ], (err) ->
         should.not.exist err
-        test.done()
+        done null
+
                 
-    "execute (with args)": (test) ->
+  describe "execute (with args)", ->
+    it "should execute script", (done) ->
       jsScript = 
         '''
         var a = arguments[0], b = arguments[1];
@@ -429,9 +453,10 @@ runTestWith = (remoteWdConfig, desired) ->
         evalShouldEqual browser, "window.wd_sync_execute_test", 'It worked! 10'             
       ], (err) ->
         should.not.exist err
-        test.done()        
-    
-    "safeExecute (no args)": (test) ->
+        done null
+  
+  describe "safeExecute (no args)", ->
+    it "should execute script (with safeExecute)", (done) ->
       async.series [
         (done) ->  browser.safeExecute "window.wd_sync_execute_test = 'It worked!'", (err) ->
           should.not.exist err
@@ -443,9 +468,11 @@ runTestWith = (remoteWdConfig, desired) ->
           done(null)      
       ], (err) ->
         should.not.exist err
-        test.done()
-
-    "safeExecute (with args)": (test) ->
+        done null
+  
+  
+  describe "safeExecute (with args)", ->
+    it "should execute script (with safeExecute)", (done) ->
       jsScript = 
         '''
         var a = arguments[0], b = arguments[1];
@@ -462,9 +489,10 @@ runTestWith = (remoteWdConfig, desired) ->
           done(null)      
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
     
-    "executeAsync (no args)": (test) ->
+  describe "executeAsync (no args)", ->
+    it "should execute async script", (done) ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
@@ -474,9 +502,10 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.executeAsync scriptAsJs, (err,res) ->          
         should.not.exist err
         res.should.equal "OK"
-        test.done()
+        done null
     
-    "executeAsync (with args)": (test) ->
+  describe "executeAsync (with args)", ->
+    it "should execute async script", (done) ->
       scriptAsCoffee =
         """
           [a,b,done] = arguments
@@ -486,9 +515,10 @@ runTestWith = (remoteWdConfig, desired) ->
       browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
         should.not.exist err
         res.should.equal "OK 15"
-        test.done()
+        done null
     
-    "safeExecuteAsync (no args)": (test) ->
+  describe "safeExecuteAsync (no args)", ->
+    it "should execute async script (using safeExecuteAsync)", (done) ->
       async.series [
         (done) ->  
           scriptAsCoffee =
@@ -508,9 +538,10 @@ runTestWith = (remoteWdConfig, desired) ->
             done(null)      
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
     
-    "safeExecuteAsync (with args)": (test) ->
+  describe "safeExecuteAsync (with args)", ->
+    it "should execute async script (using safeExecuteAsync)", (done) ->
       async.series [
         (done) ->  
           scriptAsCoffee =
@@ -530,9 +561,13 @@ runTestWith = (remoteWdConfig, desired) ->
             done(null)      
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null        
     
-    "setWaitTimeout / setImplicitWaitTimeout": (test) ->
+  describe "setWaitTimeout / setImplicitWaitTimeout", ->
+    it  "should set the wait timeout and implicit wait timeout, " + \
+        "run scripts to check functionality, " + \
+        "and unset them", (done) ->
+      @timeout 5000    
       async.series [
         # using old name
         (done) -> browser.setWaitTimeout 0, (err) ->
@@ -563,9 +598,13 @@ runTestWith = (remoteWdConfig, desired) ->
           done null             
       ], (err) ->
         should.not.exist err
-        test.done()            
+        done null
     
-    "setAsyncScriptTimeout": (test) ->
+  describe "setAsyncScriptTimeout", ->
+    it  "should set the async script timeout, " + \
+        "run scripts to check functionality, " + \
+        "and unset it", (done) ->
+      @timeout 5000
       async.series [
         (done) -> browser.setAsyncScriptTimeout 500, (err) ->
           should.not.exist err
@@ -604,11 +643,12 @@ runTestWith = (remoteWdConfig, desired) ->
           done null     
       ], (err) ->
         should.not.exist err
-        test.done()        
-    
-    "element function tests": elementFunctionTests()
-   
-    "getAttribute": (test) -> 
+        done null
+
+  elementFunctionTests()
+  
+  describe "getAttribute", -> 
+    it "should get correct attribute value", (done) -> 
       browser.elementById "getAttribute", (err,testDiv) ->
         should.not.exist err
         should.exist testDiv
@@ -625,27 +665,30 @@ runTestWith = (remoteWdConfig, desired) ->
               done null
         ], (err) ->
           should.not.exist err
-          test.done()        
-
-    "getValue (input)": (test) -> 
+          done null
+  
+  describe "getValue (input)", -> 
+    it "should get correct value", (done) -> 
       browser.elementByCss "#getValue input", (err,inputField) ->
         should.not.exist err
         should.exist inputField
         browser.getValue inputField, (err,res) ->
           should.not.exist err
           res.should.equal "Hello getValueTest!"
-          test.done()        
+          done null
 
-    "getValue (textarea)": (test) -> 
+  describe "getValue (textarea)", -> 
+    it "should get correct value", (done) -> 
       browser.elementByCss "#getValue textarea", (err,inputField) ->
         should.not.exist err
         should.exist inputField
         browser.getValue inputField, (err,res) ->
           should.not.exist err
           res.should.equal "Hello getValueTest2!"
-          test.done()        
-
-    "clickElement": (test) -> 
+          done null
+          
+  describe "clickElement", -> 
+    it "element should be clicked", (done) -> 
       browser.elementByCss "#clickElement a", (err,anchor) ->
         should.not.exist err
         should.exist anchor
@@ -666,9 +709,10 @@ runTestWith = (remoteWdConfig, desired) ->
           (done) -> textShouldEqual browser, anchor, "clicked", done
         ], (err) ->
           should.not.exist err
-          test.done()        
+          done null
     
-    "moveTo": (test) -> 
+  describe "moveTo", -> 
+    it "should move to correct element", (done) -> 
       env = {}
       async.series [
         elementByCss browser, env, "#moveTo .a1", 'a1'
@@ -704,12 +748,13 @@ runTestWith = (remoteWdConfig, desired) ->
         (done) -> textShouldEqual browser, env.current, 'a1', done
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
+        
+  # @todo waiting for implementation
+  # it "scroll", (test) ->  
     
-    # @todo waiting for implementation
-    # it "scroll", (test) ->
-    
-    "buttonDown / buttonUp": (test) -> 
+  describe "buttonDown / buttonUp", -> 
+    it "should press/unpress button", (done) -> 
       env = {}
       async.series [
         elementByCss browser, env, "#mouseButton a", 'a'
@@ -741,9 +786,10 @@ runTestWith = (remoteWdConfig, desired) ->
         (done) -> textShouldEqual browser, env.resDiv, 'button up', done
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
     
-    "click": (test) -> 
+  describe "click", -> 
+    it "should move to then click element", (done) -> 
       env = {}
       async.series [
         elementByCss browser, env, "#click .numOfClicks", 'numOfClicksDiv'
@@ -787,9 +833,10 @@ runTestWith = (remoteWdConfig, desired) ->
         # click menu in chrome and firefox
       ], (err) ->
         should.not.exist err
-        test.done()   
+        done null
             
-    "doubleclick": (test) -> 
+  describe "doubleclick", -> 
+    it "should move to then doubleclick element", (done) -> 
       env = {}
       async.series [ 
         elementByCss browser, env, "#doubleclick div", 'div'       
@@ -812,9 +859,10 @@ runTestWith = (remoteWdConfig, desired) ->
         (done) -> textShouldEqual browser, env.div, "doubleclicked", done            
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
     
-    "type": (test) -> 
+  describe "type", -> 
+    it "should correctly input text", (done) -> 
       altKey = wd.SPECIAL_KEYS['Alt']
       nullKey = wd.SPECIAL_KEYS['NULL']
       browser.elementByCss "#type input", (err,inputField) ->
@@ -839,9 +887,10 @@ runTestWith = (remoteWdConfig, desired) ->
           (done) -> valueShouldEqual browser, inputField, "Hello World", done
         ], (err) ->
           should.not.exist err
-          test.done()        
+          done null
     
-    "keys": (test) -> 
+  describe "keys", -> 
+    it "should press keys to input text", (done) -> 
       altKey = wd.SPECIAL_KEYS['Alt']
       nullKey = wd.SPECIAL_KEYS['NULL']
       browser.elementByCss "#keys input", (err,inputField) ->
@@ -870,9 +919,10 @@ runTestWith = (remoteWdConfig, desired) ->
           (done) -> valueShouldEqual browser, inputField, "Hello World", done
         ], (err) ->
           should.not.exist err
-          test.done()        
+          done null
     
-    "clear": (test) -> 
+  describe "clear", -> 
+    it "should clear input field", (done) -> 
       browser.elementByCss "#clear input", (err,inputField) ->
         should.not.exist err
         should.exist inputField
@@ -885,25 +935,28 @@ runTestWith = (remoteWdConfig, desired) ->
           (done) -> valueShouldEqual browser, inputField, "", done
         ], (err) ->
           should.not.exist err
-          test.done()        
-
-    "title": (test) -> 
+          done null
+  
+  describe "title", -> 
+    it "should retrieve title", (done) -> 
       browser.title (err,title) ->
         should.not.exist err
         title.should.equal "TEST PAGE"
-        test.done()        
-
-    "text (passing element)": (test) -> 
+        done null
+  
+  describe "text (passing element)", -> 
+    it "should retrieve text", (done) -> 
       browser.elementByCss "#text", (err,textDiv) ->
         should.not.exist err
         should.exist textDiv
         browser.text textDiv, (err, res) ->
           should.not.exist err
           res.should.include "text content" 
-          res.should.not.include "div" 
-          test.done()        
+          res.should.not.include "div"
+          done null 
 
-    "text (passing undefined)": (test) -> 
+  describe "text (passing undefined)", -> 
+    it "should retrieve text", (done) -> 
       browser.text undefined, (err, res) ->
         should.not.exist err
         # the whole page text is returned
@@ -911,9 +964,10 @@ runTestWith = (remoteWdConfig, desired) ->
         res.should.include "sunny" 
         res.should.include "click elementsByLinkText"
         res.should.not.include "div" 
-        test.done()        
-
-    "text (passing body)": (test) -> 
+        done null
+        
+  describe "text (passing body)", -> 
+    it "should retrieve text", (done) -> 
       browser.text 'body', (err, res) ->
         should.not.exist err
         # the whole page text is returned
@@ -921,9 +975,10 @@ runTestWith = (remoteWdConfig, desired) ->
         res.should.include "sunny" 
         res.should.include "click elementsByLinkText"
         res.should.not.include "div" 
-        test.done()        
-
-    "text (passing null)": (test) -> 
+        done null
+        
+  describe "text (passing null)", -> 
+    it "should retrieve text", (done) -> 
       browser.text null, (err, res) ->
         should.not.exist err
         # the whole page text is returned
@@ -931,9 +986,10 @@ runTestWith = (remoteWdConfig, desired) ->
         res.should.include "sunny" 
         res.should.include "click elementsByLinkText"
         res.should.not.include "div" 
-        test.done()        
-
-    "textPresent": (test) -> 
+        done null
+        
+  describe "textPresent", -> 
+    it "should check if text is present", (done) -> 
       browser.elementByCss "#textPresent", (err,textDiv) ->
         should.not.exist err
         should.exist textDiv
@@ -950,9 +1006,10 @@ runTestWith = (remoteWdConfig, desired) ->
               done null
         ], (err) ->
           should.not.exist err
-          test.done()        
+          done null
     
-    "acceptAlert": (test) -> 
+  describe "acceptAlert", -> 
+    it "should accept alert", (done) -> 
       browser.elementByCss "#acceptAlert a", (err,a) ->
         should.not.exist err
         should.exist a
@@ -975,9 +1032,10 @@ runTestWith = (remoteWdConfig, desired) ->
               done null
         ], (err) ->
           should.not.exist err
-          test.done()        
+          done null
     
-    "dismissAlert": (test) ->       
+  describe "dismissAlert", ->       
+    it "should dismiss alert", (done) ->       
       browser.elementByCss "#dismissAlert a", (err,a) ->
         should.not.exist err
         should.exist a
@@ -1012,9 +1070,10 @@ runTestWith = (remoteWdConfig, desired) ->
                 done null            
         ], (err) ->
           should.not.exist err
-          test.done()        
+          done null
       
-    "active": (test) -> 
+  describe "active", -> 
+    it "should check if element is active", (done) -> 
       env = {}
       async.series [
         elementByCss browser, env, "#active .i1", 'i1'
@@ -1039,15 +1098,17 @@ runTestWith = (remoteWdConfig, desired) ->
             done null
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
         
-    "url": (test) ->
+  describe "url", ->
+    it "should retrieve url", (done) ->
       browser.url (err,res) ->
         res.should.include "test-page.html"
         res.should.include "http://"
-        test.done(); 
-
-    "takeScreenshot": (test) ->
+        done null
+  
+  describe "takeScreenshot", ->
+    it "should take a screenshot", (done) ->
       browser.takeScreenshot (err,res) ->
         should.not.exist err
         data = new Buffer res, 'base64'
@@ -1056,9 +1117,10 @@ runTestWith = (remoteWdConfig, desired) ->
         img.format.should.equal 'PNG'
         img.width.should.not.equal 0
         img.height.should.not.equal 0
-        test.done();
-    
-    "allCookies / setCookies / deleteAllCookies / deleteCookie": (test) -> 
+        done null
+   
+  describe "allCookies / setCookies / deleteAllCookies / deleteCookie", -> 
+    it "cookies should work", (done) -> 
       async.series [
         (done) ->
           browser.deleteAllCookies (err) ->            
@@ -1141,9 +1203,11 @@ runTestWith = (remoteWdConfig, desired) ->
             done null
       ], (err) ->
         should.not.exist err
-        test.done()        
+        done null
     
-    "waitForCondition": (test) ->
+  describe "waitForCondition", ->
+    it "should wait for condition", (done) ->
+      @timeout 10000
       exprCond = "$('#waitForCondition .child').length > 0"
       async.series [        
         executeCoffee browser,   
@@ -1178,9 +1242,11 @@ runTestWith = (remoteWdConfig, desired) ->
             done(null)            
       ], (err) ->
         should.not.exist err
-        test.done()
-    
-    "waitForConditionInBrowser": (test) ->
+        done null
+      
+  describe "waitForConditionInBrowser", ->
+    it "should wait for condition within the browser", (done) ->
+      @timeout 10000
       exprCond = "$('#waitForConditionInBrowser .child').length > 0"
       async.series [
         executeCoffee browser,   
@@ -1223,46 +1289,47 @@ runTestWith = (remoteWdConfig, desired) ->
             done(null)
       ], (err) ->
         should.not.exist err
-        test.done()
-  
-    "err.inspect": (test) ->
+        done null
+        
+  describe "err.inspect", ->
+    it "error output should be clean", (done) ->
       browser.safeExecute "invalid-code> here", (err) ->
         should.exist err
         (err instanceof Error).should.be.true        
         should.exist err['jsonwire-error']
         err.inspect().should.include '"screen": "[hidden]"'
         err.inspect().should.include 'browser-error:'
-        test.done()
-    
-    "close": (test) ->        
+        done null
+        
+  
+  describe "close", ->        
+    it "should close current window", (done) ->        
       browser.close (err) ->
         should.not.exist err
-        test.done()
-    
-    "quit": (test) ->        
-      browser.quit (err) ->
+        done null
+        
+  describe "quit", ->        
+    it "should destroy browser", (done) ->
+      browser.quit (err) ->        
         should.not.exist err
-        test.done()    
-    
-  }
-
-app = null      
-
-exports.wd =
-  "per method test":    
-    
-    'starting express': (test) ->
-      app = express.createServer()
-      app.use(express.static(__dirname + '/assets'));
-      app.listen 8181
-      test.done()
-    
-    chrome: (runTestWith {}, {browserName: 'chrome'})
-
-    firefox: (runTestWith {}, {browserName: 'firefox'})
-
-    'stopping express': (test) ->
-      app.close()
-      test.done()
-
-    'checking leaks': leakDetector.lookForLeaks
+        done(null)
+  
+describe "wd", ->
+  describe "unit", ->
+    describe "per method tests", ->
+      express = new Express
+      before (done) ->
+        express.start()
+        done null
+        
+      after (done) ->
+        express.stop()          
+        done null
+      
+      describe "using chrome", ->  
+        test 'chrome'
+        
+      describe "using firefox", ->  
+        test 'firefox'
+      
+      leakDetector.lookForLeaks()
