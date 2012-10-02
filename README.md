@@ -653,4 +653,4 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 
 ## Test Coverage
 
-[test coverage](http://htmlpreview.github.com/?https://github.com/admc/wd/blob/master/coverage-ref.html)
+[test coverage](http://admc.io/wd/coverage.html)
