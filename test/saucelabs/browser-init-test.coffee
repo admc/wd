@@ -1,6 +1,6 @@
 # mocha test
 
-wd = require '../../lib/main'
+wd = require '../common/wd-with-cov'
 should = require 'should'
 configHelper = require './config-helper' 
 remoteWdConfig= configHelper.getRemoteWdConfig()

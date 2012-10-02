@@ -4,7 +4,7 @@ should = require 'should'
 
 leakDetector = (require '../common/leak-detector')()
 
-wd = require '../../lib/main'
+wd = require '../common/wd-with-cov'
 
 describe "wd", ->
   describe "unit", ->
@@ -85,5 +85,5 @@ describe "wd", ->
                 should.not.exist err
                 done null
     
-    leakDetector.lookForLeaks()
+    leakDetector.lookForLeaks() unless process.env.WD_COV?
             

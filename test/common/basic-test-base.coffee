@@ -6,7 +6,7 @@ assert = require 'assert'
 test = (remoteWdConfig, desired) ->  
   
   leakDetector = (require '../common/leak-detector')()
-  wd = require '../../lib/main'
+  wd = require './wd-with-cov'
 
   remoteWdConfig = remoteWdConfig() if typeof remoteWdConfig is 'function'
     
@@ -16,10 +16,11 @@ test = (remoteWdConfig, desired) ->
     it "should create browser", (done) ->
       browser = wd.remote remoteWdConfig
       should.exist browser
-      browser.on "status", (info) ->
-        console.log "\u001b[36m%s\u001b[0m", info
-      browser.on "command", (meth, path) ->
-        console.log " > \u001b[33m%s\u001b[0m: %s", meth, path
+      unless process.env.WD_COV?
+        browser.on "status", (info) ->
+          console.log "\u001b[36m%s\u001b[0m", info
+        browser.on "command", (meth, path) ->
+          console.log " > \u001b[33m%s\u001b[0m: %s", meth, path
       done null
     
   describe "init", ->
@@ -52,7 +53,7 @@ test = (remoteWdConfig, desired) ->
       browser.quit ->
         done null
     
-  leakDetector.lookForLeaks()
+  leakDetector.lookForLeaks() unless process.env.WD_COV?
     
 exports.test = test
 

@@ -5,6 +5,7 @@ DEFAULT:
 	@echo
 	@echo '  make test -> run the unit tests (start selenium with chromedriver first).'
 	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
+	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
 	@echo '  make compile2js -> compile coffee files to js.'
 	@echo '  make compile2js_watch -> compile coffee files to js, watch for changes.'
 	@echo '  make cleanGenJs -> clean js files generated from coffeescript.'
@@ -17,6 +18,15 @@ test:
 # run saucelabs test, configure username/key first
 test_saucelabs:
 	./node_modules/.bin/mocha test/saucelabs/*-test.coffee
+
+# run test coverage, install jscoverage first
+test_coverage:
+	rm -rf lib-cov
+	jscoverage --no-highlight lib lib-cov --exclude=bin.js
+	WD_COV=1 ./node_modules/.bin/mocha --reporter html-cov \
+	test/unit/*-test.coffee \
+	test/saucelabs/*-test.coffee \
+  > coverage.html
 
 # remove all the generated js
 cleanGenJs:

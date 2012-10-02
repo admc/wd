@@ -5,7 +5,7 @@ should = require 'should'
 {Express} = require './express'
 
 leakDetector = (require '../common/leak-detector')()
-wd = require '../../lib/main'
+wd = require '../common/wd-with-cov'
 
 test = (browserName) ->
   browser = null
@@ -13,10 +13,11 @@ test = (browserName) ->
   describe "wd.remote", -> 
     it "should create browser", (done) ->   
       browser = wd.remote {}
-      browser.on "status", (info) ->
-        console.log "\u001b[36m%s\u001b[0m", info
-      browser.on "command", (meth, path) ->
-        console.log " > \u001b[33m%s\u001b[0m: %s", meth, path   
+      unless process.env.WD_COV?
+        browser.on "status", (info) ->
+          console.log "\u001b[36m%s\u001b[0m", info
+        browser.on "command", (meth, path) ->
+          console.log " > \u001b[33m%s\u001b[0m: %s", meth, path   
       done null
     
   describe "init", ->
@@ -127,5 +128,5 @@ describe "wd", ->
       describe "using firefox", ->
         test 'firefox'
       
-      leakDetector.lookForLeaks()
+      leakDetector.lookForLeaks() unless process.env.WD_COV?
 
