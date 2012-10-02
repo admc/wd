@@ -644,7 +644,7 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
   - look at the results!
 </pre>
 
-## Run tests on Sauce Labs cloud!
+## Run the tests on Sauce Labs cloud!
 <pre>
   - cd wd
   - npm install .
@@ -653,4 +653,4 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 
 ## Test Coverage
 
-[here](http://htmlpreview.github.com/?https://github.com/admc/wd/blob/master/coverage-ref.html)
+[Results here](http://htmlpreview.github.com/?https://github.com/admc/wd/blob/master/coverage-ref.html)
