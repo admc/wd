@@ -3,6 +3,8 @@
 should = require 'should'
 assert = require 'assert'
 
+TIMEOUT = 60000
+
 test = (remoteWdConfig, desired) ->  
   
   leakDetector = (require '../common/leak-detector')()
@@ -25,14 +27,14 @@ test = (remoteWdConfig, desired) ->
     
   describe "init", ->
     it "should initialize browser", (done) ->
-      @timeout 15000
+      @timeout TIMEOUT
       browser.init desired, ->
         done null
 
   describe "browsing", ->
     describe "getting page", ->        
       it "should navigate to test page and check title", (done) ->
-        @timeout 15000
+        @timeout TIMEOUT
         browser.get "http://saucelabs.com/test/guinea-pig", ->
           browser.title (err, title) ->
             assert.ok ~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!"
@@ -40,7 +42,7 @@ test = (remoteWdConfig, desired) ->
   
     describe "clicking submit", ->
       it "submit element should be clicked", (done) ->
-        @timeout 15000
+        @timeout TIMEOUT
         browser.elementById "submit", (err, el) ->
           browser.clickElement el, ->
             browser.eval "window.location.href", (err, title) ->
@@ -49,7 +51,7 @@ test = (remoteWdConfig, desired) ->
               
   describe "leaving", ->
     it "closing browser", (done) ->
-      @timeout 15000
+      @timeout TIMEOUT
       browser.quit ->
         done null
     
