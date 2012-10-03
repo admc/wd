@@ -819,6 +819,36 @@
         });
       });
     });
+    describe("getTagName", function() {
+      return it("should get correct tag name", function(done) {
+        return async.series([
+          function(done) {
+            return browser.elementByCss("#getTagName input", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.getTagName(field, function(err, res) {
+                should.not.exist(err);
+                res.should.equal("input");
+                return done(null);
+              });
+            });
+          }, function(done) {
+            return browser.elementByCss("#getTagName a", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.getTagName(field, function(err, res) {
+                should.not.exist(err);
+                res.should.equal("a");
+                return done(null);
+              });
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
     describe("getValue (input)", function() {
       return it("should get correct value", function(done) {
         return browser.elementByCss("#getValue input", function(err, inputField) {
@@ -842,6 +872,78 @@
             res.should.equal("Hello getValueTest2!");
             return done(null);
           });
+        });
+      });
+    });
+    describe("isDisplayed", function() {
+      return it("should check if elemnt is displayed", function(done) {
+        return async.series([
+          function(done) {
+            return browser.elementByCss("#isDisplayed .displayed", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.isDisplayed(field, function(err, res) {
+                should.not.exist(err);
+                res.should.be["true"];
+                return done(null);
+              });
+            });
+          }, function(done) {
+            return browser.elementByCss("#isDisplayed .hidden", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.isDisplayed(field, function(err, res) {
+                should.not.exist(err);
+                res.should.be["false"];
+                return done(null);
+              });
+            });
+          }, function(done) {
+            return browser.elementByCss("#isDisplayed .displayed", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.displayed(field, function(err, res) {
+                should.not.exist(err);
+                res.should.be["true"];
+                return done(null);
+              });
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    describe("getComputedCss", function() {
+      return it("should retrieve the element computed css", function(done) {
+        return async.series([
+          function(done) {
+            return browser.elementByCss("#getComputedCss a", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.getComputedCss(field, 'color', function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                res.length.should.be.above(0);
+                return done(null);
+              });
+            });
+          }, function(done) {
+            return browser.elementByCss("#getComputedCss a", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.getComputedCSS(field, 'color', function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                res.length.should.be.above(0);
+                return done(null);
+              });
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
     });

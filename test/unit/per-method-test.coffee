@@ -311,7 +311,7 @@ test = (browserName) ->
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         done null
-
+  
   # would do with better test, but can't be bothered
   describe "setPageLoadTimeout", ->
     it "should set the page load timeout, test get, and unset it", (done) ->
@@ -667,6 +667,29 @@ test = (browserName) ->
         ], (err) ->
           should.not.exist err
           done null
+
+  describe "getTagName", -> 
+    it "should get correct tag name", (done) -> 
+      async.series [
+        (done) ->
+          browser.elementByCss "#getTagName input", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.getTagName field, (err,res) ->
+              should.not.exist err
+              res.should.equal "input"
+              done null
+        (done) ->
+          browser.elementByCss "#getTagName a", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.getTagName field, (err,res) ->
+              should.not.exist err
+              res.should.equal "a"
+              done null
+      ], (err) ->
+        should.not.exist err
+        done null
   
   describe "getValue (input)", -> 
     it "should get correct value", (done) -> 
@@ -687,7 +710,63 @@ test = (browserName) ->
           should.not.exist err
           res.should.equal "Hello getValueTest2!"
           done null
-          
+
+  describe "isDisplayed", -> 
+    it "should check if elemnt is displayed", (done) -> 
+      async.series [
+        (done) ->
+          browser.elementByCss "#isDisplayed .displayed", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.isDisplayed field, (err,res) ->
+              should.not.exist err
+              res.should.be.true
+              done null
+        (done) ->
+          browser.elementByCss "#isDisplayed .hidden", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.isDisplayed field, (err,res) ->
+              should.not.exist err
+              res.should.be.false
+              done null
+        (done) ->
+          browser.elementByCss "#isDisplayed .displayed", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.displayed field, (err,res) ->
+              should.not.exist err
+              res.should.be.true
+              done null
+      ], (err) ->
+        should.not.exist err
+        done null
+  
+  describe "getComputedCss", -> 
+    it "should retrieve the element computed css", (done) -> 
+      async.series [
+        (done) ->
+          browser.elementByCss "#getComputedCss a", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.getComputedCss field, 'color', (err,res) ->
+              should.not.exist err
+              should.exist res
+              res.length.should.be.above 0
+              done null
+        (done) ->
+          browser.elementByCss "#getComputedCss a", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.getComputedCSS field, 'color', (err,res) ->
+              should.not.exist err
+              should.exist res
+              res.length.should.be.above 0
+              done null
+      ], (err) ->
+        should.not.exist err
+        done null
+                  
   describe "clickElement", -> 
     it "element should be clicked", (done) -> 
       browser.elementByCss "#clickElement a", (err,anchor) ->
