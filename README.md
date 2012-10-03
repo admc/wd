@@ -22,6 +22,7 @@ npm install wd
   - Jonathan Lipps ([jlipps](https://github.com/jlipps))
   - Phil Sarin ([pdsarin](https://github.com/pdsarin))
   - Mathieu Sabourin ([OniOni](https://github.com/OniOni))
+  - Bjorn Tipling ([btipling](https://github.com/btipling))
   
 ## License
 
