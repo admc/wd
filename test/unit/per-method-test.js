@@ -79,7 +79,7 @@
     var browser, elementFunctionTests;
     browser = null;
     elementFunctionTests = function() {
-      var funcSuffix, _i, _len, _ref, _results;
+      var _funcSuffix, _i, _len, _ref, _results;
       describe("element", function() {
         return it("should retrieve element", function(done) {
           return async.series([
@@ -168,7 +168,60 @@
           });
         });
       });
-      describe("hasElement", function() {
+      describe("waitForElement", function() {
+        return it("should wait for element", function(done) {
+          this.timeout(10000);
+          return async.series([
+            executeCoffee(browser, "setTimeout ->\n  $('#waitForElement').append '<div class=\"child\">a waitForElement child</div>'\n, 750"), function(done) {
+              return browser.elementByCss("#waitForElement .child", function(err, res) {
+                should.exist(err);
+                err.status.should.equal(7);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.waitForElement("css selector", "#waitForElement .child", 2000, function(err) {
+                should.not.exist(err);
+                return done(err);
+              });
+            }, function(done) {
+              return browser.waitForElement("css selector", "#wrongsel .child", 2000, function(err) {
+                should.exist(err);
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
+        });
+      });
+      describe("waitForVisible", function() {
+        return it("should wait until element is visible", function(done) {
+          this.timeout(10000);
+          return async.series([
+            executeCoffee(browser, "$('#waitForVisible').append '<div class=\"child\">a waitForVisible child</div>'              \n$('#waitForVisible .child').hide()\nsetTimeout ->\n  $('#waitForVisible .child').show()\n, 750"), function(done) {
+              return browser.elementByCss("#waitForVisible .child", function(err, res) {
+                should.not.exist;
+                return done(null);
+              });
+            }, function(done) {
+              return browser.waitForVisible("css selector", "#waitForVisible .child", 2000, function(err) {
+                should.not.exist(err);
+                return done(err);
+              });
+            }, function(done) {
+              return browser.waitForVisible("css selector", "#wrongsel .child", 2000, function(err) {
+                should.exist(err);
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
+        });
+      });
+      describe("elements", function() {
         return it("should retrieve several elements", function(done) {
           return async.series([
             function(done) {
@@ -193,12 +246,15 @@
       _ref = ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText', 'ByPartialLinkText', 'ByTagName', 'ByXPath', 'ByCss'];
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        funcSuffix = _ref[_i];
+        _funcSuffix = _ref[_i];
         _results.push((function() {
-          var elementFuncName, elementsFuncName, hasElementFuncName, searchSeveralText, searchSeveralText2, searchText, searchText2;
+          var elementFuncName, elementsFuncName, funcSuffix, hasElementFuncName, searchSeveralText, searchSeveralText2, searchText, searchText2, waitForElementFuncName, waitForVisibleFuncName;
+          funcSuffix = _funcSuffix;
           elementFuncName = 'element' + funcSuffix;
           hasElementFuncName = 'hasElement' + funcSuffix;
           elementsFuncName = 'elements' + funcSuffix;
+          waitForElementFuncName = 'waitForElement' + funcSuffix;
+          waitForVisibleFuncName = 'waitForVisible' + funcSuffix;
           searchText = elementFuncName;
           if (searchText.match(/ByLinkText/)) {
             searchText = "click " + searchText;
@@ -309,6 +365,125 @@
               });
             });
           });
+          describe(waitForElementFuncName, function() {
+            return it("should wait for element (" + funcSuffix + ")", function(done) {
+              var childHtml, searchChild;
+              this.timeout(10000);
+              childHtml = "<div class='child child_" + waitForElementFuncName + "'>a " + waitForElementFuncName + " child</div>";
+              if (funcSuffix.match(/ById/)) {
+                childHtml = "<div class='child' id='child_" + waitForElementFuncName + "'>a " + waitForElementFuncName + " child</div>";
+              }
+              if (funcSuffix.match(/ByName/)) {
+                childHtml = "<div class='child' name='child_" + waitForElementFuncName + "'>a " + waitForElementFuncName + " child</div>";
+              }
+              if (funcSuffix.match(/ByLinkText/)) {
+                childHtml = "<a class='child'>child_" + waitForElementFuncName + "</a>";
+              }
+              if (funcSuffix.match(/ByPartialLinkText/)) {
+                childHtml = "<a class='child'>hello child_" + waitForElementFuncName + "</a>";
+              }
+              if (funcSuffix.match(/ByTagName/)) {
+                childHtml = "<hr class='child'>";
+              }
+              searchChild = "child_" + waitForElementFuncName;
+              if (funcSuffix.match(/ByCss/)) {
+                searchChild = "." + searchChild;
+              }
+              if (funcSuffix.match(/ByTagName/)) {
+                searchChild = "hr";
+              }
+              if (funcSuffix.match(/ByXPath/)) {
+                searchChild = "//div[@class='child child_" + waitForElementFuncName + "']";
+              }
+              return async.series([
+                executeCoffee(browser, "$('hr').remove()                \nsetTimeout ->\n  $('#" + waitForElementFuncName + "').append \"" + childHtml + "\"\n, 750"), function(done) {
+                  return browser[elementFuncName](searchChild, function(err, res) {
+                    should.exist(err);
+                    err.status.should.equal(7);
+                    return done(null);
+                  });
+                }, function(done) {
+                  return browser[waitForElementFuncName](searchChild, 2000, function(err) {
+                    should.not.exist(err);
+                    return done(err);
+                  });
+                }, function(done) {
+                  if (funcSuffix === 'ByClassName') {
+                    return browser[waitForElementFuncName]("__wrongsel", 2000, function(err) {
+                      should.exist(err);
+                      return done(null);
+                    });
+                  } else {
+                    return done(null);
+                  }
+                }
+              ], function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            });
+          });
+          describe(waitForVisibleFuncName, function() {
+            return it("should wait until element is visible", function(done) {
+              var childHtml, searchChild;
+              this.timeout(10000);
+              childHtml = "<div class='child child_" + waitForVisibleFuncName + "'>a " + waitForVisibleFuncName + " child</div>";
+              if (funcSuffix.match(/ById/)) {
+                childHtml = "<div class='child' id='child_" + waitForVisibleFuncName + "'>a " + waitForVisibleFuncName + " child</div>";
+              }
+              if (funcSuffix.match(/ByName/)) {
+                childHtml = "<div class='child' name='child_" + waitForVisibleFuncName + "'>a " + waitForVisibleFuncName + " child</div>";
+              }
+              if (funcSuffix.match(/ByLinkText/)) {
+                childHtml = "<a class='child'>child_" + waitForVisibleFuncName + "</a>";
+              }
+              if (funcSuffix.match(/ByPartialLinkText/)) {
+                childHtml = "<a class='child'>hello child_" + waitForVisibleFuncName + "</a>";
+              }
+              if (funcSuffix.match(/ByTagName/)) {
+                childHtml = "<hr class='child'>";
+              }
+              searchChild = "child_" + waitForVisibleFuncName;
+              if (funcSuffix.match(/ByCss/)) {
+                searchChild = "." + searchChild;
+              }
+              if (funcSuffix.match(/ByTagName/)) {
+                searchChild = "hr";
+              }
+              if (funcSuffix.match(/ByXPath/)) {
+                searchChild = "//div[@class='child child_" + waitForVisibleFuncName + "']";
+              }
+              return async.series([
+                executeCoffee(browser, "$('hr').remove()\n$('#" + waitForVisibleFuncName + "').append \"" + childHtml + "\"\n$('#" + waitForVisibleFuncName + " .child').hide()\nsetTimeout ->\n  $('#" + waitForVisibleFuncName + " .child').show()\n, 750"), function(done) {
+                  if (funcSuffix !== 'ByLinkText' && funcSuffix !== 'ByPartialLinkText') {
+                    return browser[elementFuncName](searchChild, function(err, res) {
+                      should.not.exist(err);
+                      return done(null);
+                    });
+                  } else {
+                    return done(null);
+                  }
+                }, function(done) {
+                  return browser[waitForVisibleFuncName](searchChild, 2000, function(err) {
+                    should.not.exist(err);
+                    return done(err);
+                  });
+                }, function(done) {
+                  if (funcSuffix === 'ByClassName') {
+                    return browser[waitForVisibleFuncName]("__wrongsel", 2000, function(err) {
+                      should.exist(err);
+                      return done(null);
+                    });
+                  } else {
+                    return done(null);
+                  }
+                }
+              ], function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            });
+          });
           return describe(elementsFuncName, function() {
             return it("should retrieve several elements", function(done) {
               return async.series([
@@ -375,7 +550,7 @@
     });
     describe("init", function() {
       return it("should initialize browser and open browser window", function(done) {
-        this.timeout(10000);
+        this.timeout(20000);
         return browser.init({
           browserName: browserName
         }, function(err) {
@@ -408,7 +583,7 @@
     });
     describe("get", function() {
       return it("should navigate to the test page", function(done) {
-        this.timeout(10000);
+        this.timeout(20000);
         return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
           should.not.exist(err);
           return done(null);
@@ -1526,6 +1701,53 @@
               secure: true
             }, function(err) {
               should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    describe("isVisible", function() {
+      return it("should check if element is visible", function(done) {
+        return async.series([
+          function(done) {
+            return browser.elementByCss("#isVisible a", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.isVisible(field, function(err, res) {
+                should.not.exist(err);
+                res.should.be["true"];
+                return done(null);
+              });
+            });
+          }, function(done) {
+            return browser.isVisible("css selector", "#isVisible a", function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(null);
+            });
+          }, function(done) {
+            return browser.execute("$('#isVisible a').hide();", function(err, res) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementByCss("#isVisible a", function(err, field) {
+              should.not.exist(err);
+              should.exist(field);
+              return browser.isVisible(field, function(err, res) {
+                should.not.exist(err);
+                res.should.be["false"];
+                return done(null);
+              });
+            });
+          }, function(done) {
+            return browser.isVisible("css selector", "#isVisible a", function(err, res) {
+              should.not.exist(err);
+              res.should.be["false"];
               return done(null);
             });
           }

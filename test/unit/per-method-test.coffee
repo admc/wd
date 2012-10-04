@@ -51,6 +51,7 @@ test = (browserName) ->
   browser = null;  
   
   elementFunctionTests = () ->
+    
     describe "element", ->
       it "should retrieve element", (done) ->
         async.series [
@@ -119,7 +120,62 @@ test = (browserName) ->
           should.not.exist err
           done null        
     
-    describe "hasElement", ->
+    describe "waitForElement", ->
+      it "should wait for element", (done) ->
+        @timeout 10000
+        async.series [        
+          executeCoffee browser,   
+            """
+              setTimeout ->
+                $('#waitForElement').append '<div class="child">a waitForElement child</div>'
+              , 750
+            """  
+          (done) ->
+            browser.elementByCss "#waitForElement .child", (err,res) ->            
+              should.exist err
+              err.status.should.equal 7
+              done(null)
+          (done) ->
+            browser.waitForElement "css selector", "#waitForElement .child", 2000, (err) ->            
+              should.not.exist err
+              done(err)
+          (done) ->
+            browser.waitForElement "css selector", "#wrongsel .child", 2000, (err) ->            
+              should.exist err
+              done(null)            
+        ], (err) ->
+          should.not.exist err
+          done null
+    
+    describe "waitForVisible", ->
+      it "should wait until element is visible", (done) ->
+        @timeout 10000
+        async.series [        
+          executeCoffee browser,   
+            """
+              $('#waitForVisible').append '<div class="child">a waitForVisible child</div>'              
+              $('#waitForVisible .child').hide()
+              setTimeout ->
+                $('#waitForVisible .child').show()
+              , 750
+            """  
+          (done) ->
+            browser.elementByCss "#waitForVisible .child", (err,res) ->            
+              should.not.exist
+              done(null)
+          (done) ->
+            browser.waitForVisible "css selector", "#waitForVisible .child", 2000, (err) ->            
+              should.not.exist err
+              done(err)
+          (done) ->
+            browser.waitForVisible "css selector", "#wrongsel .child", 2000, (err) ->            
+              should.exist err
+              done(null)            
+        ], (err) ->
+          should.not.exist err
+          done null
+    
+    describe "elements", ->
       it "should retrieve several elements", (done) ->
         async.series [
           (done) ->
@@ -136,7 +192,7 @@ test = (browserName) ->
           should.not.exist err
           done null        
     
-    for funcSuffix in [
+    for _funcSuffix in [
       'ByClassName'
       , 'ByCssSelector' 
       , 'ById'
@@ -148,10 +204,13 @@ test = (browserName) ->
       , 'ByCss'
     ]     
       do ->
+        funcSuffix = _funcSuffix
         elementFuncName = 'element' + funcSuffix
         hasElementFuncName = 'hasElement' + funcSuffix
         elementsFuncName = 'elements' + funcSuffix
-
+        waitForElementFuncName = 'waitForElement' + funcSuffix
+        waitForVisibleFuncName = 'waitForVisible' + funcSuffix
+        
         searchText = elementFuncName;
         searchText = "click #{searchText}" if searchText.match /ByLinkText/
         searchText = ".#{searchText}" if searchText.match /ByCss/
@@ -164,7 +223,9 @@ test = (browserName) ->
         
         searchSeveralText = searchText.replace('element','elements') 
         searchSeveralText2 = searchText2.replace('element','elements') 
-
+            
+        
+        
         describe elementFuncName, ->
           it "should retrieve element", (done) ->
             async.series [
@@ -215,7 +276,7 @@ test = (browserName) ->
             ], (err) ->
               should.not.exist err
               done null        
-        
+                      
         describe  hasElementFuncName, ->
           it "should check if element exists", (done) ->
             async.series [
@@ -231,8 +292,110 @@ test = (browserName) ->
                   done null
             ], (err) ->
               should.not.exist err
-              done null        
-
+              done null  
+          
+        describe waitForElementFuncName, ->
+          it "should wait for element (#{funcSuffix})", (done) ->
+            @timeout 10000
+            
+            childHtml = "<div class='child child_#{waitForElementFuncName }'>a #{waitForElementFuncName } child</div>"          
+            if funcSuffix.match /ById/
+              childHtml = "<div class='child' id='child_#{waitForElementFuncName }'>a #{waitForElementFuncName } child</div>"          
+            if funcSuffix.match /ByName/
+              childHtml = "<div class='child' name='child_#{waitForElementFuncName }'>a #{waitForElementFuncName } child</div>"          
+            if funcSuffix.match /ByLinkText/
+              childHtml = "<a class='child'>child_#{waitForElementFuncName }</a>"          
+            if funcSuffix.match /ByPartialLinkText/
+              childHtml = "<a class='child'>hello child_#{waitForElementFuncName }</a>"          
+            if funcSuffix.match /ByTagName/
+              childHtml = "<hr class='child'>"          
+                              
+            searchChild = "child_#{waitForElementFuncName }"
+            searchChild = ".#{searchChild}" if funcSuffix.match /ByCss/
+            searchChild = "hr" if funcSuffix.match /ByTagName/
+            searchChild = "//div[@class='child child_#{waitForElementFuncName}']" if funcSuffix.match /ByXPath/         
+          
+            async.series [                                        
+              executeCoffee browser,   
+                """
+                  $('hr').remove()                
+                  setTimeout ->
+                    $('##{waitForElementFuncName}').append "#{childHtml}"
+                  , 750
+                """                  
+              (done) ->
+                browser[elementFuncName] searchChild, (err,res) ->            
+                  should.exist err
+                  err.status.should.equal 7
+                  done(null)                    
+              (done) ->
+                browser[waitForElementFuncName] searchChild, 2000, (err) ->            
+                  should.not.exist err
+                  done(err)
+              (done) ->
+                if funcSuffix is 'ByClassName'                
+                  browser[waitForElementFuncName] "__wrongsel", 2000, (err) ->            
+                    should.exist err
+                    done(null)
+                else
+                  done(null)
+            ], (err) ->
+              should.not.exist err
+              done null
+        
+        describe waitForVisibleFuncName, ->
+          it "should wait until element is visible", (done) ->
+            @timeout 10000
+              
+            childHtml = "<div class='child child_#{waitForVisibleFuncName}'>a #{waitForVisibleFuncName} child</div>"          
+            if funcSuffix.match /ById/
+              childHtml = "<div class='child' id='child_#{waitForVisibleFuncName}'>a #{waitForVisibleFuncName} child</div>"          
+            if funcSuffix.match /ByName/
+              childHtml = "<div class='child' name='child_#{waitForVisibleFuncName}'>a #{waitForVisibleFuncName} child</div>"          
+            if funcSuffix.match /ByLinkText/
+              childHtml = "<a class='child'>child_#{waitForVisibleFuncName}</a>"          
+            if funcSuffix.match /ByPartialLinkText/
+              childHtml = "<a class='child'>hello child_#{waitForVisibleFuncName}</a>"          
+            if funcSuffix.match /ByTagName/
+              childHtml = "<hr class='child'>"          
+                              
+            searchChild = "child_#{waitForVisibleFuncName}"
+            searchChild = ".#{searchChild}" if funcSuffix.match /ByCss/
+            searchChild = "hr" if funcSuffix.match /ByTagName/
+            searchChild = "//div[@class='child child_#{waitForVisibleFuncName}']" if funcSuffix.match /ByXPath/         
+              
+            async.series [                                        
+              executeCoffee browser,   
+                """
+                  $('hr').remove()
+                  $('##{waitForVisibleFuncName}').append "#{childHtml}"
+                  $('##{waitForVisibleFuncName} .child').hide()
+                  setTimeout ->
+                    $('##{waitForVisibleFuncName} .child').show()
+                  , 750
+                """                  
+              (done) ->
+                unless funcSuffix in ['ByLinkText','ByPartialLinkText']
+                  browser[elementFuncName] searchChild, (err,res) ->            
+                    should.not.exist err
+                    done(null)  
+                else
+                  done(null)     
+              (done) ->
+                browser[waitForVisibleFuncName] searchChild, 2000, (err) ->            
+                  should.not.exist err
+                  done(err)
+              (done) ->
+                if funcSuffix is 'ByClassName'                              
+                  browser[waitForVisibleFuncName] "__wrongsel", 2000, (err) ->            
+                    should.exist err
+                    done(null)
+                else
+                  done(null)
+            ], (err) ->
+              should.not.exist err
+              done null
+        
         describe  elementsFuncName, ->
           it "should retrieve several elements", (done) ->
             async.series [
@@ -253,7 +416,7 @@ test = (browserName) ->
                   done null
             ], (err) ->
               should.not.exist err
-              done null        
+              done null                      
          
   describe "wd.remote", ->
     it "should create browser object", (done) ->
@@ -281,7 +444,7 @@ test = (browserName) ->
   
   describe "init", ->
     it "should initialize browser and open browser window", (done)  ->
-      @timeout 10000
+      @timeout 20000
       browser.init {browserName: browserName}, (err) ->
         should.not.exist err
         done null
@@ -307,7 +470,7 @@ test = (browserName) ->
   
   describe "get", ->
     it "should navigate to the test page", (done)  ->
-      @timeout 10000
+      @timeout 20000
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
         should.not.exist err
         done null
@@ -645,7 +808,7 @@ test = (browserName) ->
       ], (err) ->
         should.not.exist err
         done null
-
+  
   elementFunctionTests()
   
   describe "getAttribute", -> 
@@ -1284,7 +1447,44 @@ test = (browserName) ->
       ], (err) ->
         should.not.exist err
         done null
-    
+  
+  describe "isVisible", -> 
+    it "should check if element is visible", (done) -> 
+      async.series [
+        (done) ->
+          browser.elementByCss "#isVisible a", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.isVisible field, (err,res) ->
+              should.not.exist err
+              res.should.be.true
+              done null
+        (done) ->
+          browser.isVisible "css selector", "#isVisible a", (err,res) ->
+            should.not.exist err
+            res.should.be.true
+            done null
+        (done) ->
+          browser.execute "$('#isVisible a').hide();", (err,res) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.elementByCss "#isVisible a", (err, field) ->
+            should.not.exist err
+            should.exist field
+            browser.isVisible field, (err,res) ->
+              should.not.exist err
+              res.should.be.false
+              done null
+        (done) ->
+          browser.isVisible "css selector", "#isVisible a", (err,res) ->
+            should.not.exist err
+            res.should.be.false
+            done null
+      ], (err) ->
+        should.not.exist err
+        done null
+
   describe "waitForCondition", ->
     it "should wait for condition", (done) ->
       @timeout 10000
