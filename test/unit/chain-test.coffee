@@ -33,7 +33,7 @@ test = (browserName) ->
         .elementById 'submit', (err, el) ->
           # we should make clickElement not require a callback
           browser.clickElement el, (err) ->
-            console.log("did the click!")
+            should.not.exist.err
         .eval "window.location.href", (err, href) ->
           href.should.include 'http'
         .quit (err) ->

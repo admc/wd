@@ -37,7 +37,7 @@
           return title.should.include('I am a page title - Sauce Labs');
         }).elementById('submit', function(err, el) {
           return browser.clickElement(el, function(err) {
-            return console.log("did the click!");
+            return should.not.exist.err;
           });
         })["eval"]("window.location.href", function(err, href) {
           return href.should.include('http');
