@@ -26,6 +26,8 @@
     ,"imageinfo": "latest"
     ,"covershot": "latest"
     ,"nock": "latest"
+    ,"dox": "latest"
+    ,"mu2": "latest"
   }
   , "scripts" : {
     "test": "make test_saucelabs"
