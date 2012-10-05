@@ -38,6 +38,13 @@ describe "wd", ->
             browser.get "www.google.com", (err) ->
               should.not.exist err
               done null
+
+        describe "simplecallback with 200 OK", ->
+          it "should get url", (done) ->    
+            server.post( '/wd/hub/session/1234/url' , '*' ).reply 200, "OK"          
+            browser.get "www.google.com", (err) ->
+              should.not.exist err
+              done null
         
         describe "simplecallback with empty JSON data", ->
           it "should get url", (done) ->    
