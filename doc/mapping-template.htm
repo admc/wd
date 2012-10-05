@@ -1,0 +1,39 @@
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
+        <strong>JsonWireProtocol</strong>
+      </td>
+      <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
+        <strong>wd</strong>
+      </td>
+    </tr>
+    {{#mapping}}
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          {{method}} <a href="{{url}}">{{path}}</a><br>
+          {{desc}}
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          {{#wd_doc0}}
+            NA
+          {{/wd_doc0}}
+          {{#wd_doc1}}
+            {{#desc}}
+              {{line}}<br>
+            {{/desc}}
+          {{/wd_doc1}}
+          {{#wd_docN}}
+                {{#wd_doc}}
+                  <p>
+                  {{#desc}}
+                    {{line}}<br>
+                  {{/desc}}
+                </p>
+                {{/wd_doc}}  
+          {{/wd_docN}}
+        </td>
+      </tr>
+    {{/mapping}}  
+  </tbody>
+</table>
