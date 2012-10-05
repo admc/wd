@@ -27,26 +27,3 @@ for jw_k, jw_v of jsonWireFull
 mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping})
   .on 'data', (data) ->
     process.stdout.write data.toString()
-
-#console.log JSON.stringify resMapping, null, "\t"  
-
-
-
-###
-fs = require "fs"
-async = require "async"
-fd = fs.openSync "jsonwire.txt", "r"
-
-
-
-keys = {}
-i = 0
-key = null
-fs.readFileSync('jsonwire.txt').toString().split('\n').forEach (line) ->
-  if (i % 2) is 0
-    key = line.trim()
-  else keys[key] = line.trim()
-  i = i + 1;
-console.log keys
-  
-fs.writeFileSync("jsonwire-full.json", JSON.stringify( keys, null, '  '), 'utf8')
