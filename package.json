@@ -25,6 +25,7 @@
     ,"gleak": "latest"
     ,"imageinfo": "latest"
     ,"covershot": "latest"
+    ,"nock": "latest"
   }
   , "scripts" : {
     "test": "make test_saucelabs"
