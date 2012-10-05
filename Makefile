@@ -1,9 +1,9 @@
-TEST_DIR = test/common test/unit test/saucelabs
-TEST_COFFEE_FILES = $(shell find test/common/*.coffee test/unit/*.coffee test/saucelabs/*.coffee)
+TEST_DIR = test/common test/local test/saucelabs
+TEST_COFFEE_FILES = $(shell find test/common/*.coffee test/local/*.coffee test/saucelabs/*.coffee)
 
 DEFAULT:
 	@echo
-	@echo '  make test -> run the unit tests (start selenium with chromedriver first).'
+	@echo '  make test -> run the local tests (start selenium with chromedriver first).'
 	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
 	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
 	@echo '  make compile2js -> compile coffee files to js.'
@@ -13,7 +13,7 @@ DEFAULT:
 
 # run test, start selenium server first
 test:
-	./node_modules/.bin/mocha test/unit/*-test.coffee
+	./node_modules/.bin/mocha test/local/*-test.coffee
 
 # run saucelabs test, configure username/key first
 test_saucelabs:
@@ -24,13 +24,13 @@ test_coverage:
 	rm -rf lib-cov
 	jscoverage --no-highlight lib lib-cov --exclude=bin.js
 	WD_COV=1 ./node_modules/.bin/mocha --reporter html-cov \
-	test/unit/*-test.coffee \
+	test/local/*-test.coffee \
 	test/saucelabs/*-test.coffee \
   > coverage.html
 
 # remove all the generated js
 cleanGenJs:
-	@rm -f test/common/*.js test/unit/*.js test/saucelabs/*.js
+	@rm -f test/common/*.js test/local/*.js test/saucelabs/*.js
 
 # compile once
 compile2js:
