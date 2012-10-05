@@ -11,8 +11,13 @@
     {{#mapping}}
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
-          {{method}} <a href="{{url}}">{{path}}</a><br>
-          {{desc}}
+          {{#jsonWire}}
+            {{method}} <a href="{{url}}">{{path}}</a><br>
+            {{desc}}
+          {{/jsonWire}}
+          {{#extra}}
+            EXTRA
+          {{/extra}}
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           {{#wd_doc0}}
