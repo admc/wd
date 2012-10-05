@@ -1,3 +1,5 @@
+isFull = process.argv[2] is "full"
+
 fs = require "fs"
 mu = require 'mu2'
 
@@ -14,16 +16,15 @@ for jw_k, jw_v of jsonWireFull
     url: "http://code.google.com/p/selenium/wiki/JsonWireProtocol##{jw_k.replace(/\s/g, '_')}"
     desc: jw_v
     wd_doc: []
-  resMapping.push current      
   for wd_v in webdriverDoc
     if (t for t in wd_v.tags when t.type is 'jsonWire' and t.string is jw_k).length > 0       
       current.wd_doc.push
         'desc': ({line: l} for l in (wd_v.description.full.split '\n') when l isnt '')
         params: (t.string for t in wd_v.tags when t.type is 'param')
-  current.wd_doc0 = current.wd_doc if current.wd_doc.length is 0 
+  current.wd_doc0 = true if current.wd_doc.length is 0 
   current.wd_doc1 = current.wd_doc if current.wd_doc.length is 1 
-  current.wd_docN = [{wd_doc:current.wd_doc}] if current.wd_doc.length > 1 
-  
+  current.wd_docN = current.wd_doc if current.wd_doc.length > 1 
+  resMapping.push current if isFull or current.wd_doc.length > 0 
 mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping})
   .on 'data', (data) ->
     process.stdout.write data.toString()

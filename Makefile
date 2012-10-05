@@ -12,7 +12,8 @@ DEFAULT:
 	@echo '  make compile2js -> compile coffee files to js.'
 	@echo '  make compile2js_watch -> compile coffee files to js, watch for changes.'
 	@echo '  make cleanGenJs -> clean js files generated from coffeescript.'
-	@echo '  build_mapping -> output jsonwire mapping html fragment.'  
+	@echo '  build_mapping -> build the mapping (implemented only).'  
+	@echo '  build_full_mapping -> build the mapping (full).'  
 	@echo
 
 # run unit and local tests, start selenium server first
@@ -54,10 +55,15 @@ compile2js:
 compile2js_watch:
 	./node_modules/.bin/coffee --compile --watch $(TEST_DIR)
 
-# build the mapping
+# build the mapping (implemented only)
 build_mapping:
-	./node_modules/.bin/dox -r < lib/webdriver.js > doc/webdriver-doc.json
-	./node_modules/.bin/coffee doc/mapping-builder.coffee
+	@./node_modules/.bin/dox -r < lib/webdriver.js > doc/webdriver-doc.json
+	@./node_modules/.bin/coffee doc/mapping-builder.coffee
+
+# build the mapping (full)
+build_full_mapping:
+	@./node_modules/.bin/dox -r < lib/webdriver.js > doc/webdriver-doc.json
+	@./node_modules/.bin/coffee doc/mapping-builder.coffee full
 
 .PHONY: \
 	test \
@@ -68,4 +74,5 @@ build_mapping:
 	compile2js \
 	compile2js_watch \
 	cleanGenJs DEFAULT \
-  build_mapping
+  build_mapping \
+  build_full_mapping
