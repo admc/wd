@@ -1017,7 +1017,9 @@ browser.init(desired, function() {
 
 ### Full JsonWireProtocol mapping:
 
-[full mapping](https://github.com/sebv/wd/blob/master/doc/jsonwiremap-all.md)
+[supported mapping](https://github.com/sebv/wd/blob/master/doc/jsonwire-mapping.htm)
+[full mapping](https://github.com/sebv/wd/blob/master/doc/jsonwire-full-mapping.htm)
+
 
 ## More docs!
 <pre>
