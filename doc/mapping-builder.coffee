@@ -8,6 +8,8 @@ mu.root = __dirname
 jsonWireFull = JSON.parse fs.readFileSync('doc/jsonwire-full.json').toString()
 webdriverDoc = JSON.parse fs.readFileSync('doc/webdriver-doc.json').toString()
 resMapping = []
+
+# main mapping
 for jw_k, jw_v of jsonWireFull  
   current =
     jsonWire: 
@@ -26,6 +28,7 @@ for jw_k, jw_v of jsonWireFull
   current.wd_docN = current.wd_doc if current.wd_doc.length > 1 
   resMapping.push current if isFull or current.wd_doc.length > 0 
 
+# extra section
 for wd_v in webdriverDoc
   if (t for t in wd_v.tags when t.type is 'jsonWire').length is 0
     current = 
@@ -36,6 +39,20 @@ for wd_v in webdriverDoc
     current.wd_doc1 = current.wd_doc
     resMapping.push current 
 
+# missing section, looking for errors
+for wd_v in webdriverDoc
+  for t in wd_v.tags when t.type is 'jsonWire'
+    tag = t.string
+    unless jsonWireFull[tag]?
+      current = 
+        missing: 
+          key:tag
+        wd_doc: []
+      current.wd_doc.push
+        'desc': ({line: l} for l in (wd_v.description.full.split '\n') when l isnt '')
+      current.wd_doc1 = current.wd_doc
+      resMapping.push current 
+      
 mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping})
   .on 'data', (data) ->
     process.stdout.write data.toString()
