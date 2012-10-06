@@ -99,6 +99,7 @@ browser.init(desired, function() {
             Query the server's current status.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -116,6 +117,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session">/session</a><br>
             Create a new session.
+          
           
           
         </td>
@@ -137,6 +139,7 @@ browser.init(desired, function() {
           
             GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessions">/sessions</a><br>
             Returns a list of the currently active sessions.
+          
           
           
         </td>
@@ -168,6 +171,7 @@ browser.init(desired, function() {
             Retrieve the capabilities of the specified session.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -185,6 +189,7 @@ browser.init(desired, function() {
           
             DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId">/session/:sessionId</a><br>
             Delete the session.
+          
           
           
         </td>
@@ -208,6 +213,7 @@ browser.init(desired, function() {
             Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -229,6 +235,7 @@ browser.init(desired, function() {
             Set the amount of time, in milliseconds, that asynchronous scripts executed by /session/:sessionId/execute_async are permitted to run before they are aborted and a |Timeout| error is returned to the client.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -248,6 +255,7 @@ browser.init(desired, function() {
             Set the amount of time the driver should wait when searching for elements.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -263,8 +271,29 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handle">/session/:sessionId/window_handle</a><br>
+            Retrieve the current window handle.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              windowHandle(cb) -&gt; cb(err, handle)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handles">/session/:sessionId/window_handles</a><br>
             Retrieve the list of all window handles available to the session.
+          
           
           
         </td>
@@ -286,6 +315,7 @@ browser.init(desired, function() {
             Retrieve the URL of the current page.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -303,6 +333,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/url">/session/:sessionId/url</a><br>
             Navigate to a new URL.
+          
           
           
         </td>
@@ -326,6 +357,7 @@ browser.init(desired, function() {
             Navigate forwards in the browser history, if possible.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -345,6 +377,7 @@ browser.init(desired, function() {
             Navigate backwards in the browser history, if possible.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -360,8 +393,29 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/refresh">/session/:sessionId/refresh</a><br>
+            Refresh the current page.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              refresh(cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute">/session/:sessionId/execute</a><br>
             Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
+          
           
           
         </td>
@@ -423,6 +477,7 @@ browser.init(desired, function() {
             Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -460,8 +515,49 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/screenshot">/session/:sessionId/screenshot</a><br>
+            Take a screenshot of the current page.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              takeScreenshot(cb) -&gt; cb(err, screenshot)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/frame">/session/:sessionId/frame</a><br>
+            Change focus to another frame on the page.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              frame(frameRef, cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window">/session/:sessionId/window</a><br>
             Change focus to another window.
+          
           
           
         </td>
@@ -483,6 +579,7 @@ browser.init(desired, function() {
             Close the current window.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -502,6 +599,7 @@ browser.init(desired, function() {
             Retrieve all cookies visible to the current page.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -519,6 +617,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
             Set a cookie.
+          
           
           
         </td>
@@ -548,6 +647,7 @@ browser.init(desired, function() {
             Delete all cookies visible to the current page.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -565,6 +665,7 @@ browser.init(desired, function() {
           
             DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/cookie/:name">/session/:sessionId/cookie/:name</a><br>
             Delete the cookie with the given name.
+          
           
           
         </td>
@@ -586,6 +687,7 @@ browser.init(desired, function() {
             Get the current page title.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -603,6 +705,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a><br>
             Search for an element on the page, starting from the document root.
+          
           
           
         </td>
@@ -644,8 +747,149 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/elements">/session/:sessionId/elements</a><br>
+            Search for multiple elements on the page, starting from the document root.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+          
+            <p>
+              
+                Retrieve an element avoiding not found exception and returning null instead: <br>
+              
+                elementOrNull(using, value, cb) -&gt; cb(err, element)<br>
+              
+            </p>
+          
+            <p>
+              
+                Retrieve an element avoiding not found exception and returning undefined instead: <br>
+              
+                elementIfExists(using, value, cb) -&gt; cb(err, element)<br>
+              
+            </p>
+          
+            <p>
+              
+                elements(using, value, cb) -&gt; cb(err, elements)<br>
+              
+            </p>
+          
+            <p>
+              
+                Check if element exists: <br>
+              
+                hasElement(using, value, cb) -&gt; cb(err, boolean)<br>
+              
+            </p>
+          
+            <p>
+              
+                Retrieve an element avoiding not found exception and returning null instead: <br>
+              
+                elementByClassNameOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByCssSelectorOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByIdOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByNameOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByLinkTextOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByPartialLinkTextOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByTagNameOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
+              
+            </p>
+          
+            <p>
+              
+                Retrieve an element avoiding not found exception and returning undefined instead: <br>
+              
+                elementByClassNameIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByCssSelectorIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByIdIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByNameIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByLinkTextIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByPartialLinkTextIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByTagNameIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+                elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
+              
+            </p>
+          
+            <p>
+              
+                Check if element exists: <br>
+              
+                hasElementByClassName(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByCssSelector(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementById(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByName(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByLinkText(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByPartialLinkText(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByTagName(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByXPath(value, cb) -&gt; cb(err, boolean) <br>
+              
+                hasElementByCss(value, cb) -&gt; cb(err, boolean) <br>
+              
+            </p>
+          
+            <p>
+              
+                elementsByClassName(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByCssSelector(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsById(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByName(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByLinkText(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByTagName(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByXPath(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByCss(value, cb) -&gt; cb(err, elements)      <br>
+              
+            </p>
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active">/session/:sessionId/element/active</a><br>
             Get the element on the page that currently has focus.
+          
           
           
         </td>
@@ -667,6 +911,7 @@ browser.init(desired, function() {
             Click on an element.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -684,6 +929,7 @@ browser.init(desired, function() {
           
             GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/text">/session/:sessionId/element/:id/text</a><br>
             Returns the visible text for the element.
+          
           
           
         </td>
@@ -721,6 +967,7 @@ browser.init(desired, function() {
             Send a sequence of key strokes to an element.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -744,6 +991,7 @@ browser.init(desired, function() {
             Send a sequence of key strokes to the active element.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -763,8 +1011,29 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/name">/session/:sessionId/element/:id/name</a><br>
+            Query for an element's tag name.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              getTagName(element, cb) -&gt; cb(err, name)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/clear">/session/:sessionId/element/:id/clear</a><br>
             Clear a TEXTAREA or text INPUT element's value.
+          
           
           
         </td>
@@ -784,6 +1053,7 @@ browser.init(desired, function() {
           
             GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/attribute/:name">/session/:sessionId/element/:id/attribute/:name</a><br>
             Get the value of an element's attribute.
+          
           
           
         </td>
@@ -811,8 +1081,49 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/displayed">/session/:sessionId/element/:id/displayed</a><br>
+            Determine if an element is currently displayed.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              isDisplayed(element, cb) -&gt; cb(err, displayed)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+            GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName">/session/:sessionId/element/:id/css/:propertyName</a><br>
+            Query the value of an element's computed CSS property.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              getComputedCss(element, cssProperty , cb) -&gt; cb(err, value)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/accept_alert">/session/:sessionId/accept_alert</a><br>
             Accepts the currently displayed alert dialog.
+          
           
           
         </td>
@@ -834,6 +1145,7 @@ browser.init(desired, function() {
             Dismisses the currently displayed alert dialog.
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -851,6 +1163,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/moveto">/session/:sessionId/moveto</a><br>
             Move the mouse by an offset of the specificed element.
+          
           
           
         </td>
@@ -872,6 +1185,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/click">/session/:sessionId/click</a><br>
             Click any mouse button (at the coordinates set by the last moveto command).
+          
           
           
         </td>
@@ -897,6 +1211,7 @@ browser.init(desired, function() {
             Click and hold the left mouse button (at the coordinates set by the last moveto command).
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -914,6 +1229,7 @@ browser.init(desired, function() {
           
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttonup">/session/:sessionId/buttonup</a><br>
             Releases the mouse button previously held (where the mouse is currently at).
+          
           
           
         </td>
@@ -935,6 +1251,7 @@ browser.init(desired, function() {
             Double-clicks at the current mouse coordinates (set by moveto).
           
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -952,6 +1269,155 @@ browser.init(desired, function() {
           
           
             EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              windowName(cb) -&gt; cb(err, name)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              waitForElementByClassName(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementById(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByName(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByLinkText(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByTagName(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByXPath(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForElementByCss(value, timeout, cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              waitForVisibleByClassName(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleById(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByName(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByLinkText(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByTagName(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByXPath(value, timeout, cb) -&gt; cb(err)<br>
+            
+              waitForVisibleByCss(value, timeout, cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              isVisible(element , cb) -&gt; cb(err, boolean)<br>
+            
+              deprecated: isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
           
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
@@ -985,6 +1451,7 @@ browser.init(desired, function() {
           
             EXTRA
           
+          
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
@@ -1017,9 +1484,9 @@ browser.init(desired, function() {
 
 ### Full JsonWireProtocol mapping:
 
-[supported mapping](doc/jsonwire-mapping.md)
+[supported mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-mapping.md)
 
-[full mapping](doc/jsonwire-full-mapping.md)
+[full mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
 
 
 ## More docs!
