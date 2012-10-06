@@ -58,14 +58,14 @@ test = (browserName) ->
         handle.length.should.be.above 0
         handles['window-1'] = handle
         done null  
-            
+           
   describe "opening second window", ->
     it "should open the second window", (done) ->
       @timeout 10000
-      browser.execute "window.open('http://127.0.0.1:8181/window-test-page.html?window_num=2','window-2')", (err) ->
+      browser.newWindow 'http://127.0.0.1:8181/window-test-page.html?window_num=2','window-2', (err) ->
         should.not.exist err
         done null  
-
+  
   describe "change focus to second window", ->
     it "should focus on second window", (done) ->
       browser.window 'window-2', (err) ->
@@ -88,7 +88,7 @@ test = (browserName) ->
   describe "opening third window", ->
     it "should open the third window", (done) ->
       @timeout 10000
-      browser.execute "window.open('http://127.0.0.1:8181/window-test-page.html?window_num=3','window-3')", (err) ->
+      browser.newWindow 'http://127.0.0.1:8181/window-test-page.html?window_num=3','window-3', (err) ->
         should.not.exist err
         done null  
 
@@ -158,6 +158,42 @@ test = (browserName) ->
           _handles.should.have.length 1
           done null
 
+  describe "change focus to first window", ->
+    it "should focus on first window", (done) ->
+      browser.window 'window-1', (err) ->
+        should.not.exist err
+        browser.windowName (err, name) ->
+          should.not.exist err
+          name.should.equal 'window-1'
+          done null  
+  
+  describe "opening window with no name", ->
+    it "should open the third window", (done) ->
+      @timeout 10000
+      browser.newWindow 'http://127.0.0.1:8181/window-test-page.html?window_num=4', (err) ->
+        should.not.exist err
+        done null  
+
+  describe "focusing on window with no name handle", ->
+    it "last handle should correspond to latest opened window", (done) ->  
+      browser.windowHandles (err, _handles) ->
+        should.not.exist err
+        _handles.should.have.length 2
+        browser.window _handles[1], (err) ->
+          should.not.exist err
+          browser.url (err, url) ->
+            url.should.include "num=4"
+            done null  
+
+  describe "closing window with no name", ->
+    it "should close the window with no name", (done) ->
+      browser.close (err) ->
+        should.not.exist err
+        browser.windowHandles (err, _handles) ->
+          should.not.exist err
+          _handles.should.have.length 1
+          done null
+  
   describe "change focus to first window", ->
     it "should focus on first window", (done) ->
       browser.window 'window-1', (err) ->
@@ -267,7 +303,7 @@ describe "wd", ->
         test 'chrome'
 
       describe "using firefox", ->
-       test 'firefox'
+        test 'firefox'
       
       leakDetector.lookForLeaks() unless process.env.WD_COV?
 

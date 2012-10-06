@@ -1276,6 +1276,35 @@ browser.init(desired, function() {
           
           
             
+              Opens a new window (using Javascript window.open):<br>
+            
+              newWindow(url, name, cb) -&gt; cb(err)<br>
+            
+              newWindow(url, cb) -&gt; cb(err)<br>
+            
+              name: optional window name<br>
+            
+              Window can later be accessed by name with the window method, <br>
+            
+              or by getting the last handle returned by the windowHandles method.<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
               windowName(cb) -&gt; cb(err, name)<br>
             
           
@@ -1480,7 +1509,6 @@ browser.init(desired, function() {
       
   </tbody>
 </table>
-
 
 ### Full JsonWireProtocol mapping:
 

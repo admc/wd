@@ -81,7 +81,7 @@
     describe("opening second window", function() {
       return it("should open the second window", function(done) {
         this.timeout(10000);
-        return browser.execute("window.open('http://127.0.0.1:8181/window-test-page.html?window_num=2','window-2')", function(err) {
+        return browser.newWindow('http://127.0.0.1:8181/window-test-page.html?window_num=2', 'window-2', function(err) {
           should.not.exist(err);
           return done(null);
         });
@@ -114,7 +114,7 @@
     describe("opening third window", function() {
       return it("should open the third window", function(done) {
         this.timeout(10000);
-        return browser.execute("window.open('http://127.0.0.1:8181/window-test-page.html?window_num=3','window-3')", function(err) {
+        return browser.newWindow('http://127.0.0.1:8181/window-test-page.html?window_num=3', 'window-3', function(err) {
           should.not.exist(err);
           return done(null);
         });
@@ -197,6 +197,54 @@
     });
     describe("closing third window", function() {
       return it("should close the third window", function(done) {
+        return browser.close(function(err) {
+          should.not.exist(err);
+          return browser.windowHandles(function(err, _handles) {
+            should.not.exist(err);
+            _handles.should.have.length(1);
+            return done(null);
+          });
+        });
+      });
+    });
+    describe("change focus to first window", function() {
+      return it("should focus on first window", function(done) {
+        return browser.window('window-1', function(err) {
+          should.not.exist(err);
+          return browser.windowName(function(err, name) {
+            should.not.exist(err);
+            name.should.equal('window-1');
+            return done(null);
+          });
+        });
+      });
+    });
+    describe("opening window with no name", function() {
+      return it("should open the third window", function(done) {
+        this.timeout(10000);
+        return browser.newWindow('http://127.0.0.1:8181/window-test-page.html?window_num=4', function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    describe("focusing on window with no name handle", function() {
+      return it("last handle should correspond to latest opened window", function(done) {
+        return browser.windowHandles(function(err, _handles) {
+          should.not.exist(err);
+          _handles.should.have.length(2);
+          return browser.window(_handles[1], function(err) {
+            should.not.exist(err);
+            return browser.url(function(err, url) {
+              url.should.include("num=4");
+              return done(null);
+            });
+          });
+        });
+      });
+    });
+    describe("closing window with no name", function() {
+      return it("should close the window with no name", function(done) {
         return browser.close(function(err) {
           should.not.exist(err);
           return browser.windowHandles(function(err, _handles) {
