@@ -2,12 +2,10 @@
 
 should = require 'should'
 
-leakDetector = (require '../common/leak-detector')()
-
 wd = require '../common/wd-with-cov'
 
 describe "wd", ->
-  describe "unit", ->
+  describe "local", ->
     describe "browser init tests", ->
       describe "default init", ->      
         it "should open firefox browser", (done) ->
@@ -85,5 +83,4 @@ describe "wd", ->
                 should.not.exist err
                 done null
     
-    leakDetector.lookForLeaks() unless process.env.WD_COV?
             

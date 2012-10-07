@@ -2,12 +2,10 @@
 
 should = require 'should'
 
-leakDetector = (require '../common/leak-detector')()
-
 wd = require '../common/wd-with-cov'
 
 describe "wd", ->
-  describe "unit", ->
+  describe "local", ->
     describe "wd remote tests", ->
       
       describe "default", ->
@@ -122,8 +120,6 @@ describe "wd", ->
           browser.username.should.equal 'mickey' 
           browser.accessKey.should.equal 'mouse'
           done null
-
-    leakDetector.lookForLeaks() unless process.env.WD_COV?
 
       
 

@@ -6,8 +6,6 @@ assert = require 'assert'
 TIMEOUT = 60000
 
 test = (remoteWdConfig, desired) ->  
-  
-  leakDetector = (require '../common/leak-detector')()
   wd = require './wd-with-cov'
 
   remoteWdConfig = remoteWdConfig() if typeof remoteWdConfig is 'function'
@@ -54,9 +52,7 @@ test = (remoteWdConfig, desired) ->
       @timeout TIMEOUT
       browser.quit ->
         done null
-    
-  leakDetector.lookForLeaks() unless process.env.WD_COV?
-    
+        
 exports.test = test
 
             

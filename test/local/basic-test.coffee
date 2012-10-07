@@ -3,7 +3,7 @@
 {test} = require '../common/basic-test-base'
 
 describe "wd", ->
-  describe "unit", ->
+  describe "local", ->
 
     describe "basic test", ->
       

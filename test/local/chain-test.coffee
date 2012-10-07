@@ -3,7 +3,6 @@
 should = require 'should'
 async = require 'async'      
 
-leakDetector = (require '../common/leak-detector')()
 wd = require '../common/wd-with-cov'
 
 test = (browserName) ->
@@ -40,7 +39,7 @@ test = (browserName) ->
           done null
         
 describe "wd", ->
-  describe "unit", ->
+  describe "local", ->
     describe "chain tests", ->
 
       describe "using chrome", ->
@@ -49,5 +48,3 @@ describe "wd", ->
       describe "using firefox", ->
         test 'firefox'
       
-      leakDetector.lookForLeaks() unless process.env.WD_COV?
-

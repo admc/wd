@@ -9,8 +9,7 @@
   TIMEOUT = 60000;
 
   test = function(remoteWdConfig, desired) {
-    var browser, leakDetector, wd;
-    leakDetector = (require('../common/leak-detector'))();
+    var browser, wd;
     wd = require('./wd-with-cov');
     if (typeof remoteWdConfig === 'function') {
       remoteWdConfig = remoteWdConfig();
@@ -65,7 +64,7 @@
         });
       });
     });
-    describe("leaving", function() {
+    return describe("leaving", function() {
       return it("closing browser", function(done) {
         this.timeout(TIMEOUT);
         return browser.quit(function() {
@@ -73,9 +72,6 @@
         });
       });
     });
-    if (process.env.WD_COV == null) {
-      return leakDetector.lookForLeaks();
-    }
   };
 
   exports.test = test;

@@ -8,7 +8,6 @@ imageinfo = require 'imageinfo'
 
 {Express} = require './express'
 
-leakDetector = (require '../common/leak-detector')()
 wd = require '../common/wd-with-cov'
 
 evalShouldEqual = (browser,formula,expected) ->  
@@ -1595,7 +1594,7 @@ test = (browserName) ->
         done(null)
   
 describe "wd", ->
-  describe "unit", ->
+  describe "local", ->
     describe "per method tests", ->
       express = new Express
       before (done) ->
@@ -1612,4 +1611,3 @@ describe "wd", ->
       describe "using firefox", ->  
         test 'firefox'
       
-      leakDetector.lookForLeaks() unless process.env.WD_COV?
