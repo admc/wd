@@ -3,7 +3,7 @@
 should = require 'should'
 async = require 'async'
 
-{Express} = require './express'
+{Express} = require '../common/express'
 
 wd = require '../common/wd-with-cov'
 
