@@ -1,6 +1,4 @@
 TEST_DIR = test/common test/unit test/local test/saucelabs
-TEST_COFFEE_FILES = $(shell find test/common/*.coffee test/unit/*.coffee \
-test/local/*.coffee test/saucelabs/*.coffee)
 
 DEFAULT:
 	@echo
@@ -46,7 +44,7 @@ test_coverage:
 
 # remove all the generated js
 cleanGenJs:
-	@rm -f test/common/*.js test/local/*.js test/saucelabs/*.js
+	@rm -f test/common/*.js test/local/*.js test/unit/*.js test/saucelabs/*.js
 
 # compile once
 compile2js:
