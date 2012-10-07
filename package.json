@@ -22,7 +22,6 @@
     ,"should": "latest"
     ,"coffee-script": "latest"
     ,"express": "2.x"
-    ,"gleak": "latest"
     ,"imageinfo": "latest"
     ,"covershot": "latest"
     ,"nock": "latest"
