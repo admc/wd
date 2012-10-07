@@ -178,7 +178,7 @@
           
           
             
-              setAsyncScriptTimeout(ms, cb) -&gt; setImplicitWaitTimeout(ms, cb) -&gt; cb(err)<br>
+              setImplicitWaitTimeout(ms, cb) -&gt; cb(err)<br>
             
           
           
