@@ -55,14 +55,17 @@ compile2js:
 compile2js_watch:
 	./node_modules/.bin/coffee --compile --watch $(TEST_DIR)
 
+_dox:
+	@mkdir -p tmp
+	@./node_modules/.bin/dox -r < lib/webdriver.js > tmp/webdriver-dox.json
+	@./node_modules/.bin/dox -r < lib/element.js > tmp/element-dox.json
+
 # build the mapping (implemented only)
-build_mapping:
-	@./node_modules/.bin/dox -r < lib/webdriver.js > doc/webdriver-doc.json
+build_mapping: _dox
 	@./node_modules/.bin/coffee doc/mapping-builder.coffee
 
 # build the mapping (full)
-build_full_mapping:
-	@./node_modules/.bin/dox -r < lib/webdriver.js > doc/webdriver-doc.json
+build_full_mapping: _dox
 	@./node_modules/.bin/coffee doc/mapping-builder.coffee full
 
 .PHONY: \
@@ -75,4 +78,5 @@ build_full_mapping:
 	compile2js_watch \
 	cleanGenJs DEFAULT \
   build_mapping \
-  build_full_mapping
+  build_full_mapping \
+	_dox
