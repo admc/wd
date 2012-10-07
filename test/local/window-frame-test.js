@@ -6,7 +6,7 @@
 
   async = require('async');
 
-  Express = require('./express').Express;
+  Express = require('../common/express').Express;
 
   wd = require('../common/wd-with-cov');
 
