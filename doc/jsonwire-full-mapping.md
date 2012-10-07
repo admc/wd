@@ -42,9 +42,9 @@
           
           
             
-              Initialize the browser: <br>
-            
               init(desired, cb) -&gt; cb(err, sessionID)<br>
+            
+              Initialize the browser.<br>
             
           
           
@@ -114,9 +114,9 @@
           
           
             
-              Destroy the browser: <br>
-            
               quit(cb) -&gt; cb(err)<br>
+            
+              Destroy the browser.<br>
             
           
           
@@ -258,9 +258,9 @@
           
           
             
-              Get a new url: <br>
-            
               get(url,cb) -&gt; cb(err)<br>
+            
+              Get a new url.<br>
             
           
           
@@ -342,24 +342,6 @@
           
             <p>
               
-                Evaluate expression (using execute): <br>
-              
-                eval(code, cb) -&gt; cb(err, value)<br>
-              
-            </p>
-          
-            <p>
-              
-                Evaluate expression (using safeExecute): <br>
-              
-                safeEval(code, cb) -&gt; cb(err, value)<br>
-              
-            </p>
-          
-            <p>
-              
-                Execute script: <br>
-              
                 execute(code, args, cb) -&gt; cb(err, value returned)<br>
               
                 execute(code, cb) -&gt; cb(err, value returned)<br>
@@ -384,6 +366,22 @@
               
             </p>
           
+            <p>
+              
+                Evaluate expression (using execute): <br>
+              
+                eval(code, cb) -&gt; cb(err, value)<br>
+              
+            </p>
+          
+            <p>
+              
+                Evaluate expression (using safeExecute): <br>
+              
+                safeEval(code, cb) -&gt; cb(err, value)<br>
+              
+            </p>
+          
         </td>
       </tr>
     
@@ -401,8 +399,6 @@
           
           
             <p>
-              
-                Execute async script: <br>
               
                 executeAsync(code, args, cb) -&gt; cb(err, value returned)<br>
               
@@ -874,6 +870,34 @@
           
             <p>
               
+                elements(using, value, cb) -&gt; cb(err, elements)<br>
+              
+            </p>
+          
+            <p>
+              
+                elementsByClassName(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByCssSelector(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsById(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByName(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByLinkText(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByTagName(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByXPath(value, cb) -&gt; cb(err, elements)      <br>
+              
+                elementsByCss(value, cb) -&gt; cb(err, elements)      <br>
+              
+            </p>
+          
+            <p>
+              
                 Retrieve an element avoiding not found exception and returning null instead: <br>
               
                 elementOrNull(using, value, cb) -&gt; cb(err, element)<br>
@@ -881,30 +905,6 @@
             </p>
           
             <p>
-              
-                Retrieve an element avoiding not found exception and returning undefined instead: <br>
-              
-                elementIfExists(using, value, cb) -&gt; cb(err, element)<br>
-              
-            </p>
-          
-            <p>
-              
-                elements(using, value, cb) -&gt; cb(err, elements)<br>
-              
-            </p>
-          
-            <p>
-              
-                Check if element exists: <br>
-              
-                hasElement(using, value, cb) -&gt; cb(err, boolean)<br>
-              
-            </p>
-          
-            <p>
-              
-                Retrieve an element avoiding not found exception and returning null instead: <br>
               
                 elementByClassNameOrNull(value, cb) -&gt; cb(err, element)<br>
               
@@ -930,6 +930,12 @@
               
                 Retrieve an element avoiding not found exception and returning undefined instead: <br>
               
+                elementIfExists(using, value, cb) -&gt; cb(err, element)<br>
+              
+            </p>
+          
+            <p>
+              
                 elementByClassNameIfExists(value, cb) -&gt; cb(err, element)<br>
               
                 elementByCssSelectorIfExists(value, cb) -&gt; cb(err, element)<br>
@@ -954,6 +960,12 @@
               
                 Check if element exists: <br>
               
+                hasElement(using, value, cb) -&gt; cb(err, boolean)<br>
+              
+            </p>
+          
+            <p>
+              
                 hasElementByClassName(value, cb) -&gt; cb(err, boolean) <br>
               
                 hasElementByCssSelector(value, cb) -&gt; cb(err, boolean) <br>
@@ -971,28 +983,6 @@
                 hasElementByXPath(value, cb) -&gt; cb(err, boolean) <br>
               
                 hasElementByCss(value, cb) -&gt; cb(err, boolean) <br>
-              
-            </p>
-          
-            <p>
-              
-                elementsByClassName(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByCssSelector(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsById(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByName(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByLinkText(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByTagName(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByXPath(value, cb) -&gt; cb(err, elements)      <br>
-              
-                elementsByCss(value, cb) -&gt; cb(err, elements)      <br>
               
             </p>
           
@@ -1085,10 +1075,18 @@
         <td style="border: 1px solid #ccc; padding: 5px;">
           
           
-            
-              clickElement(element, cb) -&gt; cb(err)<br>
-            
           
+            <p>
+              
+                clickElement(element, cb) -&gt; cb(err)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.click(cb) -&gt; cb(err)<br>
+              
+            </p>
           
         </td>
       </tr>
@@ -1134,11 +1132,25 @@
           
             <p>
               
+                element.text(cb) -&gt; (err, text)<br>
+              
+            </p>
+          
+            <p>
+              
                 Check if text is present: <br>
               
                 textPresent(searchText, element, cb) -&gt; (err, boolean)<br>
               
                 element: specific element, 'body', or undefined<br>
+              
+                 <br>
+              
+            </p>
+          
+            <p>
+              
+                element.textPresent(searchText, cb) -&gt; (err, boolean)<br>
               
                  <br>
               
@@ -1159,14 +1171,22 @@
         <td style="border: 1px solid #ccc; padding: 5px;">
           
           
-            
-              Type keys (all keys are up at the end of command): <br>
-            
-              type(element, keys, cb) -&gt; cb(err)<br>
-            
-              special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
-            
           
+            <p>
+              
+                type(element, keys, cb) -&gt; cb(err)<br>
+              
+                Type keys (all keys are up at the end of command).<br>
+              
+                special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.type(keys, cb) -&gt; cb(err)<br>
+              
+            </p>
           
         </td>
       </tr>
@@ -1184,9 +1204,9 @@
           
           
             
-              Press keys (keys may still be down at the end of command): <br>
-            
               keys(keys, cb) -&gt; cb(err)<br>
+            
+              Press keys (keys may still be down at the end of command).<br>
             
               special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
             
@@ -1207,10 +1227,18 @@
         <td style="border: 1px solid #ccc; padding: 5px;">
           
           
-            
-              getTagName(element, cb) -&gt; cb(err, name)<br>
-            
           
+            <p>
+              
+                getTagName(element, cb) -&gt; cb(err, name)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.getTagName(cb) -&gt; cb(err, name)<br>
+              
+            </p>
           
         </td>
       </tr>
@@ -1227,10 +1255,18 @@
         <td style="border: 1px solid #ccc; padding: 5px;">
           
           
-            
-              clear(element, cb) -&gt; cb(err)<br>
-            
           
+            <p>
+              
+                clear(element, cb) -&gt; cb(err)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.clear(cb) -&gt; cb(err)<br>
+              
+            </p>
           
         </td>
       </tr>
@@ -1292,9 +1328,21 @@
           
             <p>
               
+                element.getAttribute(attrName, cb) -&gt; cb(err, value)<br>
+              
+            </p>
+          
+            <p>
+              
                 Get element value (in value attribute): <br>
               
                 getValue(element, cb) -&gt; cb(err, value)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.getValue(cb) -&gt; cb(err, value)<br>
               
             </p>
           
@@ -1331,10 +1379,18 @@
         <td style="border: 1px solid #ccc; padding: 5px;">
           
           
-            
-              isDisplayed(element, cb) -&gt; cb(err, displayed)<br>
-            
           
+            <p>
+              
+                isDisplayed(element, cb) -&gt; cb(err, displayed)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.isDisplayed(cb) -&gt; cb(err, displayed)<br>
+              
+            </p>
           
         </td>
       </tr>
@@ -1405,10 +1461,18 @@
         <td style="border: 1px solid #ccc; padding: 5px;">
           
           
-            
-              getComputedCss(element, cssProperty , cb) -&gt; cb(err, value)<br>
-            
           
+            <p>
+              
+                getComputedCss(element, cssProperty , cb) -&gt; cb(err, value)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.getComputedCss(cssProperty , cb) -&gt; cb(err, value)<br>
+              
+            </p>
           
         </td>
       </tr>
@@ -1538,9 +1602,9 @@
           
           
             
-              Move to element, xoffset and y offset are optional: <br>
-            
               moveTo(element, xoffset, yoffset, cb) -&gt; cb(err)<br>
+            
+              Move to element, xoffset and y offset are optional.<br>
             
           
           
@@ -1560,9 +1624,9 @@
           
           
             
-              Click on current element: <br>
-            
               click(button, cb) -&gt; cb(err)<br>
+            
+              Click on current element.<br>
             
               Buttons: {left: 0, middle: 1 , right: 2}<br>
             
@@ -2264,6 +2328,25 @@
               pollFreq: pooling frequency (optional, default: 100)<br>
             
               return true if condition satisfied, error otherwise.<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              isVisible(cb) -&gt; cb(err, boolean)<br>
             
           
           
