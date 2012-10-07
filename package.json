@@ -28,6 +28,7 @@
     ,"nock": "latest"
     ,"dox": "latest"
     ,"mu2": "latest"
+    ,"underscore": "latest"
   }
   , "scripts" : {
     "test": "make test_saucelabs"
