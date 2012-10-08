@@ -15,19 +15,19 @@
   , "bin" : { "wd" : "./lib/bin.js" }
   , "directories" : { "lib" : "./lib" }
   , "dependencies" : {
-    "async" : "0.1.22"
+    "async" : "0.1.x"
   }
   , "devDependencies" : {
-    "mocha" : "latest"
-    ,"should": "latest"
-    ,"coffee-script": "latest"
-    ,"express": "2.x"
-    ,"imageinfo": "latest"
-    ,"covershot": "latest"
-    ,"nock": "latest"
-    ,"dox": "latest"
-    ,"mu2": "latest"
-    ,"underscore": "latest"
+    "mocha" : "1.6.x"
+    ,"should": "1.2.x"
+    ,"coffee-script": "1.3.x"
+    ,"express": "3.x"
+    ,"imageinfo": "1.0.x"
+    ,"covershot": "0.1.x"
+    ,"nock": "0.13.x"
+    ,"dox": "0.3.x"
+    ,"mu2": "0.5.x"
+    ,"underscore": "1.4.x"
   }
   , "scripts" : {
     "test": "make test_saucelabs"
