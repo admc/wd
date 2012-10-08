@@ -425,9 +425,9 @@ browser.init(desired, function() {
           
             <p>
               
-                execute(code, args, cb) -&gt; cb(err, value returned)<br>
+                execute(code, args, cb) -&gt; cb(err, result)<br>
               
-                execute(code, cb) -&gt; cb(err, value returned)<br>
+                execute(code, cb) -&gt; cb(err, result)<br>
               
                 args: script argument array (optional)<br>
               
@@ -439,9 +439,9 @@ browser.init(desired, function() {
               
                 Execute script using eval(code): <br>
               
-                safeExecute(code, args, cb) -&gt; cb(err, value returned)<br>
+                safeExecute(code, args, cb) -&gt; cb(err, result)<br>
               
-                safeExecute(code, cb) -&gt; cb(err, value returned)<br>
+                safeExecute(code, cb) -&gt; cb(err, result)<br>
               
                 args: script argument array (optional)<br>
               
@@ -483,9 +483,9 @@ browser.init(desired, function() {
           
             <p>
               
-                executeAsync(code, args, cb) -&gt; cb(err, value returned)<br>
+                executeAsync(code, args, cb) -&gt; cb(err, result)<br>
               
-                executeAsync(code, cb) -&gt; cb(err, value returned)<br>
+                executeAsync(code, cb) -&gt; cb(err, result)<br>
               
                 args: script argument array (optional)<br>
               
@@ -497,9 +497,9 @@ browser.init(desired, function() {
               
                 Execute async script using eval(code): <br>
               
-                safeExecuteAsync(code, args, cb) -&gt; cb(err, value returned)<br>
+                safeExecuteAsync(code, args, cb) -&gt; cb(err, result)<br>
               
-                safeExecuteAsync(code, cb) -&gt; cb(err, value returned)<br>
+                safeExecuteAsync(code, cb) -&gt; cb(err, result)<br>
               
                 args: script argument array (optional)<br>
               
@@ -937,7 +937,7 @@ browser.init(desired, function() {
           
             <p>
               
-                text(element, cb) -&gt; (err, text)<br>
+                text(element, cb) -&gt; cb(err, text)<br>
               
                 element: specific element, 'body', or undefined<br>
               
@@ -945,7 +945,7 @@ browser.init(desired, function() {
           
             <p>
               
-                element.text(cb) -&gt; (err, text)<br>
+                element.text(cb) -&gt; cb(err, text)<br>
               
             </p>
           
@@ -953,7 +953,7 @@ browser.init(desired, function() {
               
                 Check if text is present: <br>
               
-                textPresent(searchText, element, cb) -&gt; (err, boolean)<br>
+                textPresent(searchText, element, cb) -&gt; cb(err, boolean)<br>
               
                 element: specific element, 'body', or undefined<br>
               
@@ -963,7 +963,7 @@ browser.init(desired, function() {
           
             <p>
               
-                element.textPresent(searchText, cb) -&gt; (err, boolean)<br>
+                element.textPresent(searchText, cb) -&gt; cb(err, boolean)<br>
               
                  <br>
               
