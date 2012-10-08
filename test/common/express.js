@@ -9,13 +9,13 @@
     function Express() {}
 
     Express.prototype.start = function() {
-      this.app = express.createServer();
+      this.app = express();
       this.app.use(express["static"](__dirname + '/assets'));
-      return this.app.listen(8181);
+      return this.server = this.app.listen(8181);
     };
 
     Express.prototype.stop = function() {
-      return this.app.close();
+      return this.server.close();
     };
 
     return Express;

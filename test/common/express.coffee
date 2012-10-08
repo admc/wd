@@ -2,11 +2,10 @@ express = require 'express'
 
 class Express
   start: ->
-    @app = express.createServer()
+    @app = express()
     @app.use(express.static(__dirname + '/assets'));
-    @app.listen 8181
-        
+    @server = @app.listen 8181
   stop: ->
-    @app.close()
+    @server.close()
 
 exports.Express = Express
