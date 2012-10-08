@@ -34,9 +34,8 @@
         }).get("http://saucelabs.com/test/guinea-pig").title(function(err, title) {
           return title.should.include('I am a page title - Sauce Labs');
         }).elementById('submit', function(err, el) {
-          return browser.clickElement(el, function(err) {
-            return should.not.exist.err;
-          });
+          should.not.exist(err);
+          return should.exist(el);
         })["eval"]("window.location.href", function(err, href) {
           return href.should.include('http');
         }).quit(function(err) {

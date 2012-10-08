@@ -30,9 +30,12 @@ test = (browserName) ->
         .title (err, title) ->
           title.should.include 'I am a page title - Sauce Labs'
         .elementById 'submit', (err, el) ->
+          should.not.exist err
+          should.exist el
+          # Commenting this test, nothing preventing quit to be called first
           # we should make clickElement not require a callback
-          browser.clickElement el, (err) ->
-            should.not.exist.err
+          # browser.clickElement el, (err) ->
+          #  should.not.exist.err
         .eval "window.location.href", (err, href) ->
           href.should.include 'http'
         .quit (err) ->
