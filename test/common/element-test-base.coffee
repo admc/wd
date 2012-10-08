@@ -44,14 +44,14 @@ test = (browserName) ->
     
   describe "init", ->
     it "should initialize browserinit", (done) ->
-      @timeout 15000
+      @timeout 45000
       browser.init {browserName: browserName}, (err) ->
         should.not.exist err
         done null
   
   describe "get", ->
     it "should navigate to test page", (done) ->
-      @timeout 10000
+      @timeout 15000
       browser.get "http://127.0.0.1:8181/element-test-page.html", (err) ->
         should.not.exist err
         done null

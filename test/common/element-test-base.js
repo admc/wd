@@ -61,7 +61,7 @@
     });
     describe("init", function() {
       return it("should initialize browserinit", function(done) {
-        this.timeout(15000);
+        this.timeout(45000);
         return browser.init({
           browserName: browserName
         }, function(err) {
@@ -72,7 +72,7 @@
     });
     describe("get", function() {
       return it("should navigate to test page", function(done) {
-        this.timeout(10000);
+        this.timeout(15000);
         return browser.get("http://127.0.0.1:8181/element-test-page.html", function(err) {
           should.not.exist(err);
           return done(null);
