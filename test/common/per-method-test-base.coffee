@@ -538,7 +538,7 @@ test = (browserName) ->
 
   describe "back forward", ->        
     it "urls should be correct when navigating back/forward", (done) ->
-      @timeout 15000
+      @timeout 45000
       async.series [
         (done) ->
           browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->

@@ -99,7 +99,7 @@ test = (browserName) ->
           should.not.exist err
           done null
 
-  describe "getTagName", -> 
+  describe "element.getTagName", -> 
     it "should get correct tag name", (done) -> 
       async.series [
         (done) ->
@@ -122,7 +122,7 @@ test = (browserName) ->
         should.not.exist err
         done null
   
-  describe "isDisplayed", -> 
+  describe "element.isDisplayed", -> 
     it "should check if elemnt is displayed", (done) -> 
       async.series [
         (done) ->
@@ -153,7 +153,7 @@ test = (browserName) ->
         should.not.exist err
         done null
   
-  describe "getComputedCss", -> 
+  describe "element.getComputedCss", -> 
     it "should retrieve the element computed css", (done) -> 
       async.series [
         (done) ->

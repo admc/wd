@@ -127,7 +127,7 @@
         });
       });
     });
-    describe("getTagName", function() {
+    describe("element.getTagName", function() {
       return it("should get correct tag name", function(done) {
         return async.series([
           function(done) {
@@ -157,7 +157,7 @@
         });
       });
     });
-    describe("isDisplayed", function() {
+    describe("element.isDisplayed", function() {
       return it("should check if elemnt is displayed", function(done) {
         return async.series([
           function(done) {
@@ -197,7 +197,7 @@
         });
       });
     });
-    describe("getComputedCss", function() {
+    describe("element.getComputedCss", function() {
       return it("should retrieve the element computed css", function(done) {
         return async.series([
           function(done) {

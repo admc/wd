@@ -4,7 +4,7 @@
 
 describe "wd", ->
   describe "local", ->
-    describe "element method tests", ->
+    describe "element tests", ->
 
       describe "using chrome", ->
         test 'chrome'

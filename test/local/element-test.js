@@ -6,7 +6,7 @@
 
   describe("wd", function() {
     return describe("local", function() {
-      return describe("element method tests", function() {
+      return describe("element tests", function() {
         describe("using chrome", function() {
           return test('chrome');
         });

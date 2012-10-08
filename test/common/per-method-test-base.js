@@ -659,7 +659,7 @@
     });
     describe("back forward", function() {
       return it("urls should be correct when navigating back/forward", function(done) {
-        this.timeout(15000);
+        this.timeout(45000);
         return async.series([
           function(done) {
             return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
