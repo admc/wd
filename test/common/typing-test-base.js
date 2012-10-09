@@ -377,12 +377,14 @@
     describe("wd.remote", function() {
       return it("should work", function(done) {
         browser = wd.remote({});
-        browser.on("status", function(info) {
-          return console.log("\u001b[36m%s\u001b[0m", info);
-        });
-        browser.on("command", function(meth, path) {
-          return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
-        });
+        if (process.env.WD_COV == null) {
+          browser.on("status", function(info) {
+            return console.log("\u001b[36m%s\u001b[0m", info);
+          });
+          browser.on("command", function(meth, path) {
+            return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
+          });
+        }
         return done(null);
       });
     });

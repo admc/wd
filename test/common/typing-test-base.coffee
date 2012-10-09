@@ -300,10 +300,11 @@ test = (browserName) ->
   describe "wd.remote", ->
     it "should work", (done) ->
       browser = wd.remote {}    
-      browser.on "status", (info) ->
-        console.log "\u001b[36m%s\u001b[0m", info
-      browser.on "command", (meth, path) ->
-        console.log " > \u001b[33m%s\u001b[0m: %s", meth, path
+      unless process.env.WD_COV?
+        browser.on "status", (info) ->
+          console.log "\u001b[36m%s\u001b[0m", info
+        browser.on "command", (meth, path) ->
+          console.log " > \u001b[33m%s\u001b[0m: %s", meth, path
       done null
 
   describe "init", ->
