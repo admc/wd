@@ -74,19 +74,19 @@
   };
 
   test = function(remoteWdConfig, desired) {
-    var browser, elementFunctionTests;
+    var browser, elementFunctionTests, express;
     browser = null;
+    express = new Express;
+    before(function(done) {
+      express.start();
+      return done(null);
+    });
+    after(function(done) {
+      express.stop();
+      return done(null);
+    });
     elementFunctionTests = function() {
-      var express, _funcSuffix, _i, _len, _ref, _results;
-      express = new Express;
-      before(function(done) {
-        express.start();
-        return done(null);
-      });
-      after(function(done) {
-        express.stop();
-        return done(null);
-      });
+      var _funcSuffix, _i, _len, _ref, _results;
       describe("element", function() {
         return it("should retrieve element", function(done) {
           return async.series([

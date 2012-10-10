@@ -50,19 +50,18 @@ test = (remoteWdConfig, desired) ->
   
   browser = null;  
   
+  express = new Express
+  
+  before (done) ->
+    express.start()
+    done null
+      
+  after (done) ->
+    express.stop()          
+    done null
+
   elementFunctionTests = () ->
 
-    express = new Express
-    
-    before (done) ->
-      express.start()
-      done null
-        
-    after (done) ->
-      express.stop()          
-      done null
-      
-    
     describe "element", ->
       it "should retrieve element", (done) ->
         async.series [
