@@ -6,9 +6,9 @@ describe "wd", ->
   describe "local", ->
     describe "element tests", ->
 
-      describe "using chrome", ->
-        test 'chrome'
-
-      describe "using firefox", ->
-        test 'firefox'
-      
+      describe "using chrome", ->  
+        test {}, {browserName:'chrome'}
+        
+      describe "using firefox", ->  
+        test {},{browserName:'firefox'}
+                                   

@@ -832,7 +832,7 @@ test = (remoteWdConfig, desired) ->
           done null
   
   elementFunctionTests()
-  ###
+  
   describe "getAttribute", -> 
     it "should get correct attribute value", (done) -> 
       browser.elementById "getAttribute", (err,testDiv) ->
@@ -852,7 +852,7 @@ test = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           done null
-
+  
   describe "getTagName", -> 
     it "should get correct tag name", (done) -> 
       async.series [
@@ -885,7 +885,7 @@ test = (remoteWdConfig, desired) ->
           should.not.exist err
           res.should.equal "Hello getValueTest!"
           done null
-
+  
   describe "getValue (textarea)", -> 
     it "should get correct value", (done) -> 
       browser.elementByCss "#getValue textarea", (err,inputField) ->
@@ -895,7 +895,7 @@ test = (remoteWdConfig, desired) ->
           should.not.exist err
           res.should.equal "Hello getValueTest2!"
           done null
-
+  
   describe "isDisplayed", -> 
     it "should check if elemnt is displayed", (done) -> 
       async.series [
@@ -975,156 +975,158 @@ test = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           done null
-    
-  describe "moveTo", -> 
-    it "should move to correct element", (done) -> 
-      env = {}
-      async.series [
-        elementByCss browser, env, "#moveTo .a1", 'a1'
-        elementByCss browser, env, "#moveTo .a2", 'a2'
-        elementByCss browser, env, "#moveTo .current", 'current'        
-        (done) -> textShouldEqual browser, env.current, '', done
-        executeCoffee browser, 
-          '''
-            jQuery ->
-              a1 = $('#moveTo .a1')
-              a2 = $('#moveTo .a2')
-              current = $('#moveTo .current')
-              a1.hover ->
-                current.html 'a1'
-              a2.hover ->
-                current.html 'a2'
-          '''
-        (done) -> textShouldEqual browser, env.current, '', done
-        (done) ->
-          browser.moveTo env.a1, 5, 5, (err) ->            
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.current, 'a1', done
-        (done) ->
-          browser.moveTo env.a2, undefined, undefined, (err) ->
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.current, 'a2', done        
-        (done) ->
-          browser.moveTo env.a1, (err) ->            
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.current, 'a1', done
-      ], (err) ->
-        should.not.exist err
-        done null
+  
+  unless process.env.GHOSTDRIVER_TEST?  
+    describe "moveTo", -> 
+      it "should move to correct element", (done) -> 
+        env = {}
+        async.series [
+          elementByCss browser, env, "#moveTo .a1", 'a1'
+          elementByCss browser, env, "#moveTo .a2", 'a2'
+          elementByCss browser, env, "#moveTo .current", 'current'        
+          (done) -> textShouldEqual browser, env.current, '', done
+          executeCoffee browser, 
+            '''
+              jQuery ->
+                a1 = $('#moveTo .a1')
+                a2 = $('#moveTo .a2')
+                current = $('#moveTo .current')
+                a1.hover ->
+                  current.html 'a1'
+                a2.hover ->
+                  current.html 'a2'
+            '''
+          (done) -> textShouldEqual browser, env.current, '', done
+          (done) ->
+            browser.moveTo env.a1, 5, 5, (err) ->            
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.current, 'a1', done
+          (done) ->
+            browser.moveTo env.a2, undefined, undefined, (err) ->
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.current, 'a2', done        
+          (done) ->
+            browser.moveTo env.a1, (err) ->            
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.current, 'a1', done
+        ], (err) ->
+          should.not.exist err
+          done null
         
   # @todo waiting for implementation
   # it "scroll", (test) ->  
-    
-  describe "buttonDown / buttonUp", -> 
-    it "should press/unpress button", (done) -> 
-      env = {}
-      async.series [
-        elementByCss browser, env, "#mouseButton a", 'a'
-        elementByCss browser, env, "#mouseButton div", 'resDiv'
-        executeCoffee browser, 
-          '''
-            jQuery ->
-              a = $('#mouseButton a')
-              resDiv = $('#mouseButton div')
-              a.mousedown ->
-                resDiv.html 'button down'
-              a.mouseup ->
-                resDiv.html 'button up'
-          '''          
-        (done) -> textShouldEqual browser, env.resDiv, '', done
-        (done) ->
-          browser.moveTo env.a, (err) ->            
-            should.not.exist err
-            done null
-        (done) ->
-          browser.buttonDown (err) ->            
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.resDiv, 'button down', done
-        (done) ->
-          browser.buttonUp (err) ->            
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.resDiv, 'button up', done
-      ], (err) ->
-        should.not.exist err
-        done null
-    
-  describe "click", -> 
-    it "should move to then click element", (done) -> 
-      env = {}
-      async.series [
-        elementByCss browser, env, "#click .numOfClicks", 'numOfClicksDiv'
-        elementByCss browser, env, "#click .buttonNumber", 'buttonNumberDiv'
-        executeCoffee browser,
-          '''
-            jQuery ->
-              window.numOfClick = 0
-              numOfClicksDiv = $('#click .numOfClicks')
-              buttonNumberDiv = $('#click .buttonNumber')
-              numOfClicksDiv.mousedown (eventObj) ->
-                button = eventObj.button
-                button = 'default' unless button?
-                window.numOfClick = window.numOfClick + 1
-                numOfClicksDiv.html "clicked #{window.numOfClick}"
-                buttonNumberDiv.html "#{button}"    
-                false                                         
-          '''
-        (done) -> textShouldEqual browser, env.numOfClicksDiv , "not clicked", done
-        (done) ->
-          browser.moveTo env.numOfClicksDiv, (err) ->
-            should.not.exist err
-            done null
-        (done) ->
-          browser.click 0, (err) ->
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 1", done
-        (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
-        (done) ->
-          browser.moveTo env.numOfClicksDiv, (err) ->
-            should.not.exist err
-            done null
-        (done) ->
-          browser.click (err) ->
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 2", done
-        (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
-        # not testing right click, cause not sure how to dismiss the right 
-        # click menu in chrome and firefox
-      ], (err) ->
-        should.not.exist err
-        done null
-            
-  describe "doubleclick", -> 
-    it "should move to then doubleclick element", (done) -> 
-      env = {}
-      async.series [ 
-        elementByCss browser, env, "#doubleclick div", 'div'       
-        executeCoffee browser,
-          '''
-            jQuery ->
-              div = $('#doubleclick div')
-              div.dblclick ->
-                div.html 'doubleclicked'                                 
-          '''
-        (done) -> textShouldEqual browser, env.div, "not clicked", done
-        (done) ->
-          browser.moveTo env.div, (err) ->
-            should.not.exist err
-            done null
-        (done) ->
-          browser.doubleclick (err) ->
-            should.not.exist err
-            done null
-        (done) -> textShouldEqual browser, env.div, "doubleclicked", done            
-      ], (err) ->
-        should.not.exist err
-        done null
+  unless process.env.GHOSTDRIVER_TEST?
+    describe "buttonDown / buttonUp", -> 
+      it "should press/unpress button", (done) -> 
+        env = {}
+        async.series [
+          elementByCss browser, env, "#mouseButton a", 'a'
+          elementByCss browser, env, "#mouseButton div", 'resDiv'
+          executeCoffee browser, 
+            '''
+              jQuery ->
+                a = $('#mouseButton a')
+                resDiv = $('#mouseButton div')
+                a.mousedown ->
+                  resDiv.html 'button down'
+                a.mouseup ->
+                  resDiv.html 'button up'
+            '''          
+          (done) -> textShouldEqual browser, env.resDiv, '', done
+          (done) ->
+            browser.moveTo env.a, (err) ->            
+              should.not.exist err
+              done null
+          (done) ->
+            browser.buttonDown (err) ->            
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.resDiv, 'button down', done
+          (done) ->
+            browser.buttonUp (err) ->            
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.resDiv, 'button up', done
+        ], (err) ->
+          should.not.exist err
+          done null
+  unless process.env.GHOSTDRIVER_TEST?  
+    describe "click", -> 
+      it "should move to then click element", (done) -> 
+        env = {}
+        async.series [
+          elementByCss browser, env, "#click .numOfClicks", 'numOfClicksDiv'
+          elementByCss browser, env, "#click .buttonNumber", 'buttonNumberDiv'
+          executeCoffee browser,
+            '''
+              jQuery ->
+                window.numOfClick = 0
+                numOfClicksDiv = $('#click .numOfClicks')
+                buttonNumberDiv = $('#click .buttonNumber')
+                numOfClicksDiv.mousedown (eventObj) ->
+                  button = eventObj.button
+                  button = 'default' unless button?
+                  window.numOfClick = window.numOfClick + 1
+                  numOfClicksDiv.html "clicked #{window.numOfClick}"
+                  buttonNumberDiv.html "#{button}"    
+                  false                                         
+            '''
+          (done) -> textShouldEqual browser, env.numOfClicksDiv , "not clicked", done
+          (done) ->
+            browser.moveTo env.numOfClicksDiv, (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            browser.click 0, (err) ->
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 1", done
+          (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
+          (done) ->
+            browser.moveTo env.numOfClicksDiv, (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            browser.click (err) ->
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 2", done
+          (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
+          # not testing right click, cause not sure how to dismiss the right 
+          # click menu in chrome and firefox
+        ], (err) ->
+          should.not.exist err
+          done null
+  
+  unless process.env.GHOSTDRIVER_TEST?        
+    describe "doubleclick", -> 
+      it "should move to then doubleclick element", (done) -> 
+        env = {}
+        async.series [ 
+          elementByCss browser, env, "#doubleclick div", 'div'       
+          executeCoffee browser,
+            '''
+              jQuery ->
+                div = $('#doubleclick div')
+                div.dblclick ->
+                  div.html 'doubleclicked'                                 
+            '''
+          (done) -> textShouldEqual browser, env.div, "not clicked", done
+          (done) ->
+            browser.moveTo env.div, (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            browser.doubleclick (err) ->
+              should.not.exist err
+              done null
+          (done) -> textShouldEqual browser, env.div, "doubleclicked", done            
+        ], (err) ->
+          should.not.exist err
+          done null
     
   describe "type", -> 
     it "should correctly input text", (done) -> 
@@ -1202,12 +1204,13 @@ test = (remoteWdConfig, desired) ->
           should.not.exist err
           done null
   
-  describe "title", -> 
-    it "should retrieve title", (done) -> 
-      browser.title (err,title) ->
-        should.not.exist err
-        title.should.equal "TEST PAGE"
-        done null
+  unless process.env.GHOSTDRIVER_TEST?        
+    describe "title", -> 
+      it "should retrieve title", (done) -> 
+        browser.title (err,title) ->
+          should.not.exist err
+          title.should.equal "TEST PAGE"
+          done null
   
   describe "text (passing element)", -> 
     it "should retrieve text", (done) -> 
@@ -1272,70 +1275,72 @@ test = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           done null
-    
-  describe "acceptAlert", -> 
-    it "should accept alert", (done) -> 
-      browser.elementByCss "#acceptAlert a", (err,a) ->
-        should.not.exist err
-        should.exist a
-        async.series [
-          executeCoffee browser,
-            """
-              jQuery ->            
-                a = $('#acceptAlert a')
-                a.click ->
-                  alert "coffee is running out"
-                  false
-            """          
-          (done) -> 
-            browser.clickElement a, (err) ->
-              should.not.exist err
-              done null
-          (done) -> 
-            browser.acceptAlert (err) ->
-              should.not.exist err
-              done null
-        ], (err) ->
+  
+  unless process.env.GHOSTDRIVER_TEST?        
+    describe "acceptAlert", -> 
+      it "should accept alert", (done) -> 
+        browser.elementByCss "#acceptAlert a", (err,a) ->
           should.not.exist err
-          done null
-    
-  describe "dismissAlert", ->       
-    it "should dismiss alert", (done) ->       
-      browser.elementByCss "#dismissAlert a", (err,a) ->
-        should.not.exist err
-        should.exist a
-        capabilities = null
-        async.series [
-          (done) -> 
-            browser.sessionCapabilities (err,res) ->
-              should.not.exist err
-              capabilities = res
-              done null              
-          executeCoffee browser,
-            """
-              jQuery ->                        
-                a = $('#dismissAlert a')
-                a.click ->
-                  alert "coffee is running out"
-                  false
-            """          
-          (done) -> 
-            browser.clickElement a, (err) ->
-              should.not.exist err
-              done null
-          (done) -> 
-            # known bug on chrome/mac, need to use acceptAlert instead
-            unless (capabilities.platform is 'MAC' and capabilities.browserName is 'chrome')
-              browser.dismissAlert (err) ->
+          should.exist a
+          async.series [
+            executeCoffee browser,
+              """
+                jQuery ->            
+                  a = $('#acceptAlert a')
+                  a.click ->
+                    alert "coffee is running out"
+                    false
+              """          
+            (done) -> 
+              browser.clickElement a, (err) ->
                 should.not.exist err
                 done null
-            else
+            (done) -> 
               browser.acceptAlert (err) ->
                 should.not.exist err
-                done null            
-        ], (err) ->
+                done null
+          ], (err) ->
+            should.not.exist err
+            done null
+    
+  unless process.env.GHOSTDRIVER_TEST?        
+    describe "dismissAlert", ->       
+      it "should dismiss alert", (done) ->       
+        browser.elementByCss "#dismissAlert a", (err,a) ->
           should.not.exist err
-          done null
+          should.exist a
+          capabilities = null
+          async.series [
+            (done) -> 
+              browser.sessionCapabilities (err,res) ->
+                should.not.exist err
+                capabilities = res
+                done null              
+            executeCoffee browser,
+              """
+                jQuery ->                        
+                  a = $('#dismissAlert a')
+                  a.click ->
+                    alert "coffee is running out"
+                    false
+              """          
+            (done) -> 
+              browser.clickElement a, (err) ->
+                should.not.exist err
+                done null
+            (done) -> 
+              # known bug on chrome/mac, need to use acceptAlert instead
+              unless (capabilities.platform is 'MAC' and capabilities.browserName is 'chrome')
+                browser.dismissAlert (err) ->
+                  should.not.exist err
+                  done null
+              else
+                browser.acceptAlert (err) ->
+                  should.not.exist err
+                  done null            
+          ], (err) ->
+            should.not.exist err
+            done null
       
   describe "active", -> 
     it "should check if element is active", (done) -> 
@@ -1546,70 +1551,73 @@ test = (remoteWdConfig, desired) ->
         should.not.exist err
         done null
       
-  describe "waitForConditionInBrowser", ->
-    it "should wait for condition within the browser", (done) ->
-      @timeout 10000
-      exprCond = "$('#waitForConditionInBrowser .child').length > 0"
-      async.series [
-        executeCoffee browser,   
-          """
-            setTimeout ->
-              $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
-            , 1500
-          """
-        (done) ->
-          browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
-            should.exist err
-            err.status.should.equal 7
-            done(null)
-        (done) ->
-          browser.setAsyncScriptTimeout 5000, (err,res) ->            
-            should.not.exist err
-            done(null)
-        (done) ->
-          browser.waitForConditionInBrowser exprCond, 2000, 200, (err,res) ->            
-            should.not.exist err
-            res.should.be.true
-            done(err)
-        (done) ->
-          browser.waitForConditionInBrowser exprCond, 2000, (err,res) ->            
-            should.not.exist err
-            res.should.be.true
-            done(err)
-        (done) ->
-          browser.waitForConditionInBrowser exprCond, (err,res) ->            
-            should.not.exist err
-            res.should.be.true
-            done(err)
-        (done) ->
-          browser.waitForConditionInBrowser "totally #} wrong == expr", (err,res) ->            
-            should.exist err
-            done(null)
-        (done) ->
-          browser.setAsyncScriptTimeout 0, (err,res) ->            
-            should.not.exist err
-            done(null)
-      ], (err) ->
-        should.not.exist err
-        done null
+  unless process.env.GHOSTDRIVER_TEST?      
+    describe "waitForConditionInBrowser", ->
+      it "should wait for condition within the browser", (done) ->
+        @timeout 10000
+        exprCond = "$('#waitForConditionInBrowser .child').length > 0"
+        async.series [
+          executeCoffee browser,   
+            """
+              setTimeout ->
+                $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
+              , 1500
+            """
+          (done) ->
+            browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
+              should.exist err
+              err.status.should.equal 7
+              done(null)
+          (done) ->
+            browser.setAsyncScriptTimeout 5000, (err,res) ->            
+              should.not.exist err
+              done(null)
+          (done) ->
+            browser.waitForConditionInBrowser exprCond, 2000, 200, (err,res) ->            
+              should.not.exist err
+              res.should.be.true
+              done(err)
+          (done) ->
+            browser.waitForConditionInBrowser exprCond, 2000, (err,res) ->            
+              should.not.exist err
+              res.should.be.true
+              done(err)
+          (done) ->
+            browser.waitForConditionInBrowser exprCond, (err,res) ->            
+              should.not.exist err
+              res.should.be.true
+              done(err)
+          (done) ->
+            browser.waitForConditionInBrowser "totally #} wrong == expr", (err,res) ->            
+              should.exist err
+              done(null)
+          (done) ->
+            browser.setAsyncScriptTimeout 0, (err,res) ->            
+              should.not.exist err
+              done(null)
+        ], (err) ->
+          should.not.exist err
+          done null
         
-  describe "err.inspect", ->
-    it "error output should be clean", (done) ->
-      browser.safeExecute "invalid-code> here", (err) ->
-        should.exist err
-        (err instanceof Error).should.be.true        
-        should.exist err['jsonwire-error']
-        err.inspect().should.include '"screen": "[hidden]"'
-        err.inspect().should.include 'browser-error:'
-        done null
+  unless process.env.GHOSTDRIVER_TEST?        
+    describe "err.inspect", ->
+      it "error output should be clean", (done) ->
+        browser.safeExecute "invalid-code> here", (err) ->
+          should.exist err
+          (err instanceof Error).should.be.true        
+          should.exist err['jsonwire-error']
+          err.inspect().should.include '"screen": "[hidden]"'
+          err.inspect().should.include 'browser-error:'
+          done null
         
   
+    
   describe "close", ->        
     it "should close current window", (done) ->        
       browser.close (err) ->
         should.not.exist err
         done null
-  ###      
+        
   describe "quit", ->        
     it "should destroy browser", (done) ->
       browser.quit (err) ->        
