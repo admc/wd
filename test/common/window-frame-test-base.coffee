@@ -7,9 +7,10 @@ async = require 'async'
 
 wd = require './wd-with-cov'
 
-test = (browserName) ->
+test = (remoteWdConfig, desired) ->  
   browser = null
   handles = {}
+  browserName = desired?.browserName
 
   express = new Express
 
@@ -23,7 +24,7 @@ test = (browserName) ->
   
   describe "wd.remote", -> 
     it "should create browser", (done) ->   
-      browser = wd.remote {}
+      browser = wd.remote remoteWdConfig
       unless process.env.WD_COV?
         browser.on "status", (info) ->
           console.log "\u001b[36m%s\u001b[0m", info
@@ -34,7 +35,7 @@ test = (browserName) ->
   describe "init", ->
     it "should initialize browserinit", (done) ->
       @timeout 30000
-      browser.init {browserName: browserName}, (err) ->
+      browser.init desired, (err) ->
         should.not.exist err
         done null
   
@@ -213,7 +214,8 @@ test = (browserName) ->
           done null  
   
   # the frame method does not work with chromeDriver
-  unless browserName is 'chrome'
+  # ghostdriver also has issues
+  unless browserName is 'chrome' or process.env.GHOSTDRIVER_TEST?
     describe "opening frame test page", ->
       it "should open the first window", (done) ->
         @timeout 10000
@@ -259,36 +261,36 @@ test = (browserName) ->
           browser.refresh (err) ->
             should.not.exist err
             done null
-  
-    describe "selecting default frame", ->    
-      it "should select frame menu", (done) ->      
-        browser.frame (err) ->
-          should.not.exist err
-          done null
-          
-    refreshPage();  
-  
-    describe "selecting frame by number", ->    
-      it "should select frame menu", (done) ->      
-        browser.frame 0, (err) ->
-          should.not.exist err
-          done null
-          
-    refreshPage();
-  
-    describe "selecting frame by id", ->    
-      it "should select frame main", (done) ->      
-        browser.frame frames[1].id, (err) ->
-          should.not.exist err
-          done null
 
-    refreshPage();
+    describe "selecting default frame", ->    
+       it "should select frame menu", (done) ->      
+         browser.frame (err) ->
+           should.not.exist err
+           done null
+         
+     refreshPage();  
   
-    describe "selecting frame by name", ->    
-      it "should select frame main", (done) ->      
-        browser.frame frames[2].name, (err) ->
-          should.not.exist err
-          done null
+     describe "selecting frame by number", ->    
+       it "should select frame menu", (done) ->      
+         browser.frame 0, (err) ->
+           should.not.exist err
+           done null
+           
+     refreshPage();
+  
+     describe "selecting frame by id", ->    
+       it "should select frame main", (done) ->      
+         browser.frame frames[1].id, (err) ->
+           should.not.exist err
+           done null
+
+     refreshPage();
+  
+     describe "selecting frame by name", ->    
+       it "should select frame main", (done) ->      
+         browser.frame frames[2].name, (err) ->
+           should.not.exist err
+           done null
   
   describe "quit", ->  
     it "should destroy browser", (done) ->

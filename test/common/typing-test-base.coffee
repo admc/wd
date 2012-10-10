@@ -114,9 +114,9 @@ altKeyTracking = (browser, _sel, done) ->
     """    
   executeCoffee browser, script , done
 
-test = (browserName) ->
+test = (remoteWdConfig, desired) ->
   browser = null
-
+  browserName = desired?.browserName
   express = new Express
   before (done) ->
     express.start()
@@ -174,12 +174,13 @@ test = (browserName) ->
             inputAndCheck browser, method, sel, 'Hello\n', expected,  done
 
         describe "10/ typing '\\r'", ->
-          it "should work", (done) ->      
-            switch browserName               
-              when 'chrome' # chrome chrashes when sent '\r'
-                inputAndCheck browser, method, sel, [returnKey], (if sel.match /input/ then 'Hello' else 'Hello\n\n'), done 
-              else
-                inputAndCheck browser, method, sel, '\r', (if sel.match /input/ then 'Hello' else 'Hello\n\n'), done   
+          it "should work", (done) ->
+            if browserName = 'chrome' or process.env.GHOSTDRIVER_TEST?
+              # chrome chrashes when sent '\r', ghostdriver does not
+              # seem to like it
+              inputAndCheck browser, method, sel, [returnKey], (if sel.match /input/ then 'Hello' else 'Hello\n\n'), done 
+            else
+              inputAndCheck browser, method, sel, '\r', (if sel.match /input/ then 'Hello' else 'Hello\n\n'), done   
 
         describe "11/ typing [returnKey]", ->
           it "should work", (done) ->      
@@ -272,10 +273,11 @@ test = (browserName) ->
           it "should work", (done) ->      
             inputAndCheck browser, method, sel, [altKey,'a'], 'altKey on',  done
 
-        describe "33/ typing ['a']", ->
-          it "should work", (done) ->      
-            expected = (if method is 'type' then 'altKey off' else 'altKey on') 
-            inputAndCheck browser, method, sel, ['a'], expected,  done
+        unless process.env.GHOSTDRIVER_TEST?    
+          describe "33/ typing ['a']", ->
+            it "should work", (done) ->      
+              expected = (if method is 'type' then 'altKey off' else 'altKey on') 
+              inputAndCheck browser, method, sel, ['a'], expected,  done
 
         describe "34/ clear", ->
           it "should work", (done) ->      
@@ -299,7 +301,7 @@ test = (browserName) ->
         
   describe "wd.remote", ->
     it "should work", (done) ->
-      browser = wd.remote {}    
+      browser = wd.remote remoteWdConfig
       unless process.env.WD_COV?
         browser.on "status", (info) ->
           console.log "\u001b[36m%s\u001b[0m", info
@@ -309,7 +311,7 @@ test = (browserName) ->
 
   describe "init", ->
     it "should work", (done) ->
-      browser.init {'browserName': browserName}, (err) ->
+      browser.init desired, (err) ->
         should.not.exist err
         done err
 
@@ -322,7 +324,7 @@ test = (browserName) ->
   testMethod "type", "#type input"
   testMethod "keys", "#type input"
 
-  testMethod "type", "#type textarea"      
+  testMethod "type", "#type textarea"
   testMethod "keys", "#type textarea"
 
   describe "quit", ->

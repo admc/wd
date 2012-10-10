@@ -33,7 +33,7 @@
     };
   };
 
-  test = function(browserName) {
+  test = function(remoteWdConfig, desired) {
     var browser, express;
     browser = null;
     express = new Express;
@@ -47,7 +47,7 @@
     });
     describe("wd.remote", function() {
       return it("should create browser", function(done) {
-        browser = wd.remote({});
+        browser = wd.remote(remoteWdConfig);
         if (process.env.WD_COV == null) {
           browser.on("status", function(info) {
             return console.log("\u001b[36m%s\u001b[0m", info);
@@ -62,9 +62,7 @@
     describe("init", function() {
       return it("should initialize browserinit", function(done) {
         this.timeout(45000);
-        return browser.init({
-          browserName: browserName
-        }, function(err) {
+        return browser.init(desired, function(err) {
           should.not.exist(err);
           return done(null);
         });
