@@ -7,8 +7,8 @@ describe "wd", ->
     describe "per method tests", ->
       
       describe "using chrome", ->  
-        test 'chrome'
+        test {}, {browserName:'chrome'}
         
       describe "using firefox", ->  
-        test 'firefox'
+        test {},{browserName:'firefox'}
       

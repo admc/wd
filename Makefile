@@ -6,6 +6,7 @@ DEFAULT:
 	@echo '  make test_unit -> run the unit tests'
 	@echo '  make test_local -> run the local tests (start selenium with chromedriver first).'
 	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
+	@echo '  make test_ghostdriver -> run the ghostdriver tests (start ghostdriver first).'
 	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
 	@echo '  make compile2js -> compile coffee files to js.'
 	@echo '  make compile2js_watch -> compile coffee files to js, watch for changes.'
@@ -32,6 +33,9 @@ test_local:
 test_saucelabs:
 	./node_modules/.bin/mocha test/saucelabs/*-test.coffee
 
+# run ghostdriver test, start ghostdriver first
+test_ghostdriver:
+	./node_modules/.bin/mocha test/ghostdriver/*-test.coffee
 # run test coverage, install jscoverage first
 test_coverage:
 	rm -rf lib-cov
@@ -68,13 +72,15 @@ build_full_mapping: _dox
 
 .PHONY: \
 	test \
+	DEFAULT \
 	test_unit \
 	test_local \
 	test_saucelabs \
 	test_coverage \
 	compile2js \
 	compile2js_watch \
-	cleanGenJs DEFAULT \
-  build_mapping \
-  build_full_mapping \
+	cleanGenJs \
+	test_ghostdriver \
+	build_mapping \
+	build_full_mapping \
 	_dox

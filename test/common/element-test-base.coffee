@@ -20,7 +20,7 @@ executeCoffee = (browser, script) ->
     should.not.exist err
     done(null)      
 
-test = (browserName) ->
+test = (remoteWdConfig, desired) ->
   browser = null
 
   express = new Express
@@ -34,7 +34,7 @@ test = (browserName) ->
 
   describe "wd.remote", -> 
     it "should create browser", (done) ->   
-      browser = wd.remote {}
+      browser = wd.remote remoteWdConfig
       unless process.env.WD_COV?
         browser.on "status", (info) ->
           console.log "\u001b[36m%s\u001b[0m", info
@@ -45,7 +45,7 @@ test = (browserName) ->
   describe "init", ->
     it "should initialize browserinit", (done) ->
       @timeout 45000
-      browser.init {browserName: browserName}, (err) ->
+      browser.init desired, (err) ->
         should.not.exist err
         done null
   
