@@ -12,11 +12,7 @@
             browserName: 'chrome'
           });
         });
-        return describe("using firefox", function() {
-          return test({}, {
-            browserName: 'firefox'
-          });
-        });
+        return describe("using firefox", function() {});
       });
     });
   });
