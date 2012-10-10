@@ -46,7 +46,8 @@ valueShouldEqual = (browser,element,expected, done) ->
     res.should.equal expected
     done null      
     
-test = (browserName) -> 
+test = (remoteWdConfig, desired) -> 
+  
   browser = null;  
   
   elementFunctionTests = () ->
@@ -430,7 +431,7 @@ test = (browserName) ->
          
   describe "wd.remote", ->
     it "should create browser object", (done) ->
-      browser = wd.remote {}    
+      browser = wd.remote remoteWdConfig
       unless process.env.WD_COV?
         browser.on "status", (info) ->
           console.log "\u001b[36m%s\u001b[0m", info
@@ -455,7 +456,7 @@ test = (browserName) ->
   describe "init", ->
     it "should initialize browser and open browser window", (done)  ->
       @timeout 20000
-      browser.init {browserName: browserName}, (err) ->
+      browser.init desired, (err) ->
         should.not.exist err
         done null
 
@@ -529,43 +530,53 @@ test = (browserName) ->
         should.not.exist err
         done null
 
-  describe "refresh", ->
-    it "should refresh page", (done) ->
-      @timeout 10000
-      browser.refresh (err) ->
-        should.not.exist err
-        done null
+  unless process.env.GHOSTDRIVER_TEST?
+    describe "refresh", ->
+      it "should refresh page", (done) ->
+        @timeout 10000
+        browser.refresh (err) ->
+          should.not.exist err
+          done null
 
-  describe "back forward", ->        
+  describe "back forward", ->
     it "urls should be correct when navigating back/forward", (done) ->
       @timeout 45000
-      async.series [
+      async.series [                  
         (done) ->
           browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
             should.not.exist err
             done null
         (done) ->
-          browser.url (err, url) ->
-            should.not.exist err            
-            url.should.include "?p=2"
+          unless process.env.GHOSTDRIVER_TEST? 
+            browser.url (err, url) ->
+              should.not.exist err
+              url.should.include "?p=2"
+              done null
+          else
             done null
         (done) ->
           browser.back  (err) ->
             should.not.exist err
             done null
         (done) ->
-          browser.url (err, url) ->
-            should.not.exist err            
-            url.should.not.include "?p=2"
+          unless process.env.GHOSTDRIVER_TEST?
+            browser.url (err, url) ->
+              should.not.exist err
+              url.should.not.include "?p=2"
+              done null
+          else
             done null
         (done) ->
           browser.forward  (err) ->
             should.not.exist err
             done null
         (done) ->
-          browser.url (err, url) ->
-            should.not.exist err            
-            url.should.include "?p=2"
+          unless process.env.GHOSTDRIVER_TEST?
+            browser.url (err, url) ->
+              should.not.exist err            
+              url.should.include "?p=2"
+              done null
+          else
             done null
         (done) ->
           browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
@@ -574,32 +585,33 @@ test = (browserName) ->
       ], (err) ->
         should.not.exist err
         done null
-
-  describe "eval", ->
-    it "should correctly evaluate various formulas", (done) ->
-      async.series [
-        evalShouldEqual browser, "1+2", 3
-        evalShouldEqual browser, "document.title", "TEST PAGE"
-        evalShouldEqual browser, "$('#eval').length", 1
-        evalShouldEqual browser, "$('#eval li').length", 2     
-      ], (err) ->
-        should.not.exist err
-        done null    
+  
+  unless process.env.GHOSTDRIVER_TEST?
+    describe "eval", ->
+      it "should correctly evaluate various formulas", (done) ->
+        async.series [
+          evalShouldEqual browser, "1+2", 3
+          evalShouldEqual browser, "document.title", "TEST PAGE"
+          evalShouldEqual browser, "$('#eval').length", 1
+          evalShouldEqual browser, "$('#eval li').length", 2     
+        ], (err) ->
+          should.not.exist err
+          done null    
     
-  describe "safeEval", ->
-    it "should correctly evaluate (with safeEval) various formulas", (done) ->
-      async.series [
-        safeEvalShouldEqual browser, "1+2", 3
-        safeEvalShouldEqual browser, "document.title", "TEST PAGE"
-        safeEvalShouldEqual browser, "$('#eval').length", 1
-        safeEvalShouldEqual browser, "$('#eval li').length", 2     
-        (done) ->  browser.safeEval 'wrong formula +', (err,res) ->
-          should.exist err
-          (err instanceof Error).should.be.true          
-          done(null)                 
-      ], (err) ->
-        should.not.exist err
-        done null
+    describe "safeEval", ->
+      it "should correctly evaluate (with safeEval) various formulas", (done) ->
+        async.series [
+          safeEvalShouldEqual browser, "1+2", 3
+          safeEvalShouldEqual browser, "document.title", "TEST PAGE"
+          safeEvalShouldEqual browser, "$('#eval').length", 1
+          safeEvalShouldEqual browser, "$('#eval li').length", 2     
+          (done) ->  browser.safeEval 'wrong formula +', (err,res) ->
+            should.exist err
+            (err instanceof Error).should.be.true          
+            done(null)                 
+        ], (err) ->
+          should.not.exist err
+          done null
     
   describe "execute (no args)", ->
     it "should execute script", (done) ->
@@ -677,150 +689,151 @@ test = (browserName) ->
         should.not.exist err
         res.should.equal "OK"
         done null
-    
-  describe "executeAsync (with args)", ->
-    it "should execute async script", (done) ->
-      scriptAsCoffee =
-        """
-          [a,b,done] = arguments
-          done("OK " + (a+b))              
-        """
-      scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
-      browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
-        should.not.exist err
-        res.should.equal "OK 15"
-        done null
-    
-  describe "safeExecuteAsync (no args)", ->
-    it "should execute async script (using safeExecuteAsync)", (done) ->
-      async.series [
-        (done) ->  
-          scriptAsCoffee =
-            """
-              [args...,done] = arguments
-              done "OK"              
-            """
-          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
-          browser.safeExecuteAsync scriptAsJs, (err,res) ->          
-            should.not.exist err
-            res.should.equal "OK"
-            done(null)      
-        (done) ->  
-          browser.safeExecuteAsync "123 invalid<script", (err,res) ->          
-            should.exist err
-            (err instanceof Error).should.be.true
-            done(null)      
-      ], (err) ->
-        should.not.exist err
-        done null
-    
-  describe "safeExecuteAsync (with args)", ->
-    it "should execute async script (using safeExecuteAsync)", (done) ->
-      async.series [
-        (done) ->  
-          scriptAsCoffee =
-            """
-              [a,b,done] = arguments
-              done("OK " + (a+b))              
-            """
-          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
-          browser.safeExecuteAsync scriptAsJs, [10, 5], (err,res) ->          
-            should.not.exist err
-            res.should.equal "OK 15"
-            done(null)      
-        (done) ->  
-          browser.safeExecuteAsync "123 invalid<script", [10, 5], (err,res) ->          
-            should.exist err
-            (err instanceof Error).should.be.true
-            done(null)      
-      ], (err) ->
-        should.not.exist err
-        done null        
-    
-  describe "setWaitTimeout / setImplicitWaitTimeout", ->
-    it  "should set the wait timeout and implicit wait timeout, " + \
-        "run scripts to check functionality, " + \
-        "and unset them", (done) ->
-      @timeout 5000    
-      async.series [
-        # using old name
-        (done) -> browser.setWaitTimeout 0, (err) ->
-          should.not.exist err
-          done null     
-        executeCoffee browser,   
+  unless process.env.GHOSTDRIVER_TEST?
+    describe "executeAsync (with args)", ->
+      it "should execute async script", (done) ->
+        scriptAsCoffee =
           """
-            setTimeout ->
-              $('#setWaitTimeout').html '<div class="child">a child</div>'
-            , 1000
+            [a,b,done] = arguments
+            done("OK " + (a+b))              
           """
-        (done) ->
-          browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
-            should.exist err
-            err.status.should.equal 7
-            done(null)  
-        (done) -> browser.setImplicitWaitTimeout 2000, (err) ->
+        scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+        browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
           should.not.exist err
-          done null             
-        (done) ->
-          browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
-            # now it works
-            should.not.exist err
-            should.exist res
-            done(null)          
-        (done) -> browser.setImplicitWaitTimeout 0, (err) ->
-          should.not.exist err
-          done null             
-      ], (err) ->
-        should.not.exist err
-        done null
+          res.should.equal "OK 15"
+          done null
     
-  describe "setAsyncScriptTimeout", ->
-    it  "should set the async script timeout, " + \
-        "run scripts to check functionality, " + \
-        "and unset it", (done) ->
-      @timeout 5000
-      async.series [
-        (done) -> browser.setAsyncScriptTimeout 500, (err) ->
+    describe "safeExecuteAsync (no args)", ->
+      it "should execute async script (using safeExecuteAsync)", (done) ->
+        async.series [
+          (done) ->  
+            scriptAsCoffee =
+              """
+                [args...,done] = arguments
+                done "OK"              
+              """
+            scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+            browser.safeExecuteAsync scriptAsJs, (err,res) ->          
+              should.not.exist err
+              res.should.equal "OK"
+              done(null)      
+          (done) ->  
+            browser.safeExecuteAsync "123 invalid<script", (err,res) ->          
+              should.exist err
+              (err instanceof Error).should.be.true
+              done(null)      
+        ], (err) ->
           should.not.exist err
-          done null     
-        (done) -> 
-          scriptAsCoffee =
-            """
-              [args...,done] = arguments
-              setTimeout ->
-                done "OK"
-              , 2000
-            """
-          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
-          browser.executeAsync scriptAsJs, (err,res) ->          
-            should.exist err
-            err.status.should.equal 28
-            done null
-        (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
+          done null
+    
+    describe "safeExecuteAsync (with args)", ->
+      it "should execute async script (using safeExecuteAsync)", (done) ->
+        async.series [
+          (done) ->  
+            scriptAsCoffee =
+              """
+                [a,b,done] = arguments
+                done("OK " + (a+b))              
+              """
+            scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+            browser.safeExecuteAsync scriptAsJs, [10, 5], (err,res) ->          
+              should.not.exist err
+              res.should.equal "OK 15"
+              done(null)      
+          (done) ->  
+            browser.safeExecuteAsync "123 invalid<script", [10, 5], (err,res) ->          
+              should.exist err
+              (err instanceof Error).should.be.true
+              done(null)      
+        ], (err) ->
           should.not.exist err
-          done null     
-        (done) -> 
-          scriptAsCoffee =
-            """
-              [args...,done] = arguments
-              setTimeout ->
-                done "OK"
-              , 500
-            """
-          scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
-          browser.executeAsync scriptAsJs, (err,res) ->          
+          done null        
+  
+  unless process.env.GHOSTDRIVER_TEST?
+    describe "setWaitTimeout / setImplicitWaitTimeout", ->
+      it  "should set the wait timeout and implicit wait timeout, " + \
+          "run scripts to check functionality, " + \
+          "and unset them", (done) ->
+        @timeout 5000    
+        async.series [
+          # using old name
+          (done) -> browser.setWaitTimeout 0, (err) ->
             should.not.exist err
-            res.should.equal "OK"
-            done null
-        (done) -> browser.setAsyncScriptTimeout 0, (err) ->
+            done null     
+          executeCoffee browser,   
+            """
+              setTimeout ->
+                $('#setWaitTimeout').html '<div class="child">a child</div>'
+              , 1000
+            """
+          (done) ->
+            browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
+              should.exist err
+              err.status.should.equal 7
+              done(null)  
+          (done) -> browser.setImplicitWaitTimeout 2000, (err) ->
+            should.not.exist err
+            done null             
+          (done) ->
+            browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
+              # now it works
+              should.not.exist err
+              should.exist res
+              done(null)          
+          (done) -> browser.setImplicitWaitTimeout 0, (err) ->
+            should.not.exist err
+            done null             
+        ], (err) ->
           should.not.exist err
-          done null     
-      ], (err) ->
-        should.not.exist err
-        done null
+          done null
+  
+    describe "setAsyncScriptTimeout", ->
+      it  "should set the async script timeout, " + \
+          "run scripts to check functionality, " + \
+          "and unset it", (done) ->
+        @timeout 5000
+        async.series [
+          (done) -> browser.setAsyncScriptTimeout 500, (err) ->
+            should.not.exist err
+            done null     
+          (done) -> 
+            scriptAsCoffee =
+              """
+                [args...,done] = arguments
+                setTimeout ->
+                  done "OK"
+                , 2000
+              """
+            scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+            browser.executeAsync scriptAsJs, (err,res) ->          
+              should.exist err
+              err.status.should.equal 28
+              done null
+          (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
+            should.not.exist err
+            done null     
+          (done) -> 
+            scriptAsCoffee =
+              """
+                [args...,done] = arguments
+                setTimeout ->
+                  done "OK"
+                , 500
+              """
+            scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+            browser.executeAsync scriptAsJs, (err,res) ->          
+              should.not.exist err
+              res.should.equal "OK"
+              done null
+          (done) -> browser.setAsyncScriptTimeout 0, (err) ->
+            should.not.exist err
+            done null     
+        ], (err) ->
+          should.not.exist err
+          done null
   
   elementFunctionTests()
-  
+  ###
   describe "getAttribute", -> 
     it "should get correct attribute value", (done) -> 
       browser.elementById "getAttribute", (err,testDiv) ->
@@ -1597,7 +1610,7 @@ test = (browserName) ->
       browser.close (err) ->
         should.not.exist err
         done null
-        
+  ###      
   describe "quit", ->        
     it "should destroy browser", (done) ->
       browser.quit (err) ->        
