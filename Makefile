@@ -36,6 +36,7 @@ test_saucelabs:
 # run ghostdriver test, start ghostdriver first
 test_ghostdriver:
 	./node_modules/.bin/mocha test/ghostdriver/*-test.coffee
+
 # run test coverage, install jscoverage first
 test_coverage:
 	rm -rf lib-cov
