@@ -10,10 +10,11 @@
 
   wd = require('./wd-with-cov');
 
-  test = function(browserName) {
-    var browser, express, frames, handles, refreshPage;
+  test = function(remoteWdConfig, desired) {
+    var browser, browserName, express, frames, handles, refreshPage;
     browser = null;
     handles = {};
+    browserName = desired != null ? desired.browserName : void 0;
     express = new Express;
     before(function(done) {
       express.start();
@@ -25,7 +26,7 @@
     });
     describe("wd.remote", function() {
       return it("should create browser", function(done) {
-        browser = wd.remote({});
+        browser = wd.remote(remoteWdConfig);
         if (process.env.WD_COV == null) {
           browser.on("status", function(info) {
             return console.log("\u001b[36m%s\u001b[0m", info);
@@ -40,9 +41,7 @@
     describe("init", function() {
       return it("should initialize browserinit", function(done) {
         this.timeout(30000);
-        return browser.init({
-          browserName: browserName
-        }, function(err) {
+        return browser.init(desired, function(err) {
           should.not.exist(err);
           return done(null);
         });
@@ -274,7 +273,7 @@
         });
       });
     });
-    if (browserName !== 'chrome') {
+    if (!(browserName === 'chrome' || (process.env.GHOSTDRIVER_TEST != null))) {
       describe("opening frame test page", function() {
         return it("should open the first window", function(done) {
           this.timeout(10000);

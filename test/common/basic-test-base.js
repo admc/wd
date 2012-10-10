@@ -44,9 +44,10 @@
           this.timeout(TIMEOUT);
           return browser.get("http://saucelabs.com/test/guinea-pig", function() {
             if (process.env.GHOSTDRIVER_TEST == null) {
-              browser.title(function(err, title) {});
-              assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
-              return done(null);
+              return browser.title(function(err, title) {
+                assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
+                return done(null);
+              });
             } else {
               return done(null);
             }

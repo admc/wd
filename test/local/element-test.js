@@ -8,10 +8,14 @@
     return describe("local", function() {
       return describe("element tests", function() {
         describe("using chrome", function() {
-          return test('chrome');
+          return test({}, {
+            browserName: 'chrome'
+          });
         });
         return describe("using firefox", function() {
-          return test('firefox');
+          return test({}, {
+            browserName: 'firefox'
+          });
         });
       });
     });

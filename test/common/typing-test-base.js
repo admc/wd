@@ -142,9 +142,10 @@
     return executeCoffee(browser, script, done);
   };
 
-  test = function(browserName) {
-    var browser, express, testMethod;
+  test = function(remoteWdConfig, desired) {
+    var browser, browserName, express, testMethod;
     browser = null;
+    browserName = desired != null ? desired.browserName : void 0;
     express = new Express;
     before(function(done) {
       express.start();
@@ -215,11 +216,10 @@
           });
           describe("10/ typing '\\r'", function() {
             return it("should work", function(done) {
-              switch (browserName) {
-                case 'chrome':
-                  return inputAndCheck(browser, method, sel, [returnKey], (sel.match(/input/) ? 'Hello' : 'Hello\n\n'), done);
-                default:
-                  return inputAndCheck(browser, method, sel, '\r', (sel.match(/input/) ? 'Hello' : 'Hello\n\n'), done);
+              if (browserName = 'chrome' || (process.env.GHOSTDRIVER_TEST != null)) {
+                return inputAndCheck(browser, method, sel, [returnKey], (sel.match(/input/) ? 'Hello' : 'Hello\n\n'), done);
+              } else {
+                return inputAndCheck(browser, method, sel, '\r', (sel.match(/input/) ? 'Hello' : 'Hello\n\n'), done);
               }
             });
           });
@@ -339,13 +339,15 @@
               return inputAndCheck(browser, method, sel, [altKey, 'a'], 'altKey on', done);
             });
           });
-          describe("33/ typing ['a']", function() {
-            return it("should work", function(done) {
-              var expected;
-              expected = (method === 'type' ? 'altKey off' : 'altKey on');
-              return inputAndCheck(browser, method, sel, ['a'], expected, done);
+          if (process.env.GHOSTDRIVER_TEST == null) {
+            describe("33/ typing ['a']", function() {
+              return it("should work", function(done) {
+                var expected;
+                expected = (method === 'type' ? 'altKey off' : 'altKey on');
+                return inputAndCheck(browser, method, sel, ['a'], expected, done);
+              });
             });
-          });
+          }
           describe("34/ clear", function() {
             return it("should work", function(done) {
               return clearAndCheck(browser, sel, done);
@@ -376,7 +378,7 @@
     };
     describe("wd.remote", function() {
       return it("should work", function(done) {
-        browser = wd.remote({});
+        browser = wd.remote(remoteWdConfig);
         if (process.env.WD_COV == null) {
           browser.on("status", function(info) {
             return console.log("\u001b[36m%s\u001b[0m", info);
@@ -390,9 +392,7 @@
     });
     describe("init", function() {
       return it("should work", function(done) {
-        return browser.init({
-          'browserName': browserName
-        }, function(err) {
+        return browser.init(desired, function(err) {
           should.not.exist(err);
           return done(err);
         });
