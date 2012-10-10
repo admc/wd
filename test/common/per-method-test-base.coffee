@@ -10,6 +10,9 @@ imageinfo = require 'imageinfo'
 
 wd = require './wd-with-cov'
 
+TIMEOUT_BASE = 1000
+TIMEOUT_BASE = 250 if process.env.GHOSTDRIVER_TEST?
+
 evalShouldEqual = (browser,formula,expected) ->  
   (done) ->  browser.eval formula, (err,res) ->
     should.not.exist err
@@ -138,7 +141,7 @@ test = (remoteWdConfig, desired) ->
             """
               setTimeout ->
                 $('#waitForElement').append '<div class="child">a waitForElement child</div>'
-              , 750
+              , #{0.75*TIMEOUT_BASE}
             """  
           (done) ->
             browser.elementByCss "#waitForElement .child", (err,res) ->            
@@ -146,11 +149,11 @@ test = (remoteWdConfig, desired) ->
               err.status.should.equal 7
               done(null)
           (done) ->
-            browser.waitForElement "css selector", "#waitForElement .child", 2000, (err) ->            
+            browser.waitForElement "css selector", "#waitForElement .child", 2*TIMEOUT_BASE, (err) ->            
               should.not.exist err
               done(err)
           (done) ->
-            browser.waitForElement "css selector", "#wrongsel .child", 2000, (err) ->            
+            browser.waitForElement "css selector", "#wrongsel .child", 2*TIMEOUT_BASE, (err) ->            
               should.exist err
               done(null)            
         ], (err) ->
@@ -167,18 +170,18 @@ test = (remoteWdConfig, desired) ->
               $('#waitForVisible .child').hide()
               setTimeout ->
                 $('#waitForVisible .child').show()
-              , 750
+              , #{0.75*TIMEOUT_BASE}
             """  
           (done) ->
             browser.elementByCss "#waitForVisible .child", (err,res) ->            
               should.not.exist
               done(null)
           (done) ->
-            browser.waitForVisible "css selector", "#waitForVisible .child", 2000, (err) ->            
+            browser.waitForVisible "css selector", "#waitForVisible .child", 2*TIMEOUT_BASE, (err) ->            
               should.not.exist err
               done(err)
           (done) ->
-            browser.waitForVisible "css selector", "#wrongsel .child", 2000, (err) ->            
+            browser.waitForVisible "css selector", "#wrongsel .child", 2*TIMEOUT_BASE, (err) ->            
               should.exist err
               done(null)            
         ], (err) ->
@@ -331,7 +334,7 @@ test = (remoteWdConfig, desired) ->
                   $('hr').remove()                
                   setTimeout ->
                     $('##{waitForElementFuncName}').append "#{childHtml}"
-                  , 750
+                  , #{0.75*TIMEOUT_BASE}
                 """                  
               (done) ->
                 browser[elementFuncName] searchChild, (err,res) ->            
@@ -339,12 +342,12 @@ test = (remoteWdConfig, desired) ->
                   err.status.should.equal 7
                   done(null)                    
               (done) ->
-                browser[waitForElementFuncName] searchChild, 2000, (err) ->            
+                browser[waitForElementFuncName] searchChild, 2*TIMEOUT_BASE, (err) ->            
                   should.not.exist err
                   done(err)
               (done) ->
                 if funcSuffix is 'ByClassName'                
-                  browser[waitForElementFuncName] "__wrongsel", 2000, (err) ->            
+                  browser[waitForElementFuncName] "__wrongsel", 2*TIMEOUT_BASE, (err) ->            
                     should.exist err
                     done(null)
                 else
@@ -382,7 +385,7 @@ test = (remoteWdConfig, desired) ->
                   $('##{waitForVisibleFuncName} .child').hide()
                   setTimeout ->
                     $('##{waitForVisibleFuncName} .child').show()
-                  , 750
+                  , #{0.75*TIMEOUT_BASE}
                 """                  
               (done) ->
                 unless funcSuffix in ['ByLinkText','ByPartialLinkText']
@@ -392,12 +395,12 @@ test = (remoteWdConfig, desired) ->
                 else
                   done(null)     
               (done) ->
-                browser[waitForVisibleFuncName] searchChild, 2000, (err) ->            
+                browser[waitForVisibleFuncName] searchChild, 2*TIMEOUT_BASE, (err) ->            
                   should.not.exist err
                   done(err)
               (done) ->
                 if funcSuffix is 'ByClassName'                              
-                  browser[waitForVisibleFuncName] "__wrongsel", 2000, (err) ->            
+                  browser[waitForVisibleFuncName] "__wrongsel", 2*TIMEOUT_BASE, (err) ->            
                     should.exist err
                     done(null)
                 else
@@ -499,7 +502,7 @@ test = (remoteWdConfig, desired) ->
         (done) -> 
           # not working on chrome
           unless capabilities.browserName is 'chrome'
-            browser.setPageLoadTimeout 500, (err) ->
+            browser.setPageLoadTimeout TIMEOUT_BASE/2, (err) ->
               should.not.exist err
               done null
           else
@@ -507,7 +510,7 @@ test = (remoteWdConfig, desired) ->
         (done) -> 
           # not working on chrome
           unless capabilities.browserName is 'chrome'
-            browser.setPageLoadTimeout 500, (err) ->
+            browser.setPageLoadTimeout TIMEOUT_BASE/2, (err) ->
               should.not.exist err
               done null
           else
@@ -763,14 +766,14 @@ test = (remoteWdConfig, desired) ->
             """
               setTimeout ->
                 $('#setWaitTimeout').html '<div class="child">a child</div>'
-              , 1000
+              , #{TIMEOUT_BASE}
             """
           (done) ->
             browser.elementByCss "#setWaitTimeout .child", (err,res) ->            
               should.exist err
               err.status.should.equal 7
               done(null)  
-          (done) -> browser.setImplicitWaitTimeout 2000, (err) ->
+          (done) -> browser.setImplicitWaitTimeout 2*TIMEOUT_BASE, (err) ->
             should.not.exist err
             done null             
           (done) ->
@@ -792,7 +795,7 @@ test = (remoteWdConfig, desired) ->
           "and unset it", (done) ->
         @timeout 5000
         async.series [
-          (done) -> browser.setAsyncScriptTimeout 500, (err) ->
+          (done) -> browser.setAsyncScriptTimeout TIMEOUT_BASE/2, (err) ->
             should.not.exist err
             done null     
           (done) -> 
@@ -801,14 +804,14 @@ test = (remoteWdConfig, desired) ->
                 [args...,done] = arguments
                 setTimeout ->
                   done "OK"
-                , 2000
+                , #{2*TIMEOUT_BASE}
               """
             scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
             browser.executeAsync scriptAsJs, (err,res) ->          
               should.exist err
               err.status.should.equal 28
               done null
-          (done) -> browser.setAsyncScriptTimeout 2000, (err) ->
+          (done) -> browser.setAsyncScriptTimeout 2*TIMEOUT_BASE, (err) ->
             should.not.exist err
             done null     
           (done) -> 
@@ -817,7 +820,7 @@ test = (remoteWdConfig, desired) ->
                 [args...,done] = arguments
                 setTimeout ->
                   done "OK"
-                , 500
+                , #{TIMEOUT_BASE/2}
               """
             scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
             browser.executeAsync scriptAsJs, (err,res) ->          
@@ -1521,7 +1524,7 @@ test = (remoteWdConfig, desired) ->
           """
             setTimeout ->
               $('#waitForCondition').html '<div class="child">a waitForCondition child</div>'
-            , 1500
+            , #{1.5*TIMEOUT_BASE}
           """  
         (done) ->
           browser.elementByCss "#waitForCondition .child", (err,res) ->            
@@ -1529,12 +1532,12 @@ test = (remoteWdConfig, desired) ->
             err.status.should.equal 7
             done(null)
         (done) ->
-          browser.waitForCondition exprCond, 2000, 200, (err,res) ->            
+          browser.waitForCondition exprCond, 2*TIMEOUT_BASE, 200, (err,res) ->            
             should.not.exist err
             res.should.be.true
             done(err)
         (done) ->
-          browser.waitForCondition exprCond, 2000, (err,res) ->            
+          browser.waitForCondition exprCond, 2*TIMEOUT_BASE, (err,res) ->            
             should.not.exist err
             res.should.be.true
             done(err)
@@ -1561,7 +1564,7 @@ test = (remoteWdConfig, desired) ->
             """
               setTimeout ->
                 $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
-              , 1500
+              , #{1.5*TIMEOUT_BASE}
             """
           (done) ->
             browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
@@ -1569,16 +1572,16 @@ test = (remoteWdConfig, desired) ->
               err.status.should.equal 7
               done(null)
           (done) ->
-            browser.setAsyncScriptTimeout 5000, (err,res) ->            
+            browser.setAsyncScriptTimeout 5*TIMEOUT_BASE, (err,res) ->            
               should.not.exist err
               done(null)
           (done) ->
-            browser.waitForConditionInBrowser exprCond, 2000, 200, (err,res) ->            
+            browser.waitForConditionInBrowser exprCond, 2*TIMEOUT_BASE, 0.2*TIMEOUT_BASE, (err,res) ->            
               should.not.exist err
               res.should.be.true
               done(err)
           (done) ->
-            browser.waitForConditionInBrowser exprCond, 2000, (err,res) ->            
+            browser.waitForConditionInBrowser exprCond, 2*TIMEOUT_BASE, (err,res) ->            
               should.not.exist err
               res.should.be.true
               done(err)
