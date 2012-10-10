@@ -1,4 +1,4 @@
-TEST_DIR = test/common test/unit test/local test/saucelabs
+TEST_DIR = test/common test/unit test/local test/saucelabs test/ghostdriver
 
 DEFAULT:
 	@echo
@@ -45,11 +45,12 @@ test_coverage:
 	test/unit/*-test.coffee \
 	test/local/*-test.coffee \
 	test/saucelabs/*-test.coffee \
+	test/ghostdriver/*-test.coffee \
   > coverage.html
 
 # remove all the generated js
 cleanGenJs:
-	@rm -f test/common/*.js test/local/*.js test/unit/*.js test/saucelabs/*.js
+	@rm -f test/common/*.js test/local/*.js test/unit/*.js test/saucelabs/*.js test/ghostdriver/*.js
 
 # compile once
 compile2js:
