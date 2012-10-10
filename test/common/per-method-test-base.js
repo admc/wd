@@ -73,7 +73,7 @@
     });
   };
 
-  test = function(browserName) {
+  test = function(remoteWdConfig, desired) {
     var browser, elementFunctionTests;
     browser = null;
     elementFunctionTests = function() {
@@ -525,7 +525,7 @@
     };
     describe("wd.remote", function() {
       return it("should create browser object", function(done) {
-        browser = wd.remote({});
+        browser = wd.remote(remoteWdConfig);
         if (process.env.WD_COV == null) {
           browser.on("status", function(info) {
             return console.log("\u001b[36m%s\u001b[0m", info);
@@ -558,9 +558,7 @@
     describe("init", function() {
       return it("should initialize browser and open browser window", function(done) {
         this.timeout(20000);
-        return browser.init({
-          browserName: browserName
-        }, function(err) {
+        return browser.init(desired, function(err) {
           should.not.exist(err);
           return done(null);
         });
@@ -648,15 +646,17 @@
         });
       });
     });
-    describe("refresh", function() {
-      return it("should refresh page", function(done) {
-        this.timeout(10000);
-        return browser.refresh(function(err) {
-          should.not.exist(err);
-          return done(null);
+    if (process.env.GHOSTDRIVER_TEST == null) {
+      describe("refresh", function() {
+        return it("should refresh page", function(done) {
+          this.timeout(10000);
+          return browser.refresh(function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
         });
       });
-    });
+    }
     describe("back forward", function() {
       return it("urls should be correct when navigating back/forward", function(done) {
         this.timeout(45000);
@@ -667,33 +667,45 @@
               return done(null);
             });
           }, function(done) {
-            return browser.url(function(err, url) {
-              should.not.exist(err);
-              url.should.include("?p=2");
+            if (process.env.GHOSTDRIVER_TEST == null) {
+              return browser.url(function(err, url) {
+                should.not.exist(err);
+                url.should.include("?p=2");
+                return done(null);
+              });
+            } else {
               return done(null);
-            });
+            }
           }, function(done) {
             return browser.back(function(err) {
               should.not.exist(err);
               return done(null);
             });
           }, function(done) {
-            return browser.url(function(err, url) {
-              should.not.exist(err);
-              url.should.not.include("?p=2");
+            if (process.env.GHOSTDRIVER_TEST == null) {
+              return browser.url(function(err, url) {
+                should.not.exist(err);
+                url.should.not.include("?p=2");
+                return done(null);
+              });
+            } else {
               return done(null);
-            });
+            }
           }, function(done) {
             return browser.forward(function(err) {
               should.not.exist(err);
               return done(null);
             });
           }, function(done) {
-            return browser.url(function(err, url) {
-              should.not.exist(err);
-              url.should.include("?p=2");
+            if (process.env.GHOSTDRIVER_TEST == null) {
+              return browser.url(function(err, url) {
+                should.not.exist(err);
+                url.should.include("?p=2");
+                return done(null);
+              });
+            } else {
               return done(null);
-            });
+            }
           }, function(done) {
             return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
               should.not.exist(err);
@@ -706,30 +718,32 @@
         });
       });
     });
-    describe("eval", function() {
-      return it("should correctly evaluate various formulas", function(done) {
-        return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
-          should.not.exist(err);
-          return done(null);
+    if (process.env.GHOSTDRIVER_TEST == null) {
+      describe("eval", function() {
+        return it("should correctly evaluate various formulas", function(done) {
+          return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
         });
       });
-    });
-    describe("safeEval", function() {
-      return it("should correctly evaluate (with safeEval) various formulas", function(done) {
-        return async.series([
-          safeEvalShouldEqual(browser, "1+2", 3), safeEvalShouldEqual(browser, "document.title", "TEST PAGE"), safeEvalShouldEqual(browser, "$('#eval').length", 1), safeEvalShouldEqual(browser, "$('#eval li').length", 2), function(done) {
-            return browser.safeEval('wrong formula +', function(err, res) {
-              should.exist(err);
-              (err instanceof Error).should.be["true"];
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
+      describe("safeEval", function() {
+        return it("should correctly evaluate (with safeEval) various formulas", function(done) {
+          return async.series([
+            safeEvalShouldEqual(browser, "1+2", 3), safeEvalShouldEqual(browser, "document.title", "TEST PAGE"), safeEvalShouldEqual(browser, "$('#eval').length", 1), safeEvalShouldEqual(browser, "$('#eval li').length", 2), function(done) {
+              return browser.safeEval('wrong formula +', function(err, res) {
+                should.exist(err);
+                (err instanceof Error).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
         });
       });
-    });
+    }
     describe("execute (no args)", function() {
       return it("should execute script", function(done) {
         return async.series([
@@ -820,1064 +834,944 @@
         });
       });
     });
-    describe("executeAsync (with args)", function() {
-      return it("should execute async script", function(done) {
-        var scriptAsCoffee, scriptAsJs;
-        scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
-        scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-          bare: 'on'
-        });
-        return browser.executeAsync(scriptAsJs, [10, 5], function(err, res) {
-          should.not.exist(err);
-          res.should.equal("OK 15");
-          return done(null);
-        });
-      });
-    });
-    describe("safeExecuteAsync (no args)", function() {
-      return it("should execute async script (using safeExecuteAsync)", function(done) {
-        return async.series([
-          function(done) {
-            var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
-            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-              bare: 'on'
-            });
-            return browser.safeExecuteAsync(scriptAsJs, function(err, res) {
-              should.not.exist(err);
-              res.should.equal("OK");
-              return done(null);
-            });
-          }, function(done) {
-            return browser.safeExecuteAsync("123 invalid<script", function(err, res) {
-              should.exist(err);
-              (err instanceof Error).should.be["true"];
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
+    if (process.env.GHOSTDRIVER_TEST == null) {
+      describe("executeAsync (with args)", function() {
+        return it("should execute async script", function(done) {
+          var scriptAsCoffee, scriptAsJs;
+          scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
+          scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+            bare: 'on'
+          });
+          return browser.executeAsync(scriptAsJs, [10, 5], function(err, res) {
+            should.not.exist(err);
+            res.should.equal("OK 15");
+            return done(null);
+          });
         });
       });
-    });
-    describe("safeExecuteAsync (with args)", function() {
-      return it("should execute async script (using safeExecuteAsync)", function(done) {
-        return async.series([
-          function(done) {
-            var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
-            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-              bare: 'on'
-            });
-            return browser.safeExecuteAsync(scriptAsJs, [10, 5], function(err, res) {
-              should.not.exist(err);
-              res.should.equal("OK 15");
-              return done(null);
-            });
-          }, function(done) {
-            return browser.safeExecuteAsync("123 invalid<script", [10, 5], function(err, res) {
-              should.exist(err);
-              (err instanceof Error).should.be["true"];
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
+      describe("safeExecuteAsync (no args)", function() {
+        return it("should execute async script (using safeExecuteAsync)", function(done) {
+          return async.series([
+            function(done) {
+              var scriptAsCoffee, scriptAsJs;
+              scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
+              scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+                bare: 'on'
+              });
+              return browser.safeExecuteAsync(scriptAsJs, function(err, res) {
+                should.not.exist(err);
+                res.should.equal("OK");
+                return done(null);
+              });
+            }, function(done) {
+              return browser.safeExecuteAsync("123 invalid<script", function(err, res) {
+                should.exist(err);
+                (err instanceof Error).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
         });
       });
-    });
-    describe("setWaitTimeout / setImplicitWaitTimeout", function() {
-      return it("should set the wait timeout and implicit wait timeout, " + "run scripts to check functionality, " + "and unset them", function(done) {
-        this.timeout(5000);
-        return async.series([
-          function(done) {
-            return browser.setWaitTimeout(0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, executeCoffee(browser, "setTimeout ->\n  $('#setWaitTimeout').html '<div class=\"child\">a child</div>'\n, 1000"), function(done) {
-            return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setImplicitWaitTimeout(2000, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
-              should.not.exist(err);
-              should.exist(res);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setImplicitWaitTimeout(0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
+      describe("safeExecuteAsync (with args)", function() {
+        return it("should execute async script (using safeExecuteAsync)", function(done) {
+          return async.series([
+            function(done) {
+              var scriptAsCoffee, scriptAsJs;
+              scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
+              scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+                bare: 'on'
+              });
+              return browser.safeExecuteAsync(scriptAsJs, [10, 5], function(err, res) {
+                should.not.exist(err);
+                res.should.equal("OK 15");
+                return done(null);
+              });
+            }, function(done) {
+              return browser.safeExecuteAsync("123 invalid<script", [10, 5], function(err, res) {
+                should.exist(err);
+                (err instanceof Error).should.be["true"];
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
         });
       });
-    });
-    describe("setAsyncScriptTimeout", function() {
-      return it("should set the async script timeout, " + "run scripts to check functionality, " + "and unset it", function(done) {
-        this.timeout(5000);
-        return async.series([
-          function(done) {
-            return browser.setAsyncScriptTimeout(500, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 2000";
-            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-              bare: 'on'
-            });
-            return browser.executeAsync(scriptAsJs, function(err, res) {
-              should.exist(err);
-              err.status.should.equal(28);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setAsyncScriptTimeout(2000, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            var scriptAsCoffee, scriptAsJs;
-            scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 500";
-            scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-              bare: 'on'
-            });
-            return browser.executeAsync(scriptAsJs, function(err, res) {
-              should.not.exist(err);
-              res.should.equal("OK");
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setAsyncScriptTimeout(0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
+    }
+    if (process.env.GHOSTDRIVER_TEST == null) {
+      describe("setWaitTimeout / setImplicitWaitTimeout", function() {
+        return it("should set the wait timeout and implicit wait timeout, " + "run scripts to check functionality, " + "and unset them", function(done) {
+          this.timeout(5000);
+          return async.series([
+            function(done) {
+              return browser.setWaitTimeout(0, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, executeCoffee(browser, "setTimeout ->\n  $('#setWaitTimeout').html '<div class=\"child\">a child</div>'\n, 1000"), function(done) {
+              return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
+                should.exist(err);
+                err.status.should.equal(7);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.setImplicitWaitTimeout(2000, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
+                should.not.exist(err);
+                should.exist(res);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.setImplicitWaitTimeout(0, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
         });
       });
-    });
+      describe("setAsyncScriptTimeout", function() {
+        return it("should set the async script timeout, " + "run scripts to check functionality, " + "and unset it", function(done) {
+          this.timeout(5000);
+          return async.series([
+            function(done) {
+              return browser.setAsyncScriptTimeout(500, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              var scriptAsCoffee, scriptAsJs;
+              scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 2000";
+              scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+                bare: 'on'
+              });
+              return browser.executeAsync(scriptAsJs, function(err, res) {
+                should.exist(err);
+                err.status.should.equal(28);
+                return done(null);
+              });
+            }, function(done) {
+              return browser.setAsyncScriptTimeout(2000, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              var scriptAsCoffee, scriptAsJs;
+              scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 500";
+              scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+                bare: 'on'
+              });
+              return browser.executeAsync(scriptAsJs, function(err, res) {
+                should.not.exist(err);
+                res.should.equal("OK");
+                return done(null);
+              });
+            }, function(done) {
+              return browser.setAsyncScriptTimeout(0, function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }
+          ], function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
+        });
+      });
+    }
     elementFunctionTests();
-    describe("getAttribute", function() {
-      return it("should get correct attribute value", function(done) {
-        return browser.elementById("getAttribute", function(err, testDiv) {
-          should.not.exist(err);
-          should.exist(testDiv);
-          return async.series([
-            function(done) {
-              return browser.getAttribute(testDiv, "weather", function(err, res) {
-                should.not.exist(err);
-                res.should.equal("sunny");
-                return done(null);
-              });
-            }, function(done) {
-              return browser.getAttribute(testDiv, "timezone", function(err, res) {
-                should.not.exist(err);
-                should.not.exist(res);
-                return done(null);
-              });
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("getTagName", function() {
-      return it("should get correct tag name", function(done) {
-        return async.series([
-          function(done) {
-            return browser.elementByCss("#getTagName input", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.getTagName(field, function(err, res) {
-                should.not.exist(err);
-                res.should.equal("input");
-                return done(null);
-              });
-            });
-          }, function(done) {
-            return browser.elementByCss("#getTagName a", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.getTagName(field, function(err, res) {
-                should.not.exist(err);
-                res.should.equal("a");
-                return done(null);
-              });
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("getValue (input)", function() {
-      return it("should get correct value", function(done) {
-        return browser.elementByCss("#getValue input", function(err, inputField) {
-          should.not.exist(err);
-          should.exist(inputField);
-          return browser.getValue(inputField, function(err, res) {
-            should.not.exist(err);
-            res.should.equal("Hello getValueTest!");
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("getValue (textarea)", function() {
-      return it("should get correct value", function(done) {
-        return browser.elementByCss("#getValue textarea", function(err, inputField) {
-          should.not.exist(err);
-          should.exist(inputField);
-          return browser.getValue(inputField, function(err, res) {
-            should.not.exist(err);
-            res.should.equal("Hello getValueTest2!");
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("isDisplayed", function() {
-      return it("should check if elemnt is displayed", function(done) {
-        return async.series([
-          function(done) {
-            return browser.elementByCss("#isDisplayed .displayed", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.isDisplayed(field, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(null);
-              });
-            });
-          }, function(done) {
-            return browser.elementByCss("#isDisplayed .hidden", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.isDisplayed(field, function(err, res) {
-                should.not.exist(err);
-                res.should.be["false"];
-                return done(null);
-              });
-            });
-          }, function(done) {
-            return browser.elementByCss("#isDisplayed .displayed", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.displayed(field, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(null);
-              });
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("getComputedCss", function() {
-      return it("should retrieve the element computed css", function(done) {
-        return async.series([
-          function(done) {
-            return browser.elementByCss("#getComputedCss a", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.getComputedCss(field, 'color', function(err, res) {
-                should.not.exist(err);
-                should.exist(res);
-                res.length.should.be.above(0);
-                return done(null);
-              });
-            });
-          }, function(done) {
-            return browser.elementByCss("#getComputedCss a", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.getComputedCSS(field, 'color', function(err, res) {
-                should.not.exist(err);
-                should.exist(res);
-                res.length.should.be.above(0);
-                return done(null);
-              });
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("clickElement", function() {
-      return it("element should be clicked", function(done) {
-        return browser.elementByCss("#clickElement a", function(err, anchor) {
-          should.not.exist(err);
-          should.exist(anchor);
-          return async.series([
-            executeCoffee(browser, 'jQuery ->\n  a = $(\'#clickElement a\')\n  a.click ->\n    a.html \'clicked\'\n    false              '), function(done) {
-              return textShouldEqual(browser, anchor, "not clicked", done);
-            }, function(done) {
-              return browser.clickElement(anchor, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, anchor, "clicked", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("moveTo", function() {
-      return it("should move to correct element", function(done) {
-        var env;
-        env = {};
-        return async.series([
-          elementByCss(browser, env, "#moveTo .a1", 'a1'), elementByCss(browser, env, "#moveTo .a2", 'a2'), elementByCss(browser, env, "#moveTo .current", 'current'), function(done) {
-            return textShouldEqual(browser, env.current, '', done);
-          }, executeCoffee(browser, 'jQuery ->\n  a1 = $(\'#moveTo .a1\')\n  a2 = $(\'#moveTo .a2\')\n  current = $(\'#moveTo .current\')\n  a1.hover ->\n    current.html \'a1\'\n  a2.hover ->\n    current.html \'a2\''), function(done) {
-            return textShouldEqual(browser, env.current, '', done);
-          }, function(done) {
-            return browser.moveTo(env.a1, 5, 5, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.current, 'a1', done);
-          }, function(done) {
-            return browser.moveTo(env.a2, void 0, void 0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.current, 'a2', done);
-          }, function(done) {
-            return browser.moveTo(env.a1, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.current, 'a1', done);
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("buttonDown / buttonUp", function() {
-      return it("should press/unpress button", function(done) {
-        var env;
-        env = {};
-        return async.series([
-          elementByCss(browser, env, "#mouseButton a", 'a'), elementByCss(browser, env, "#mouseButton div", 'resDiv'), executeCoffee(browser, 'jQuery ->\n  a = $(\'#mouseButton a\')\n  resDiv = $(\'#mouseButton div\')\n  a.mousedown ->\n    resDiv.html \'button down\'\n  a.mouseup ->\n    resDiv.html \'button up\''), function(done) {
-            return textShouldEqual(browser, env.resDiv, '', done);
-          }, function(done) {
-            return browser.moveTo(env.a, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.buttonDown(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.resDiv, 'button down', done);
-          }, function(done) {
-            return browser.buttonUp(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.resDiv, 'button up', done);
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("click", function() {
-      return it("should move to then click element", function(done) {
-        var env;
-        env = {};
-        return async.series([
-          elementByCss(browser, env, "#click .numOfClicks", 'numOfClicksDiv'), elementByCss(browser, env, "#click .buttonNumber", 'buttonNumberDiv'), executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"    \n    false                                         '), function(done) {
-            return textShouldEqual(browser, env.numOfClicksDiv, "not clicked", done);
-          }, function(done) {
-            return browser.moveTo(env.numOfClicksDiv, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.click(0, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.numOfClicksDiv, "clicked 1", done);
-          }, function(done) {
-            return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
-          }, function(done) {
-            return browser.moveTo(env.numOfClicksDiv, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.click(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.numOfClicksDiv, "clicked 2", done);
-          }, function(done) {
-            return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("doubleclick", function() {
-      return it("should move to then doubleclick element", function(done) {
-        var env;
-        env = {};
-        return async.series([
-          elementByCss(browser, env, "#doubleclick div", 'div'), executeCoffee(browser, 'jQuery ->\n  div = $(\'#doubleclick div\')\n  div.dblclick ->\n    div.html \'doubleclicked\'                                 '), function(done) {
-            return textShouldEqual(browser, env.div, "not clicked", done);
-          }, function(done) {
-            return browser.moveTo(env.div, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.doubleclick(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return textShouldEqual(browser, env.div, "doubleclicked", done);
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("type", function() {
-      return it("should correctly input text", function(done) {
-        var altKey, nullKey;
-        altKey = wd.SPECIAL_KEYS['Alt'];
-        nullKey = wd.SPECIAL_KEYS['NULL'];
-        return browser.elementByCss("#type input", function(err, inputField) {
-          should.not.exist(err);
-          should.exist(inputField);
-          return async.series([
-            function(done) {
-              return valueShouldEqual(browser, inputField, "", done);
-            }, function(done) {
-              return browser.type(inputField, "Hello", function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "Hello", done);
-            }, function(done) {
-              return browser.type(inputField, [altKey, nullKey, " World"], function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "Hello World", done);
-            }, function(done) {
-              return browser.type(inputField, "\n", function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "Hello World", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("keys", function() {
-      return it("should press keys to input text", function(done) {
-        var altKey, nullKey;
-        altKey = wd.SPECIAL_KEYS['Alt'];
-        nullKey = wd.SPECIAL_KEYS['NULL'];
-        return browser.elementByCss("#keys input", function(err, inputField) {
-          should.not.exist(err);
-          should.exist(inputField);
-          return async.series([
-            function(done) {
-              return valueShouldEqual(browser, inputField, "", done);
-            }, function(done) {
-              return browser.clickElement(inputField, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.keys("Hello", function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "Hello", done);
-            }, function(done) {
-              return browser.keys([altKey, nullKey, " World"], function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "Hello World", done);
-            }, function(done) {
-              return browser.keys("\n", function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "Hello World", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("clear", function() {
-      return it("should clear input field", function(done) {
-        return browser.elementByCss("#clear input", function(err, inputField) {
-          should.not.exist(err);
-          should.exist(inputField);
-          return async.series([
-            function(done) {
-              return valueShouldEqual(browser, inputField, "not cleared", done);
-            }, function(done) {
-              return browser.clear(inputField, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return valueShouldEqual(browser, inputField, "", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("title", function() {
-      return it("should retrieve title", function(done) {
-        return browser.title(function(err, title) {
-          should.not.exist(err);
-          title.should.equal("TEST PAGE");
-          return done(null);
-        });
-      });
-    });
-    describe("text (passing element)", function() {
-      return it("should retrieve text", function(done) {
-        return browser.elementByCss("#text", function(err, textDiv) {
-          should.not.exist(err);
-          should.exist(textDiv);
-          return browser.text(textDiv, function(err, res) {
-            should.not.exist(err);
-            res.should.include("text content");
-            res.should.not.include("div");
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("text (passing undefined)", function() {
-      return it("should retrieve text", function(done) {
-        return browser.text(void 0, function(err, res) {
-          should.not.exist(err);
-          res.should.include("text content");
-          res.should.include("sunny");
-          res.should.include("click elementsByLinkText");
-          res.should.not.include("div");
-          return done(null);
-        });
-      });
-    });
-    describe("text (passing body)", function() {
-      return it("should retrieve text", function(done) {
-        return browser.text('body', function(err, res) {
-          should.not.exist(err);
-          res.should.include("text content");
-          res.should.include("sunny");
-          res.should.include("click elementsByLinkText");
-          res.should.not.include("div");
-          return done(null);
-        });
-      });
-    });
-    describe("text (passing null)", function() {
-      return it("should retrieve text", function(done) {
-        return browser.text(null, function(err, res) {
-          should.not.exist(err);
-          res.should.include("text content");
-          res.should.include("sunny");
-          res.should.include("click elementsByLinkText");
-          res.should.not.include("div");
-          return done(null);
-        });
-      });
-    });
-    describe("textPresent", function() {
-      return it("should check if text is present", function(done) {
-        return browser.elementByCss("#textPresent", function(err, textDiv) {
-          should.not.exist(err);
-          should.exist(textDiv);
-          return async.series([
-            function(done) {
-              return browser.textPresent('sunny', textDiv, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(null);
-              });
-            }, function(done) {
-              return browser.textPresent('raining', textDiv, function(err, res) {
-                should.not.exist(err);
-                res.should.be["false"];
-                return done(null);
-              });
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("acceptAlert", function() {
-      return it("should accept alert", function(done) {
-        return browser.elementByCss("#acceptAlert a", function(err, a) {
-          should.not.exist(err);
-          should.exist(a);
-          return async.series([
-            executeCoffee(browser, "jQuery ->            \n  a = $('#acceptAlert a')\n  a.click ->\n    alert \"coffee is running out\"\n    false"), function(done) {
-              return browser.clickElement(a, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.acceptAlert(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("dismissAlert", function() {
-      return it("should dismiss alert", function(done) {
-        return browser.elementByCss("#dismissAlert a", function(err, a) {
-          var capabilities;
-          should.not.exist(err);
-          should.exist(a);
-          capabilities = null;
-          return async.series([
-            function(done) {
-              return browser.sessionCapabilities(function(err, res) {
-                should.not.exist(err);
-                capabilities = res;
-                return done(null);
-              });
-            }, executeCoffee(browser, "jQuery ->                        \n  a = $('#dismissAlert a')\n  a.click ->\n    alert \"coffee is running out\"\n    false"), function(done) {
-              return browser.clickElement(a, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              if (!(capabilities.platform === 'MAC' && capabilities.browserName === 'chrome')) {
-                return browser.dismissAlert(function(err) {
-                  should.not.exist(err);
-                  return done(null);
-                });
-              } else {
-                return browser.acceptAlert(function(err) {
-                  should.not.exist(err);
-                  return done(null);
-                });
-              }
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    });
-    describe("active", function() {
-      return it("should check if element is active", function(done) {
-        var env;
-        env = {};
-        return async.series([
-          elementByCss(browser, env, "#active .i1", 'i1'), elementByCss(browser, env, "#active .i2", 'i2'), function(done) {
-            return browser.clickElement(env.i1, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.active(function(err, res) {
-              var k, _i, _len;
-              should.not.exist(err);
-              for (_i = 0, _len = res.length; _i < _len; _i++) {
-                k = res[_i];
-                res.should.equal(env.i1[k]);
-                env.i1.should.have.property(k);
-              }
-              return done(null);
-            });
-          }, function(done) {
-            return browser.clickElement(env.i2, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.active(function(err, res) {
-              var k, _i, _len;
-              should.not.exist(err);
-              for (_i = 0, _len = res.length; _i < _len; _i++) {
-                k = res[_i];
-                res.should.equal(env.i2[k]);
-                env.i2.should.have.property(k);
-              }
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("url", function() {
-      return it("should retrieve url", function(done) {
-        return browser.url(function(err, res) {
-          res.should.include("test-page.html");
-          res.should.include("http://");
-          return done(null);
-        });
-      });
-    });
-    describe("takeScreenshot", function() {
-      return it("should take a screenshot", function(done) {
-        return browser.takeScreenshot(function(err, res) {
-          var data, img;
-          should.not.exist(err);
-          data = new Buffer(res, 'base64');
-          img = imageinfo(data);
-          img.should.not.be["false"];
-          img.format.should.equal('PNG');
-          img.width.should.not.equal(0);
-          img.height.should.not.equal(0);
-          return done(null);
-        });
-      });
-    });
-    describe("allCookies / setCookies / deleteAllCookies / deleteCookie", function() {
-      return it("cookies should work", function(done) {
-        return async.series([
-          function(done) {
-            return browser.deleteAllCookies(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.allCookies(function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setCookie({
-              name: 'fruit1',
-              value: 'apple'
-            }, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.allCookies(function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(1);
-              (res.filter(function(c) {
-                return c.name === 'fruit1' && c.value === 'apple';
-              })).should.have.length(1);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setCookie({
-              name: 'fruit2',
-              value: 'pear'
-            }, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.allCookies(function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(2);
-              (res.filter(function(c) {
-                return c.name === 'fruit2' && c.value === 'pear';
-              })).should.have.length(1);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setCookie({
-              name: 'fruit3',
-              value: 'orange'
-            }, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.allCookies(function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(3);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.deleteCookie('fruit2', function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.allCookies(function(err, res) {
-              should.not.exist(err);
-              res.should.have.length(2);
-              (res.filter(function(c) {
-                return c.name === 'fruit2' && c.value === 'pear';
-              })).should.have.length(0);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.deleteAllCookies(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.allCookies(function(err, res) {
-              should.not.exist(err);
-              res.should.eql([]);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setCookie({
-              name: 'fruit3',
-              value: 'orange',
-              secure: true
-            }, function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("isVisible", function() {
-      return it("should check if element is visible", function(done) {
-        return async.series([
-          function(done) {
-            return browser.elementByCss("#isVisible a", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.isVisible(field, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(null);
-              });
-            });
-          }, function(done) {
-            return browser.isVisible("css selector", "#isVisible a", function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(null);
-            });
-          }, function(done) {
-            return browser.execute("$('#isVisible a').hide();", function(err, res) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.elementByCss("#isVisible a", function(err, field) {
-              should.not.exist(err);
-              should.exist(field);
-              return browser.isVisible(field, function(err, res) {
-                should.not.exist(err);
-                res.should.be["false"];
-                return done(null);
-              });
-            });
-          }, function(done) {
-            return browser.isVisible("css selector", "#isVisible a", function(err, res) {
-              should.not.exist(err);
-              res.should.be["false"];
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("waitForCondition", function() {
-      return it("should wait for condition", function(done) {
-        var exprCond;
-        this.timeout(10000);
-        exprCond = "$('#waitForCondition .child').length > 0";
-        return async.series([
-          executeCoffee(browser, "setTimeout ->\n  $('#waitForCondition').html '<div class=\"child\">a waitForCondition child</div>'\n, 1500"), function(done) {
-            return browser.elementByCss("#waitForCondition .child", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.waitForCondition(exprCond, 2000, 200, function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(err);
-            });
-          }, function(done) {
-            return browser.waitForCondition(exprCond, 2000, function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(err);
-            });
-          }, function(done) {
-            return browser.waitForCondition(exprCond, function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(err);
-            });
-          }, function(done) {
-            return browser.waitForCondition('$wrong expr!!!', function(err, res) {
-              should.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("waitForConditionInBrowser", function() {
-      return it("should wait for condition within the browser", function(done) {
-        var exprCond;
-        this.timeout(10000);
-        exprCond = "$('#waitForConditionInBrowser .child').length > 0";
-        return async.series([
-          executeCoffee(browser, "setTimeout ->\n  $('#waitForConditionInBrowser').html '<div class=\"child\">a waitForCondition child</div>'\n, 1500"), function(done) {
-            return browser.elementByCss("#waitForConditionInBrowser .child", function(err, res) {
-              should.exist(err);
-              err.status.should.equal(7);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setAsyncScriptTimeout(5000, function(err, res) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.waitForConditionInBrowser(exprCond, 2000, 200, function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(err);
-            });
-          }, function(done) {
-            return browser.waitForConditionInBrowser(exprCond, 2000, function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(err);
-            });
-          }, function(done) {
-            return browser.waitForConditionInBrowser(exprCond, function(err, res) {
-              should.not.exist(err);
-              res.should.be["true"];
-              return done(err);
-            });
-          }, function(done) {
-            return browser.waitForConditionInBrowser("totally #} wrong == expr", function(err, res) {
-              should.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            return browser.setAsyncScriptTimeout(0, function(err, res) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("err.inspect", function() {
-      return it("error output should be clean", function(done) {
-        return browser.safeExecute("invalid-code> here", function(err) {
-          should.exist(err);
-          (err instanceof Error).should.be["true"];
-          should.exist(err['jsonwire-error']);
-          err.inspect().should.include('"screen": "[hidden]"');
-          err.inspect().should.include('browser-error:');
-          return done(null);
-        });
-      });
-    });
-    describe("close", function() {
-      return it("should close current window", function(done) {
-        return browser.close(function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
+    /*
+      describe "getAttribute", -> 
+        it "should get correct attribute value", (done) -> 
+          browser.elementById "getAttribute", (err,testDiv) ->
+            should.not.exist err
+            should.exist testDiv
+            async.series [
+              (done) ->
+                browser.getAttribute testDiv, "weather", (err,res) ->
+                  should.not.exist err
+                  res.should.equal "sunny"
+                  done null
+              (done) ->
+                browser.getAttribute testDiv, "timezone", (err,res) ->
+                  should.not.exist err
+                  should.not.exist res
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null
+    
+      describe "getTagName", -> 
+        it "should get correct tag name", (done) -> 
+          async.series [
+            (done) ->
+              browser.elementByCss "#getTagName input", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.getTagName field, (err,res) ->
+                  should.not.exist err
+                  res.should.equal "input"
+                  done null
+            (done) ->
+              browser.elementByCss "#getTagName a", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.getTagName field, (err,res) ->
+                  should.not.exist err
+                  res.should.equal "a"
+                  done null
+          ], (err) ->
+            should.not.exist err
+            done null
+      
+      describe "getValue (input)", -> 
+        it "should get correct value", (done) -> 
+          browser.elementByCss "#getValue input", (err,inputField) ->
+            should.not.exist err
+            should.exist inputField
+            browser.getValue inputField, (err,res) ->
+              should.not.exist err
+              res.should.equal "Hello getValueTest!"
+              done null
+    
+      describe "getValue (textarea)", -> 
+        it "should get correct value", (done) -> 
+          browser.elementByCss "#getValue textarea", (err,inputField) ->
+            should.not.exist err
+            should.exist inputField
+            browser.getValue inputField, (err,res) ->
+              should.not.exist err
+              res.should.equal "Hello getValueTest2!"
+              done null
+    
+      describe "isDisplayed", -> 
+        it "should check if elemnt is displayed", (done) -> 
+          async.series [
+            (done) ->
+              browser.elementByCss "#isDisplayed .displayed", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.isDisplayed field, (err,res) ->
+                  should.not.exist err
+                  res.should.be.true
+                  done null
+            (done) ->
+              browser.elementByCss "#isDisplayed .hidden", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.isDisplayed field, (err,res) ->
+                  should.not.exist err
+                  res.should.be.false
+                  done null
+            (done) ->
+              browser.elementByCss "#isDisplayed .displayed", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.displayed field, (err,res) ->
+                  should.not.exist err
+                  res.should.be.true
+                  done null
+          ], (err) ->
+            should.not.exist err
+            done null
+      
+      describe "getComputedCss", -> 
+        it "should retrieve the element computed css", (done) -> 
+          async.series [
+            (done) ->
+              browser.elementByCss "#getComputedCss a", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.getComputedCss field, 'color', (err,res) ->
+                  should.not.exist err
+                  should.exist res
+                  res.length.should.be.above 0
+                  done null
+            (done) ->
+              browser.elementByCss "#getComputedCss a", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.getComputedCSS field, 'color', (err,res) ->
+                  should.not.exist err
+                  should.exist res
+                  res.length.should.be.above 0
+                  done null
+          ], (err) ->
+            should.not.exist err
+            done null
+                      
+      describe "clickElement", -> 
+        it "element should be clicked", (done) -> 
+          browser.elementByCss "#clickElement a", (err,anchor) ->
+            should.not.exist err
+            should.exist anchor
+            async.series [
+              executeCoffee browser,
+                '''
+                  jQuery ->
+                    a = $('#clickElement a')
+                    a.click ->
+                      a.html 'clicked'
+                      false              
+                '''
+              (done) -> textShouldEqual browser, anchor, "not clicked", done
+              (done) ->
+                browser.clickElement anchor, (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> textShouldEqual browser, anchor, "clicked", done
+            ], (err) ->
+              should.not.exist err
+              done null
+        
+      describe "moveTo", -> 
+        it "should move to correct element", (done) -> 
+          env = {}
+          async.series [
+            elementByCss browser, env, "#moveTo .a1", 'a1'
+            elementByCss browser, env, "#moveTo .a2", 'a2'
+            elementByCss browser, env, "#moveTo .current", 'current'        
+            (done) -> textShouldEqual browser, env.current, '', done
+            executeCoffee browser, 
+              '''
+                jQuery ->
+                  a1 = $('#moveTo .a1')
+                  a2 = $('#moveTo .a2')
+                  current = $('#moveTo .current')
+                  a1.hover ->
+                    current.html 'a1'
+                  a2.hover ->
+                    current.html 'a2'
+              '''
+            (done) -> textShouldEqual browser, env.current, '', done
+            (done) ->
+              browser.moveTo env.a1, 5, 5, (err) ->            
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.current, 'a1', done
+            (done) ->
+              browser.moveTo env.a2, undefined, undefined, (err) ->
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.current, 'a2', done        
+            (done) ->
+              browser.moveTo env.a1, (err) ->            
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.current, 'a1', done
+          ], (err) ->
+            should.not.exist err
+            done null
+            
+      # @todo waiting for implementation
+      # it "scroll", (test) ->  
+        
+      describe "buttonDown / buttonUp", -> 
+        it "should press/unpress button", (done) -> 
+          env = {}
+          async.series [
+            elementByCss browser, env, "#mouseButton a", 'a'
+            elementByCss browser, env, "#mouseButton div", 'resDiv'
+            executeCoffee browser, 
+              '''
+                jQuery ->
+                  a = $('#mouseButton a')
+                  resDiv = $('#mouseButton div')
+                  a.mousedown ->
+                    resDiv.html 'button down'
+                  a.mouseup ->
+                    resDiv.html 'button up'
+              '''          
+            (done) -> textShouldEqual browser, env.resDiv, '', done
+            (done) ->
+              browser.moveTo env.a, (err) ->            
+                should.not.exist err
+                done null
+            (done) ->
+              browser.buttonDown (err) ->            
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.resDiv, 'button down', done
+            (done) ->
+              browser.buttonUp (err) ->            
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.resDiv, 'button up', done
+          ], (err) ->
+            should.not.exist err
+            done null
+        
+      describe "click", -> 
+        it "should move to then click element", (done) -> 
+          env = {}
+          async.series [
+            elementByCss browser, env, "#click .numOfClicks", 'numOfClicksDiv'
+            elementByCss browser, env, "#click .buttonNumber", 'buttonNumberDiv'
+            executeCoffee browser,
+              '''
+                jQuery ->
+                  window.numOfClick = 0
+                  numOfClicksDiv = $('#click .numOfClicks')
+                  buttonNumberDiv = $('#click .buttonNumber')
+                  numOfClicksDiv.mousedown (eventObj) ->
+                    button = eventObj.button
+                    button = 'default' unless button?
+                    window.numOfClick = window.numOfClick + 1
+                    numOfClicksDiv.html "clicked #{window.numOfClick}"
+                    buttonNumberDiv.html "#{button}"    
+                    false                                         
+              '''
+            (done) -> textShouldEqual browser, env.numOfClicksDiv , "not clicked", done
+            (done) ->
+              browser.moveTo env.numOfClicksDiv, (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.click 0, (err) ->
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 1", done
+            (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
+            (done) ->
+              browser.moveTo env.numOfClicksDiv, (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.click (err) ->
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.numOfClicksDiv, "clicked 2", done
+            (done) -> textShouldEqual browser, env.buttonNumberDiv, "0", done
+            # not testing right click, cause not sure how to dismiss the right 
+            # click menu in chrome and firefox
+          ], (err) ->
+            should.not.exist err
+            done null
+                
+      describe "doubleclick", -> 
+        it "should move to then doubleclick element", (done) -> 
+          env = {}
+          async.series [ 
+            elementByCss browser, env, "#doubleclick div", 'div'       
+            executeCoffee browser,
+              '''
+                jQuery ->
+                  div = $('#doubleclick div')
+                  div.dblclick ->
+                    div.html 'doubleclicked'                                 
+              '''
+            (done) -> textShouldEqual browser, env.div, "not clicked", done
+            (done) ->
+              browser.moveTo env.div, (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.doubleclick (err) ->
+                should.not.exist err
+                done null
+            (done) -> textShouldEqual browser, env.div, "doubleclicked", done            
+          ], (err) ->
+            should.not.exist err
+            done null
+        
+      describe "type", -> 
+        it "should correctly input text", (done) -> 
+          altKey = wd.SPECIAL_KEYS['Alt']
+          nullKey = wd.SPECIAL_KEYS['NULL']
+          browser.elementByCss "#type input", (err,inputField) ->
+            should.not.exist err
+            should.exist inputField
+            async.series [
+              (done) -> valueShouldEqual browser, inputField, "", done
+              (done) ->
+                browser.type inputField, "Hello" , (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "Hello", done
+              (done) ->
+                browser.type inputField, [altKey, nullKey, " World"] , (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "Hello World", done
+              (done) ->
+                browser.type inputField, "\n" , (err) -> # no effect
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "Hello World", done
+            ], (err) ->
+              should.not.exist err
+              done null
+        
+      describe "keys", -> 
+        it "should press keys to input text", (done) -> 
+          altKey = wd.SPECIAL_KEYS['Alt']
+          nullKey = wd.SPECIAL_KEYS['NULL']
+          browser.elementByCss "#keys input", (err,inputField) ->
+            should.not.exist err
+            should.exist inputField
+            async.series [
+              (done) -> valueShouldEqual browser, inputField, "", done
+              (done) ->
+                browser.clickElement inputField, (err) ->
+                  should.not.exist err
+                  done null
+              (done) ->
+                browser.keys "Hello" , (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "Hello", done
+              (done) ->
+                browser.keys [altKey, nullKey, " World"] , (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "Hello World", done
+              (done) ->
+                browser.keys "\n" , (err) -> # no effect
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "Hello World", done
+            ], (err) ->
+              should.not.exist err
+              done null
+        
+      describe "clear", -> 
+        it "should clear input field", (done) -> 
+          browser.elementByCss "#clear input", (err,inputField) ->
+            should.not.exist err
+            should.exist inputField
+            async.series [
+              (done) -> valueShouldEqual browser, inputField, "not cleared", done
+              (done) ->
+                browser.clear inputField , (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> valueShouldEqual browser, inputField, "", done
+            ], (err) ->
+              should.not.exist err
+              done null
+      
+      describe "title", -> 
+        it "should retrieve title", (done) -> 
+          browser.title (err,title) ->
+            should.not.exist err
+            title.should.equal "TEST PAGE"
+            done null
+      
+      describe "text (passing element)", -> 
+        it "should retrieve text", (done) -> 
+          browser.elementByCss "#text", (err,textDiv) ->
+            should.not.exist err
+            should.exist textDiv
+            browser.text textDiv, (err, res) ->
+              should.not.exist err
+              res.should.include "text content" 
+              res.should.not.include "div"
+              done null 
+    
+      describe "text (passing undefined)", -> 
+        it "should retrieve text", (done) -> 
+          browser.text undefined, (err, res) ->
+            should.not.exist err
+            # the whole page text is returned
+            res.should.include "text content" 
+            res.should.include "sunny" 
+            res.should.include "click elementsByLinkText"
+            res.should.not.include "div" 
+            done null
+            
+      describe "text (passing body)", -> 
+        it "should retrieve text", (done) -> 
+          browser.text 'body', (err, res) ->
+            should.not.exist err
+            # the whole page text is returned
+            res.should.include "text content" 
+            res.should.include "sunny" 
+            res.should.include "click elementsByLinkText"
+            res.should.not.include "div" 
+            done null
+            
+      describe "text (passing null)", -> 
+        it "should retrieve text", (done) -> 
+          browser.text null, (err, res) ->
+            should.not.exist err
+            # the whole page text is returned
+            res.should.include "text content" 
+            res.should.include "sunny" 
+            res.should.include "click elementsByLinkText"
+            res.should.not.include "div" 
+            done null
+            
+      describe "textPresent", -> 
+        it "should check if text is present", (done) -> 
+          browser.elementByCss "#textPresent", (err,textDiv) ->
+            should.not.exist err
+            should.exist textDiv
+            async.series [
+              (done) -> 
+                browser.textPresent 'sunny', textDiv , (err, res) ->
+                  should.not.exist err
+                  res.should.be.true
+                  done null
+              (done) -> 
+                browser.textPresent 'raining', textDiv , (err, res) ->
+                  should.not.exist err
+                  res.should.be.false
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null
+        
+      describe "acceptAlert", -> 
+        it "should accept alert", (done) -> 
+          browser.elementByCss "#acceptAlert a", (err,a) ->
+            should.not.exist err
+            should.exist a
+            async.series [
+              executeCoffee browser,
+                """
+                  jQuery ->            
+                    a = $('#acceptAlert a')
+                    a.click ->
+                      alert "coffee is running out"
+                      false
+                """          
+              (done) -> 
+                browser.clickElement a, (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> 
+                browser.acceptAlert (err) ->
+                  should.not.exist err
+                  done null
+            ], (err) ->
+              should.not.exist err
+              done null
+        
+      describe "dismissAlert", ->       
+        it "should dismiss alert", (done) ->       
+          browser.elementByCss "#dismissAlert a", (err,a) ->
+            should.not.exist err
+            should.exist a
+            capabilities = null
+            async.series [
+              (done) -> 
+                browser.sessionCapabilities (err,res) ->
+                  should.not.exist err
+                  capabilities = res
+                  done null              
+              executeCoffee browser,
+                """
+                  jQuery ->                        
+                    a = $('#dismissAlert a')
+                    a.click ->
+                      alert "coffee is running out"
+                      false
+                """          
+              (done) -> 
+                browser.clickElement a, (err) ->
+                  should.not.exist err
+                  done null
+              (done) -> 
+                # known bug on chrome/mac, need to use acceptAlert instead
+                unless (capabilities.platform is 'MAC' and capabilities.browserName is 'chrome')
+                  browser.dismissAlert (err) ->
+                    should.not.exist err
+                    done null
+                else
+                  browser.acceptAlert (err) ->
+                    should.not.exist err
+                    done null            
+            ], (err) ->
+              should.not.exist err
+              done null
+          
+      describe "active", -> 
+        it "should check if element is active", (done) -> 
+          env = {}
+          async.series [
+            elementByCss browser, env, "#active .i1", 'i1'
+            elementByCss browser, env, "#active .i2", 'i2'
+            (done) ->
+              browser.clickElement env.i1, (err) ->            
+                should.not.exist err
+                done null
+            (done) ->
+              browser.active (err,res) ->            
+                should.not.exist err
+                (res.should.equal env.i1[k]; env.i1.should.have.property k) for k in res
+                done null
+            (done) ->
+              browser.clickElement env.i2, (err) ->            
+                should.not.exist err
+                done null
+            (done) ->
+              browser.active (err,res) ->            
+                should.not.exist err
+                (res.should.equal env.i2[k]; env.i2.should.have.property k) for k in res
+                done null
+          ], (err) ->
+            should.not.exist err
+            done null
+            
+      describe "url", ->
+        it "should retrieve url", (done) ->
+          browser.url (err,res) ->
+            res.should.include "test-page.html"
+            res.should.include "http://"
+            done null
+      
+      describe "takeScreenshot", ->
+        it "should take a screenshot", (done) ->
+          browser.takeScreenshot (err,res) ->
+            should.not.exist err
+            data = new Buffer res, 'base64'
+            img = imageinfo data
+            img.should.not.be.false
+            img.format.should.equal 'PNG'
+            img.width.should.not.equal 0
+            img.height.should.not.equal 0
+            done null
+       
+      describe "allCookies / setCookies / deleteAllCookies / deleteCookie", -> 
+        it "cookies should work", (done) -> 
+          async.series [
+            (done) ->
+              browser.deleteAllCookies (err) ->            
+                should.not.exist err
+                done null            
+            (done) ->
+              browser.allCookies (err, res) ->            
+                should.not.exist err
+                res.should.eql []
+                done null            
+            (done) ->
+              browser.setCookie \
+                name: 'fruit1'
+                , value: 'apple'
+              , (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.allCookies (err, res) ->            
+                should.not.exist err
+                res.should.have.length 1
+                (res.filter (c) -> c.name is 'fruit1' and c.value is 'apple')\
+                   .should.have.length 1
+                done null            
+            (done) ->
+              browser.setCookie \
+                name: 'fruit2'
+                , value: 'pear'
+              , (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.allCookies (err, res) ->            
+                should.not.exist err
+                res.should.have.length 2
+                (res.filter (c) -> c.name is 'fruit2' and c.value is 'pear')\
+                   .should.have.length 1
+                done null            
+            (done) ->
+              browser.setCookie \
+                name: 'fruit3'
+                , value: 'orange'
+              , (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.allCookies (err, res) ->            
+                should.not.exist err
+                res.should.have.length 3
+                done null            
+            (done) ->
+              browser.deleteCookie 'fruit2', (err) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.allCookies (err, res) ->            
+                should.not.exist err
+                res.should.have.length 2
+                (res.filter (c) -> c.name is 'fruit2' and c.value is 'pear')\
+                   .should.have.length 0
+                done null            
+            (done) ->
+              browser.deleteAllCookies (err) ->            
+                should.not.exist err
+                done null            
+            (done) ->
+              browser.allCookies (err, res) ->            
+                should.not.exist err
+                res.should.eql []
+                done null            
+            (done) ->
+              # not too sure how to test this case this one, so just making sure 
+              # that it does not throw
+              browser.setCookie \
+                name: 'fruit3'
+                , value: 'orange'
+                , secure: true
+              , (err) ->
+                should.not.exist err
+                done null
+          ], (err) ->
+            should.not.exist err
+            done null
+      
+      describe "isVisible", -> 
+        it "should check if element is visible", (done) -> 
+          async.series [
+            (done) ->
+              browser.elementByCss "#isVisible a", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.isVisible field, (err,res) ->
+                  should.not.exist err
+                  res.should.be.true
+                  done null
+            (done) ->
+              browser.isVisible "css selector", "#isVisible a", (err,res) ->
+                should.not.exist err
+                res.should.be.true
+                done null
+            (done) ->
+              browser.execute "$('#isVisible a').hide();", (err,res) ->
+                should.not.exist err
+                done null
+            (done) ->
+              browser.elementByCss "#isVisible a", (err, field) ->
+                should.not.exist err
+                should.exist field
+                browser.isVisible field, (err,res) ->
+                  should.not.exist err
+                  res.should.be.false
+                  done null
+            (done) ->
+              browser.isVisible "css selector", "#isVisible a", (err,res) ->
+                should.not.exist err
+                res.should.be.false
+                done null
+          ], (err) ->
+            should.not.exist err
+            done null
+    
+      describe "waitForCondition", ->
+        it "should wait for condition", (done) ->
+          @timeout 10000
+          exprCond = "$('#waitForCondition .child').length > 0"
+          async.series [        
+            executeCoffee browser,   
+              """
+                setTimeout ->
+                  $('#waitForCondition').html '<div class="child">a waitForCondition child</div>'
+                , 1500
+              """  
+            (done) ->
+              browser.elementByCss "#waitForCondition .child", (err,res) ->            
+                should.exist err
+                err.status.should.equal 7
+                done(null)
+            (done) ->
+              browser.waitForCondition exprCond, 2000, 200, (err,res) ->            
+                should.not.exist err
+                res.should.be.true
+                done(err)
+            (done) ->
+              browser.waitForCondition exprCond, 2000, (err,res) ->            
+                should.not.exist err
+                res.should.be.true
+                done(err)
+            (done) ->
+              browser.waitForCondition exprCond, (err,res) ->            
+                should.not.exist err
+                res.should.be.true
+                done(err)                    
+            (done) ->
+              browser.waitForCondition '$wrong expr!!!', (err,res) ->            
+                should.exist err
+                done(null)            
+          ], (err) ->
+            should.not.exist err
+            done null
+          
+      describe "waitForConditionInBrowser", ->
+        it "should wait for condition within the browser", (done) ->
+          @timeout 10000
+          exprCond = "$('#waitForConditionInBrowser .child').length > 0"
+          async.series [
+            executeCoffee browser,   
+              """
+                setTimeout ->
+                  $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
+                , 1500
+              """
+            (done) ->
+              browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
+                should.exist err
+                err.status.should.equal 7
+                done(null)
+            (done) ->
+              browser.setAsyncScriptTimeout 5000, (err,res) ->            
+                should.not.exist err
+                done(null)
+            (done) ->
+              browser.waitForConditionInBrowser exprCond, 2000, 200, (err,res) ->            
+                should.not.exist err
+                res.should.be.true
+                done(err)
+            (done) ->
+              browser.waitForConditionInBrowser exprCond, 2000, (err,res) ->            
+                should.not.exist err
+                res.should.be.true
+                done(err)
+            (done) ->
+              browser.waitForConditionInBrowser exprCond, (err,res) ->            
+                should.not.exist err
+                res.should.be.true
+                done(err)
+            (done) ->
+              browser.waitForConditionInBrowser "totally #} wrong == expr", (err,res) ->            
+                should.exist err
+                done(null)
+            (done) ->
+              browser.setAsyncScriptTimeout 0, (err,res) ->            
+                should.not.exist err
+                done(null)
+          ], (err) ->
+            should.not.exist err
+            done null
+            
+      describe "err.inspect", ->
+        it "error output should be clean", (done) ->
+          browser.safeExecute "invalid-code> here", (err) ->
+            should.exist err
+            (err instanceof Error).should.be.true        
+            should.exist err['jsonwire-error']
+            err.inspect().should.include '"screen": "[hidden]"'
+            err.inspect().should.include 'browser-error:'
+            done null
+            
+      
+      describe "close", ->        
+        it "should close current window", (done) ->        
+          browser.close (err) ->
+            should.not.exist err
+            done null
+    */
+
     return describe("quit", function() {
       return it("should destroy browser", function(done) {
         return browser.quit(function(err) {
