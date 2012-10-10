@@ -1,6 +1,6 @@
 # mocha test
 
-process.env.GHOSTDRIVER_TEST=true
+process.env.GHOSTDRIVER_TEST=1
 
 {test} = require '../common/basic-test-base'
 
