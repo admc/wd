@@ -2,11 +2,9 @@
 (function() {
   var desired, remoteWdConfig, test, _ref;
 
-  process.env.GHOSTDRIVER_TEST = 1;
+  _ref = require('./config'), desired = _ref.desired, remoteWdConfig = _ref.remoteWdConfig;
 
   test = require('../common/basic-test-base').test;
-
-  _ref = require('./config'), desired = _ref.desired, remoteWdConfig = _ref.remoteWdConfig;
 
   describe("wd", function() {
     return describe("ghostdriver", function() {

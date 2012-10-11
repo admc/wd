@@ -1,9 +1,7 @@
 # mocha test
 
-process.env.GHOSTDRIVER_TEST=1
-
-{test} = require '../common/element-test-base'
 {desired, remoteWdConfig} = require './config'
+{test} = require '../common/element-test-base'
 
 describe "wd", ->
   describe "ghostdriver", ->
