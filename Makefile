@@ -8,9 +8,9 @@ DEFAULT:
 	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
 	@echo '  make test_ghostdriver -> run the ghostdriver tests (start ghostdriver first).'
 	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
-	@echo '  make compile2js -> compile coffee files to js.'
-	@echo '  make compile2js_watch -> compile coffee files to js, watch for changes.'
-	@echo '  make cleanGenJs -> clean js files generated from coffeescript.'
+	@echo '  make compile -> compile coffee files to js.'
+	@echo '  make compile_watch -> compile coffee files to js, watch for changes.'
+	@echo '  make clean_js -> clean js files generated from coffeescript.'
 	@echo '  build_mapping -> build the mapping (implemented only).'  
 	@echo '  build_full_mapping -> build the mapping (full).'  
 	@echo
@@ -49,14 +49,14 @@ test_coverage:
   > coverage.html
 
 # remove all the generated js
-cleanGenJs:
+clean_js:
 	@rm -f test/common/*.js test/local/*.js test/unit/*.js test/saucelabs/*.js test/ghostdriver/*.js
 
 # compile once
-compile2js:
+compile:
 	@./node_modules/.bin/coffee --compile $(TEST_DIR)
 # compile, and then watch for changes
-compile2js_watch:
+compile_watch:
 	./node_modules/.bin/coffee --compile --watch $(TEST_DIR)
 
 _dox:
@@ -79,9 +79,9 @@ build_full_mapping: _dox
 	test_local \
 	test_saucelabs \
 	test_coverage \
-	compile2js \
-	compile2js_watch \
-	cleanGenJs \
+	compile \
+	compile_watch \
+	clean_js \
 	test_ghostdriver \
 	build_mapping \
 	build_full_mapping \

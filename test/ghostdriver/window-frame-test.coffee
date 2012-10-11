@@ -3,6 +3,7 @@
 process.env.GHOSTDRIVER_TEST=1
 
 {test} = require '../common/window-frame-test-base'
+{desired, remoteWdConfig} = require './config'
 
 describe "wd", ->
   describe "ghostdriver", ->
@@ -10,5 +11,5 @@ describe "wd", ->
     describe "window frame test", ->
       
       describe "using ghostdriver", ->
-        test {host:'localhost', port:8080}, {}
+        test remoteWdConfig, desired
         
