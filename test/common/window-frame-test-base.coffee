@@ -215,7 +215,7 @@ test = (remoteWdConfig, desired) ->
   
   # the frame method does not work with chromeDriver
   # ghostdriver also has issues
-  unless browserName is 'chrome' or process.env.GHOSTDRIVER_TEST?
+  unless browserName is 'chrome'
     describe "opening frame test page", ->
       it "should open the first window", (done) ->
         @timeout 10000

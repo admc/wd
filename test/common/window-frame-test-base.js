@@ -273,7 +273,7 @@
         });
       });
     });
-    if (!(browserName === 'chrome' || (process.env.GHOSTDRIVER_TEST != null))) {
+    if (browserName !== 'chrome') {
       describe("opening frame test page", function() {
         return it("should open the first window", function(done) {
           this.timeout(10000);

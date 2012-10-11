@@ -55,9 +55,9 @@
           this.timeout(TIMEOUT);
           return browser.elementById("submit", function(err, el) {
             return browser.clickElement(el, function() {
-              if (process.env.GHOSTDRIVER_TEST == null) {
+              if (process.env.aGHOSTDRIVER_TEST == null) {
                 return browser["eval"]("window.location.href", function(err, location) {
-                  assert.ok(~location.indexOf("#"), "Wrong location!");
+                  assert.ok(~location.indexOf("http://"), "Wrong location!");
                   return done(null);
                 });
               } else {

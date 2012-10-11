@@ -879,46 +879,44 @@
         });
       });
     });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("setWaitTimeout / setImplicitWaitTimeout", function() {
-        return it("should set the wait timeout and implicit wait timeout, " + "run scripts to check functionality, " + "and unset them", function(done) {
-          this.timeout(5000);
-          return async.series([
-            function(done) {
-              return browser.setWaitTimeout(0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, executeCoffee(browser, "setTimeout ->\n  $('#setWaitTimeout').html '<div class=\"child\">a child</div>'\n, " + TIMEOUT_BASE), function(done) {
-              return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
-                should.exist(err);
-                err.status.should.equal(7);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.setImplicitWaitTimeout(2 * TIMEOUT_BASE, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
-                should.not.exist(err);
-                should.exist(res);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.setImplicitWaitTimeout(0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
+    describe("setImplicitWaitTimeout", function() {
+      it("should set the wait timeout and implicit wait timeout, " + "run scripts to check functionality, " + "and unset them", function(done) {
+        this.timeout(5000);
+        return async.series([
+          function(done) {
+            return browser.setImplicitWaitTimeout(0, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, executeCoffee(browser, "setTimeout ->\n  $('#setWaitTimeout').html '<div class=\"child\">a child</div>'\n, " + TIMEOUT_BASE), function(done) {
+            return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
+              should.exist(err);
+              err.status.should.equal(7);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setImplicitWaitTimeout(2 * TIMEOUT_BASE, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.elementByCss("#setWaitTimeout .child", function(err, res) {
+              should.not.exist(err);
+              should.exist(res);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setImplicitWaitTimeout(0, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
-      describe("setAsyncScriptTimeout", function() {
+      return describe("setAsyncScriptTimeout", function() {
         return it("should set the async script timeout, " + "run scripts to check functionality, " + "and unset it", function(done) {
           this.timeout(5000);
           return async.series([
@@ -966,7 +964,7 @@
           });
         });
       });
-    }
+    });
     elementFunctionTests();
     describe("getAttribute", function() {
       return it("should get correct attribute value", function(done) {
@@ -1145,152 +1143,154 @@
         });
       });
     });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("moveTo", function() {
-        return it("should move to correct element", function(done) {
-          var env;
-          env = {};
-          return async.series([
-            elementByCss(browser, env, "#moveTo .a1", 'a1'), elementByCss(browser, env, "#moveTo .a2", 'a2'), elementByCss(browser, env, "#moveTo .current", 'current'), function(done) {
-              return textShouldEqual(browser, env.current, '', done);
-            }, executeCoffee(browser, 'jQuery ->\n  a1 = $(\'#moveTo .a1\')\n  a2 = $(\'#moveTo .a2\')\n  current = $(\'#moveTo .current\')\n  a1.hover ->\n    current.html \'a1\'\n  a2.hover ->\n    current.html \'a2\''), function(done) {
-              return textShouldEqual(browser, env.current, '', done);
-            }, function(done) {
-              return browser.moveTo(env.a1, 5, 5, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.current, 'a1', done);
-            }, function(done) {
-              return browser.moveTo(env.a2, void 0, void 0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.current, 'a2', done);
-            }, function(done) {
-              return browser.moveTo(env.a1, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.current, 'a1', done);
-            }
-          ], function(err) {
-            should.not.exist(err);
+    describe("moveTo", function() {
+      return it("should move to correct element", function(done) {
+        var env, _textShouldEqual;
+        env = {};
+        _textShouldEqual = textShouldEqual;
+        textShouldEqual = function(browser, element, expected, done) {
+          if (process.env.GHOSTDRIVER_TEST == null) {
+            return _textShouldEqual.apply(browser, element, expected, done);
+          } else {
             return done(null);
-          });
+          }
+        };
+        return async.series([
+          elementByCss(browser, env, "#moveTo .a1", 'a1'), elementByCss(browser, env, "#moveTo .a2", 'a2'), elementByCss(browser, env, "#moveTo .current", 'current'), function(done) {
+            return textShouldEqual(browser, env.current, '', done);
+          }, executeCoffee(browser, 'jQuery ->\n  a1 = $(\'#moveTo .a1\')\n  a2 = $(\'#moveTo .a2\')\n  current = $(\'#moveTo .current\')\n  a1.hover ->\n    current.html \'a1\'\n  a2.hover ->\n    current.html \'a2\''), function(done) {
+            return textShouldEqual(browser, env.current, '', done);
+          }, function(done) {
+            return browser.moveTo(env.a1, 5, 5, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.current, 'a1', done);
+          }, function(done) {
+            return done(null);
+          }, function(done) {
+            return browser.moveTo(env.a2, void 0, void 0, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.current, 'a2', done);
+          }, function(done) {
+            return browser.moveTo(env.a1, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.current, 'a1', done);
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
-    }
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("buttonDown / buttonUp", function() {
-        return it("should press/unpress button", function(done) {
-          var env;
-          env = {};
-          return async.series([
-            elementByCss(browser, env, "#mouseButton a", 'a'), elementByCss(browser, env, "#mouseButton div", 'resDiv'), executeCoffee(browser, 'jQuery ->\n  a = $(\'#mouseButton a\')\n  resDiv = $(\'#mouseButton div\')\n  a.mousedown ->\n    resDiv.html \'button down\'\n  a.mouseup ->\n    resDiv.html \'button up\''), function(done) {
-              return textShouldEqual(browser, env.resDiv, '', done);
-            }, function(done) {
-              return browser.moveTo(env.a, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.buttonDown(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.resDiv, 'button down', done);
-            }, function(done) {
-              return browser.buttonUp(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.resDiv, 'button up', done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
+    });
+    describe("buttonDown / buttonUp", function() {
+      return it("should press/unpress button", function(done) {
+        var env;
+        env = {};
+        return async.series([
+          elementByCss(browser, env, "#mouseButton a", 'a'), elementByCss(browser, env, "#mouseButton div", 'resDiv'), executeCoffee(browser, 'jQuery ->\n  a = $(\'#mouseButton a\')\n  resDiv = $(\'#mouseButton div\')\n  a.mousedown ->\n    resDiv.html \'button down\'\n  a.mouseup ->\n    resDiv.html \'button up\''), function(done) {
+            return textShouldEqual(browser, env.resDiv, '', done);
+          }, function(done) {
+            return browser.moveTo(env.a, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.buttonDown(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.resDiv, 'button down', done);
+          }, function(done) {
+            return browser.buttonUp(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.resDiv, 'button up', done);
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
-    }
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("click", function() {
-        return it("should move to then click element", function(done) {
-          var env;
-          env = {};
-          return async.series([
-            elementByCss(browser, env, "#click .numOfClicks", 'numOfClicksDiv'), elementByCss(browser, env, "#click .buttonNumber", 'buttonNumberDiv'), executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"    \n    false                                         '), function(done) {
-              return textShouldEqual(browser, env.numOfClicksDiv, "not clicked", done);
-            }, function(done) {
-              return browser.moveTo(env.numOfClicksDiv, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.click(0, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.numOfClicksDiv, "clicked 1", done);
-            }, function(done) {
-              return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
-            }, function(done) {
-              return browser.moveTo(env.numOfClicksDiv, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.click(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.numOfClicksDiv, "clicked 2", done);
-            }, function(done) {
-              return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
+    });
+    describe("click", function() {
+      return it("should move to then click element", function(done) {
+        var env;
+        env = {};
+        return async.series([
+          elementByCss(browser, env, "#click .numOfClicks", 'numOfClicksDiv'), elementByCss(browser, env, "#click .buttonNumber", 'buttonNumberDiv'), executeCoffee(browser, 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"    \n    false                                         '), function(done) {
+            return textShouldEqual(browser, env.numOfClicksDiv, "not clicked", done);
+          }, function(done) {
+            return browser.moveTo(env.numOfClicksDiv, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.click(0, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.numOfClicksDiv, "clicked 1", done);
+          }, function(done) {
+            return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
+          }, function(done) {
+            return browser.moveTo(env.numOfClicksDiv, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.click(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.numOfClicksDiv, "clicked 2", done);
+          }, function(done) {
+            return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
-    }
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("doubleclick", function() {
-        return it("should move to then doubleclick element", function(done) {
-          var env;
-          env = {};
-          return async.series([
-            elementByCss(browser, env, "#doubleclick div", 'div'), executeCoffee(browser, 'jQuery ->\n  div = $(\'#doubleclick div\')\n  div.dblclick ->\n    div.html \'doubleclicked\'                                 '), function(done) {
-              return textShouldEqual(browser, env.div, "not clicked", done);
-            }, function(done) {
-              return browser.moveTo(env.div, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.doubleclick(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return textShouldEqual(browser, env.div, "doubleclicked", done);
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
+    });
+    describe("doubleclick", function() {
+      return it("should move to then doubleclick element", function(done) {
+        var env;
+        env = {};
+        return async.series([
+          elementByCss(browser, env, "#doubleclick div", 'div'), executeCoffee(browser, 'jQuery ->\n  div = $(\'#doubleclick div\')\n  div.dblclick ->\n    div.html \'doubleclicked\'                                 '), function(done) {
+            return textShouldEqual(browser, env.div, "not clicked", done);
+          }, function(done) {
+            return browser.moveTo(env.div, function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.doubleclick(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return textShouldEqual(browser, env.div, "doubleclicked", done);
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
-    }
+    });
     describe("type", function() {
       return it("should correctly input text", function(done) {
         var altKey, nullKey;
