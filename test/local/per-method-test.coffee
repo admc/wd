@@ -10,5 +10,5 @@ describe "wd", ->
         test {}, {browserName:'chrome'}
         
       describe "using firefox", ->  
-        # test {},{browserName:'firefox'}
+        test {},{browserName:'firefox'}
       

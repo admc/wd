@@ -489,104 +489,89 @@ test = (remoteWdConfig, desired) ->
         done null
   
   # would do with better test, but can't be bothered
-  describe "setPageLoadTimeout", ->
-    it "should set the page load timeout, test get, and unset it", (done) ->
-      @timeout 10000
-      capabilities = null
-      async.series [
-        (done) -> 
-          browser.sessionCapabilities (err,res) ->
-            should.not.exist err
-            capabilities = res
-            done null              
-        (done) -> 
-          # not working on chrome
-          unless capabilities.browserName is 'chrome'
+  
+  unless desired?.browserName is 'chrome'
+    # not working on chrome
+    describe "setPageLoadTimeout", ->
+      it "should set the page load timeout, test get, and unset it", (done) ->
+        @timeout 10000
+        async.series [
+          (done) -> 
             browser.setPageLoadTimeout TIMEOUT_BASE/2, (err) ->
               should.not.exist err
               done null
-          else
-            done null
-        (done) -> 
-          # not working on chrome
-          unless capabilities.browserName is 'chrome'
+          (done) -> 
             browser.setPageLoadTimeout TIMEOUT_BASE/2, (err) ->
               should.not.exist err
               done null
-          else
-            done null
-        (done) -> 
-          # testing get
-          browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
-            should.not.exist err
-            done null
-        (done) -> 
-          # not working on chrome
-          unless capabilities.browserName is 'chrome'
-            browser.setPageLoadTimeout -1, (err) ->
+          (done) -> 
+            # testing get
+            browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
               should.not.exist err
               done null
-          else
-            done null
-      ], (err) ->
-        should.not.exist err
-        done null
-
+          (done) -> 
+            # not working on chrome
+            defaultTimeout = if desired?.browserName is 'firefox' -1 else 10000
+            browser.setPageLoadTimeout defaultTimeout, (err) ->
+              should.not.exist err
+              done null
+        ], (err) ->
+          should.not.exist err
+          done null
+        
+  
   describe "refresh", ->
     it "should refresh page", (done) ->
       @timeout 10000
       browser.refresh (err) ->
         should.not.exist err
         done null
-
-  unless process.env.GHOSTDRIVER_TEST?
-    describe "back forward", ->
-      it "urls should be correct when navigating back/forward", (done) ->
-        @timeout 45000
-        async.series [                  
-          (done) ->
+  
+  describe "back forward", ->
+    it "urls should be correct when navigating back/forward", (done) ->
+      @timeout 45000
+      async.series [                  
+        (done) ->
+          setTimeout =>
             browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
               should.not.exist err
               done null
-          (done) ->
-            unless process.env.GHOSTDRIVER_TEST? 
-              browser.url (err, url) ->
-                should.not.exist err
-                url.should.include "?p=2"
-                done null
-            else
-              done null
-          (done) ->
-            browser.back  (err) ->
+          , 1000
+          
+        (done) ->
+          unless process.env.aGHOSTDRIVER_TEST? 
+            browser.url (err, url) ->
               should.not.exist err
+              url.should.include "?p=2"
               done null
-          (done) ->
-            unless process.env.GHOSTDRIVER_TEST?
-              browser.url (err, url) ->
-                should.not.exist err
-                url.should.not.include "?p=2"
-                done null
-            else
-              done null
-          (done) ->
-            browser.forward  (err) ->
-              should.not.exist err
-              done null
-          (done) ->
-            unless process.env.GHOSTDRIVER_TEST?
-              browser.url (err, url) ->
-                should.not.exist err            
-                url.should.include "?p=2"
-                done null
-            else
-              done null
-          (done) ->
-            browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
-              should.not.exist err
-              done null
-        ], (err) ->
-          should.not.exist err
-          done null
+          else
+            done null
+        (done) ->
+          browser.back  (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err
+            url.should.not.include "?p=2"
+            done null
+        (done) ->
+          browser.forward  (err) ->
+            should.not.exist err
+            done null
+        (done) ->
+          browser.url (err, url) ->
+            should.not.exist err            
+            url.should.include "?p=2"
+            done null
+        (done) ->
+          browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
+            should.not.exist err
+            done null
+            
+      ], (err) ->
+        should.not.exist err
+        done null
   
   describe "eval", ->
     it "should correctly evaluate various formulas", (done) ->
