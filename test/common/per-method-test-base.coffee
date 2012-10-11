@@ -964,7 +964,7 @@ test = (remoteWdConfig, desired) ->
       _textShouldEqual = textShouldEqual
       textShouldEqual = (browser,element,expected, done) ->
         unless process.env.GHOSTDRIVER_TEST?
-          _textShouldEqual.apply browser,element,expected, done
+          _textShouldEqual browser,element,expected, done
         else
           done null
       async.series [

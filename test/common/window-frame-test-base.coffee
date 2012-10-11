@@ -213,79 +213,77 @@ test = (remoteWdConfig, desired) ->
           name.should.equal 'window-1'
           done null  
   
-  # the frame method does not work with chromeDriver
-  # ghostdriver also has issues
-  unless browserName is 'chrome'
-    describe "opening frame test page", ->
-      it "should open the first window", (done) ->
-        @timeout 10000
-        browser.get "http://127.0.0.1:8181/frames/index.html", (err) ->
-          should.not.exist err
-          done null  
+  describe "opening frame test page", ->
+    it "should open the first window", (done) ->
+      @timeout 10000
+      browser.get "http://127.0.0.1:8181/frames/index.html", (err) ->
+        should.not.exist err
+        done null  
 
-    frames = []
+  frames = []
   
-    describe "looking for frame elements", ->
-      it "should find frame elements", (done) ->      
-        browser.elementsByTagName  'frame', (err, _frames) ->
+  describe "looking for frame elements", ->
+    it "should find frame elements", (done) ->      
+      browser.elementsByTagName  'frame', (err, _frames) ->
+        should.not.exist err
+        _frames.should.have.length 3
+        async.forEachSeries _frames, (frame, done) ->
+          frameInfo = {el:frame.toString()}
+          async.series [            
+            (done) ->
+              frame.getAttribute 'name', (err, name) ->
+                should.not.exist err
+                frameInfo.name = name                
+                done null 
+            (done) ->
+              frame.getAttribute 'id', (err, id) ->
+                should.not.exist err
+                frameInfo.id = id
+                done null             
+          ], (err) ->
+            should.not.exist err
+            frames.push frameInfo
+            done null
+        , (err) ->
           should.not.exist err
-          _frames.should.have.length 3
-          async.forEachSeries _frames, (frame, done) ->
-            frameInfo = {el:frame.toString()}
-            async.series [            
-              (done) ->
-                frame.getAttribute 'name', (err, name) ->
-                  should.not.exist err
-                  frameInfo.name = name                
-                  done null 
-              (done) ->
-                frame.getAttribute 'id', (err, id) ->
-                  should.not.exist err
-                  frameInfo.id = id
-                  done null             
-            ], (err) ->
-              should.not.exist err
-              frames.push frameInfo
-              done null
-          , (err) ->
-            should.not.exist err
-            frames.should.have.length 3
-            (i.name for i in frames).should.eql ['menu','main','bottom']
-            done null
+          frames.should.have.length 3
+          (i.name for i in frames).should.eql ['menu','main','bottom']
+          done null
   
-    refreshPage = ->      
-      # selenium is very buggy, so having to refresh between each
-      # frame switch
-      describe "refreshing page", ->    
-        it "should refresh the page", (done) ->      
-          browser.refresh (err) ->
-            should.not.exist err
-            done null
+  refreshPage = ->      
+    # selenium is very buggy, so having to refresh between each
+    # frame switch
+    describe "refreshing page", ->    
+      it "should refresh the page", (done) ->      
+        browser.refresh (err) ->
+          should.not.exist err
+          done null
 
-    describe "selecting default frame", ->    
-       it "should select frame menu", (done) ->      
-         browser.frame (err) ->
-           should.not.exist err
-           done null
+  describe "selecting default frame", ->    
+     it "should select frame menu", (done) ->      
+       browser.frame (err) ->
+         should.not.exist err
+         done null
+       
+   refreshPage();  
+  
+   describe "selecting frame by number", ->    
+     it "should select frame menu", (done) ->      
+       browser.frame 0, (err) ->
+         should.not.exist err
+         done null
          
-     refreshPage();  
-  
-     describe "selecting frame by number", ->    
-       it "should select frame menu", (done) ->      
-         browser.frame 0, (err) ->
-           should.not.exist err
-           done null
-           
-     refreshPage();
-  
+   refreshPage();
+   unless browserName is 'chrome'
      describe "selecting frame by id", ->    
        it "should select frame main", (done) ->      
          browser.frame frames[1].id, (err) ->
            should.not.exist err
            done null
 
-     refreshPage();
-  
+   refreshPage();
+   
+   unless browserName is 'chrome'
      describe "selecting frame by name", ->    
        it "should select frame main", (done) ->      
          browser.frame frames[2].name, (err) ->
