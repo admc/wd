@@ -529,7 +529,7 @@
       }
       return _results;
     };
-    describe("wd.remote", function() {
+    describe("wd.remote<COMP>", function() {
       return it("should create browser object", function(done) {
         browser = wd.remote(remoteWdConfig);
         if (process.env.WD_COV == null) {
@@ -561,7 +561,7 @@
         });
       });
     });
-    describe("init", function() {
+    describe("init<COMP>", function() {
       return it("should initialize browser and open browser window", function(done) {
         this.timeout(20000);
         return browser.init(desired, function(err) {
@@ -592,7 +592,7 @@
         });
       });
     });
-    describe("get", function() {
+    describe("get<COMP>", function() {
       return it("should navigate to the test page", function(done) {
         this.timeout(20000);
         return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
@@ -652,88 +652,86 @@
         });
       });
     });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("refresh", function() {
-        return it("should refresh page", function(done) {
-          this.timeout(10000);
-          return browser.refresh(function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-    }
-    describe("back forward", function() {
-      return it("urls should be correct when navigating back/forward", function(done) {
-        this.timeout(45000);
-        return async.series([
-          function(done) {
-            return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            if (process.env.GHOSTDRIVER_TEST == null) {
-              return browser.url(function(err, url) {
-                should.not.exist(err);
-                url.should.include("?p=2");
-                return done(null);
-              });
-            } else {
-              return done(null);
-            }
-          }, function(done) {
-            return browser.back(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            if (process.env.GHOSTDRIVER_TEST == null) {
-              return browser.url(function(err, url) {
-                should.not.exist(err);
-                url.should.not.include("?p=2");
-                return done(null);
-              });
-            } else {
-              return done(null);
-            }
-          }, function(done) {
-            return browser.forward(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            if (process.env.GHOSTDRIVER_TEST == null) {
-              return browser.url(function(err, url) {
-                should.not.exist(err);
-                url.should.include("?p=2");
-                return done(null);
-              });
-            } else {
-              return done(null);
-            }
-          }, function(done) {
-            return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }
-        ], function(err) {
+    describe("refresh", function() {
+      return it("should refresh page", function(done) {
+        this.timeout(10000);
+        return browser.refresh(function(err) {
           should.not.exist(err);
           return done(null);
         });
       });
     });
     if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("eval", function() {
-        return it("should correctly evaluate various formulas", function(done) {
-          return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
+      describe("back forward", function() {
+        return it("urls should be correct when navigating back/forward", function(done) {
+          this.timeout(45000);
+          return async.series([
+            function(done) {
+              return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              if (process.env.GHOSTDRIVER_TEST == null) {
+                return browser.url(function(err, url) {
+                  should.not.exist(err);
+                  url.should.include("?p=2");
+                  return done(null);
+                });
+              } else {
+                return done(null);
+              }
+            }, function(done) {
+              return browser.back(function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              if (process.env.GHOSTDRIVER_TEST == null) {
+                return browser.url(function(err, url) {
+                  should.not.exist(err);
+                  url.should.not.include("?p=2");
+                  return done(null);
+                });
+              } else {
+                return done(null);
+              }
+            }, function(done) {
+              return browser.forward(function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              if (process.env.GHOSTDRIVER_TEST == null) {
+                return browser.url(function(err, url) {
+                  should.not.exist(err);
+                  url.should.include("?p=2");
+                  return done(null);
+                });
+              } else {
+                return done(null);
+              }
+            }, function(done) {
+              return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }
+          ], function(err) {
             should.not.exist(err);
             return done(null);
           });
         });
       });
-      describe("safeEval", function() {
+    }
+    describe("eval", function() {
+      it("should correctly evaluate various formulas", function(done) {
+        return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+      return describe("safeEval", function() {
         return it("should correctly evaluate (with safeEval) various formulas", function(done) {
           return async.series([
             safeEvalShouldEqual(browser, "1+2", 3), safeEvalShouldEqual(browser, "document.title", "TEST PAGE"), safeEvalShouldEqual(browser, "$('#eval').length", 1), safeEvalShouldEqual(browser, "$('#eval li').length", 2), function(done) {
@@ -749,7 +747,7 @@
           });
         });
       });
-    }
+    });
     describe("execute (no args)", function() {
       return it("should execute script", function(done) {
         return async.series([
@@ -840,19 +838,17 @@
         });
       });
     });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("executeAsync (with args)", function() {
-        return it("should execute async script", function(done) {
-          var scriptAsCoffee, scriptAsJs;
-          scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
-          scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
-            bare: 'on'
-          });
-          return browser.executeAsync(scriptAsJs, [10, 5], function(err, res) {
-            should.not.exist(err);
-            res.should.equal("OK 15");
-            return done(null);
-          });
+    describe("executeAsync (with args)", function() {
+      it("should execute async script", function(done) {
+        var scriptAsCoffee, scriptAsJs;
+        scriptAsCoffee = "[a,b,done] = arguments\ndone(\"OK \" + (a+b))              ";
+        scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+          bare: 'on'
+        });
+        return browser.executeAsync(scriptAsJs, [10, 5], function(err, res) {
+          should.not.exist(err);
+          res.should.equal("OK 15");
+          return done(null);
         });
       });
       describe("safeExecuteAsync (no args)", function() {
@@ -882,7 +878,7 @@
           });
         });
       });
-      describe("safeExecuteAsync (with args)", function() {
+      return describe("safeExecuteAsync (with args)", function() {
         return it("should execute async script (using safeExecuteAsync)", function(done) {
           return async.series([
             function(done) {
@@ -909,7 +905,7 @@
           });
         });
       });
-    }
+    });
     if (process.env.GHOSTDRIVER_TEST == null) {
       describe("setWaitTimeout / setImplicitWaitTimeout", function() {
         return it("should set the wait timeout and implicit wait timeout, " + "run scripts to check functionality, " + "and unset them", function(done) {
@@ -1430,17 +1426,15 @@
         });
       });
     });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("title", function() {
-        return it("should retrieve title", function(done) {
-          return browser.title(function(err, title) {
-            should.not.exist(err);
-            title.should.equal("TEST PAGE");
-            return done(null);
-          });
+    describe("title", function() {
+      return it("should retrieve title", function(done) {
+        return browser.title(function(err, title) {
+          should.not.exist(err);
+          title.should.equal("TEST PAGE");
+          return done(null);
         });
       });
-    }
+    });
     describe("text (passing element)", function() {
       return it("should retrieve text", function(done) {
         return browser.elementByCss("#text", function(err, textDiv) {
@@ -1844,60 +1838,58 @@
         });
       });
     });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("waitForConditionInBrowser", function() {
-        return it("should wait for condition within the browser", function(done) {
-          var exprCond;
-          this.timeout(10000);
-          exprCond = "$('#waitForConditionInBrowser .child').length > 0";
-          return async.series([
-            executeCoffee(browser, "setTimeout ->\n  $('#waitForConditionInBrowser').html '<div class=\"child\">a waitForCondition child</div>'\n, " + (1.5 * TIMEOUT_BASE)), function(done) {
-              return browser.elementByCss("#waitForConditionInBrowser .child", function(err, res) {
-                should.exist(err);
-                err.status.should.equal(7);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.setAsyncScriptTimeout(5 * TIMEOUT_BASE, function(err, res) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE, 0.2 * TIMEOUT_BASE, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(err);
-              });
-            }, function(done) {
-              return browser.waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(err);
-              });
-            }, function(done) {
-              return browser.waitForConditionInBrowser(exprCond, function(err, res) {
-                should.not.exist(err);
-                res.should.be["true"];
-                return done(err);
-              });
-            }, function(done) {
-              return browser.waitForConditionInBrowser("totally #} wrong == expr", function(err, res) {
-                should.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              return browser.setAsyncScriptTimeout(0, function(err, res) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }
-          ], function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
+    describe("waitForConditionInBrowser", function() {
+      return it("should wait for condition within the browser", function(done) {
+        var exprCond;
+        this.timeout(10000);
+        exprCond = "$('#waitForConditionInBrowser .child').length > 0";
+        return async.series([
+          executeCoffee(browser, "setTimeout ->\n  $('#waitForConditionInBrowser').html '<div class=\"child\">a waitForCondition child</div>'\n, " + (1.5 * TIMEOUT_BASE)), function(done) {
+            return browser.elementByCss("#waitForConditionInBrowser .child", function(err, res) {
+              should.exist(err);
+              err.status.should.equal(7);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setAsyncScriptTimeout(5 * TIMEOUT_BASE, function(err, res) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE, 0.2 * TIMEOUT_BASE, function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(err);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE, function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(err);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser(exprCond, function(err, res) {
+              should.not.exist(err);
+              res.should.be["true"];
+              return done(err);
+            });
+          }, function(done) {
+            return browser.waitForConditionInBrowser("totally #} wrong == expr", function(err, res) {
+              should.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.setAsyncScriptTimeout(0, function(err, res) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
         });
       });
-    }
+    });
     if (process.env.GHOSTDRIVER_TEST == null) {
       describe("err.inspect", function() {
         return it("error output should be clean", function(done) {
@@ -1920,7 +1912,7 @@
         });
       });
     });
-    return describe("quit", function() {
+    return describe("quit<COMP>", function() {
       return it("should destroy browser", function(done) {
         return browser.quit(function(err) {
           should.not.exist(err);

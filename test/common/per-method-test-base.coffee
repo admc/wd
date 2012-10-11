@@ -431,7 +431,7 @@ test = (remoteWdConfig, desired) ->
               should.not.exist err
               done null                      
          
-  describe "wd.remote", ->
+  describe "wd.remote<COMP>", ->
     it "should create browser object", (done) ->
       browser = wd.remote remoteWdConfig
       unless process.env.WD_COV?
@@ -455,7 +455,7 @@ test = (remoteWdConfig, desired) ->
         should.exist sessions
         done null
   
-  describe "init", ->
+  describe "init<COMP>", ->
     it "should initialize browser and open browser window", (done)  ->
       @timeout 20000
       browser.init desired, (err) ->
@@ -481,7 +481,7 @@ test = (remoteWdConfig, desired) ->
         should.exist capabilities.platform
         done null
   
-  describe "get", ->
+  describe "get<COMP>", ->
     it "should navigate to the test page", (done)  ->
       @timeout 20000
       browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
@@ -532,73 +532,72 @@ test = (remoteWdConfig, desired) ->
         should.not.exist err
         done null
 
-  unless process.env.GHOSTDRIVER_TEST?
-    describe "refresh", ->
-      it "should refresh page", (done) ->
-        @timeout 10000
-        browser.refresh (err) ->
-          should.not.exist err
-          done null
-
-  describe "back forward", ->
-    it "urls should be correct when navigating back/forward", (done) ->
-      @timeout 45000
-      async.series [                  
-        (done) ->
-          browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
-            should.not.exist err
-            done null
-        (done) ->
-          unless process.env.GHOSTDRIVER_TEST? 
-            browser.url (err, url) ->
-              should.not.exist err
-              url.should.include "?p=2"
-              done null
-          else
-            done null
-        (done) ->
-          browser.back  (err) ->
-            should.not.exist err
-            done null
-        (done) ->
-          unless process.env.GHOSTDRIVER_TEST?
-            browser.url (err, url) ->
-              should.not.exist err
-              url.should.not.include "?p=2"
-              done null
-          else
-            done null
-        (done) ->
-          browser.forward  (err) ->
-            should.not.exist err
-            done null
-        (done) ->
-          unless process.env.GHOSTDRIVER_TEST?
-            browser.url (err, url) ->
-              should.not.exist err            
-              url.should.include "?p=2"
-              done null
-          else
-            done null
-        (done) ->
-          browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
-            should.not.exist err
-            done null
-      ], (err) ->
+  describe "refresh", ->
+    it "should refresh page", (done) ->
+      @timeout 10000
+      browser.refresh (err) ->
         should.not.exist err
         done null
-  
+
   unless process.env.GHOSTDRIVER_TEST?
-    describe "eval", ->
-      it "should correctly evaluate various formulas", (done) ->
-        async.series [
-          evalShouldEqual browser, "1+2", 3
-          evalShouldEqual browser, "document.title", "TEST PAGE"
-          evalShouldEqual browser, "$('#eval').length", 1
-          evalShouldEqual browser, "$('#eval li').length", 2     
+    describe "back forward", ->
+      it "urls should be correct when navigating back/forward", (done) ->
+        @timeout 45000
+        async.series [                  
+          (done) ->
+            browser.get "http://127.0.0.1:8181/test-page.html?p=2", (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            unless process.env.GHOSTDRIVER_TEST? 
+              browser.url (err, url) ->
+                should.not.exist err
+                url.should.include "?p=2"
+                done null
+            else
+              done null
+          (done) ->
+            browser.back  (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            unless process.env.GHOSTDRIVER_TEST?
+              browser.url (err, url) ->
+                should.not.exist err
+                url.should.not.include "?p=2"
+                done null
+            else
+              done null
+          (done) ->
+            browser.forward  (err) ->
+              should.not.exist err
+              done null
+          (done) ->
+            unless process.env.GHOSTDRIVER_TEST?
+              browser.url (err, url) ->
+                should.not.exist err            
+                url.should.include "?p=2"
+                done null
+            else
+              done null
+          (done) ->
+            browser.get "http://127.0.0.1:8181/test-page.html", (err) ->
+              should.not.exist err
+              done null
         ], (err) ->
           should.not.exist err
-          done null    
+          done null
+  
+  describe "eval", ->
+    it "should correctly evaluate various formulas", (done) ->
+      async.series [
+        evalShouldEqual browser, "1+2", 3
+        evalShouldEqual browser, "document.title", "TEST PAGE"
+        evalShouldEqual browser, "$('#eval').length", 1
+        evalShouldEqual browser, "$('#eval li').length", 2     
+      ], (err) ->
+        should.not.exist err
+        done null    
     
     describe "safeEval", ->
       it "should correctly evaluate (with safeEval) various formulas", (done) ->
@@ -691,19 +690,18 @@ test = (remoteWdConfig, desired) ->
         should.not.exist err
         res.should.equal "OK"
         done null
-  unless process.env.GHOSTDRIVER_TEST?
-    describe "executeAsync (with args)", ->
-      it "should execute async script", (done) ->
-        scriptAsCoffee =
-          """
-            [a,b,done] = arguments
-            done("OK " + (a+b))              
-          """
-        scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
-        browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
-          should.not.exist err
-          res.should.equal "OK 15"
-          done null
+  describe "executeAsync (with args)", ->
+    it "should execute async script", (done) ->
+      scriptAsCoffee =
+        """
+          [a,b,done] = arguments
+          done("OK " + (a+b))              
+        """
+      scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+      browser.executeAsync scriptAsJs, [10, 5], (err,res) ->          
+        should.not.exist err
+        res.should.equal "OK 15"
+        done null
     
     describe "safeExecuteAsync (no args)", ->
       it "should execute async script (using safeExecuteAsync)", (done) ->
@@ -1056,6 +1054,7 @@ test = (remoteWdConfig, desired) ->
         ], (err) ->
           should.not.exist err
           done null
+
   unless process.env.GHOSTDRIVER_TEST?  
     describe "click", -> 
       it "should move to then click element", (done) -> 
@@ -1207,13 +1206,12 @@ test = (remoteWdConfig, desired) ->
           should.not.exist err
           done null
   
-  unless process.env.GHOSTDRIVER_TEST?        
-    describe "title", -> 
-      it "should retrieve title", (done) -> 
-        browser.title (err,title) ->
-          should.not.exist err
-          title.should.equal "TEST PAGE"
-          done null
+  describe "title", -> 
+    it "should retrieve title", (done) -> 
+      browser.title (err,title) ->
+        should.not.exist err
+        title.should.equal "TEST PAGE"
+        done null
   
   describe "text (passing element)", -> 
     it "should retrieve text", (done) -> 
@@ -1554,53 +1552,52 @@ test = (remoteWdConfig, desired) ->
         should.not.exist err
         done null
       
-  unless process.env.GHOSTDRIVER_TEST?      
-    describe "waitForConditionInBrowser", ->
-      it "should wait for condition within the browser", (done) ->
-        @timeout 10000
-        exprCond = "$('#waitForConditionInBrowser .child').length > 0"
-        async.series [
-          executeCoffee browser,   
-            """
-              setTimeout ->
-                $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
-              , #{1.5*TIMEOUT_BASE}
-            """
-          (done) ->
-            browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
-              should.exist err
-              err.status.should.equal 7
-              done(null)
-          (done) ->
-            browser.setAsyncScriptTimeout 5*TIMEOUT_BASE, (err,res) ->            
-              should.not.exist err
-              done(null)
-          (done) ->
-            browser.waitForConditionInBrowser exprCond, 2*TIMEOUT_BASE, 0.2*TIMEOUT_BASE, (err,res) ->            
-              should.not.exist err
-              res.should.be.true
-              done(err)
-          (done) ->
-            browser.waitForConditionInBrowser exprCond, 2*TIMEOUT_BASE, (err,res) ->            
-              should.not.exist err
-              res.should.be.true
-              done(err)
-          (done) ->
-            browser.waitForConditionInBrowser exprCond, (err,res) ->            
-              should.not.exist err
-              res.should.be.true
-              done(err)
-          (done) ->
-            browser.waitForConditionInBrowser "totally #} wrong == expr", (err,res) ->            
-              should.exist err
-              done(null)
-          (done) ->
-            browser.setAsyncScriptTimeout 0, (err,res) ->            
-              should.not.exist err
-              done(null)
-        ], (err) ->
-          should.not.exist err
-          done null
+  describe "waitForConditionInBrowser", ->
+    it "should wait for condition within the browser", (done) ->
+      @timeout 10000
+      exprCond = "$('#waitForConditionInBrowser .child').length > 0"
+      async.series [
+        executeCoffee browser,   
+          """
+            setTimeout ->
+              $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
+            , #{1.5*TIMEOUT_BASE}
+          """
+        (done) ->
+          browser.elementByCss "#waitForConditionInBrowser .child", (err,res) ->            
+            should.exist err
+            err.status.should.equal 7
+            done(null)
+        (done) ->
+          browser.setAsyncScriptTimeout 5*TIMEOUT_BASE, (err,res) ->            
+            should.not.exist err
+            done(null)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, 2*TIMEOUT_BASE, 0.2*TIMEOUT_BASE, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, 2*TIMEOUT_BASE, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser exprCond, (err,res) ->            
+            should.not.exist err
+            res.should.be.true
+            done(err)
+        (done) ->
+          browser.waitForConditionInBrowser "totally #} wrong == expr", (err,res) ->            
+            should.exist err
+            done(null)
+        (done) ->
+          browser.setAsyncScriptTimeout 0, (err,res) ->            
+            should.not.exist err
+            done(null)
+      ], (err) ->
+        should.not.exist err
+        done null
         
   unless process.env.GHOSTDRIVER_TEST?        
     describe "err.inspect", ->
@@ -1621,7 +1618,7 @@ test = (remoteWdConfig, desired) ->
         should.not.exist err
         done null
         
-  describe "quit", ->        
+  describe "quit<COMP>", ->        
     it "should destroy browser", (done) ->
       browser.quit (err) ->        
         should.not.exist err

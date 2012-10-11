@@ -34,11 +34,9 @@ test = (remoteWdConfig, desired) ->
       it "should navigate to test page and check title", (done) ->
         @timeout TIMEOUT
         browser.get "http://saucelabs.com/test/guinea-pig", ->
-          unless process.env.GHOSTDRIVER_TEST?
-            browser.title (err, title) ->
-              assert.ok ~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!"
-              done null
-          else done null
+          browser.title (err, title) ->
+           assert.ok ~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!"
+           done null
   
     describe "clicking submit", ->
       it "submit element should be clicked", (done) ->
@@ -47,7 +45,7 @@ test = (remoteWdConfig, desired) ->
           browser.clickElement el, ->
             unless process.env.GHOSTDRIVER_TEST? 
               browser.eval "window.location.href", (err, location) ->
-                assert.ok ~location.indexOf("#"), "Wrong title!"
+                assert.ok ~location.indexOf("#"), "Wrong location!"
                 done null
             else done null
               

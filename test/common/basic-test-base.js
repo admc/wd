@@ -43,14 +43,10 @@
         return it("should navigate to test page and check title", function(done) {
           this.timeout(TIMEOUT);
           return browser.get("http://saucelabs.com/test/guinea-pig", function() {
-            if (process.env.GHOSTDRIVER_TEST == null) {
-              return browser.title(function(err, title) {
-                assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
-                return done(null);
-              });
-            } else {
+            return browser.title(function(err, title) {
+              assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
               return done(null);
-            }
+            });
           });
         });
       });
@@ -61,7 +57,7 @@
             return browser.clickElement(el, function() {
               if (process.env.GHOSTDRIVER_TEST == null) {
                 return browser["eval"]("window.location.href", function(err, location) {
-                  assert.ok(~location.indexOf("#"), "Wrong title!");
+                  assert.ok(~location.indexOf("#"), "Wrong location!");
                   return done(null);
                 });
               } else {
