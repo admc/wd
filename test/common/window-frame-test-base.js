@@ -273,92 +273,92 @@
         });
       });
     });
+    describe("opening frame test page", function() {
+      return it("should open the first window", function(done) {
+        this.timeout(10000);
+        return browser.get("http://127.0.0.1:8181/frames/index.html", function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    frames = [];
+    describe("looking for frame elements", function() {
+      return it("should find frame elements", function(done) {
+        return browser.elementsByTagName('frame', function(err, _frames) {
+          should.not.exist(err);
+          _frames.should.have.length(3);
+          return async.forEachSeries(_frames, function(frame, done) {
+            var frameInfo;
+            frameInfo = {
+              el: frame.toString()
+            };
+            return async.series([
+              function(done) {
+                return frame.getAttribute('name', function(err, name) {
+                  should.not.exist(err);
+                  frameInfo.name = name;
+                  return done(null);
+                });
+              }, function(done) {
+                return frame.getAttribute('id', function(err, id) {
+                  should.not.exist(err);
+                  frameInfo.id = id;
+                  return done(null);
+                });
+              }
+            ], function(err) {
+              should.not.exist(err);
+              frames.push(frameInfo);
+              return done(null);
+            });
+          }, function(err) {
+            var i;
+            should.not.exist(err);
+            frames.should.have.length(3);
+            ((function() {
+              var _i, _len, _results;
+              _results = [];
+              for (_i = 0, _len = frames.length; _i < _len; _i++) {
+                i = frames[_i];
+                _results.push(i.name);
+              }
+              return _results;
+            })()).should.eql(['menu', 'main', 'bottom']);
+            return done(null);
+          });
+        });
+      });
+    });
+    refreshPage = function() {
+      return describe("refreshing page", function() {
+        return it("should refresh the page", function(done) {
+          return browser.refresh(function(err) {
+            should.not.exist(err);
+            return done(null);
+          });
+        });
+      });
+    };
+    describe("selecting default frame", function() {
+      return it("should select frame menu", function(done) {
+        return browser.frame(function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    refreshPage();
+    describe("selecting frame by number", function() {
+      return it("should select frame menu", function(done) {
+        return browser.frame(0, function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    refreshPage();
     if (browserName !== 'chrome') {
-      describe("opening frame test page", function() {
-        return it("should open the first window", function(done) {
-          this.timeout(10000);
-          return browser.get("http://127.0.0.1:8181/frames/index.html", function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-      frames = [];
-      describe("looking for frame elements", function() {
-        return it("should find frame elements", function(done) {
-          return browser.elementsByTagName('frame', function(err, _frames) {
-            should.not.exist(err);
-            _frames.should.have.length(3);
-            return async.forEachSeries(_frames, function(frame, done) {
-              var frameInfo;
-              frameInfo = {
-                el: frame.toString()
-              };
-              return async.series([
-                function(done) {
-                  return frame.getAttribute('name', function(err, name) {
-                    should.not.exist(err);
-                    frameInfo.name = name;
-                    return done(null);
-                  });
-                }, function(done) {
-                  return frame.getAttribute('id', function(err, id) {
-                    should.not.exist(err);
-                    frameInfo.id = id;
-                    return done(null);
-                  });
-                }
-              ], function(err) {
-                should.not.exist(err);
-                frames.push(frameInfo);
-                return done(null);
-              });
-            }, function(err) {
-              var i;
-              should.not.exist(err);
-              frames.should.have.length(3);
-              ((function() {
-                var _i, _len, _results;
-                _results = [];
-                for (_i = 0, _len = frames.length; _i < _len; _i++) {
-                  i = frames[_i];
-                  _results.push(i.name);
-                }
-                return _results;
-              })()).should.eql(['menu', 'main', 'bottom']);
-              return done(null);
-            });
-          });
-        });
-      });
-      refreshPage = function() {
-        return describe("refreshing page", function() {
-          return it("should refresh the page", function(done) {
-            return browser.refresh(function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          });
-        });
-      };
-      describe("selecting default frame", function() {
-        return it("should select frame menu", function(done) {
-          return browser.frame(function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-      refreshPage();
-      describe("selecting frame by number", function() {
-        return it("should select frame menu", function(done) {
-          return browser.frame(0, function(err) {
-            should.not.exist(err);
-            return done(null);
-          });
-        });
-      });
-      refreshPage();
       describe("selecting frame by id", function() {
         return it("should select frame main", function(done) {
           return browser.frame(frames[1].id, function(err) {
@@ -367,7 +367,9 @@
           });
         });
       });
-      refreshPage();
+    }
+    refreshPage();
+    if (browserName !== 'chrome') {
       describe("selecting frame by name", function() {
         return it("should select frame main", function(done) {
           return browser.frame(frames[2].name, function(err) {

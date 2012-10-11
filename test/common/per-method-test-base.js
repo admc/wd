@@ -1150,7 +1150,7 @@
         _textShouldEqual = textShouldEqual;
         textShouldEqual = function(browser, element, expected, done) {
           if (process.env.GHOSTDRIVER_TEST == null) {
-            return _textShouldEqual.apply(browser, element, expected, done);
+            return _textShouldEqual(browser, element, expected, done);
           } else {
             return done(null);
           }
