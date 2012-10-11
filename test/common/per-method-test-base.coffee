@@ -539,12 +539,9 @@ test = (remoteWdConfig, desired) ->
           , 1000
           
         (done) ->
-          unless process.env.aGHOSTDRIVER_TEST? 
-            browser.url (err, url) ->
-              should.not.exist err
-              url.should.include "?p=2"
-              done null
-          else
+          browser.url (err, url) ->
+            should.not.exist err
+            url.should.include "?p=2"
             done null
         (done) ->
           browser.back  (err) ->

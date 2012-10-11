@@ -658,15 +658,11 @@
               });
             }, 1000);
           }, function(done) {
-            if (process.env.aGHOSTDRIVER_TEST == null) {
-              return browser.url(function(err, url) {
-                should.not.exist(err);
-                url.should.include("?p=2");
-                return done(null);
-              });
-            } else {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.include("?p=2");
               return done(null);
-            }
+            });
           }, function(done) {
             return browser.back(function(err) {
               should.not.exist(err);
