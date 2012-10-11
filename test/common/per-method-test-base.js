@@ -601,118 +601,30 @@
         });
       });
     });
-    describe("setPageLoadTimeout", function() {
-      return it("should set the page load timeout, test get, and unset it", function(done) {
-        var capabilities;
-        this.timeout(10000);
-        capabilities = null;
-        return async.series([
-          function(done) {
-            return browser.sessionCapabilities(function(err, res) {
-              should.not.exist(err);
-              capabilities = res;
-              return done(null);
-            });
-          }, function(done) {
-            if (capabilities.browserName !== 'chrome') {
-              return browser.setPageLoadTimeout(TIMEOUT_BASE / 2, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            } else {
-              return done(null);
-            }
-          }, function(done) {
-            if (capabilities.browserName !== 'chrome') {
-              return browser.setPageLoadTimeout(TIMEOUT_BASE / 2, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            } else {
-              return done(null);
-            }
-          }, function(done) {
-            return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
-              should.not.exist(err);
-              return done(null);
-            });
-          }, function(done) {
-            if (capabilities.browserName !== 'chrome') {
-              return browser.setPageLoadTimeout(-1, function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            } else {
-              return done(null);
-            }
-          }
-        ], function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    describe("refresh", function() {
-      return it("should refresh page", function(done) {
-        this.timeout(10000);
-        return browser.refresh(function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
-    if (process.env.GHOSTDRIVER_TEST == null) {
-      describe("back forward", function() {
-        return it("urls should be correct when navigating back/forward", function(done) {
-          this.timeout(45000);
+    if ((desired != null ? desired.browserName : void 0) !== 'chrome') {
+      describe("setPageLoadTimeout", function() {
+        return it("should set the page load timeout, test get, and unset it", function(done) {
+          this.timeout(10000);
           return async.series([
             function(done) {
-              return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
+              return browser.setPageLoadTimeout(TIMEOUT_BASE / 2, function(err) {
                 should.not.exist(err);
                 return done(null);
               });
             }, function(done) {
-              if (process.env.GHOSTDRIVER_TEST == null) {
-                return browser.url(function(err, url) {
-                  should.not.exist(err);
-                  url.should.include("?p=2");
-                  return done(null);
-                });
-              } else {
-                return done(null);
-              }
-            }, function(done) {
-              return browser.back(function(err) {
+              return browser.setPageLoadTimeout(TIMEOUT_BASE / 2, function(err) {
                 should.not.exist(err);
                 return done(null);
               });
-            }, function(done) {
-              if (process.env.GHOSTDRIVER_TEST == null) {
-                return browser.url(function(err, url) {
-                  should.not.exist(err);
-                  url.should.not.include("?p=2");
-                  return done(null);
-                });
-              } else {
-                return done(null);
-              }
-            }, function(done) {
-              return browser.forward(function(err) {
-                should.not.exist(err);
-                return done(null);
-              });
-            }, function(done) {
-              if (process.env.GHOSTDRIVER_TEST == null) {
-                return browser.url(function(err, url) {
-                  should.not.exist(err);
-                  url.should.include("?p=2");
-                  return done(null);
-                });
-              } else {
-                return done(null);
-              }
             }, function(done) {
               return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, function(done) {
+              var defaultTimeout;
+              defaultTimeout = (desired != null ? desired.browserName : void 0) === 'firefox' - 1 ? void 0 : 10000;
+              return browser.setPageLoadTimeout(defaultTimeout, function(err) {
                 should.not.exist(err);
                 return done(null);
               });
@@ -724,6 +636,71 @@
         });
       });
     }
+    describe("refresh", function() {
+      return it("should refresh page", function(done) {
+        this.timeout(10000);
+        return browser.refresh(function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
+    describe("back forward", function() {
+      return it("urls should be correct when navigating back/forward", function(done) {
+        this.timeout(45000);
+        return async.series([
+          function(done) {
+            var _this = this;
+            return setTimeout(function() {
+              return browser.get("http://127.0.0.1:8181/test-page.html?p=2", function(err) {
+                should.not.exist(err);
+                return done(null);
+              });
+            }, 1000);
+          }, function(done) {
+            if (process.env.aGHOSTDRIVER_TEST == null) {
+              return browser.url(function(err, url) {
+                should.not.exist(err);
+                url.should.include("?p=2");
+                return done(null);
+              });
+            } else {
+              return done(null);
+            }
+          }, function(done) {
+            return browser.back(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.not.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.forward(function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }, function(done) {
+            return browser.url(function(err, url) {
+              should.not.exist(err);
+              url.should.include("?p=2");
+              return done(null);
+            });
+          }, function(done) {
+            return browser.get("http://127.0.0.1:8181/test-page.html", function(err) {
+              should.not.exist(err);
+              return done(null);
+            });
+          }
+        ], function(err) {
+          should.not.exist(err);
+          return done(null);
+        });
+      });
+    });
     describe("eval", function() {
       it("should correctly evaluate various formulas", function(done) {
         return async.series([evalShouldEqual(browser, "1+2", 3), evalShouldEqual(browser, "document.title", "TEST PAGE"), evalShouldEqual(browser, "$('#eval').length", 1), evalShouldEqual(browser, "$('#eval li').length", 2)], function(err) {
