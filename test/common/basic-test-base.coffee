@@ -43,11 +43,9 @@ test = (remoteWdConfig, desired) ->
         @timeout TIMEOUT
         browser.elementById "submit", (err, el) ->
           browser.clickElement el, ->
-            unless process.env.aGHOSTDRIVER_TEST? 
-              browser.eval "window.location.href", (err, location) ->
-                assert.ok ~location.indexOf("http://"), "Wrong location!"
-                done null
-            else done null
+            browser.eval "window.location.href", (err, location) ->
+              assert.ok ~location.indexOf("http://"), "Wrong location!"
+              done null
               
   describe "leaving", ->
     it "closing browser", (done) ->

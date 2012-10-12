@@ -962,6 +962,7 @@ test = (remoteWdConfig, desired) ->
     it "should move to correct element", (done) -> 
       env = {}
       _textShouldEqual = textShouldEqual
+      # hover does not trigger in phantomjs, so disabling test
       textShouldEqual = (browser,element,expected, done) ->
         unless process.env.GHOSTDRIVER_TEST?
           _textShouldEqual browser,element,expected, done
@@ -1262,6 +1263,7 @@ test = (remoteWdConfig, desired) ->
           should.not.exist err
           done null
   
+  # not yet implemented in ghostdriver
   unless process.env.GHOSTDRIVER_TEST?        
     describe "acceptAlert", -> 
       it "should accept alert", (done) -> 
@@ -1288,7 +1290,8 @@ test = (remoteWdConfig, desired) ->
           ], (err) ->
             should.not.exist err
             done null
-    
+
+  # not yet implemented in ghostdriver
   unless process.env.GHOSTDRIVER_TEST?        
     describe "dismissAlert", ->       
       it "should dismiss alert", (done) ->       
