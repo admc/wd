@@ -1,5 +1,15 @@
 language: node_js
 node_js:
-  - 0.6
+  - 0.8
 env:
   - secure: "h/YmtRfpb4cLz3tAXq/ARACey1XdVSnMLFRATc4rGxhqLAn0auiJdJN9wuZf\npG4sjqJWo5DF+JgjUY3mqFlrBFpH6iUWIB7UrRFBUTSrXqfS/u/dsIlr9cDT\nxJnlYny1uJC+QYB9DvjfVm4P1LlWF+JSn9myyY327nzAHsaGO+8="
+before_script:
+  - "export DISPLAY=:99.0" 
+  - "sh -e /etc/init.d/xvfb start"
+  - "./node_modules/.bin/install_selenium"
+  - "./node_modules/.bin/start_selenium &"
+  - "sleep 10"
+script: 
+  - "make test_local"
+after_script:
+  - "./node_modules/.bin/kill_selenium"

@@ -28,6 +28,7 @@
     ,"dox": "0.3.x"
     ,"mu2": "0.5.x"
     ,"underscore": "1.4.x"
+    ,"sv-selenium": "0.1.x"
   }
   , "scripts" : {
     "test": "make test_saucelabs"
