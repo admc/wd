@@ -10,7 +10,7 @@ script:
   - "make test_unit"
   - "make test_saucelabs"
   - "./node_modules/.bin/install_selenium"
-  - "./node_modules/.bin/start_selenium &"
+  - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
   - "sleep 10"
   - "make test_local"
 after_script:
