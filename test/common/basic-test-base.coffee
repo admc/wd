@@ -33,7 +33,7 @@ test = (remoteWdConfig, desired) ->
     describe "getting page", ->
       it "should navigate to test page and check title", (done) ->
         @timeout TIMEOUT
-        browser.get "http://saucelabs.com/test/guinea-pig", ->
+        browser.get "http://admc.io/wd/test-pages/guinea-pig.html", ->
           browser.title (err, title) ->
            assert.ok ~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!"
            done null

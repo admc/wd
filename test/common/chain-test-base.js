@@ -31,7 +31,7 @@
           browserName: 'chrome',
           tags: ["examples"],
           name: "This is an example test"
-        }).get("http://saucelabs.com/test/guinea-pig").title(function(err, title) {
+        }).get("http://admc.io/wd/test-pages/guinea-pig.html").title(function(err, title) {
           return title.should.include('I am a page title - Sauce Labs');
         }).elementById('submit', function(err, el) {
           should.not.exist(err);

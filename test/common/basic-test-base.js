@@ -42,7 +42,7 @@
       describe("getting page", function() {
         return it("should navigate to test page and check title", function(done) {
           this.timeout(TIMEOUT);
-          return browser.get("http://saucelabs.com/test/guinea-pig", function() {
+          return browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
             return browser.title(function(err, title) {
               assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
               return done(null);

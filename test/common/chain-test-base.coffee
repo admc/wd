@@ -26,7 +26,7 @@ test = (browserName) ->
           browserName:'chrome'
           , tags : ["examples"]
           , name: "This is an example test"        
-        .get( "http://saucelabs.com/test/guinea-pig" )
+        .get( "http://admc.io/wd/test-pages/guinea-pig.html" )
         .title (err, title) ->
           title.should.include 'I am a page title - Sauce Labs'
         .elementById 'submit', (err, el) ->
