@@ -16,7 +16,7 @@ I am some page content
      <div>i appear 3 times</div>
      <div>i appear 3 times</div>
 <div id="invisible div" style="display:none;">i am invisible</div>
-<form id="the_forms_id">
+<form id="the_forms_id" action="#" method="get">
 <p>
 <input id="i_am_a_textbox" name="i_am_a_textbox" type="text" value="i has no focus">
 </p>
@@ -79,7 +79,7 @@ Your comments: None<br>
     };
   </script>
 
-  <form id="jumpContact" method="post">
+  <form id="jumpContact" method="get" action="#jumpContact">
     <p>
       <label for="comments">Comments:</label><br>
       <textarea id="comments" style="width:400px;height:100px" name="comments"></textarea>
