@@ -24,14 +24,14 @@ browser.init({
   browser.get("http://saucelabs.com/test/guinea-pig", function() {
     browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
-      browser.elementById('submit', function(err, el) {
+      browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          browser.eval("window.location.href", function(err, title) {
-            assert.ok(~title.indexOf('#'), 'Wrong title!');
-            browser.quit()
-          })
-        })
-      })
-    })
-  })
-})
+          browser.eval("window.location.href", function(err, href) {
+            assert.ok(~href.indexOf('test-guinea-pig2'));
+            browser.quit();
+          });
+        });
+      });
+    });
+  });
+});
