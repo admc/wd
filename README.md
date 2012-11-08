@@ -63,13 +63,13 @@ desired = {
 };
 
 browser.init(desired, function() {
-  browser.get("http://saucelabs.com/test/guinea-pig", function() {
+  browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
           browser.eval("window.location.href", function(err, location) {
-            assert.ok(~location.indexOf('test-guinea-pig2'));
+            assert.ok(~location.indexOf('guinea-pig2'));
             browser.quit();
           });
         });

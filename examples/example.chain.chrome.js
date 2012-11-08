@@ -18,7 +18,7 @@ browser
       , tags : ["examples"]
       , name: "This is an example test"
   })
-  .get("http://saucelabs.com/test/guinea-pig")
+  .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title(function(err, title) {
     assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
   })
@@ -29,6 +29,6 @@ browser
     });
   })
   .eval("window.location.href", function(err, href) {
-    assert.ok(~href.indexOf('test-guinea-pig2'), 'Wrong url!');
+    assert.ok(~href.indexOf('guinea-pig2'), 'Wrong url!');
   })
   .quit();
