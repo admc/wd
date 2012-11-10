@@ -45,7 +45,6 @@ test_coverage:
 	test/unit/*-test.coffee \
 	test/local/*-test.coffee \
 	test/saucelabs/*-test.coffee \
-	test/ghostdriver/*-test.coffee \
   > coverage.html
 
 # remove all the generated js
