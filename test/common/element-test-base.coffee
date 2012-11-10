@@ -223,12 +223,6 @@ test = (remoteWdConfig, desired) ->
             textReceived.should.equal ""
             done null
 
-  describe "close", ->
-    it "should close current window", (done) ->            
-      browser.close (err) ->
-        should.not.exist err
-        done null
-  
   describe "quit", ->  
     it "should destroy browser", (done) ->
       browser.quit (err) ->

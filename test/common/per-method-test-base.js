@@ -1877,14 +1877,6 @@
         });
       });
     }
-    describe("close", function() {
-      return it("should close current window", function(done) {
-        return browser.close(function(err) {
-          should.not.exist(err);
-          return done(null);
-        });
-      });
-    });
     return describe("quit<COMP>", function() {
       return it("should destroy browser", function(done) {
         return browser.quit(function(err) {

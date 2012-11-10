@@ -1597,15 +1597,7 @@ test = (remoteWdConfig, desired) ->
           err.inspect().should.include '"screen": "[hidden]"'
           err.inspect().should.include 'browser-error:'
           done null
-        
   
-    
-  describe "close", ->        
-    it "should close current window", (done) ->        
-      browser.close (err) ->
-        should.not.exist err
-        done null
-        
   describe "quit<COMP>", ->        
     it "should destroy browser", (done) ->
       browser.quit (err) ->        

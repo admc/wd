@@ -1,8 +1,6 @@
-// run in the browser
-
-//parse arguments
-var condExpr = arguments[0], timeout = arguments[1], 
-poll = arguments[2], cb = arguments[3];
+var args = Array.prototype.slice.call(arguments, 0);
+var condExpr = args[0], timeout = args[1], 
+    poll = args[2], cb = args[3];
 
 // recursive implementation
 var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
@@ -11,9 +9,9 @@ var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
   if (Date.now() < limit) {
     // condition check
     var res = eval(conditionExpr);
-    if (res == true ) {
+    if (res === true ) {
       // condition ok
-      return cb(res);
+      cb(res);
     } else {        
       // wait for poll and try again
       setTimeout(function() {
