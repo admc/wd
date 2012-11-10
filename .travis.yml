@@ -11,7 +11,7 @@ script:
   - "make test_saucelabs"
   - "./node_modules/.bin/install_selenium"
   - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
-  - "sleep 10"
+  - "sleep 15"
   - "make test_local"
 after_script:
   - "./node_modules/.bin/kill_selenium"
