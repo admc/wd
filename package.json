@@ -29,7 +29,8 @@
   "dependencies": {
     "async": "0.1.x",
     "underscore": "1.4.x",
-    "vargs": "~0.1.0"
+    "vargs": "~0.1.0",
+    "request": "~2.12.0"
   },
   "devDependencies": {
     "mocha": "1.6.x",
