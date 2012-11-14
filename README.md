@@ -1,6 +1,7 @@
 # WD.js -- A light weight WebDriver/Se2 client for node.js
 
 [![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
+[![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com)
 
 ## Update node to latest
 
