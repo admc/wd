@@ -1882,9 +1882,7 @@ test = function(remoteWdConfig, desired) {
         return browser.safeExecute("invalid-code> here", function(err) {
           should.exist(err);
           (err instanceof Error).should.be.true;
-          should.exist(err['jsonwire-error']);
-          err.inspect().should.include('"screen": "[hidden]"');
-          err.inspect().should.include('browser-error:');
+          (err.inspect().length <= 510).should.be.true
           return done(null);
         });
       });
