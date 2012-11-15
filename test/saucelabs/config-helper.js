@@ -10,7 +10,7 @@ try {
 
 exports.getRemoteWdConfig = function() {
   var _ref, _ref1;
-  should.exist(config, "Missing config!\nYou need to copy config-sample.coffee to config.coffee,\nand then configure your sauce username and access-key in\nconfig.coffee");
+  should.exist(config, "Missing config!\nYou need to copy config-sample.js to config.js,\nand then configure your sauce username and access-key in\nconfig.js");
   return {
     host: "ondemand.saucelabs.com",
     port: 80,
