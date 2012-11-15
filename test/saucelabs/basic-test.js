@@ -29,13 +29,13 @@ describe("wd", function() {
   return describe("saucelabs", function() {
     return describe("basic tests", function() {
       describe("using chrome", function() {
-        return test(remoteWdConfig, chromeDesired);
+        test(remoteWdConfig, chromeDesired, configHelper.jobPassed );
       });
       describe("using firefox", function() {
-        return test(remoteWdConfig, firefoxDesired);
+        test(remoteWdConfig, firefoxDesired, configHelper.jobPassed);
       });
       return describe("using explorer", function() {
-        return test(remoteWdConfig, explorerDesired);
+        test(remoteWdConfig, explorerDesired, configHelper.jobPassed);
       });
     });
   });

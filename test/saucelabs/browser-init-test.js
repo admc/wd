@@ -12,8 +12,11 @@ describe("wd", function() {
   return describe("saucelabs", function() {
     return describe("browser init tests", function() {
       describe("default init", function() {
+        var browser;
+        after(function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
         return it("should open a XP firefox browser", function(done) {
-          var browser;
           this.timeout(15000);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.should.eql({
@@ -37,8 +40,11 @@ describe("wd", function() {
         });
       });
       describe("browser.defaultCapabilities", function() {
+        var browser;
+        after(function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
         return it("should open a LINUX chrome browser", function(done) {
-          var browser;
           this.timeout(15000);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.browserName = 'chrome';
@@ -69,8 +75,11 @@ describe("wd", function() {
         });
       });
       describe("desired only", function() {
+        var browser;
+        after(function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
         return it("should open a WINDOWS explorer browser", function(done) {
-          var browser, desired;
           this.timeout(15000);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.should.eql({
@@ -79,7 +88,7 @@ describe("wd", function() {
             javascriptEnabled: true,
             platform: 'VISTA'
           });
-          desired = {
+          var desired = {
             browserName: 'iexplore',
             platform: 'Windows 2008',
             name: 'browser init using desired',
@@ -100,8 +109,11 @@ describe("wd", function() {
         });
       });
       return describe("desired overiding defaultCapabilities", function() {
+        var browser;
+        after(function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
         return it("should open a firefox browser", function(done) {
-          var browser;
           this.timeout(15000);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.browserName = 'chrome';

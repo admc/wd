@@ -6,13 +6,23 @@ assert = require('assert');
 
 TIMEOUT = 60000;
 
-test = function(remoteWdConfig, desired) {
+test = function(remoteWdConfig, desired, markAsPassed) {
+  var sessionID;
   var browser, wd;
   wd = require('./wd-with-cov');
   if (typeof remoteWdConfig === 'function') {
     remoteWdConfig = remoteWdConfig();
   }
   browser = null;
+
+  after(function(done) {
+    if(markAsPassed) {
+      markAsPassed(sessionID, done);
+    } else {
+      done(null);
+    }
+  });
+
   describe("remote", function() {
     return it("should create browser", function(done) {
       browser = wd.remote(remoteWdConfig);
@@ -32,6 +42,7 @@ test = function(remoteWdConfig, desired) {
     return it("should initialize browser", function(done) {
       this.timeout(TIMEOUT);
       return browser.init(desired, function() {
+        sessionID = browser.sessionID;
         return done(null);
       });
     });
@@ -45,7 +56,7 @@ test = function(remoteWdConfig, desired) {
           return browser.title(function(err, title) {
             if(err) { console.log(err); return done(err); }
             assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
-            return done(null);
+            done(null);
           });
         });
       });
@@ -68,7 +79,7 @@ test = function(remoteWdConfig, desired) {
     return it("closing browser", function(done) {
       this.timeout(TIMEOUT);
       return browser.quit(function() {
-        return done(null);
+        done(null);
       });
     });
   });
