@@ -33,7 +33,7 @@ exports.jobPassed = function(jobId, done) {
     headers: {
       'Content-Type': 'text/json'
     },
-    body: JSON.stringify({passed: true, public: true})
+    body: JSON.stringify({passed: true, public: true, build: Math.round(new Date().getTime() / (1000*60*60))})
   };
 
   request(httpOpts, function(err, res) {
