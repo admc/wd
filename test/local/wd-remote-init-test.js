@@ -11,12 +11,14 @@ describe("wd", function() {
         return it("browser should be initialized with default parameters", function(done) {
           var browser;
           browser = wd.remote();
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('127.0.0.1');
           browser.options.port.should.equal(4444);
           browser.options.path.should.equal('/wd/hub/session');
           browser.basePath.should.equal('/wd/hub');
           should.not.exist(browser.username);
-          //should.not.exist(browser.accessKey);
+          should.not.exist(browser.accessKey);
           return done();
         });
       });
@@ -25,6 +27,8 @@ describe("wd", function() {
           return it("browser should be initialized with given parameters", function(done) {
             var browser;
             browser = wd.remote('localhost', 8888);
+            browser.username = null;
+            browser.accessKey = null;
             browser.options.host.should.equal('localhost');
             browser.options.port.should.equal(8888);
             browser.options.path.should.equal('/wd/hub/session');
@@ -54,6 +58,8 @@ describe("wd", function() {
         return it("browser should be initialized with default", function(done) {
           var browser;
           browser = wd.remote({});
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('127.0.0.1');
           browser.options.port.should.equal(4444);
           browser.options.path.should.equal('/wd/hub/session');
@@ -70,6 +76,8 @@ describe("wd", function() {
             host: 'localhost',
             port: 8888
           });
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/wd/hub/session');
@@ -88,6 +96,8 @@ describe("wd", function() {
             username: 'mickey',
             accessKey: 'mouse'
           });
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/wd/hub/session');
@@ -103,6 +113,8 @@ describe("wd", function() {
           browser = wd.remote({
             path: '/taiwan'
           });
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('127.0.0.1');
           browser.options.port.should.equal(4444);
           browser.options.path.should.equal('/taiwan/session');
@@ -120,6 +132,8 @@ describe("wd", function() {
             port: 8888,
             path: '/'
           });
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/session');
@@ -139,6 +153,8 @@ describe("wd", function() {
             accessKey: 'mouse',
             path: '/asia/taiwan'
           });
+          browser.username = null;
+          browser.accessKey = null;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/asia/taiwan/session');
