@@ -2,9 +2,10 @@ language: node_js
 node_js:
   - 0.8
 env:
-  - secure: "h/YmtRfpb4cLz3tAXq/ARACey1XdVSnMLFRATc4rGxhqLAn0auiJdJN9wuZf\npG4sjqJWo5DF+JgjUY3mqFlrBFpH6iUWIB7UrRFBUTSrXqfS/u/dsIlr9cDT\nxJnlYny1uJC+QYB9DvjfVm4P1LlWF+JSn9myyY327nzAHsaGO+8="
+  global:
+    - secure: "WEduEIC13OcG1Gy+eV/wzJ6mW6lL6ubT/hdtdzzJCDanOHdP8R7Zxmk9JRbZ\n6ZSv1uJqxA3L2zf9mlDsNWNK4lPAJpwE1hNY41cyatRp3jhc4/T+ZZ5n4HT8\nO61YPjORYEKxUUURB1nAzDuftzkuWUEHdsdTAxr5m/24Y6ViDYU="
 before_script:
-  - "export DISPLAY=:99.0" 
+  - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
   - "make test_unit"
