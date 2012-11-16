@@ -33,7 +33,7 @@ exports.jobPassed = function(jobId, done) {
     headers: {
       'Content-Type': 'text/json'
     },
-    body: JSON.stringify({passed: true})
+    body: JSON.stringify({passed: true, public: true})
   };
 
   request(httpOpts, function(err, res) {
