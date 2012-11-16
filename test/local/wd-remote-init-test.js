@@ -42,8 +42,6 @@ describe("wd", function() {
           return it("browser should be initialized with given parameters", function(done) {
             var browser;
             browser = wd.remote('localhost', 8888, 'mickey', 'mouse');
-            delete browser.username;
-            delete browser.accessKey;
             browser.options.host.should.equal('localhost');
             browser.options.port.should.equal(8888);
             browser.options.path.should.equal('/wd/hub/session');
@@ -98,8 +96,6 @@ describe("wd", function() {
             username: 'mickey',
             accessKey: 'mouse'
           });
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/wd/hub/session');
@@ -155,8 +151,6 @@ describe("wd", function() {
             accessKey: 'mouse',
             path: '/asia/taiwan'
           });
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/asia/taiwan/session');
