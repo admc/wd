@@ -1,8 +1,8 @@
-var should, wd;
+var should = require('should'),
+    wd = require('../common/wd-with-cov'),
+    _ = require('underscore');
 
-should = require('should');
-
-wd = require('../common/wd-with-cov');
+process.env = _(process.env).omit('SAUCE_USERNAME', 'SAUCE_ACCESS_KEY');
 
 describe("wd", function() {
   return describe("local", function() {
@@ -11,8 +11,6 @@ describe("wd", function() {
         return it("browser should be initialized with default parameters", function(done) {
           var browser;
           browser = wd.remote();
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('127.0.0.1');
           browser.options.port.should.equal(4444);
           browser.options.path.should.equal('/wd/hub/session');
@@ -27,8 +25,6 @@ describe("wd", function() {
           return it("browser should be initialized with given parameters", function(done) {
             var browser;
             browser = wd.remote('localhost', 8888);
-            delete browser.username;
-            delete browser.accessKey;
             browser.options.host.should.equal('localhost');
             browser.options.port.should.equal(8888);
             browser.options.path.should.equal('/wd/hub/session');
@@ -58,8 +54,6 @@ describe("wd", function() {
         return it("browser should be initialized with default", function(done) {
           var browser;
           browser = wd.remote({});
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('127.0.0.1');
           browser.options.port.should.equal(4444);
           browser.options.path.should.equal('/wd/hub/session');
@@ -76,8 +70,6 @@ describe("wd", function() {
             host: 'localhost',
             port: 8888
           });
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/wd/hub/session');
@@ -111,8 +103,6 @@ describe("wd", function() {
           browser = wd.remote({
             path: '/taiwan'
           });
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('127.0.0.1');
           browser.options.port.should.equal(4444);
           browser.options.path.should.equal('/taiwan/session');
@@ -130,8 +120,6 @@ describe("wd", function() {
             port: 8888,
             path: '/'
           });
-          delete browser.username;
-          delete browser.accessKey;
           browser.options.host.should.equal('localhost');
           browser.options.port.should.equal(8888);
           browser.options.path.should.equal('/session');
