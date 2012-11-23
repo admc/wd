@@ -3,7 +3,7 @@ node_js:
   - 0.8
 env:
   global:
-    secure: "IwP4h8ySKru2oxF9bEHGYxyigOcfSZq3eXm4JrdQwW9UHAwb/8X1j5sivJT+\nQvAj8VsbqtPG4oktrlfoy4cMWD4MflzZ/PnDH7wHepuD6QhQcFtg+6o46i7+\nKd7it0qreHDR9KM1w1AxFWqR+e3qsnQFcBBtAMNF+rIByKNSXo0="
+    secure: "mbQ93JSbGACsOb20Wh/j5i7vA96EPSEYEc+KTaXerQFKmuz24xWOwj5KmNGK\nssMjDtUS2HPY37iyeByNimzyyOUSlj4CzwhBedJ4VfkNMriM7ir5ThyPSidA\neF4BaJUf4Dz50Z6w0ASussSEmeydoEhzbphd8N78wT1HMsLbnRw="
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
