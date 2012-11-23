@@ -18,17 +18,17 @@ browser
       , tags : ["examples"]
       , name: "This is an example test"
   })
-  .get("http://saucelabs.com/test/guinea-pig")
+  .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title(function(err, title) {
     assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
   })
-  .elementById('submit', function(err, el) {
+  .elementById('i am a link', function(err, el) {
     //we should make clickElement not require a callback
     browser.clickElement(el, function() {
-      console.log("did the click!")
-    })
+      console.log("did the click!");
+    });
   })
   .eval("window.location.href", function(err, href) {
-    assert.ok(~href.indexOf('#'), 'Wrong url!');
+    assert.ok(~href.indexOf('guinea-pig2'), 'Wrong url!');
   })
   .quit();

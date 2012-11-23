@@ -1,5 +1,9 @@
-var webdriver  = require('wd');
-
+var webdriver;
+try {
+  webdriver = require('wd');
+} catch( err ) { 
+  webdriver = require('../lib/main');
+}
 var assert = require('assert');
 var browser = webdriver.remote();
 
@@ -17,29 +21,17 @@ browser.init({
     , name: "This is an example test"
   }, function() {
 
-  browser.get("http://saucelabs.com/test/guinea-pig", function() {
-      browser.title(function(err, title) {
+  browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
+    browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
-	  browser.elementById('comments', function(err, el) {
-	      el.sendKeys("this is not a comment", function(err) {
-		  browser.elementById('submit', function(err, el) {
-		      el.click(function() {
-			  browser.eval("window.location.href", function(err, title) {
-			      assert.ok(~title.indexOf('#'), 'Wrong title!');
-			      browser.elementById("your_comments", function(err, el) {
-				  el.textPresent("this is not a comment", function(err, present) {
-				      assert.ok(present, "Comments not correct");
-				      el.text(function(err, text) {
-					  console.log(text);
-					  browser.quit();  
-            })				      
-				  })
-         })
-			  })
-       })
-		  })
-     })
-	  })
-   })
-  })
+      browser.elementById('i am a link', function(err, el) {
+        browser.clickElement(el, function() {
+          browser.eval("window.location.href", function(err, href) {
+            assert.ok(~href.indexOf('guinea-pig2'));
+            browser.quit();
+          });
+        });
+      });
+    });
+  });
 });

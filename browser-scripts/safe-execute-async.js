@@ -1,7 +1,8 @@
-var code = arguments[0], args = arguments[1], done = arguments[2];
+var args = Array.prototype.slice.call(arguments, 0);
+var code = args[0], fargs = args[1], done = args[2];
 var wrap = function() {
   return eval(code);
 };
 
-args.push(done);
-return wrap.apply(this, args);
+fargs.push(done);
+wrap.apply(this, fargs);

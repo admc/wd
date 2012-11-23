@@ -1,7 +1,7 @@
 // CONFIGURE SAUCE CREDENTIALS HERE
 var username = "<USERNAME>",
 accessKey = "<ACCESS_KEY>";
-  
+
 var webdriver;
 try {
   webdriver = require('wd');
@@ -23,20 +23,20 @@ browser.on('command', function(meth, path){
 var desired = {
   tags: ["examples"]
   , name: "This is an example test"
-}
+};
 
 browser.init(desired, function() {
-  browser.get("http://saucelabs.com/test/guinea-pig", function() {
+  browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
-      browser.elementById('submit', function(err, el) {
+      browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          browser.eval("window.location.href", function(err, title) {
-            assert.ok(~title.indexOf('#'), 'Wrong title!');
-            browser.quit()
-          })
-        })
-      })
-    })
-  })
-})
+          browser.eval("window.location.href", function(err, href) {
+            assert.ok(~href.indexOf('guinea-pig2'));
+            browser.quit();
+          });
+        });
+      });
+    });
+  });
+});
