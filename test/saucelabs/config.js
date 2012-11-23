@@ -1,7 +1,7 @@
 
 module.exports = {
   saucelabs: {
-    username: process.env.SAUCE_USERNAME || 'wdjs',
+    username: 'wdjs',
     accessKey: process.env.SAUCE_ACCESS_KEY
   }
 };
