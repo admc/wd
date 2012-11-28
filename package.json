@@ -30,7 +30,8 @@
     "async": "0.1.x",
     "underscore": "1.4.x",
     "vargs": "~0.1.0",
-    "request": "~2.12.0"
+    "request": "~2.12.0",
+    "q": "0.8.x"
   },
   "devDependencies": {
     "mocha": "1.6.x",
