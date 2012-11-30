@@ -2,21 +2,21 @@
 var username = "<USERNAME>",
 accessKey = "<ACCESS_KEY>";
  
-var webdriver;
+var wd;
 try {
-  webdriver = require('wd'); 
+  wd = require('wd'); 
 } catch( err ) { 
-  webdriver = require('../lib/main');
+  wd = require('../lib/main');
 }
 var assert = require('assert');
-var browser = webdriver.remote("ondemand.saucelabs.com", 80, username, accessKey);
+var browser = wd.remote("ondemand.saucelabs.com", 80, username, accessKey);
 
 browser.on('status', function(info){
   console.log('\x1b[36m%s\x1b[0m', info);
 });
 
-browser.on('command', function(meth, path){
-  console.log(' > \x1b[33m%s\x1b[0m: %s', meth, path);
+browser.on('command', function(meth, path, data){
+  console.log(' > \x1b[33m%s\x1b[0m: %s', meth, path, data || '');
 });
 
 var desired = {
