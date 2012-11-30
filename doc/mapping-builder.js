@@ -53,7 +53,7 @@ for (jw_k in jsonWireFull) {
               orderTag = t;
             }
           }
-          order = orderTag !== null ? parseInt(orderTag.string) : 1000000;
+          order = orderTag? parseInt(orderTag.string) : 1000000;
           return current.wd_doc.push({
             'desc': (function() {
               var _l, _len3, _ref1, _results;
