@@ -6,6 +6,8 @@ should = require('should');
 
 configHelper = require('./config-helper');
 
+var TIMEOUT = 30000;
+
 remoteWdConfig = configHelper.getRemoteWdConfig();
 
 describe("wd", function() {
@@ -17,7 +19,7 @@ describe("wd", function() {
           configHelper.jobPassed(browser.sessionID, done);
         });
         return it("should open a XP firefox browser", function(done) {
-          this.timeout(15000);
+          this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.should.eql({
             browserName: 'firefox',
@@ -45,7 +47,7 @@ describe("wd", function() {
           configHelper.jobPassed(browser.sessionID, done);
         });
         return it("should open a LINUX chrome browser", function(done) {
-          this.timeout(15000);
+          this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.browserName = 'chrome';
           browser.defaultCapabilities.platform = 'LINUX';
@@ -80,7 +82,7 @@ describe("wd", function() {
           configHelper.jobPassed(browser.sessionID, done);
         });
         return it("should open a WINDOWS explorer browser", function(done) {
-          this.timeout(15000);
+          this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.should.eql({
             browserName: 'firefox',
@@ -114,7 +116,7 @@ describe("wd", function() {
           configHelper.jobPassed(browser.sessionID, done);
         });
         return it("should open a firefox browser", function(done) {
-          this.timeout(15000);
+          this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.browserName = 'chrome';
           browser.defaultCapabilities.name = 'browser init overide';
