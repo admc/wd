@@ -1186,6 +1186,46 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
+            GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/alert_text">/session/:sessionId/alert_text</a><br>
+            Gets the text of the currently displayed JavaScript alert(), confirm(), or prompt() dialog.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              alertText(cb) -&gt; cb(err, text)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/alert_text">/session/:sessionId/alert_text</a><br>
+            Sends keystrokes to a JavaScript prompt() dialog.
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              alertKeys(keys, cb) -&gt; cb(err)<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/accept_alert">/session/:sessionId/accept_alert</a><br>
             Accepts the currently displayed alert dialog.
           
@@ -1341,6 +1381,25 @@ browser.init(desired, function() {
           
           
             
+              esired, cb<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
               Opens a new window (using Javascript window.open):<br>
             
               newWindow(url, name, cb) -&gt; cb(err)<br>
@@ -1352,6 +1411,25 @@ browser.init(desired, function() {
               Window can later be accessed by name with the window method, <br>
             
               or by getting the last handle returned by the windowHandles method.<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              rl, name, cb<br>
             
           
           
@@ -1499,7 +1577,7 @@ browser.init(desired, function() {
             
               isVisible(element , cb) -&gt; cb(err, boolean)<br>
             
-              deprecated: isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
+              isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
             
           
           

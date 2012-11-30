@@ -1524,8 +1524,10 @@
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
-            NA
           
+            
+              alertText(cb) -&gt; cb(err, text)<br>
+            
           
           
         </td>
@@ -1542,8 +1544,10 @@
         </td>
         <td style="border: 1px solid #ccc; padding: 5px;">
           
-            NA
           
+            
+              alertKeys(keys, cb) -&gt; cb(err)<br>
+            
           
           
         </td>
@@ -2103,6 +2107,25 @@
           
           
             
+              esired, cb<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
               Opens a new window (using Javascript window.open):<br>
             
               newWindow(url, name, cb) -&gt; cb(err)<br>
@@ -2114,6 +2137,25 @@
               Window can later be accessed by name with the window method, <br>
             
               or by getting the last handle returned by the windowHandles method.<br>
+            
+          
+          
+        </td>
+      </tr>
+    
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            EXTRA
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            
+              rl, name, cb<br>
             
           
           
@@ -2261,7 +2303,7 @@
             
               isVisible(element , cb) -&gt; cb(err, boolean)<br>
             
-              deprecated: isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
+              isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
             
           
           
