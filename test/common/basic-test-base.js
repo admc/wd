@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var TIMEOUT, assert, should, test;
 
 should = require('should');
@@ -24,7 +25,7 @@ test = function(remoteWdConfig, desired, markAsPassed) {
   });
 
   describe("remote", function() {
-    return it("should create browser", function(done) {
+    it("should create browser", function(done) {
       browser = wd.remote(remoteWdConfig);
       should.exist(browser);
       if (!process.env.WD_COV) {
@@ -35,50 +36,50 @@ test = function(remoteWdConfig, desired, markAsPassed) {
           return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
         });
       }
-      return done(null);
+      done(null);
     });
   });
   describe("init", function() {
-    return it("should initialize browser", function(done) {
+    it("should initialize browser", function(done) {
       this.timeout(TIMEOUT);
-      return browser.init(desired, function() {
+      browser.init(desired, function() {
         sessionID = browser.sessionID;
-        return done(null);
+        done(null);
       });
     });
   });
   describe("browsing", function() {
     describe("getting page", function() {
-      return it("should navigate to test page and check title", function(done) {
+      it("should navigate to test page and check title", function(done) {
         this.timeout(TIMEOUT);
-        return browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function(err) {
-          if(err) { console.log(err); return done(err); }
-          return browser.title(function(err, title) {
-            if(err) { console.log(err); return done(err); }
+        browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function(err) {
+          if(err) { console.log(err); done(err); }
+          browser.title(function(err, title) {
+            if(err) { console.log(err); done(err); }
             assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
             done(null);
           });
         });
       });
     });
-    return describe("clicking submit", function() {
-      return it("submit element should be clicked", function(done) {
+    describe("clicking submit", function() {
+      it("submit element should be clicked", function(done) {
         this.timeout(TIMEOUT);
-        return browser.elementById("submit", function(err, el) {
-          return browser.clickElement(el, function() {
+        browser.elementById("submit", function(err, el) {
+          browser.clickElement(el, function() {
             return browser["eval"]("window.location.href", function(err, location) {
               assert.ok(~location.indexOf("http://"), "Wrong location!");
-              return done(null);
+              done(null);
             });
           });
         });
       });
     });
   });
-  return describe("leaving", function() {
-    return it("closing browser", function(done) {
+  describe("leaving", function() {
+    it("closing browser", function(done) {
       this.timeout(TIMEOUT);
-      return browser.quit(function() {
+      browser.quit(function() {
         done(null);
       });
     });

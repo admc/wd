@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var chromeDesired, configHelper, explorerDesired, firefoxDesired, nameBase, remoteWdConfig, test;
 
 test = require('../common/basic-test-base').test;
@@ -26,15 +27,15 @@ explorerDesired = {
 };
 
 describe("wd", function() {
-  return describe("saucelabs", function() {
-    return describe("basic tests", function() {
+  describe("saucelabs", function() {
+    describe("basic tests", function() {
       describe("using chrome", function() {
         test(remoteWdConfig, chromeDesired, configHelper.jobPassed );
       });
       describe("using firefox", function() {
         test(remoteWdConfig, firefoxDesired, configHelper.jobPassed);
       });
-      return describe("using explorer", function() {
+      describe("using explorer", function() {
         test(remoteWdConfig, explorerDesired, configHelper.jobPassed);
       });
     });

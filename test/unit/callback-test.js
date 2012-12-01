@@ -1,4 +1,4 @@
-/*global describe,before,it */
+/*global describe,before,it,after */
 var nock, should, wd, pwd;
 
 wd = require('../common/wd-with-cov');
@@ -86,37 +86,37 @@ describe("wd", function() {
         var browser;
         browser = null;
         describe("browser initialization", function() {
-          return it("should initialize browser", function(done) {
+          it("should initialize browser", function(done) {
             browser = wd.promiseRemote({
               port: 5555
             });
-            return browser.init({}).then(
-              function() { return done(null); },
-              function(err) { return done(err); });
+            browser.init({}).then(
+              function() { done(null); },
+              function(err) { done(err); });
           });
         });
         describe("simplepromsie with empty return", function() {
-          return it("should get url", function(done) {
+          it("should get url", function(done) {
             server.post('/wd/hub/session/1234/url', '*').reply(200, "");
-            return browser.get("www.google.com").then(
-              function() { return done(null); },
-              function(err) { return done(err); });
+            browser.get("www.google.com").then(
+              function() { done(null); },
+              function(err) { done(err); });
           });
         });
         describe("simplepromise with 200 OK", function() {
-          return it("should get url", function(done) {
+          it("should get url", function(done) {
             server.post('/wd/hub/session/1234/url', '*').reply(200, "OK");
-            return browser.get("www.google.com").then(
-              function() { return done(null); },
-              function(err) { return done(err); });
+            browser.get("www.google.com").then(
+              function() { done(null); },
+              function(err) { done(err); });
           });
         });
         describe("simplepromise with empty JSON data", function() {
-          return it("should get url", function(done) {
+          it("should get url", function(done) {
             server.post('/wd/hub/session/1234/url', '*').reply(200, '{"sessionId":"1234","status":0,"value":{}}');
-            return browser.get("www.google.com").then(
-              function() { return done(null); },
-              function(err) { return done(err); });
+            browser.get("www.google.com").then(
+              function() { done(null); },
+              function(err) { done(err); });
           });
         });
       });

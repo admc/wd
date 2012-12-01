@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var should, wd;
 
 should = require('should');
@@ -5,10 +6,10 @@ should = require('should');
 wd = require('../common/wd-with-cov');
 
 describe("wd", function() {
-  return describe("local", function() {
-    return describe("browser init tests", function() {
+  describe("local", function() {
+    describe("browser init tests", function() {
       describe("default init", function() {
-        return it("should open firefox browser", function(done) {
+        it("should open firefox browser", function(done) {
           var browser;
           this.timeout(15000);
           browser = wd.remote();
@@ -18,21 +19,21 @@ describe("wd", function() {
             javascriptEnabled: true,
             platform: 'ANY'
           });
-          return browser.init(function(err) {
+          browser.init(function(err) {
             should.not.exist(err);
-            return browser.sessionCapabilities(function(err, capabilities) {
+            browser.sessionCapabilities(function(err, capabilities) {
               should.not.exist(err);
               capabilities.browserName.should.equal('firefox');
-              return browser.quit(function(err) {
+              browser.quit(function(err) {
                 should.not.exist(err);
-                return done(null);
+                done(null);
               });
             });
           });
         });
       });
       describe("browser.defaultCapabilities", function() {
-        return it("should open chrome browser", function(done) {
+        it("should open chrome browser", function(done) {
           var browser;
           this.timeout(15000);
           browser = wd.remote();
@@ -44,21 +45,21 @@ describe("wd", function() {
             javascriptEnabled: false,
             platform: 'ANY'
           });
-          return browser.init(function(err) {
+          browser.init(function(err) {
             should.not.exist(err);
-            return browser.sessionCapabilities(function(err, capabilities) {
+            browser.sessionCapabilities(function(err, capabilities) {
               should.not.exist(err);
               capabilities.browserName.should.equal('chrome');
-              return browser.quit(function(err) {
+              browser.quit(function(err) {
                 should.not.exist(err);
-                return done(null);
+                done(null);
               });
             });
           });
         });
       });
       describe("desired only", function() {
-        return it("should open chrome browser", function(done) {
+        it("should open chrome browser", function(done) {
           var browser;
           this.timeout(15000);
           browser = wd.remote();
@@ -68,23 +69,23 @@ describe("wd", function() {
             javascriptEnabled: true,
             platform: 'ANY'
           });
-          return browser.init({
+          browser.init({
             browserName: 'chrome'
           }, function(err) {
             should.not.exist(err);
-            return browser.sessionCapabilities(function(err, capabilities) {
+            browser.sessionCapabilities(function(err, capabilities) {
               should.not.exist(err);
               capabilities.browserName.should.equal('chrome');
-              return browser.quit(function(err) {
+              browser.quit(function(err) {
                 should.not.exist(err);
-                return done(null);
+                done(null);
               });
             });
           });
         });
       });
-      return describe("desired overiding defaultCapabilities", function() {
-        return it("should open firefox browser", function(done) {
+      describe("desired overiding defaultCapabilities", function() {
+        it("should open firefox browser", function(done) {
           var browser;
           this.timeout(15000);
           browser = wd.remote();
@@ -95,16 +96,16 @@ describe("wd", function() {
             javascriptEnabled: true,
             platform: 'ANY'
           });
-          return browser.init({
+          browser.init({
             browserName: 'firefox'
           }, function(err) {
             should.not.exist(err);
-            return browser.sessionCapabilities(function(err, capabilities) {
+            browser.sessionCapabilities(function(err, capabilities) {
               should.not.exist(err);
               capabilities.browserName.should.equal('firefox');
-              return browser.quit(function(err) {
+              browser.quit(function(err) {
                 should.not.exist(err);
-                return done(null);
+                done(null);
               });
             });
           });

@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var config, should, request;
 
 should = require('should');
@@ -41,10 +42,10 @@ exports.jobPassed = function(jobId, done) {
   };
 
   request(httpOpts, function(err, res) {
-    if(err) 
+    if(err)
       { console.log(err); }
     else
-      { console.log("> job:", jobId, "marked as pass." ); } 
+      { console.log("> job:", jobId, "marked as pass." ); }
     done(err);
   });
 };

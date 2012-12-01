@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var async, should, test, wd;
 
 should = require('should');
@@ -10,7 +11,7 @@ test = function(browserName) {
   var browser;
   browser = null;
   describe("wd.remote", function() {
-    return it("should create browser", function(done) {
+    it("should create browser", function(done) {
       browser = wd.remote({});
       if (!process.env.WD_COV) {
         browser.on("status", function(info) {
@@ -20,12 +21,12 @@ test = function(browserName) {
           return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
         });
       }
-      return done(null);
+      done(null);
     });
   });
-  return describe("chaining", function() {
-    return it("should work", function(done) {
-      return browser.chain().init({
+  describe("chaining", function() {
+    it("should work", function(done) {
+      browser.chain().init({
         browserName: 'chrome',
         tags: ["examples"],
         name: "This is an example test"
@@ -37,13 +38,13 @@ test = function(browserName) {
 
         // Commenting this test, nothing preventing quit to be called first
         // we should make clickElement not require a callback
-        // return browser.clickElement(el, function(err) {
+        // browser.clickElement(el, function(err) {
         //  return should.not.exist.err;
         //});
       })["eval"]("window.location.href", function(err, href) {
         return href.should.include('http');
       }).quit(function(err) {
-        return done(null);
+        done(null);
       });
     });
   });
