@@ -2,7 +2,6 @@
 var nock, should, wd, pwd;
 
 wd = require('../common/wd-with-cov');
-pwd = require('../../promise');
 
 nock = require('nock');
 
@@ -88,7 +87,7 @@ describe("wd", function() {
         browser = null;
         describe("browser initialization", function() {
           return it("should initialize browser", function(done) {
-            browser = pwd.remote({
+            browser = wd.promiseRemote({
               port: 5555
             });
             return browser.init({}).then(
