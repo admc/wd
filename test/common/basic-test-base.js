@@ -1,6 +1,8 @@
 /*global describe,before,it,after */
 var TIMEOUT, assert, should, test;
 
+require("mocha-as-promised")();
+
 should = require('should');
 
 assert = require('assert');
@@ -81,6 +83,62 @@ test = function(remoteWdConfig, desired, markAsPassed) {
       this.timeout(TIMEOUT);
       browser.quit(function() {
         done(null);
+      });
+    });
+  });
+
+
+  describe("remote promises", function() {
+    describe("remote", function() {
+      it("should create browser", function() {
+        browser = wd.promiseRemote(remoteWdConfig);
+        should.exist(browser);
+        if (!process.env.WD_COV) {
+          browser.on("status", function(info) {
+            return console.log("\u001b[36m%s\u001b[0m", info);
+          });
+          browser.on("command", function(meth, path) {
+            return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
+          });
+        }
+      });
+    });
+    describe("init", function() {
+      it("should initialize browser", function() {
+        this.timeout(TIMEOUT);
+        return browser.init(desired).then(function() {
+          sessionID = browser.sessionID;
+        });
+      });
+    });
+    describe("browsing", function() {
+      describe("getting page", function() {
+        it("should navigate to test page and check title", function() {
+          this.timeout(TIMEOUT);
+          return browser.get("http://admc.io/wd/test-pages/guinea-pig.html").then(function() {
+            return browser.title();
+          }).then(function(title) {
+            return assert.ok(~title.indexOf("I am a page title - Sauce Labs"), "Wrong title!");
+          });
+        });
+      });
+      describe("clicking submit", function() {
+        it("submit element should be clicked", function() {
+          this.timeout(TIMEOUT);
+          return browser.elementById("submit").then(function(el) {
+            return browser.clickElement(el);
+          }).then(function() {
+            return browser["eval"]("window.location.href");
+          }).then(function(location) {
+            assert.ok(~location.indexOf("http://"), "Wrong location!");
+          });
+        });
+      });
+    });
+    describe("leaving", function() {
+      it("closing browser", function() {
+        this.timeout(TIMEOUT);
+        return browser.quit();
       });
     });
   });
