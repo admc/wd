@@ -4,7 +4,7 @@ node_js:
 env:
   - [
       {secure: "WGuKCvCfr6Q6MNmgd0tvc/lRqUER1o2ibd7Vd6V5EMP0etmNL5djOC2d6iCP\nvTI6U/6R/vK2iuhrNne0MuWEl8AfXlT3mNapo+AMpBibaE9fp5ryaTLqevMS\nzLt1Nmp3NLZ1k6+REW37efUHxJieCk3rsUagJI64d4KSdOvrqWk="},
-      {secure: "WEduEIC13OcG1Gy+eV/wzJ6mW6lL6ubT/hdtdzzJCDanOHdP8R7Zxmk9JRbZ\n6ZSv1uJqxA3L2zf9mlDsNWNK4lPAJpwE1hNY41cyatRp3jhc4/T+ZZ5n4HT8\nO61YPjORYEKxUUURB1nAzDuftzkuWUEHdsdTAxr5m/24Y6ViDYU="},
+      {secure: "BaKOBk/AIegTkF/vUcTyPs/5Jh4ccTXZkbUxXw/ihvMC2GexuYh9kR785Ah3\nnNt7LbH4VwNlrnwz347JuF9BIhoXdqIKahr4Inw4hncpgKTA1CmBNZa5ntnG\n3TVzb/L4hXHbHSJWGtiSgRvPQQQM8rj4S4XnJwGeijcqyvCwQy0="}
     ]
 before_script:
   - "export DISPLAY=:99.0"
