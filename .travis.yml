@@ -3,7 +3,7 @@ node_js:
   - 0.8
 env:
   - [
-      {secure: "WGuKCvCfr6Q6MNmgd0tvc/lRqUER1o2ibd7Vd6V5EMP0etmNL5djOC2d6iCP\nvTI6U/6R/vK2iuhrNne0MuWEl8AfXlT3mNapo+AMpBibaE9fp5ryaTLqevMS\nzLt1Nmp3NLZ1k6+REW37efUHxJieCk3rsUagJI64d4KSdOvrqWk="},
+      {secure: "X3VNJyxnIMeUOB69+wc/mTL7MsvpDJBzeiAtAdemJqcF/TEH+DXu5SwkF5ID\nbe8h7hJu4B3HFG1xMXpkw/ThzL6ihPF693ajzLUKD75y3FZhjC6U2mF8/ljJ\nR3wHBywGt2kt/dNaq2tIsH1fnXzGu5EfXDjWtAexC3ECuxdvN5k="},
       {secure: "BaKOBk/AIegTkF/vUcTyPs/5Jh4ccTXZkbUxXw/ihvMC2GexuYh9kR785Ah3\nnNt7LbH4VwNlrnwz347JuF9BIhoXdqIKahr4Inw4hncpgKTA1CmBNZa5ntnG\n3TVzb/L4hXHbHSJWGtiSgRvPQQQM8rj4S4XnJwGeijcqyvCwQy0="}
     ]
 before_script:
