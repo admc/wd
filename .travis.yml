@@ -3,8 +3,8 @@ node_js:
   - 0.8
 env:
   - [
-      {secure: "F+dTe/x5eB+zSDQPedoVfvFkbD3x4g2mjOho5ztfuV7H2YaLQvrnyyoEBZJq\nWnqB/nxj2nLkLOZWoEHeGMP2eo1X5N8FXbzw4RNpBJOlcuLllofEwmDaGY9x\nogtHIoAb4NixAB+eR9E7ha/Gx8phlabHL0W+VzWMjq/8uDsGIAU="},
-      {secure: "p6TeXpeP9NQlekPmwlBst/+HTmgaHahiMbbKV+4iubV5+vfPxc/ye9CVu/JI\n6nbmAlkquOcoyxL8hlZSNo6U4UOTF0DT0AStWUqyIeC27zKKPhv5DUiEs46U\nBDiORjacAyGlEOt2ppV90KRoEiPxDiUMqJD7N6FwcD7t3HsaAow="}
+      {secure: "P6rr9zRzJfodqw7dCKZAQtBi8rcMwYAhXwyk27k+8tRbKdoMyxPDGByo1EEW\n39Y7W53gmXYgjb6FZcwwJ/d+yr6DpZuxbcGt75HmsHltJPTJB4OzXQCliod+\nMRw6VQmHdnZVMS2yHBc4OXrVfM99o4k2uNcq4dapgX8K3oflY5A="},
+      {secure: "q2/Z+s1xck/mXvM/0GAPj37fuDONypsQmWCtybEZxvTK3OJStiyayLREDt8o\nRKObg9ixoXqoK6TVphO/qDlh3eyfoJbj5+WhbkiffM7MjQXW9s6H4NKaNbpU\nDNt+3XzzXzeRQwpkYmwiuWZupMqiMR0ulWzAHotsW6/yYhla4Jo="}
     ]
 before_script:
   - "export DISPLAY=:99.0"
