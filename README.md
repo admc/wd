@@ -1,7 +1,7 @@
 # WD.js -- WebDriver/Selenium 2 for node.js
 
 [![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
-[![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com)
+[![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com/u/wdjs)
 
 ## Update node to latest
 
