@@ -988,13 +988,13 @@ browser.init(desired, function() {
           
             <p>
               
-                location(element, cb) -&gt; cb(err, location)<br>
+                getLocation(element, cb) -&gt; cb(err, location)<br>
               
             </p>
           
             <p>
               
-                element.location(cb) -&gt; cb(err, location)<br>
+                element.getLocation(cb) -&gt; cb(err, location)<br>
               
             </p>
           

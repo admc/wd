@@ -1492,12 +1492,26 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
-  describe("location", function() {
+  describe("getLocation (browser)", function() {
     return it("should retrieve x and y locations", function(done) {
       return browser.elementByCss("#elementLocation", function(err, locationDiv) {
         should.not.exist(err);
         should.exist(locationDiv);
-        return browser.location(locationDiv, function(err, location) {
+        return browser.getLocation(locationDiv, function(err, location) {
+          should.not.exist(err);
+          should.exist(location.x);
+          should.exist(location.y);
+          return done(null);
+        });
+      });
+    });
+  });
+  describe("getLocation (element)", function() {
+    return it("should retrieve x and y locations", function(done) {
+      return browser.elementByCss("#elementLocation", function(err, locationDiv) {
+        should.not.exist(err);
+        should.exist(locationDiv);
+        return locationDiv.getLocation(function(err, location) {
           should.not.exist(err);
           should.exist(location.x);
           should.exist(location.y);
@@ -1507,7 +1521,7 @@ test = function(remoteWdConfig, desired) {
     });
   });
   // not yet implemented in ghostdriver
-  if (process.env.GHOSTDRIVER_TEST == null) {
+  if (process.env.GHOSTDRIVER_TEST === null) {
     describe("acceptAlert", function() {
       return it("should accept alert", function(done) {
         return browser.elementByCss("#acceptAlert a", function(err, a) {
