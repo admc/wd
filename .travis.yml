@@ -10,7 +10,13 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "sleep 5"
+# Install Google Chrome
+  - "wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb"
+  - "sudo apt-get install libgconf2-4"
+  - "sudo dpkg -i google-chrome*.deb"
+  - "sudo apt-get -f install" 
   - "sudo apt-get install chrome"
+# Install selenium and chromedriver
   - "./node_modules/.bin/install_selenium"
   - "sleep 5"
 #  - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
