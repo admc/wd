@@ -36,7 +36,7 @@ exports.jobPassed = function(jobId, done) {
     body: JSON.stringify({
           passed: true
           , public: true
-          , build: process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60*60))
+          , build: /*process.env.TRAVIS_JOB_ID ||*/ Math.round(new Date().getTime() /*/ (1000*60*60)*/)
         })
   };
 
