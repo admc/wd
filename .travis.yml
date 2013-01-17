@@ -12,7 +12,7 @@ before_script:
   - "sleep 5"
 # Install Google Chrome
   - "wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb"
-  - "sudo apt-get install libgconf2-4"
+  - "sudo apt-get install libgconf2-4 libnss3-1d libxss1"
   - "sudo dpkg -i google-chrome*.deb"
   - "sudo apt-get -f install" 
   - "sudo apt-get install chrome"
