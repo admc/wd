@@ -13,7 +13,7 @@ before_script:
   - "./node_modules/.bin/install_selenium"
   - "sleep 5"
 #  - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
-  - "./node_modules/.bin/start_selenium"
+  - "./node_modules/.bin/start_selenium &"
 script:
 #  - "make test_unit"
 #  - "make test_saucelabs"
