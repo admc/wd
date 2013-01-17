@@ -7,10 +7,10 @@ remoteWdConfig = _ref.remoteWdConfig;
 test = require('../common/per-method-test-base').test;
 
 describe("wd", function() {
-  return describe("ghostdriver", function() {
-    return describe("per method tests", function() {
-      return describe("using ghostdriver", function() {
-        return test(remoteWdConfig, desired);
+  describe("ghostdriver", function() {
+    describe("per method tests", function() {
+      describe("using ghostdriver", function() {
+        test(remoteWdConfig, desired);
       });
     });
   });
