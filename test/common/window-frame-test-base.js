@@ -321,7 +321,7 @@ test = function(remoteWdConfig, desired) {
               i = frames[_i];
               _results.push(i.name);
             }
-            _results;
+            return _results;
           })()).should.eql(['menu', 'main', 'bottom']);
           done(null);
         });
