@@ -9,18 +9,14 @@ env:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "sleep 5"
   - "./node_modules/.bin/install_selenium"
   - "sleep 5"
-#  - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
-  - "./node_modules/.bin/start_selenium &"
+  - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
 script:
-#  - "make test_unit"
-#  - "make test_saucelabs"
+  - "make test_unit"
+  - "make test_saucelabs"
   - "sleep 10"
   - "make test_local"
 after_script:
-  - "ls -l ./temp/sv-selenium"
-  - "cat /home/travis/build/admc/wd/temp/sv-selenium/chromedriver.log"
   - "./node_modules/.bin/kill_selenium"
 
