@@ -23,7 +23,7 @@ executeCoffee = function(browser, script) {
   scriptAsJs = CoffeeScript.compile(script, {
     bare: 'on'
   });
-  function(done) {
+  return function(done) {
     browser.execute(scriptAsJs, function(err) {
       should.not.exist(err);
       done(null);
