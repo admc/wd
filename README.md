@@ -988,13 +988,40 @@ browser.init(desired, function() {
           
             <p>
               
-                location(element, cb) -&gt; cb(err, location)<br>
+                getLocation(element, cb) -&gt; cb(err, location)<br>
               
             </p>
           
             <p>
               
-                element.location(cb) -&gt; cb(err, location)<br>
+                element.getLocation(cb) -&gt; cb(err, location)<br>
+              
+            </p>
+          
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location">/session/:sessionId/element/:id/location</a><br>
+            Get an element's rendered size
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            <p>
+              
+                getSize(element, cb) -&gt; cb(err, size)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.getSize(cb) -&gt; cb(err, size)<br>
               
             </p>
           

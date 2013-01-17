@@ -1492,12 +1492,12 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
-  describe("location", function() {
+  describe("getLocation (browser)", function() {
     return it("should retrieve x and y locations", function(done) {
       return browser.elementByCss("#elementLocation", function(err, locationDiv) {
         should.not.exist(err);
         should.exist(locationDiv);
-        return browser.location(locationDiv, function(err, location) {
+        return browser.getLocation(locationDiv, function(err, location) {
           should.not.exist(err);
           should.exist(location.x);
           should.exist(location.y);
@@ -1506,8 +1506,50 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("getLocation (element)", function() {
+    return it("should retrieve x and y locations", function(done) {
+      return browser.elementByCss("#elementLocation", function(err, locationDiv) {
+        should.not.exist(err);
+        should.exist(locationDiv);
+        return locationDiv.getLocation(function(err, location) {
+          should.not.exist(err);
+          should.exist(location.x);
+          should.exist(location.y);
+          return done(null);
+        });
+      });
+    });
+  });
+  describe("getSize (element)", function() {
+    return it("should retrieve height and width", function(done) {
+      return browser.elementByCss("#elementSize", function(err, sizeDiv) {
+        should.not.exist(err);
+        should.exist(sizeDiv);
+        return sizeDiv.getSize(function(err, size) {
+          should.not.exist(err);
+          should.exist(size.height);
+          should.exist(size.height);
+          return done(null);
+        });
+      });
+    });
+  });
+  describe("getSize (browser)", function() {
+    return it("should retrieve height and width", function(done) {
+      return browser.elementByCss("#elementSize", function(err, sizeDiv) {
+        should.not.exist(err);
+        should.exist(sizeDiv);
+        return browser.getSize(sizeDiv, function(err, size) {
+          should.not.exist(err);
+          should.exist(size.width);
+          should.exist(size.height);
+          return done(null);
+        });
+      });
+    });
+  });
   // not yet implemented in ghostdriver
-  if (process.env.GHOSTDRIVER_TEST == null) {
+  if (process.env.GHOSTDRIVER_TEST === null) {
     describe("acceptAlert", function() {
       return it("should accept alert", function(done) {
         return browser.elementByCss("#acceptAlert a", function(err, a) {
