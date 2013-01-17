@@ -15,7 +15,8 @@ before_script:
   - "sudo sh -c \"echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list\""
   - "sudo cat /etc/apt/sources.list.d/google-chrome.list"
   - "sudo apt-get update"
-  - "sudo apt-get install google-chrome-stable"
+  - "sudo apt-get install -f google-chrome-stable"
+  - "which chrome"
 # Install selenium and chromedriver
   - "./node_modules/.bin/install_selenium"
   - "sleep 5"
