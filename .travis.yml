@@ -11,7 +11,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "sleep 5"
 # Install Google Chrome
-  - "sudo echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list"
+  - "sudo sh -c \"echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list\""
   - "sudo apt-get install google-chrome-stable"
 # Install selenium and chromedriver
   - "./node_modules/.bin/install_selenium"
