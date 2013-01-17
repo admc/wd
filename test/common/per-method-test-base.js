@@ -601,7 +601,7 @@ test = function(remoteWdConfig, desired) {
   });
   if ((desired? desired.browserName : undefined) !== 'chrome') {
     // would do with better test, but can't be bothered
-    // not working on chrome 
+    // not working on chrome
     describe("setPageLoadTimeout", function() {
       return it("should set the page load timeout, test get, and unset it", function(done) {
         this.timeout(10000);
@@ -1260,7 +1260,7 @@ test = function(remoteWdConfig, desired) {
         }, function(done) {
           return textShouldEqual(browser, env.buttonNumberDiv, "0", done);
         }
-        // not testing right click, cause not sure how to dismiss the right 
+        // not testing right click, cause not sure how to dismiss the right
         // click menu in chrome and firefox
       ], function(err) {
         should.not.exist(err);
@@ -1492,6 +1492,20 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("location", function() {
+    return it("should retrieve x and y locations", function(done) {
+      return browser.elementByCss("#elementLocation", function(err, locationDiv) {
+        should.not.exist(err);
+        should.exist(locationDiv);
+        return browser.location(locationDiv, function(err, location) {
+          should.not.exist(err);
+          should.exist(location.x);
+          should.exist(location.y);
+          return done(null);
+        });
+      });
+    });
+  });
   // not yet implemented in ghostdriver
   if (process.env.GHOSTDRIVER_TEST == null) {
     describe("acceptAlert", function() {
@@ -1718,7 +1732,7 @@ test = function(remoteWdConfig, desired) {
             return done(null);
           });
         }, function(done) {
-          // not too sure how to test this case this one, so just making sure 
+          // not too sure how to test this case this one, so just making sure
           // that it does not throw
           return browser.setCookie({
             name: 'fruit3',

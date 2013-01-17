@@ -24,6 +24,7 @@ npm install wd
   - Phil Sarin ([pdsarin](https://github.com/pdsarin))
   - Mathieu Sabourin ([OniOni](https://github.com/OniOni))
   - Bjorn Tipling ([btipling](https://github.com/btipling))
+  - Santiago Suarez Ordonez ([santiycr](https://github.com/santiycr))
   
 ## License
 
@@ -972,6 +973,34 @@ browser.init(desired, function() {
           
         </td>
       </tr>
+
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location">/session/:sessionId/element/:id/location</a><br>
+            Get an element's location on the page
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            <p>
+              
+                location(element, cb) -&gt; cb(err, location)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.location(cb) -&gt; cb(err, location)<br>
+              
+            </p>
+          
+        </td>
+      </tr>
+    
     
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
