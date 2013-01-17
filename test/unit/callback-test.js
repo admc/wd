@@ -7,8 +7,8 @@ nock = require('nock');
 should = require('should');
 
 describe("wd", function() {
-  return describe("unit", function() {
-    return describe("callback tests", function() {
+  describe("unit", function() {
+    describe("callback tests", function() {
       var server;
       server = null;
       before(function(done) {
@@ -19,46 +19,46 @@ describe("wd", function() {
         server.post('/wd/hub/session', '*').reply(303, "OK", {
           'Location': '/wd/hub/session/1234'
         });
-        return done(null);
+        done(null);
       });
-      return describe("simplecallback empty returns", function() {
+      describe("simplecallback empty returns", function() {
         var browser;
         browser = null;
         describe("browser initialization", function() {
-          return it("should initialize browser", function(done) {
+          it("should initialize browser", function(done) {
             browser = wd.remote({
               port: 5555
             });
-            return browser.init({}, function(err) {
+            browser.init({}, function(err) {
               should.not.exist(err);
-              return done(null);
+              done(null);
             });
           });
         });
         describe("simplecallback with empty return", function() {
-          return it("should get url", function(done) {
+          it("should get url", function(done) {
             server.post('/wd/hub/session/1234/url', '*').reply(200, "");
-            return browser.get("www.google.com", function(err) {
+            browser.get("www.google.com", function(err) {
               should.not.exist(err);
-              return done(null);
+              done(null);
             });
           });
         });
         describe("simplecallback with 200 OK", function() {
-          return it("should get url", function(done) {
+          it("should get url", function(done) {
             server.post('/wd/hub/session/1234/url', '*').reply(200, "OK");
-            return browser.get("www.google.com", function(err) {
+            browser.get("www.google.com", function(err) {
               should.not.exist(err);
-              return done(null);
+              done(null);
             });
           });
         });
-        return describe("simplecallback with empty JSON data", function() {
-          return it("should get url", function(done) {
+        describe("simplecallback with empty JSON data", function() {
+          it("should get url", function(done) {
             server.post('/wd/hub/session/1234/url', '*').reply(200, '{"sessionId":"1234","status":0,"value":{}}');
-            return browser.get("www.google.com", function(err) {
+            browser.get("www.google.com", function(err) {
               should.not.exist(err);
-              return done(null);
+              done(null);
             });
           });
         });

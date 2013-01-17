@@ -26,7 +26,7 @@ test = function(browserName) {
   return describe("chaining", function() {
     return it("should work", function(done) {
       return browser.chain().init({
-        browserName: 'chrome',
+        browserName: browserName,
         tags: ["examples"],
         name: "This is an example test"
       }).get("http://admc.io/wd/test-pages/guinea-pig.html").title(function(err, title) {
