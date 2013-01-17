@@ -1,12 +1,10 @@
-console.log("------ process.env:", process.env);
-var test;
-
-test = require('../common/basic-test-base').test;
+var test = require('../common/basic-test-base').test,
+    utils = require('../common/basic-test-base').utils;
 
 describe("wd", function() {
   describe("local", function() {
     describe("basic test", function() {
-      if(!process.env.TRAVIS_JOB_ID){
+      if(!utils.isTravis()){
         describe("using chrome", function() {
           test({}, {
             browserName: 'chrome'
