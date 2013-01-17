@@ -1,24 +1,22 @@
-var CoffeeScript, Express, altKey, altKeyTracking, async, clearAndCheck, click, enterKey, executeCoffee, inputAndCheck, keysAndCheck, nullKey, preventDefault, returnKey, should, test, typeAndCheck, unbind, valueShouldEqual, wd;
+var CoffeeScript = require('coffee-script');
 
-CoffeeScript = require('coffee-script');
+var should = require('should');
 
-should = require('should');
+var async = require('async');
 
-async = require('async');
+var Express = require('./express').Express;
 
-Express = require('./express').Express;
+var wd = require('./wd-with-cov');
 
-wd = require('./wd-with-cov');
+var altKey = wd.SPECIAL_KEYS.Alt;
 
-altKey = wd.SPECIAL_KEYS.Alt;
+var nullKey = wd.SPECIAL_KEYS.NULL;
 
-nullKey = wd.SPECIAL_KEYS.NULL;
+var returnKey = wd.SPECIAL_KEYS.Return;
 
-returnKey = wd.SPECIAL_KEYS.Return;
+var enterKey = wd.SPECIAL_KEYS.Enter;
 
-enterKey = wd.SPECIAL_KEYS.Enter;
-
-executeCoffee = function(browser, script, done) {
+var executeCoffee = function(browser, script, done) {
   var scriptAsJs;
   scriptAsJs = CoffeeScript.compile(script, {
     bare: 'on'
@@ -29,7 +27,7 @@ executeCoffee = function(browser, script, done) {
   });
 };
 
-valueShouldEqual = function(browser, element, expected, done) {
+var valueShouldEqual = function(browser, element, expected, done) {
   browser.getValue(element, function(err, res) {
     should.not.exist(err);
     res.should.equal(expected);
@@ -37,7 +35,7 @@ valueShouldEqual = function(browser, element, expected, done) {
   });
 };
 
-click = function(browser, _sel, done) {
+var click = function(browser, _sel, done) {
   browser.elementByCss(_sel, function(err, inputField) {
     should.not.exist(err);
     should.exist(inputField);
@@ -48,7 +46,7 @@ click = function(browser, _sel, done) {
   });
 };
 
-typeAndCheck = function(browser, _sel, chars, expected, done) {
+var typeAndCheck = function(browser, _sel, chars, expected, done) {
   browser.elementByCss(_sel, function(err, inputField) {
     should.not.exist(err);
     should.exist(inputField);
@@ -68,7 +66,7 @@ typeAndCheck = function(browser, _sel, chars, expected, done) {
   });
 };
 
-keysAndCheck = function(browser, _sel, chars, expected, done) {
+var keysAndCheck = function(browser, _sel, chars, expected, done) {
   browser.elementByCss(_sel, function(err, inputField) {
     should.not.exist(err);
     should.exist(inputField);
@@ -93,16 +91,16 @@ keysAndCheck = function(browser, _sel, chars, expected, done) {
   });
 };
 
-inputAndCheck = function(browser, method, _sel, chars, expected, done) {
+var inputAndCheck = function(browser, method, _sel, chars, expected, done) {
   switch (method) {
     case 'type':
-      typeAndCheck(browser, _sel, chars, expected, done);
+      return typeAndCheck(browser, _sel, chars, expected, done);
     case 'keys':
-      keysAndCheck(browser, _sel, chars, expected, done);
+      return keysAndCheck(browser, _sel, chars, expected, done);
   }
 };
 
-clearAndCheck = function(browser, _sel, done) {
+var clearAndCheck = function(browser, _sel, done) {
   browser.elementByCss(_sel, function(err, inputField) {
     should.not.exist(err);
     should.exist(inputField);
@@ -122,25 +120,25 @@ clearAndCheck = function(browser, _sel, done) {
   });
 };
 
-preventDefault = function(browser, _sel, eventType, done) {
+var preventDefault = function(browser, _sel, eventType, done) {
   var script;
   script = "$('" + _sel + "')." + eventType + " (e) ->\n  e.preventDefault()";
   executeCoffee(browser, script, done);
 };
 
-unbind = function(browser, _sel, eventType, done) {
+var unbind = function(browser, _sel, eventType, done) {
   var script;
   script = "$('" + _sel + "').unbind '" + eventType + "' ";
   executeCoffee(browser, script, done);
 };
 
-altKeyTracking = function(browser, _sel, done) {
+var altKeyTracking = function(browser, _sel, done) {
   var script;
   script = "f = $('" + _sel + "')\nf.keydown (e) ->\n  if e.altKey\n    f.val 'altKey on'\n  else\n    f.val 'altKey off'\n  e.preventDefault()";
   executeCoffee(browser, script, done);
 };
 
-test = function(remoteWdConfig, desired) {
+var test = function(remoteWdConfig, desired) {
   var browser, browserName, express, testMethod;
   browser = null;
   browserName = desired !== null ? desired.browserName : 0;
@@ -161,7 +159,7 @@ test = function(remoteWdConfig, desired) {
             click(browser, sel, done);
           });
         });
-        if (!(method === 'keys' && (browserName === 'chrome'))) {
+        if (!(method === 'keys' || (browserName === 'chrome'))) {
           describe("1/ typing nothing", function() {
             it("should work", function(done) {
               inputAndCheck(browser, method, sel, "", "", done);
@@ -407,9 +405,9 @@ test = function(remoteWdConfig, desired) {
     });
   });
   testMethod("type", "#type input");
-  testMethod("keys", "#type input");
-  testMethod("type", "#type textarea");
-  testMethod("keys", "#type textarea");
+  //testMethod("keys", "#type input");
+  //testMethod("type", "#type textarea");
+  //testMethod("keys", "#type textarea");
   describe("quit", function() {
     it("should work", function(done) {
       browser.quit(function(err) {

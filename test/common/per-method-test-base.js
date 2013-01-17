@@ -19,7 +19,7 @@ if (process.env.GHOSTDRIVER_TEST) {
 }
 
 evalShouldEqual = function(browser, formula, expected) {
-  function(done) {
+  return function(done) {
     browser["eval"](formula, function(err, res) {
       should.not.exist(err);
       res.should.equal(expected);
@@ -29,7 +29,7 @@ evalShouldEqual = function(browser, formula, expected) {
 };
 
 safeEvalShouldEqual = function(browser, formula, expected) {
-  function(done) {
+  return function(done) {
     browser.safeEval(formula, function(err, res) {
       should.not.exist(err);
       res.should.equal(expected);
@@ -43,7 +43,7 @@ executeCoffee = function(browser, script) {
   scriptAsJs = CoffeeScript.compile(script, {
     bare: 'on'
   });
-  function(done) {
+  return function(done) {
     browser.execute(scriptAsJs, function(err) {
       should.not.exist(err);
       done(null);
@@ -52,7 +52,7 @@ executeCoffee = function(browser, script) {
 };
 
 elementByCss = function(browser, env, css, name) {
-  function(done) {
+  return function(done) {
     browser.elementByCss(css, function(err, res) {
       should.not.exist(err);
       env[name] = res;
@@ -1668,10 +1668,11 @@ test = function(remoteWdConfig, desired) {
           });
         }, function(done) {
           browser.allCookies(function(err, res) {
+            console.log("OKOK" , res);
             should.not.exist(err);
             res.should.have.length(1);
             (res.filter(function(c) {
-              c.name === 'fruit1' && c.value === 'apple';
+              return c.name === 'fruit1' && c.value === 'apple';
             })).should.have.length(1);
             done(null);
           });
@@ -1688,7 +1689,7 @@ test = function(remoteWdConfig, desired) {
             should.not.exist(err);
             res.should.have.length(2);
             (res.filter(function(c) {
-              c.name === 'fruit2' && c.value === 'pear';
+              return c.name === 'fruit2' && c.value === 'pear';
             })).should.have.length(1);
             done(null);
           });
@@ -1716,7 +1717,7 @@ test = function(remoteWdConfig, desired) {
             should.not.exist(err);
             res.should.have.length(2);
             (res.filter(function(c) {
-              c.name === 'fruit2' && c.value === 'pear';
+              return c.name === 'fruit2' && c.value === 'pear';
             })).should.have.length(0);
             done(null);
           });
