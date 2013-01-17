@@ -1492,12 +1492,12 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
-  describe("location", function() {
+  describe("getLocation (browser)", function() {
     it("should retrieve x and y locations", function(done) {
       browser.elementByCss("#elementLocation", function(err, locationDiv) {
         should.not.exist(err);
         should.exist(locationDiv);
-        browser.location(locationDiv, function(err, location) {
+        browser.getLocation(locationDiv, function(err, location) {
           should.not.exist(err);
           should.exist(location.x);
           should.exist(location.y);
@@ -1506,8 +1506,50 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("getLocation (element)", function() {
+    it("should retrieve x and y locations", function(done) {
+      browser.elementByCss("#elementLocation", function(err, locationDiv) {
+        should.not.exist(err);
+        should.exist(locationDiv);
+        locationDiv.getLocation(function(err, location) {
+          should.not.exist(err);
+          should.exist(location.x);
+          should.exist(location.y);
+          done(null);
+        });
+      });
+    });
+  });
+  describe("getSize (element)", function() {
+    it("should retrieve height and width", function(done) {
+      browser.elementByCss("#elementSize", function(err, sizeDiv) {
+        should.not.exist(err);
+        should.exist(sizeDiv);
+        sizeDiv.getSize(function(err, size) {
+          should.not.exist(err);
+          should.exist(size.height);
+          should.exist(size.height);
+          done(null);
+        });
+      });
+    });
+  });
+  describe("getSize (browser)", function() {
+    it("should retrieve height and width", function(done) {
+      browser.elementByCss("#elementSize", function(err, sizeDiv) {
+        should.not.exist(err);
+        should.exist(sizeDiv);
+        browser.getSize(sizeDiv, function(err, size) {
+          should.not.exist(err);
+          should.exist(size.width);
+          should.exist(size.height);
+          done(null);
+        });
+      });
+    });
+  });
   // not yet implemented in ghostdriver
-  if (process.env.GHOSTDRIVER_TEST == null) {
+  if (process.env.GHOSTDRIVER_TEST === null) {
     describe("acceptAlert", function() {
       it("should accept alert", function(done) {
         browser.elementByCss("#acceptAlert a", function(err, a) {
