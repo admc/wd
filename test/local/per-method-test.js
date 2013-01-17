@@ -1,18 +1,16 @@
-var test;
+var _ = require("underscore");
 
-test = require('../common/per-method-test-base').test;
+var test = require('../common/per-method-test-base').test,
+    utils = require('../common/utils');
 
 describe("wd", function() {
-  return describe("local", function() {
-    return describe("per method tests", function() {
-      describe("using chrome", function() {
-        return test({}, {
-          browserName: 'chrome'
-        });
-      });
-      return describe("using firefox", function() {
-        return test({}, {
-          browserName: 'firefox'
+  describe("local", function() {
+    describe("per method tests", function() {
+      _(utils.browsers).each(function (browser) {
+        describe("using " + browser, function() {
+          test({}, {
+            browserName: browser
+          });
         });
       });
     });

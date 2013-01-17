@@ -5,10 +5,10 @@ var should = require('should'),
 process.env = _(process.env).omit('SAUCE_USERNAME', 'SAUCE_ACCESS_KEY');
 
 describe("wd", function() {
-  return describe("local", function() {
+  describe("local", function() {
     describe("wd remote tests", function() {
       describe("default", function() {
-        return it("browser should be initialized with default parameters", function(done) {
+        it("browser should be initialized with default parameters", function(done) {
           var browser;
           browser = wd.remote();
           browser.options.host.should.equal('127.0.0.1');
@@ -17,12 +17,12 @@ describe("wd", function() {
           browser.basePath.should.equal('/wd/hub');
           should.not.exist(browser.username);
           should.not.exist(browser.accessKey);
-          return done();
+          done();
         });
       });
-      return describe("params", function() {
+      describe("params", function() {
         describe("host, port", function() {
-          return it("browser should be initialized with given parameters", function(done) {
+          it("browser should be initialized with given parameters", function(done) {
             var browser;
             browser = wd.remote('localhost', 8888);
             browser.options.host.should.equal('localhost');
@@ -31,11 +31,11 @@ describe("wd", function() {
             browser.basePath.should.equal('/wd/hub');
             should.not.exist(browser.username);
             should.not.exist(browser.accessKey);
-            return done(null);
+            done(null);
           });
         });
-        return describe("host, port, username, accesskey", function() {
-          return it("browser should be initialized with given parameters", function(done) {
+        describe("host, port, username, accesskey", function() {
+          it("browser should be initialized with given parameters", function(done) {
             var browser;
             browser = wd.remote('localhost', 8888, 'mickey', 'mouse');
             browser.options.host.should.equal('localhost');
@@ -44,14 +44,14 @@ describe("wd", function() {
             browser.basePath.should.equal('/wd/hub');
             browser.username.should.equal('mickey');
             browser.accessKey.should.equal('mouse');
-            return done(null);
+            done(null);
           });
         });
       });
     });
-    return describe("options", function() {
+    describe("options", function() {
       describe("empty options", function() {
-        return it("browser should be initialized with default", function(done) {
+        it("browser should be initialized with default", function(done) {
           var browser;
           browser = wd.remote({});
           browser.options.host.should.equal('127.0.0.1');
@@ -60,11 +60,11 @@ describe("wd", function() {
           browser.basePath.should.equal('/wd/hub');
           should.not.exist(browser.username);
           should.not.exist(browser.accessKey);
-          return done(null);
+          done(null);
         });
       });
       describe("host, port", function() {
-        return it("browser should be initialized with given options", function(done) {
+        it("browser should be initialized with given options", function(done) {
           var browser;
           browser = wd.remote({
             host: 'localhost',
@@ -76,11 +76,11 @@ describe("wd", function() {
           browser.basePath.should.equal('/wd/hub');
           should.not.exist(browser.username);
           should.not.exist(browser.accessKey);
-          return done(null);
+          done(null);
         });
       });
       describe("host, port, username, accesskey", function() {
-        return it("browser should be initialized with given options", function(done) {
+        it("browser should be initialized with given options", function(done) {
           var browser;
           browser = wd.remote({
             host: 'localhost',
@@ -94,11 +94,11 @@ describe("wd", function() {
           browser.basePath.should.equal('/wd/hub');
           browser.username.should.equal('mickey');
           browser.accessKey.should.equal('mouse');
-          return done(null);
+          done(null);
         });
       });
       describe("path", function() {
-        return it("browser should be initialized with given options", function(done) {
+        it("browser should be initialized with given options", function(done) {
           var browser;
           browser = wd.remote({
             path: '/taiwan'
@@ -109,11 +109,11 @@ describe("wd", function() {
           browser.basePath.should.equal('/taiwan');
           should.not.exist(browser.username);
           should.not.exist(browser.accessKey);
-          return done(null);
+          done(null);
         });
       });
       describe("host, port, path", function() {
-        return it("browser should be initialized with given options", function(done) {
+        it("browser should be initialized with given options", function(done) {
           var browser;
           browser = wd.remote({
             host: 'localhost',
@@ -126,11 +126,11 @@ describe("wd", function() {
           browser.basePath.should.equal('/');
           should.not.exist(browser.username);
           should.not.exist(browser.accessKey);
-          return done(null);
+          done(null);
         });
       });
-      return describe("host, port, username, accesskey, path", function() {
-        return it("browser should be initialized with given options", function(done) {
+      describe("host, port, username, accesskey, path", function() {
+        it("browser should be initialized with given options", function(done) {
           var browser;
           browser = wd.remote({
             host: 'localhost',
@@ -145,7 +145,7 @@ describe("wd", function() {
           browser.basePath.should.equal('/asia/taiwan');
           browser.username.should.equal('mickey');
           browser.accessKey.should.equal('mouse');
-          return done(null);
+          done(null);
         });
       });
     });

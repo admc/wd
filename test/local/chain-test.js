@@ -1,15 +1,15 @@
-var test;
+var _ = require("underscore");
 
-test = require('../common/chain-test-base').test;
+var test = require('../common/chain-test-base').test,
+    utils = require('../common/utils');
 
 describe("wd", function() {
-  return describe("local", function() {
-    return describe("chain tests", function() {
-      describe("using chrome", function() {
-        return test('chrome');
-      });
-      return describe("using firefox", function() {
-        return test('firefox');
+  describe("local", function() {
+    describe("chain tests", function() {
+      _(utils.browsers).each(function (browser) {
+        describe("using " + browser, function() {
+          test(browser);
+        });
       });
     });
   });
