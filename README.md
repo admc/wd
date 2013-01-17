@@ -1000,6 +1000,33 @@ browser.init(desired, function() {
           
         </td>
       </tr>
+
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+            POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location">/session/:sessionId/element/:id/location</a><br>
+            Get an element's rendered size
+          
+          
+          
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+          
+          
+            <p>
+              
+                getSize(element, cb) -&gt; cb(err, size)<br>
+              
+            </p>
+          
+            <p>
+              
+                element.getSize(cb) -&gt; cb(err, size)<br>
+              
+            </p>
+          
+        </td>
+      </tr>
     
     
       <tr>

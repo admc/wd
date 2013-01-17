@@ -1520,6 +1520,34 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("getSize (element)", function() {
+    return it("should retrieve height and width", function(done) {
+      return browser.elementByCss("#elementSize", function(err, sizeDiv) {
+        should.not.exist(err);
+        should.exist(sizeDiv);
+        return sizeDiv.getSize(function(err, size) {
+          should.not.exist(err);
+          should.exist(size.height);
+          should.exist(size.height);
+          return done(null);
+        });
+      });
+    });
+  });
+  describe("getSize (browser)", function() {
+    return it("should retrieve height and width", function(done) {
+      return browser.elementByCss("#elementSize", function(err, sizeDiv) {
+        should.not.exist(err);
+        should.exist(sizeDiv);
+        return browser.getSize(sizeDiv, function(err, size) {
+          should.not.exist(err);
+          should.exist(size.width);
+          should.exist(size.height);
+          return done(null);
+        });
+      });
+    });
+  });
   // not yet implemented in ghostdriver
   if (process.env.GHOSTDRIVER_TEST === null) {
     describe("acceptAlert", function() {
