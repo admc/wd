@@ -20,6 +20,7 @@ script:
   - "sleep 10"
   - "make test_local"
 after_script:
+  - "cat /home/travis/build/admc/wd/temp/sv-selenium/chromedriver.log"
   - "./node_modules/.bin/kill_selenium"
 
 
