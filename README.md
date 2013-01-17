@@ -701,6 +701,26 @@ browser.init(desired, function() {
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
 
+            GET <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/source">/session/:sessionId/source</a><br>
+            Get the current page source.
+
+
+
+        </td>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+
+
+
+              source(cb) -&gt; cb(err, source)<br>
+
+
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px;">
+
             POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a><br>
             Search for an element on the page, starting from the document root.
 
