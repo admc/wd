@@ -14,7 +14,7 @@ test = function(remoteWdConfig, desired, markAsPassed) {
     remoteWdConfig = remoteWdConfig();
   }
   browser = null;
-
+/*
   after(function(done) {
     if(markAsPassed) {
       markAsPassed(sessionID, done);
@@ -22,7 +22,7 @@ test = function(remoteWdConfig, desired, markAsPassed) {
       done(null);
     }
   });
-
+*/
   describe("remote", function() {
     it("should create browser", function(done) {
       browser = wd.remote(remoteWdConfig);
@@ -76,6 +76,11 @@ test = function(remoteWdConfig, desired, markAsPassed) {
     });
   });
   describe("leaving", function() {
+    if(markAsPassed) {
+      it("marking as passed", function(done) {
+        markAsPassed(sessionID, done);
+      });
+    };
     it("closing browser", function(done) {
       this.timeout(TIMEOUT);
       browser.quit(function() {
