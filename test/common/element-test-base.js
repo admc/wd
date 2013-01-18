@@ -285,6 +285,60 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("element.element", function() {
+    it("should find an element within itself", function(done) {
+      browser.elementById("getComputedCss", function(err, el) {
+        should.not.exist(err);
+        el.elementByTagName("a", function(err, el2) {
+          should.not.exist(err);
+          el2.text(function(err, text) {
+            text.should.equal("a1");
+            done();
+          });
+        });
+      });
+    });
+    if (desired.browserName != "firefox") {
+      // this hangs and times out in ff, probably a ffdriver bug
+      it("should not find an element not within itself", function(done) {
+        browser.setImplicitWaitTimeout(0, function(err) {
+          should.not.exist(err);
+          browser.elementById("getComputedCss", function(err, el) {
+            should.not.exist(err);
+            el.elementByTagName("textarea", function(err, el2) {
+              should.exist(err);
+              done();
+            });
+          });
+        });
+      });
+    }
+  });
+  describe("element.elements", function() {
+    it("should find some elements within itself", function(done) {
+      browser.elementById("isDisplayed", function(err, el) {
+        should.not.exist(err);
+        el.elementsByTagName("input", function(err, els) {
+          should.not.exist(err);
+          els.length.should.equal(2);
+          done();
+        });
+      });
+    });
+    it("should not find an element not within itself", function(done) {
+      browser.setImplicitWaitTimeout(0, function(err) {
+        should.not.exist(err);
+        browser.elementById("getComputedCss", function(err, el) {
+          should.not.exist(err);
+          el.elementsByCss("input", function(err, els) {
+            should.not.exist(err);
+            els.length.should.equal(0);
+            done();
+          });
+        });
+      });
+    });
+  });
   describe("quit", function() {
     it("should destroy browser", function(done) {
       browser.quit(function(err) {
