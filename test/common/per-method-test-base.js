@@ -1945,6 +1945,14 @@ test = function(remoteWdConfig, desired) {
       });
     });
   }
+  describe("setGeoLocation", function() {
+    it("should set geolocation", function(done) {
+      browser.setGeoLocation(1, 1, 1, function(err, res){
+        should.not.exist(err);
+        done(null);
+      });
+    });
+  })
   describe("quit<COMP>", function() {
     it("should destroy browser", function(done) {
       browser.quit(function(err) {
