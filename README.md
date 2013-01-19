@@ -25,7 +25,8 @@ npm install wd
   - Mathieu Sabourin ([OniOni](https://github.com/OniOni))
   - Bjorn Tipling ([btipling](https://github.com/btipling))
   - Santiago Suarez Ordonez ([santiycr](https://github.com/santiycr))
-
+  - Bernard Kobos ([bernii](https://github.com/bernii))
+  
 ## License
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
