@@ -26,7 +26,8 @@ npm install wd
   - Bjorn Tipling ([btipling](https://github.com/btipling))
   - Santiago Suarez Ordonez ([santiycr](https://github.com/santiycr))
   - Bernard Kobos ([bernii](https://github.com/bernii))
-  
+  - Jason Carr ([maudineormsby](https://github.com/maudineormsby))
+
 ## License
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
