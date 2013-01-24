@@ -8,8 +8,8 @@ DEFAULT:
 	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
 	@echo '  make test_ghostdriver -> run the ghostdriver tests (start ghostdriver first).'
 	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
-	@echo '  build_mapping -> build the mapping (implemented only).'  
-	@echo '  build_full_mapping -> build the mapping (full).'  
+	@echo '  mapping -> build the mapping (implemented only).'  
+	@echo '  full_mapping -> build the mapping (full).'  
 	@echo
 
 # run unit and local tests, start selenium server first
@@ -50,11 +50,11 @@ _dox:
 	@./node_modules/.bin/dox -r < lib/element.js > tmp/element-dox.json
 
 # build the mapping (implemented only)
-build_mapping: _dox
+mapping: _dox
 	@node doc/mapping-builder.js
 
 # build the mapping (full)
-build_full_mapping: _dox
+full_mapping: _dox
 	@node doc/mapping-builder.js full
 
 .PHONY: \
