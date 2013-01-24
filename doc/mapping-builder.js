@@ -113,6 +113,11 @@ _(jsonDocs).each(function (jsonDoc) {
 });
 
 mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping}).on('data', function (data) {
-  process.stdout.write(data.toString());
+  _(data.toString().split('\n')).each(function (line) {    
+    line = line.trim();
+    if(line !== '' ){
+      process.stdout.write(line + '\n');
+    }
+  });
 });
 
