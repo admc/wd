@@ -1468,6 +1468,21 @@ method as a template for methods not returning data, and `getOrientation`
 for methods which returns data. No need to modify README as the doc
 generation is automated. Other contributions are welcomed.
 
+## Doc
+
+The JsonWire mappings in the README and mapping files are generated from code
+comments using [dox](https://github.com/visionmedia/dox).
+
+To update the mappings run the following commands:
+
+<pre>
+  - make mapping > doc/jsonwire-mapping.md 
+  - make full_mapping > doc/jsonwire-full-mapping.md
+</pre>
+
+The content of doc/jsonwire-mapping.md should then be manually integrated into
+README.md.
+
 ## Test Coverage
 
 [test coverage](http://admc.io/wd/coverage.html)
