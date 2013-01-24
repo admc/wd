@@ -1880,7 +1880,7 @@ If the method you want to use is not yet implemented, that should be
 easy to add it to `lib/webdriver.js`. You can use the `doubleclick`
 method as a template for methods not returning data, and `getOrientation`
 for methods which returns data. No need to modify README as the doc
-generation is automated. Other contribution are welcomed.
+generation is automated. Other contributions are welcomed.
 
 ## Test Coverage
 
