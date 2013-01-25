@@ -83,14 +83,15 @@ browser.init(desired, function() {
 });
 </pre>
 
-## Promises api
+## Promises Api
 
 A promise api using [q](https://github.com/kriskowal/q) is
-available. Code sample is [here]()
+available. Code sample is
+[here](https://github.com/admc/wd/blob/master/examples/example.promise.chrome.js).
 
-## Chain api
+## Chain Api
 
-A chain api is also available. Code sample is [here]()
+A chain api is also available. Code sample is [here](https://github.com/admc/wd/blob/master/examples/example.chain.chrome.js).
 
 ## Supported Methods
 
