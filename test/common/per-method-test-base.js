@@ -1489,7 +1489,6 @@ test = function(remoteWdConfig, desired) {
         ], function(err) {
           should.not.exist(err);
           done(null);
-<<<<<<< HEAD
         });
       });
     });
