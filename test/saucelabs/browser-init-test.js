@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var configHelper, remoteWdConfig, should, wd;
 
 wd = require('../common/wd-with-cov');

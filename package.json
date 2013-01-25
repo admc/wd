@@ -30,10 +30,12 @@
     "async": "0.1.x",
     "underscore": "1.4.x",
     "vargs": "~0.1.0",
-    "request": "~2.12.0"
+    "request": "~2.12.0",
+    "q": "0.8.x"
   },
   "devDependencies": {
     "mocha": "1.6.x",
+    "mocha-as-promised": "1.1.x",
     "should": "1.2.x",
     "coffee-script": "1.3.x",
     "express": "3.x",

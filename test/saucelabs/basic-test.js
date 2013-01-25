@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var chromeDesired, configHelper, explorerDesired, firefoxDesired, nameBase, remoteWdConfig, test;
 
 test = require('../common/basic-test-base').test;

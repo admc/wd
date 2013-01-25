@@ -1,6 +1,7 @@
+/*global describe,before,it,after */
 var desired, remoteWdConfig, test, _ref;
 
-_ref = require('./config'); 
+_ref = require('./config');
 desired = _ref.desired;
 remoteWdConfig = _ref.remoteWdConfig;
 

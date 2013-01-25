@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var async, should, test, wd;
 
 should = require('should');

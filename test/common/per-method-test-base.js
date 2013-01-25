@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var CoffeeScript, Express, TIMEOUT_BASE, async, elementByCss, evalShouldEqual, executeCoffee, imageinfo, safeEvalShouldEqual, should, test, textShouldEqual, valueShouldEqual, wd;
 
 CoffeeScript = require('coffee-script');
@@ -1488,6 +1489,7 @@ test = function(remoteWdConfig, desired) {
         ], function(err) {
           should.not.exist(err);
           done(null);
+<<<<<<< HEAD
         });
       });
     });
@@ -1710,7 +1712,6 @@ test = function(remoteWdConfig, desired) {
           });
         }, function(done) {
           browser.allCookies(function(err, res) {
-            console.log("OKOK" , res);
             should.not.exist(err);
             res.should.have.length(1);
             (res.filter(function(c) {

@@ -405,9 +405,9 @@ var test = function(remoteWdConfig, desired) {
     });
   });
   testMethod("type", "#type input");
-  //testMethod("keys", "#type input");
-  //testMethod("type", "#type textarea");
-  //testMethod("keys", "#type textarea");
+  testMethod("keys", "#type input");
+  testMethod("type", "#type textarea");
+  testMethod("keys", "#type textarea");
   describe("quit", function() {
     it("should work", function(done) {
       browser.quit(function(err) {

@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var should = require('should'),
     wd = require('../common/wd-with-cov'),
     _ = require('underscore');

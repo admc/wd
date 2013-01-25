@@ -1,3 +1,4 @@
+/*global describe,before,it,after */
 var CoffeeScript, Express, async, executeCoffee, should, test, textShouldEqual, wd;
 
 CoffeeScript = require('coffee-script');
