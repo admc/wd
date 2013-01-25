@@ -1440,7 +1440,7 @@ isVisible(cb) -&gt; cb(err, boolean)
 </tbody>
 </table>
 
-### JsonWireProtocol mapping:
+## JsonWireProtocol mapping
 
 [supported mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-mapping.md)
 
