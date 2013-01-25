@@ -83,6 +83,15 @@ browser.init(desired, function() {
 });
 </pre>
 
+## Promises api
+
+A promise api using [q](https://github.com/kriskowal/q) is
+available. Code sample is [here]()
+
+## Chain api
+
+A chain api is also available. Code sample is [here]()
+
 ## Supported Methods
 
 <table class="wikitable">
