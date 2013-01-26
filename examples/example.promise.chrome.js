@@ -17,21 +17,22 @@ browser.on('command', function(meth, path, data){
 
 browser.init({
     browserName: 'chrome',
-    tags : ["examples"] ,
+    tags: ["examples"],
     name: "This is an example test"
-  }).then(function() {
+}).then(function () {
+    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+}).then(function () {
+    return browser.title();
+}).then(function (title) {
+    assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
+    return browser.elementById('i am a link');
+}).then(function (el) {
+    return browser.clickElement(el);
+}).then(function () {
+    return browser.eval("window.location.href");
+}).then(function (href) {
+    assert.ok(~href.indexOf('guinea-pig2'));
+}).fin(function () {
+    browser.quit();
+}).done();
 
-  browser.get("http://admc.io/wd/test-pages/guinea-pig.html").then(function() {
-    browser.title().then(function(title) {
-      assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
-      browser.elementById('i am a link').then(function(el) {
-        browser.clickElement(el).then(function() {
-          browser.eval("window.location.href").then(function(href) {
-            assert.ok(~href.indexOf('guinea-pig2'));
-            browser.quit();
-          });
-        });
-      });
-    });
-  });
-});
