@@ -51,3 +51,27 @@ exports.jobPassed = function(jobId, done) {
   });
 };
 
+exports.jobUpdate = function(jobId, name, tags, done) {
+  var httpOpts = {
+    url: 'http://' + username + ':' + accessKey + '@saucelabs.com/rest/v1/' + username + '/jobs/' + jobId,
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'text/json'
+    },
+    body: JSON.stringify({
+          name: name,
+          tags: tags,
+          'public': true,
+          build: process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60))
+        }),
+    jar: false /* disable cookies: avoids CSRF issues */
+  };
+
+  request(httpOpts, function(err, res) {
+    if(err)
+      { console.log(err); }
+    else
+      { console.log("> job:", jobId, "updated." ); }
+    done(err);
+  });
+};

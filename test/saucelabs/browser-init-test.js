@@ -26,21 +26,27 @@ describe("wd", function() {
             browserName: 'firefox',
             version: '',
             javascriptEnabled: true,
-            platform: 'VISTA',
-            name: 'browser init with default',
-            tags: ['wd', 'test']
+            platform: 'VISTA'
           });
           browser.init(function(err) {
             should.not.exist(err);
-            browser.sessionCapabilities(function(err, capabilities) {
-              should.not.exist(err);
-              capabilities.browserName.should.equal('firefox');
-              capabilities.platform.should.equal('XP');
-              browser.quit(function(err) {
+            configHelper.jobUpdate( 
+              browser.sessionID,
+              'browser init with default',
+              ['wd', 'test'],
+              function (err) {
                 should.not.exist(err);
-                done(null);
-              });
-            });
+                browser.sessionCapabilities(function(err, capabilities) {
+                  should.not.exist(err);
+                  capabilities.browserName.should.equal('firefox');
+                  capabilities.platform.should.equal('XP');
+                  browser.quit(function(err) {
+                    should.not.exist(err);
+                    done(null);
+                  });
+                });
+              }
+            );
           });
         });
       });
