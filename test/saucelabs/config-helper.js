@@ -60,9 +60,7 @@ exports.jobUpdate = function(jobId, name, tags, done) {
     },
     body: JSON.stringify({
           name: name,
-          tags: tags,
-          'public': true,
-          build: process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60))
+          tags: tags
         }),
     jar: false /* disable cookies: avoids CSRF issues */
   };
