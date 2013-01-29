@@ -10,7 +10,7 @@ try {
 
 }
 
-should.exist(config, "Missing config!\nYou need to copy config-sample.js to config.js,\nand then configure your sauce username and access-key in\nconfig.js");
+should.exist(config, "Missing config!\nYou need to set the SAUCE_USERNAME and SAUCE_ACCESS_KEY variables.\n");
 
 var username, accessKey;
 if(config.saucelabs) {
@@ -35,9 +35,9 @@ exports.jobPassed = function(jobId, done) {
       'Content-Type': 'text/json'
     },
     body: JSON.stringify({
-          passed: true
-          , public: true
-          , build: process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60))
+          passed: true,
+          'public': true,
+          build: process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60))
         }),
     jar: false /* disable cookies: avoids CSRF issues */
   };
