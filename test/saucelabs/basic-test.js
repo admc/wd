@@ -11,19 +11,22 @@ nameBase = "saucelabs basic test - ";
 
 chromeDesired = {
   name: nameBase + 'chrome',
-  browserName: 'chrome'
+  browserName: 'chrome',
+  tags: ['wd', 'test']
 };
 
 firefoxDesired = {
   name: nameBase + 'firefox',
-  browserName: 'firefox'
+  browserName: 'firefox',
+  tags: ['wd', 'test']
 };
 
 explorerDesired = {
   name: nameBase + 'explorer',
   browserName: 'iexplore',
   version: '9',
-  platform: 'Windows 2008'
+  platform: 'Windows 2008',
+  tags: ['wd', 'test']
 };
 
 describe("wd", function() {

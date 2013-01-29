@@ -26,7 +26,9 @@ describe("wd", function() {
             browserName: 'firefox',
             version: '',
             javascriptEnabled: true,
-            platform: 'VISTA'
+            platform: 'VISTA',
+            name: 'browser init with default',
+            tags: ['wd', 'test']
           });
           browser.init(function(err) {
             should.not.exist(err);
