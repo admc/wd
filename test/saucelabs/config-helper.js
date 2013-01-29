@@ -38,7 +38,8 @@ exports.jobPassed = function(jobId, done) {
           passed: true
           , public: true
           , build: process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60))
-        })
+        }),
+    jar: false /* disable cookies: avoids CSRF issues */
   };
 
   request(httpOpts, function(err, res) {
