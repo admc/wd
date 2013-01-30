@@ -253,9 +253,10 @@ test = function(remoteWdConfig, desired) {
     });
   });
   describe("element.sendKeys", function() {
+    var firstText = "keys";
     it("should send keys", function(done) {
       var text;
-      text = "keys";
+      text = firstText;
       browser.element("id", "sendKeys", function(err, el) {
         should.not.exist(err);
         el.should.have.property("sendKeys");
@@ -264,6 +265,23 @@ test = function(remoteWdConfig, desired) {
           el.getValue(function(err, textReceived) {
             should.not.exist(err);
             textReceived.should.equal(text);
+            done(null);
+          });
+        });
+      });
+    });
+    it("should send keys as strings", function(done) {
+      var text;
+      text = [100136872.21, {}];
+      browser.element("id", "sendKeys", function(err, el) {
+        should.not.exist(err);
+        el.should.have.property("sendKeys");
+        el.sendKeys(text, function(err) {
+          should.not.exist(err);
+          el.getValue(function(err, textReceived) {
+            should.not.exist(err);
+            textReceived.should.equal(firstText + text[0].toString() +
+                                      text[1].toString());
             done(null);
           });
         });
