@@ -334,6 +334,15 @@ close(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/maximize">/session/:sessionId/window/:windowHandle/maximize</a><br>
+Maximize the specified window if not already maximized.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+maximize(handle, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
 Retrieve all cookies visible to the current page.
 </td>
@@ -945,14 +954,6 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-MISSING: POST /session/:sessionId/window/:handle/maximize
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-maximize(handle, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 </tbody>
