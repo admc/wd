@@ -112,12 +112,17 @@ _(jsonDocs).each(function (jsonDoc) {
   });  
 });
 
-mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping}).on('data', function (data) {
-  _(data.toString().split('\n')).each(function (line) {    
-    line = line.trim();
-    if(line !== '' ){
-      process.stdout.write(line + '\n');
-    }
+var output = '';
+mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping})
+  .on('data', function (data) {
+    output += data.toString();
+  })
+  .on('end', function () {
+    _(output.split('\n')).each(function (line) {
+      line = line.trim();
+      if(line !== '' ){
+        process.stdout.write(line + '\n');
+      }
+    });
   });
-});
 
