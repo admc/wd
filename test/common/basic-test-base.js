@@ -15,14 +15,6 @@ test = function(remoteWdConfig, desired, markAsPassed) {
   }
   browser = null;
   
-  after(function(done) {
-    if(markAsPassed) {
-      markAsPassed(sessionID, done);
-    } else {
-      done(null);
-    }
-  });
-  
   describe("remote", function() {
     it("should create browser", function(done) {
       browser = wd.remote(remoteWdConfig);
@@ -83,6 +75,13 @@ test = function(remoteWdConfig, desired, markAsPassed) {
       });
     });
   });
+  if(markAsPassed) {
+    describe("marking job as passed", function() {
+      it("should mark job ass passed", function(done) {
+        markAsPassed(sessionID, done);
+      });
+    });
+  }
 };
 
 exports.test = test;

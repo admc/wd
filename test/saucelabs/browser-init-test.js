@@ -16,9 +16,6 @@ describe("wd", function() {
     describe("browser init tests", function() {
       describe("default init", function() {
         var browser;
-        after(function(done) {
-          configHelper.jobPassed(browser.sessionID, done);
-        });
         it("should open a XP firefox browser", function(done) {
           this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
@@ -49,12 +46,12 @@ describe("wd", function() {
             );
           });
         });
+        it("should mark job as passed", function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
       });
       describe("browser.defaultCapabilities", function() {
         var browser;
-        after(function(done) {
-          configHelper.jobPassed(browser.sessionID, done);
-        });
         it("should open a LINUX chrome browser", function(done) {
           this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
@@ -63,13 +60,15 @@ describe("wd", function() {
           browser.defaultCapabilities.javascriptEnabled = false;
           browser.defaultCapabilities.name = 'browser init using defaultCapabilities';
           browser.defaultCapabilities.tags = ['wd', 'test'];
+          browser.defaultCapabilities["record-video"] = false;
           browser.defaultCapabilities.should.eql({
             browserName: 'chrome',
             version: '',
             javascriptEnabled: false,
             platform: 'LINUX',
             name: 'browser init using defaultCapabilities',
-            tags: ['wd', 'test']
+            tags: ['wd', 'test'],
+            "record-video": false
           });
           browser.init(function(err) {
             should.not.exist(err);
@@ -84,12 +83,12 @@ describe("wd", function() {
             });
           });
         });
+        it("should mark job as passed", function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
       });
       describe("desired only", function() {
         var browser;
-        after(function(done) {
-          configHelper.jobPassed(browser.sessionID, done);
-        });
         it("should open a WINDOWS explorer browser", function(done) {
           this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
@@ -103,7 +102,8 @@ describe("wd", function() {
             browserName: 'iexplore',
             platform: 'Windows 2008',
             name: 'browser init using desired',
-            tags: ['wd', 'test']
+            tags: ['wd', 'test'],
+            "record-video": false
           };
           browser.init(desired, function(err) {
             should.not.exist(err);
@@ -118,25 +118,27 @@ describe("wd", function() {
             });
           });
         });
+        it("should mark job as passed", function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
+        });
       });
       describe("desired overiding defaultCapabilities", function() {
         var browser;
-        after(function(done) {
-          configHelper.jobPassed(browser.sessionID, done);
-        });
         it("should open a firefox browser", function(done) {
           this.timeout(TIMEOUT);
           browser = wd.remote(remoteWdConfig);
           browser.defaultCapabilities.browserName = 'chrome';
           browser.defaultCapabilities.name = 'browser init overide';
           browser.defaultCapabilities.tags = ['wd', 'test'];
+          browser.defaultCapabilities["record-video"] = false;
           browser.defaultCapabilities.should.eql({
             browserName: 'chrome',
             version: '',
             javascriptEnabled: true,
             platform: 'VISTA',
             name: 'browser init overide',
-            tags: ['wd', 'test']
+            tags: ['wd', 'test'],
+            "record-video": false
           });
           browser.init({
             browserName: 'firefox'
@@ -151,6 +153,9 @@ describe("wd", function() {
               });
             });
           });
+        });
+        it("should mark job as passed", function(done) {
+          configHelper.jobPassed(browser.sessionID, done);
         });
       });
     });

@@ -12,13 +12,15 @@ nameBase = "saucelabs promise test - ";
 chromeDesired = {
   name: nameBase + 'chrome',
   browserName: 'chrome',
-  tags: ['wd', 'test']
+  tags: ['wd', 'test'],
+  "record-video": false
 };
 
 firefoxDesired = {
   name: nameBase + 'firefox',
   browserName: 'firefox',
-  tags: ['wd', 'test']
+  tags: ['wd', 'test'],
+  "record-video": false
 };
 
 explorerDesired = {
@@ -26,7 +28,8 @@ explorerDesired = {
   browserName: 'iexplore',
   version: '9',
   platform: 'Windows 2008',
-  tags: ['wd', 'test']
+  tags: ['wd', 'test'],
+  "record-video": false
 };
 
 describe("wd", function() {

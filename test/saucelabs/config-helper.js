@@ -60,7 +60,8 @@ exports.jobUpdate = function(jobId, name, tags, done) {
     },
     body: JSON.stringify({
           name: name,
-          tags: tags
+          tags: tags,
+          "record-video": false
         }),
     jar: false /* disable cookies: avoids CSRF issues */
   };
