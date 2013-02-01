@@ -7,7 +7,7 @@ should = require('should');
 
 configHelper = require('./config-helper');
 
-var TIMEOUT = 60000;
+var TIMEOUT = 90000;
 
 remoteWdConfig = configHelper.getRemoteWdConfig();
 
