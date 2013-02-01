@@ -13,8 +13,8 @@ before_script:
   - "sleep 5"
   - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
 script:
-  - "make test_unit"
-  - "make test_saucelabs"
+  # - "make test_unit"
+  # - "make test_saucelabs"
   - "sleep 10"
   - "make test_local"
 after_script:
