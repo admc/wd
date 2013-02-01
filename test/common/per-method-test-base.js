@@ -295,7 +295,6 @@ test = function(remoteWdConfig, desired) {
               function(done) {
                 browser[elementFuncName](searchText, function(err, res) {
                   should.not.exist(err);
-                  console.log("OKOKOKOK res=", res);
                   should.exist(res);
                   done(null);
                 });
