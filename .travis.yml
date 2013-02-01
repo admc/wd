@@ -7,19 +7,19 @@ env:
       {secure: "ZQggUDYRhdI8SCC+VkcKZ8AHV1KlnJzGhsBC2yIhWLJaog1nPR8mXsYrWI2H\njQCxT5aGDng2ho856P5M0LFRYN9Qv2g3XPclq+SjDZubbH9v7rjB0YYpntHz\nxP88ykl5T4wImDmA0j4fmYsdqJwW2XyDgKCk2mjiMJAvtkzbtCI="}
     ]
 before_script:
-  - "sudo apt-get update"
-  - "sudo apt-get install libxrandr2"
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - "./node_modules/.bin/install_selenium"
-  - "sleep 5"
+  # - "export DISPLAY=:99.0"
+  # - "sh -e /etc/init.d/xvfb start"
+  # - "./node_modules/.bin/install_selenium"
+  # - "sleep 5"
   # - "./node_modules/.bin/start_selenium > /dev/null 2>&1 &"
-  - "./node_modules/.bin/start_selenium &"
+  # - "./node_modules/.bin/start_selenium &"
 script:
-  # - "make test_unit"
-  # - "make test_saucelabs"
-  - "sleep 10"
-  - "make test_local"
+  - "make test_unit"
+  - "make test_saucelabs"
+  # - "sleep 10"
+  # - "make test_local"
 after_script:
-  - "./node_modules/.bin/kill_selenium"
+  # - "./node_modules/.bin/kill_selenium"
+
+# Note: local test have been disabled cause firefox and chrome selenenium seems to be broken in travis
 
