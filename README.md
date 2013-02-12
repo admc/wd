@@ -334,6 +334,35 @@ close(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/size">/session/:sessionId/window/:windowHandle/size</a><br>
+Change the size of the specified window.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+windowSize(handle, width, height, cb) -&gt; cb(err)<br>
+</p>
+<p>
+setWindowSize(width, height, handle, cb) -&gt; cb(err)<br>
+setWindowSize(width, height, cb) -&gt; cb(err)<br>
+width: width in pixels to set size to<br>
+height: height in pixels to set size to<br>
+handle: window handle to set size for (optional, default: 'current')<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/size">/session/:sessionId/window/:windowHandle/size</a><br>
+Get the size of the specified window.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getWindowSize(handle, cb) -&gt; cb(err, size)<br>
+getWindowSize(cb) -&gt; cb(err, size)<br>
+handle: window handle to get size (optional, default: 'current')<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/maximize">/session/:sessionId/window/:windowHandle/maximize</a><br>
 Maximize the specified window if not already maximized.
 </td>
@@ -814,7 +843,7 @@ Flick on the touch screen using finger motion events.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-flick(xSpeed, ySpeed, cb) -&gt; cb(err)<br>
+flick(xSpeed, ySpeed, swipe, cb) -&gt; cb(err)<br>
 Flicks, starting anywhere on the screen.<br>
 flick(element, xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 Flicks, starting at element center.<br>
@@ -954,6 +983,14 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: GET /session/:sessionId/element/:id/pageIndex
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
 </td>
 </tr>
 </tbody>

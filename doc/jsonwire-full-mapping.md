@@ -290,7 +290,11 @@ Change the size of the specified window.
 windowSize(handle, width, height, cb) -&gt; cb(err)<br>
 </p>
 <p>
-setWindowSize(handle, width, height, cb) -&gt; cb(err)<br>
+setWindowSize(width, height, handle, cb) -&gt; cb(err)<br>
+setWindowSize(width, height, cb) -&gt; cb(err)<br>
+width: width in pixels to set size to<br>
+height: height in pixels to set size to<br>
+handle: window handle to set size for (optional, default: 'current')<br>
 </p>
 </td>
 </tr>
@@ -301,6 +305,8 @@ Get the size of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 getWindowSize(handle, cb) -&gt; cb(err, size)<br>
+getWindowSize(cb) -&gt; cb(err, size)<br>
+handle: window handle to get size (optional, default: 'current')<br>
 </td>
 </tr>
 <tr>
