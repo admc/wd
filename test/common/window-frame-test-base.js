@@ -200,6 +200,24 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("set size of third window", function() {
+    it("should change its size", function(done) {
+      browser.getWindowSize('window-3', function(err, size) {
+        should.not.exist(err);
+        var newX = size.width - 50;
+        var newY = size.height - 30;
+        browser.setWindowSize('window-3', newX, newY, function(err) {
+          should.not.exist(err);
+          browser.getWindowSize('window-3', function(err, size) {
+            should.not.exist(err);
+            size.width.should.equal(newX);
+            size.height.should.equal(newY);
+            done();
+          });
+        });
+      });
+    });
+  });
   describe("closing third window", function() {
     it("should close the third window", function(done) {
       browser.close(function(err) {
