@@ -206,9 +206,27 @@ test = function(remoteWdConfig, desired) {
         should.not.exist(err);
         var newX = size.width - 50;
         var newY = size.height - 30;
-        browser.setWindowSize('window-3', newX, newY, function(err) {
+        browser.setWindowSize(newX, newY, 'window-3', function(err) {
           should.not.exist(err);
           browser.getWindowSize('window-3', function(err, size) {
+            should.not.exist(err);
+            size.width.should.equal(newX);
+            size.height.should.equal(newY);
+            done();
+          });
+        });
+      });
+    });
+  });
+  describe("set size of current window", function() {
+    it("should change its size", function(done) {
+      browser.getWindowSize(function(err, size) {
+        should.not.exist(err);
+        var newX = size.width - 50;
+        var newY = size.height - 30;
+        browser.setWindowSize(newX, newY, function(err) {
+          should.not.exist(err);
+          browser.getWindowSize(function(err, size) {
             should.not.exist(err);
             size.width.should.equal(newX);
             size.height.should.equal(newY);
