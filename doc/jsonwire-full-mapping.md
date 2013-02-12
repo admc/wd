@@ -286,7 +286,12 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Change the size of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+<p>
+windowSize(handle, width, height, cb) -&gt; cb(err)<br>
+</p>
+<p>
+setWindowSize(handle, width, height, cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -295,7 +300,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Get the size of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+getWindowSize(handle, cb) -&gt; cb(err, size)<br>
 </td>
 </tr>
 <tr>
@@ -906,7 +911,7 @@ Flick on the touch screen using finger motion events.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-flick(xSpeed, ySpeed, cb) -&gt; cb(err)<br>
+flick(xSpeed, ySpeed, swipe, cb) -&gt; cb(err)<br>
 Flicks, starting anywhere on the screen.<br>
 flick(element, xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 Flicks, starting at element center.<br>
@@ -1172,6 +1177,14 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: GET /session/:sessionId/element/:id/pageIndex
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
 </td>
 </tr>
 </tbody>

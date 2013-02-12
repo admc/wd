@@ -1004,7 +1004,7 @@ comments using [dox](https://github.com/visionmedia/dox).
 To update the mappings run the following commands:
 
 <pre>
-  - make mapping > doc/jsonwire-mapping.md 
+  - make mapping > doc/jsonwire-mapping.md
   - make full_mapping > doc/jsonwire-full-mapping.md
 </pre>
 
