@@ -1058,28 +1058,12 @@ NA
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-esired, cb<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
 Opens a new window (using Javascript window.open):<br>
 newWindow(url, name, cb) -&gt; cb(err)<br>
 newWindow(url, cb) -&gt; cb(err)<br>
 name: optional window name<br>
 Window can later be accessed by name with the window method,<br>
 or by getting the last handle returned by the windowHandles method.<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-rl, name, cb<br>
 </td>
 </tr>
 <tr>
@@ -1152,6 +1136,15 @@ isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+Retrieves the pageIndex element (added for Appium):<br>
+getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (polling within wd client):<br>
 waitForCondition(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
 waitForCondition(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
@@ -1183,14 +1176,6 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-MISSING: GET /session/:sessionId/element/:id/pageIndex
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
 </td>
 </tr>
 </tbody>
