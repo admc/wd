@@ -401,9 +401,6 @@ Search for an element on the page, starting from the document root.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-element.element(using, value, cb) -&gt; cb(err, element)<br>
-</p>
-<p>
 element(using, value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
@@ -484,20 +481,6 @@ hasElementByTagName(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByCss(value, cb) -&gt; cb(err, boolean)<br>
 </p>
-<p>
-element.elements(using, value, cb) -&gt; cb(err, elements)<br>
-</p>
-<p>
-element.elementsByClassName(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByCssSelector(value, cb) -&gt; cb(err, elements)<br>
-element.elementsById(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByName(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByLinkText(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
-</p>
 </td>
 </tr>
 <tr>
@@ -524,6 +507,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Search for an element on the page, starting from the identified element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 element.elementByClassName(value, cb) -&gt; cb(err, element)<br>
 element.elementByCssSelector(value, cb) -&gt; cb(err, element)<br>
 element.elementById(value, cb) -&gt; cb(err, element)<br>
@@ -533,6 +517,10 @@ element.elementByPartialLinkText(value, cb) -&gt; cb(err, element)<br>
 element.elementByTagName(value, cb) -&gt; cb(err, element)<br>
 element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
 element.elementByCss(value, cb) -&gt; cb(err, element)<br>
+</p>
+<p>
+element.element(using, value, cb) -&gt; cb(err, element)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -541,7 +529,20 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Search for multiple elements on the page, starting from the identified element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+<p>
+element.elementsByClassName(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByCssSelector(value, cb) -&gt; cb(err, elements)<br>
+element.elementsById(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByName(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByLinkText(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
+</p>
+<p>
+element.elements(using, value, cb) -&gt; cb(err, elements)<br>
+</p>
 </td>
 </tr>
 <tr>
