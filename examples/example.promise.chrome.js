@@ -20,7 +20,7 @@ browser.init({
     tags: ["examples"],
     name: "This is an example test"
 }).then(function () {
-    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+    return browser.get("http://saucelabs.com/test/guinea-pig");
 }).then(function () {
     return browser.title();
 }).then(function (title) {
