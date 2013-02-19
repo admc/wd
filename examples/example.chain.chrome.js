@@ -23,7 +23,7 @@ browser
       , tags : ["examples"]
       , name: "This is an example test"
   })
-  .get("http://admc.io/wd/test-pages/guinea-pig.html")
+  .get("http://saucelabs.com/test/guinea-pig")
   .title(function(err, title) {
     assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
   })
