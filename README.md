@@ -48,32 +48,32 @@ npm install wd
 ## Writing a test!
 
 <pre>
-var webdriver = require('wd')
-  , assert = require('assert');
+var wd = require('wd')
+  , assert = require('assert')
+  , colors = require('colors')
+  , browser = wd.remote();
 
-var browser = webdriver.remote();
-
-browser.on('status', function(info){
-  console.log('\x1b[36m%s\x1b[0m', info);
-});
-browser.on('command', function(meth, path){
-  console.log(' > \x1b[33m%s\x1b[0m: %s', meth, path);
+browser.on('status', function(info) {
+  console.log(info.cyan);
 });
 
-desired = {
-  browserName:'chrome'
-  , tags: ["examples"]
-  , name: "This is an example test"
-};
+browser.on('command', function(meth, path, data) {
+  console.log(' > ' + meth.yellow, path.grey, data || '');
+});
 
-browser.init(desired, function() {
+browser.init({
+    browserName:'chrome'
+    , tags : ["examples"]
+    , name: "This is an example test"
+  }, function() {
+
   browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          browser.eval("window.location.href", function(err, location) {
-            assert.ok(~location.indexOf('guinea-pig2'));
+          browser.eval("window.location.href", function(err, href) {
+            assert.ok(~href.indexOf('guinea-pig2'));
             browser.quit();
           });
         });
