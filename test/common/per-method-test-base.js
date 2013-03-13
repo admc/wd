@@ -1089,6 +1089,46 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("element.isEnabled", function() {
+    it("should check if element is enabled", function(done) {
+      async.series([
+        function(done) {
+          browser.elementByCss("#isEnabled .enabled", function(err, field) {
+            should.not.exist(err);
+            should.exist(field);
+            field.isEnabled(function(err, res) {
+              should.not.exist(err);
+              res.should.be.true;
+              done(null);
+            });
+          });
+        }, function(done) {
+          browser.elementByCss("#isEnabled .disabled", function(err, field) {
+            should.not.exist(err);
+            should.exist(field);
+            field.isEnabled(function(err, res) {
+              should.not.exist(err);
+              res.should.be.false;
+              done(null);
+            });
+          });
+        }, function(done) {
+          browser.elementByCss("#isEnabled .enabled", function(err, field) {
+            should.not.exist(err);
+            should.exist(field);
+            field.enabled(function(err, res) {
+              should.not.exist(err);
+              res.should.be.true;
+              done(null);
+            });
+          });
+        }
+      ], function(err) {
+        should.not.exist(err);
+        done(null);
+      });
+    });
+  });
   describe("getComputedCss", function() {
     it("should retrieve the element computed css", function(done) {
       async.series([
