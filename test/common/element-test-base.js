@@ -266,6 +266,17 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("element.equalsElement", function() {
+    it("should check whether two references are referring to the same dom element", function(done) {
+      browser.elementByTagName("body", function(err, body) {
+        browser.elementByXPath("//body", function(xerr, xbody) {
+          body.equals(xbody, function(err, val) {
+            val.should.be.true;
+          });
+        });
+      });
+    });
+  });
   describe("element.getAttribute", function() {
     it("should retrieve attribute value", function(done) {
       browser.element("id", "getAttribute", function(err, el) {
