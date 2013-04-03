@@ -31,7 +31,8 @@
     "underscore": "1.4.x",
     "vargs": "~0.1.0",
     "request": "~2.12.0",
-    "q": "0.8.x"
+    "q": "0.8.x",
+    "nock": "~0.17.1"
   },
   "devDependencies": {
     "mocha": "1.6.x",
