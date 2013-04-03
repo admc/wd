@@ -41,7 +41,7 @@
     "express": "3.x",
     "imageinfo": "1.0.x",
     "covershot": "0.1.x",
-    "nock": "0.13.x",
+    "nock": "~0.17.1",
     "dox": "0.3.x",
     "mu2": "0.5.x",
     "sv-selenium": "0.1.x"
