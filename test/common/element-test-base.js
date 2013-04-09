@@ -88,6 +88,18 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("active", function() {
+    it("should get the active element", function(done) {
+      browser.active(function(err, el) {
+        should.not.exist(err);
+        should.exist(el);
+        el.text(function(err, res) {
+          res.should.include("This is a test page");
+          done(null);
+        });
+      });
+    });
+  });
   describe("element.textPresent", function() {
     it("should check if text is present", function(done) {
       browser.element("id", "text", function(err, el) {
