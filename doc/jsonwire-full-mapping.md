@@ -978,8 +978,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Set the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-setLocalStorageKey(key, value, cb) -&gt; cb(err)<br>
-# uses safeExecute() due to localStorage bug in Selenium<br>
+NA
 </td>
 </tr>
 <tr>
@@ -988,8 +987,7 @@ DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/
 Clear the storage.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-clearLocalStorage(cb) -&gt; cb(err)<br>
-# uses safeExecute() due to localStorage bug in Selenium<br>
+NA
 </td>
 </tr>
 <tr>
@@ -998,8 +996,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Get the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-getLocalStorageKey(key, cb) -&gt; cb(err)<br>
-# uses safeEval() due to localStorage bug in Selenium<br>
+NA
 </td>
 </tr>
 <tr>
@@ -1008,8 +1005,7 @@ DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/
 Remove the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-removeLocalStorageKey(key, cb) -&gt; cb(err)<br>
-# uses safeExecute() due to localStorage bug in Selenium<br>
+NA
 </td>
 </tr>
 <tr>
