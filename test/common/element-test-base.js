@@ -284,6 +284,7 @@ test = function(remoteWdConfig, desired) {
         browser.elementByXPath("//body", function(xerr, xbody) {
           body.equals(xbody, function(err, val) {
             val.should.be.true;
+            done(null);
           });
         });
       });
