@@ -822,6 +822,46 @@ waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
+Set the storage item for the given key.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setLocalStorageKey(key, value, cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
+Clear the storage.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+clearLocalStorage(cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/local_storage/key/:key">/session/:sessionId/local_storage/key/:key</a><br>
+Get the storage item for the given key.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getLocalStorageKey(key, cb) -&gt; cb(err)<br>
+# uses safeEval() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/local_storage/key/:key">/session/:sessionId/local_storage/key/:key</a><br>
+Remove the storage item for the given key.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+removeLocalStorageKey(key, cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">

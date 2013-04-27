@@ -1832,6 +1832,43 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("localStorage", function() {
+    it("should add & retrieve a key/value pair", function(done) {
+      browser.setLocalStorageKey("foo", "bar", function(err) {
+        should.not.exist(err);
+        browser.getLocalStorageKey("foo", function(err, value) {
+          should.not.exist(err);
+          value.should.equal("bar");
+          done(null);
+        });
+      });
+    });
+    it("should add & remove a key/value pair", function(done) {
+      browser.setLocalStorageKey("bar", "ham", function(err) {
+        should.not.exist(err);
+        browser.removeLocalStorageKey("bar", function(err) {
+          should.not.exist(err);
+          browser.getLocalStorageKey("bar", function(err, value) {
+            should.not.exist(err);
+            should.not.exists(value);
+            done(null);
+          });
+        });
+      });
+    });
+    it("should clear localStorage", function(done) {
+      browser.setLocalStorageKey("ham", "foo", function(err) {
+        should.not.exist(err);
+        browser.clearLocalStorage(function(err){
+          should.not.exist(err);
+          browser.getLocalStorageKey("ham", function(err) {
+            should.not.exist(err);
+            done(null);
+          });
+        });
+      });
+    });
+  });
   describe("isVisible", function() {
     it("should check if element is visible", function(done) {
       async.series([
