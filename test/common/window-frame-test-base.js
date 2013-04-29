@@ -236,6 +236,42 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("set position of third window", function() {
+    it("should change its position", function(done) {
+      browser.getWindowPosition('window-3', function(err, position) {
+        should.not.exist(err);
+        var newX = position.x + 50;
+        var newY = position.y + 30;
+        browser.setWindowPosition(newX, newY, 'window-3', function(err) {
+          should.not.exist(err);
+          browser.getWindowPosition('window-3', function(err, position) {
+            should.not.exist(err);
+            position.x.should.equal(newX);
+            position.y.should.equal(newY);
+            done();
+          });
+        });
+      });
+    });
+  });
+  describe("set position of current window", function() {
+    it("should change its position", function(done) {
+      browser.getWindowPosition(function(err, position) {
+        should.not.exist(err);
+        var newX = position.x + 50;
+        var newY = position.y + 30;
+        browser.setWindowPosition(newX, newY, function(err) {
+          should.not.exist(err);
+          browser.getWindowPosition(function(err, position) {
+            should.not.exist(err);
+            position.x.should.equal(newX);
+            position.y.should.equal(newY);
+            done();
+          });
+        });
+      });
+    });
+  });
   describe("closing third window", function() {
     it("should close the third window", function(done) {
       browser.close(function(err) {
