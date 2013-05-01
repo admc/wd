@@ -28,7 +28,12 @@ test_local:
 
 # run saucelabs test, configure username/key first
 test_saucelabs:
+# run saucelabs test if this is not a pull request
+ifeq ($(TRAVIS_PULL_REQUEST),true)
+	@echo 'Skipping Sauce Labs tests as this is a pull request'
+else
 	./node_modules/.bin/mocha test/saucelabs/*-test.js
+endif
 
 # run ghostdriver test, start ghostdriver first
 test_ghostdriver:
