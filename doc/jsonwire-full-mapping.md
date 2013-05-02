@@ -315,7 +315,11 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Change the position of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+setWindowPosition(x, y, handle, cb) -&gt; cb(err)<br>
+setWindowPosition(x, y, cb) -&gt; cb(err)<br>
+x: the x-coordinate in pixels to set the window position<br>
+y: the y-coordinate in pixels to set the window position<br>
+handle: window handle to set position for (optional, default: 'current')<br>
 </td>
 </tr>
 <tr>
@@ -324,7 +328,9 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Get the position of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+getWindowPosition(handle, cb) -&gt; cb(err, position)<br>
+getWindowPosition(cb) -&gt; cb(err, position)<br>
+handle: window handle to get position (optional, default: 'current')<br>
 </td>
 </tr>
 <tr>
@@ -653,7 +659,12 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Determine if an OPTION element, or an INPUT element of type checkbox or radiobutton is currently selected.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 isSelected(element, cb) -&gt; cb(err, selected)<br>
+</p>
+<p>
+element.isSelected(cb) -&gt; cb(err, selected)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -662,7 +673,12 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Determine if an element is currently enabled.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+<p>
+isEnabled(element, cb) -&gt; cb(err, enabled)<br>
+</p>
+<p>
+element.isEnabled(cb) -&gt; cb(err, enabled)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -692,7 +708,12 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Test if two element IDs refer to the same DOM element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+<p>
+element.equals(other, cb) -&gt; cb(err, value)<br>
+</p>
+<p>
+equalsElement(element, other , cb) -&gt; cb(err, value)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -978,7 +999,8 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Set the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+setLocalStorageKey(key, value, cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
 </td>
 </tr>
 <tr>
@@ -987,7 +1009,8 @@ DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/
 Clear the storage.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+clearLocalStorage(cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
 </td>
 </tr>
 <tr>
@@ -996,7 +1019,8 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Get the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+getLocalStorageKey(key, cb) -&gt; cb(err)<br>
+# uses safeEval() due to localStorage bug in Selenium<br>
 </td>
 </tr>
 <tr>
@@ -1005,7 +1029,8 @@ DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/
 Remove the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+removeLocalStorageKey(key, cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
 </td>
 </tr>
 <tr>

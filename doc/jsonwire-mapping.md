@@ -266,6 +266,30 @@ handle: window handle to get size (optional, default: 'current')<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/position">/session/:sessionId/window/:windowHandle/position</a><br>
+Change the position of the specified window.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setWindowPosition(x, y, handle, cb) -&gt; cb(err)<br>
+setWindowPosition(x, y, cb) -&gt; cb(err)<br>
+x: the x-coordinate in pixels to set the window position<br>
+y: the y-coordinate in pixels to set the window position<br>
+handle: window handle to set position for (optional, default: 'current')<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/position">/session/:sessionId/window/:windowHandle/position</a><br>
+Get the position of the specified window.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getWindowPosition(handle, cb) -&gt; cb(err, position)<br>
+getWindowPosition(cb) -&gt; cb(err, position)<br>
+handle: window handle to get position (optional, default: 'current')<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/maximize">/session/:sessionId/window/:windowHandle/maximize</a><br>
 Maximize the specified window if not already maximized.
 </td>
@@ -581,7 +605,26 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Determine if an OPTION element, or an INPUT element of type checkbox or radiobutton is currently selected.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 isSelected(element, cb) -&gt; cb(err, selected)<br>
+</p>
+<p>
+element.isSelected(cb) -&gt; cb(err, selected)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/enabled">/session/:sessionId/element/:id/enabled</a><br>
+Determine if an element is currently enabled.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+isEnabled(element, cb) -&gt; cb(err, enabled)<br>
+</p>
+<p>
+element.isEnabled(cb) -&gt; cb(err, enabled)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -602,6 +645,20 @@ getValue(element, cb) -&gt; cb(err, value)<br>
 </p>
 <p>
 element.getValue(cb) -&gt; cb(err, value)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/equals/:other">/session/:sessionId/element/:id/equals/:other</a><br>
+Test if two element IDs refer to the same DOM element.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+element.equals(other, cb) -&gt; cb(err, value)<br>
+</p>
+<p>
+equalsElement(element, other , cb) -&gt; cb(err, value)<br>
 </p>
 </td>
 </tr>
@@ -781,6 +838,46 @@ Flicks, starting at element center.<br>
 <p>
 element.flick(xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 </p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
+Set the storage item for the given key.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setLocalStorageKey(key, value, cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
+Clear the storage.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+clearLocalStorage(cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/local_storage/key/:key">/session/:sessionId/local_storage/key/:key</a><br>
+Get the storage item for the given key.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getLocalStorageKey(key, cb) -&gt; cb(err)<br>
+# uses safeEval() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/local_storage/key/:key">/session/:sessionId/local_storage/key/:key</a><br>
+Remove the storage item for the given key.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+removeLocalStorageKey(key, cb) -&gt; cb(err)<br>
+# uses safeExecute() due to localStorage bug in Selenium<br>
 </td>
 </tr>
 <tr>
