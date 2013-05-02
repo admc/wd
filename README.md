@@ -122,7 +122,7 @@ browser
   // ...
   .elementById('i am a link', function(err, el) {
     // call to clickElement will be injected to the queue
-    // and will be executed after current function finishes
+    // and will be executed sequentially after current function finishes
     browser.next('clickElement', el, function() {
       console.log("did the click!");
     });
