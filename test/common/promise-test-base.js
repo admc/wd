@@ -35,7 +35,6 @@ test = function(remoteWdConfig, desired, markAsPassed) {
     describe("init", function(done) {
       it("should initialize browser", function(done) {
         this.timeout(TIMEOUT);
-        desired.build = process.env.TRAVIS_JOB_ID;
         browser.init(desired).then(function() {
           sessionID = browser.sessionID;
           done(null);
