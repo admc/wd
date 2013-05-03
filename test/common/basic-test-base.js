@@ -33,6 +33,8 @@ test = function(remoteWdConfig, desired, markAsPassed) {
   describe("init", function() {
     it("should initialize browser", function(done) {
       this.timeout(TIMEOUT);
+      // use TravisCI build numer if provided
+      desired.build = process.env.TRAVIS_JOB_ID;
       browser.init(desired, function() {
         sessionID = browser.sessionID;
         done(null);
