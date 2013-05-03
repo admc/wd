@@ -1155,8 +1155,11 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 
 ## Run the tests!
 <pre>
+  - Install the Selenium server and Chromedriver
+      node_modules/.bin/install_selenium
+      node_modules/.bin/install_chromedriver
   - Run the selenium server with chromedriver:
-      java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=&lt;PATH&gt;/chromedriver
+      node_modules/.bin/start_selenium_with_chromedriver
   - cd wd
   - npm install .
   - make test
