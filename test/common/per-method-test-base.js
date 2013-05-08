@@ -1916,6 +1916,19 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  // GhostDriver has not implemented this endpoint
+  if (!process.env.GHOSTDRIVER_TEST) {
+    describe("uploadFile", function() {
+      it("should upload a local file to remove server", function(done) {
+        browser.uploadFile("test/mocha.opts", function(err, filepath) {
+          should.not.exist(err);
+          should.exist(filepath);
+          filepath.should.include('mocha.opts');
+          done(null);
+        });
+      });
+    });
+  }
   describe("waitForCondition", function() {
     it("should wait for condition", function(done) {
       var exprCond;
