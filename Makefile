@@ -30,11 +30,11 @@ test_local:
 test_saucelabs:
 ifdef TRAVIS
 	# run saucelabs test if this is not a pull request
-	ifneq ($(TRAVIS_PULL_REQUEST),false)
-		@echo 'Skipping Sauce Labs tests as this is a pull request'
-	else
-		./node_modules/.bin/mocha test/saucelabs/*-test.js
-	endif
+ifneq ($(TRAVIS_PULL_REQUEST),false)
+	@echo 'Skipping Sauce Labs tests as this is a pull request'
+else
+	./node_modules/.bin/mocha test/saucelabs/*-test.js
+endif
 else
 	./node_modules/.bin/mocha test/saucelabs/*-test.js
 endif
