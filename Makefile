@@ -29,7 +29,8 @@ test_local:
 # run saucelabs test, configure username/key first
 test_saucelabs:
 ifdef TRAVIS
-	# run saucelabs test if this is not a pull request
+	# secure env variables are not available for pull reuqests
+	# so you won't be able to run test against Sauce on these
 ifneq ($(TRAVIS_PULL_REQUEST),false)
 	@echo 'Skipping Sauce Labs tests as this is a pull request'
 else
