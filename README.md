@@ -108,7 +108,7 @@ browser
   .elementById('i am a link', function(err, el) {
     // following call will be executed apart from the current execution chain
     // you won't be able to pass results further in chain
-    // and it may cause racing codnitions in your script
+    // and it may cause racing conditions in your script
     browser.clickElement(el, function() {
       console.log("did the click!");
     });
