@@ -1198,14 +1198,14 @@ To update the mappings run the following commands:
 The content of doc/jsonwire-mapping.md should then be manually integrated into
 README.md.
 
-## `safeExecute` and `safeEval` methods
+## safe methods
 
-These methods are equivalent to `execute` and `eval` but the code is
+The `safeExecute` and `safeEval` methods are equivalent to `execute` and `eval` but the code is
 executed within a `eval` block. They are safe in the sense that eventual
-code syntax issues are tackled earlier returning as syntax error,
+code syntax issues are tackled earlier returning as syntax error and
 avoiding browser hanging in some cases.
 
-Below are examples of expression hanging the browser:
+For instance the expression below is hanging the browser:
 
 ```javascript
 browser.eval("superwrong!!!", function(err, res) { // hangs
