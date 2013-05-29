@@ -37,7 +37,7 @@ Returns a list of the currently active sessions.
 sessions(cb) -&gt; cb(err, sessions)<br>
 </p>
 <p>
-## Alternate strategy to get session capabilities from server session list<br>
+Alternate strategy to get session capabilities from server session list:<br>
 altSessionCapabilities(cb) -&gt; cb(err, capabilities)<br>
 </p>
 </td>
@@ -165,7 +165,7 @@ execute(code, cb) -&gt; cb(err, result)<br>
 args: script argument array (optional)<br>
 </p>
 <p>
-Execute script using eval(code):<br>
+Safely execute script within an eval block, always returning:<br>
 safeExecute(code, args, cb) -&gt; cb(err, result)<br>
 safeExecute(code, cb) -&gt; cb(err, result)<br>
 args: script argument array (optional)<br>
@@ -175,7 +175,7 @@ Evaluate expression (using execute):<br>
 eval(code, cb) -&gt; cb(err, value)<br>
 </p>
 <p>
-Evaluate expression (using safeExecute):<br>
+Safely evaluate expression, always returning  (using safeExecute):<br>
 safeEval(code, cb) -&gt; cb(err, value)<br>
 </p>
 </td>
@@ -192,7 +192,7 @@ executeAsync(code, cb) -&gt; cb(err, result)<br>
 args: script argument array (optional)<br>
 </p>
 <p>
-Execute async script using eval(code):<br>
+Safely execute async script within an eval block, always returning:<br>
 safeExecuteAsync(code, args, cb) -&gt; cb(err, result)<br>
 safeExecuteAsync(code, cb) -&gt; cb(err, result)<br>
 args: script argument array (optional)<br>
@@ -315,7 +315,7 @@ Set a cookie.
 setCookie(cookie, cb) -&gt; cb(err)<br>
 cookie example:<br>
 {name:'fruit', value:'apple'}<br>
-## Optional cookie fields<br>
+Optional cookie fields:<br>
 path, domain, secure, expiry<br>
 </td>
 </tr>
@@ -398,7 +398,7 @@ elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 </p>
 <p>
-## Retrieve an element avoiding not found exception and returning null instead<br>
+Retrieve an element avoiding not found exception and returning null instead:<br>
 elementOrNull(using, value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
@@ -413,7 +413,7 @@ elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
-## Retrieve an element avoiding not found exception and returning undefined instead<br>
+Retrieve an element avoiding not found exception and returning undefined instead:<br>
 elementIfExists(using, value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
@@ -428,7 +428,7 @@ elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
-## Check if element exists<br>
+Check if element exists:<br>
 hasElement(using, value, cb) -&gt; cb(err, boolean)<br>
 </p>
 <p>
@@ -535,7 +535,7 @@ element: specific element, 'body', or undefined<br>
 element.text(cb) -&gt; cb(err, text)<br>
 </p>
 <p>
-## Check if text is present<br>
+Check if text is present:<br>
 textPresent(searchText, element, cb) -&gt; cb(err, boolean)<br>
 element: specific element, 'body', or undefined<br>
 </p>
@@ -1002,7 +1002,25 @@ return true if condition satisfied, error otherwise.<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+Equivalent to the python sendKeys binding. Upload file if <br>
+a local file is detected, otherwise behaves like type.<br>
+element.sendKeys(keys, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/file
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+uploadFile(filepath, cb) -&gt; cb(err, filepath)<br>
 </td>
 </tr>
 </tbody>
