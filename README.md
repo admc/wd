@@ -1198,7 +1198,7 @@ To update the mappings run the following commands:
 The content of doc/jsonwire-mapping.md should then be manually integrated into
 README.md.
 
-## safe methods
+## Safe Methods
 
 The `safeExecute` and `safeEval` methods are equivalent to `execute` and `eval` but the code is
 executed within a `eval` block. They are safe in the sense that eventual
