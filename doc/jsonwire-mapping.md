@@ -972,6 +972,16 @@ getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+Uploads a local file using undocumented<br>
+POST /session/:sessionId/file<br>
+uploadFile(filepath, cb) -&gt; cb(err, filepath)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (polling within wd client):<br>
 waitForCondition(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
 waitForCondition(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
@@ -1013,14 +1023,6 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-MISSING: POST /session/:sessionId/file
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-uploadFile(filepath, cb) -&gt; cb(err, filepath)<br>
 </td>
 </tr>
 </tbody>
