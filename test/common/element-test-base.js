@@ -1,4 +1,7 @@
 /*global describe,before,it,after */
+
+var path = require('path');
+
 var CoffeeScript, Express, async, executeCoffee, should, test, textShouldEqual, wd;
 
 CoffeeScript = require('coffee-script');
@@ -346,6 +349,22 @@ test = function(remoteWdConfig, desired) {
             should.not.exist(err);
             textReceived.should.equal(firstText + text[0].toString() +
                                       text[1].toString());
+            done(null);
+          });
+        });
+      });
+    });
+    it("should detects local file and upload", function(done) {
+      var text;
+      text = path.resolve("test/mocha.opts");
+      browser.element("id", "sendKeys_file", function(err, el) {
+        should.not.exist(err);
+        el.should.have.property("sendKeys");
+        el.sendKeys(text, function(err) {
+          should.not.exist(err);
+          el.getValue(function(err, filepath) {
+            should.not.exist(err);
+            filepath.should.include('mocha.opts');
             done(null);
           });
         });
