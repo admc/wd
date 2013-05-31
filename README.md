@@ -1225,16 +1225,13 @@ executed within a `eval` block. They are safe in the sense that eventual
 code syntax issues are tackled earlier returning as syntax error and
 avoiding browser hanging in some cases.
 
-For instance the expression below is hanging the browser:
+An example below of expression hanging Chrome:
 
 ```javascript
-browser.eval("superwrong!!!", function(err, res) { // hangs
-
-browser.safeEval("superwrong!!!", function(err, res) { // returns
-
-browser.execute("superwrong!!!", function(err, res) { //hangs
-
-browser.safeExecute("superwrong!!!", function(err, res) { //returns
+browser.eval("wrong!!!", function(err, res) { // hangs
+browser.safeEval("wrong!!!", function(err, res) { // returns
+browser.execute("wrong!!!", function(err, res) { //hangs
+browser.safeExecute("wrong!!!", function(err, res) { //returns
 ```
 
 ## Test Coverage
