@@ -2,6 +2,14 @@ var args = Array.prototype.slice.call(arguments, 0);
 var condExpr = args[0], timeout = args[1], 
     poll = args[2], cb = args[3];
 
+// Shim Date.now if browser engine does not support it.
+// (taken from MDN page).
+if (!Date.now) {
+  Date.now = function now() {
+    return new Date().getTime();
+  };
+}
+
 // recursive implementation
 var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
   
