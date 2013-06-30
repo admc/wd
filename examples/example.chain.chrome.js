@@ -27,6 +27,13 @@ browser
   .title(function(err, title) {
     assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
   })
+  .queueAddAsync(function(cb) {
+    console.log("simulating async call, waiting 500ms");
+    setTimeout(function() {
+      console.log("500ms expired");
+      cb(null);
+    }, 500);
+  })
   .elementById('i am a link', function(err, el) {
     //we should make clickElement not require a callback
     browser.next('clickElement', el, function() {

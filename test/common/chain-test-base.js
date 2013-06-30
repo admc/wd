@@ -48,6 +48,29 @@ test = function(browserName) {
       });
     });
   });
+  describe("queued async call", function() {
+    var asyncCallCompleted = false;
+    it("should work", function(done) {
+      browser.chain().init({
+        browserName: browserName,
+        tags: ["examples"],
+        name: "This is an example test"
+      }).get("http://admc.io/wd/test-pages/guinea-pig.html").title(function(err, title) {
+        title.should.include('I am a page title - Sauce Labs');
+
+      }).queueAddAsync( function(cb) {
+        setTimeout(function() {
+          asyncCallCompleted = true;
+          cb(null);
+        }, 250);
+      }).elementById('submit', function(err, el) {
+        should.not.exist(err);
+        asyncCallCompleted.should.be.true;
+      }).quit(function(err) {
+        done(null);
+      });
+    });
+  });
 };
 
 exports.test = test;
