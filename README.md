@@ -132,7 +132,7 @@ browser
   // ...
 ```
 
-#### Example 3 - alternative solution, use *queueAddAsync*
+### Inserting async code with *queueAddAsync*
 
 ```javascript
 browser
