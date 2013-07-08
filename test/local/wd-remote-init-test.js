@@ -1,5 +1,6 @@
 /*global describe,before,it,after */
 var should = require('should'),
+    url = require('url'),
     wd = require('../common/wd-with-cov'),
     _ = require('underscore');
 
@@ -30,11 +31,47 @@ describe("wd", function() {
             should.not.exist(browser.configUrl.auth);
             done(null);
           });
+          it("browser should be initialized with given parameters (url string)", function(done) {
+            var browser;
+            browser = wd.remote('http://localhost:8888/wd/hub');
+            browser.configUrl.hostname.should.equal('localhost');
+            browser.configUrl.port.should.equal('8888');
+            browser.configUrl.pathname.should.equal('/wd/hub');
+            should.not.exist(browser.configUrl.auth);
+            done(null);
+          });
+          it("browser should be initialized with given parameters (url object)", function(done) {
+            var browser;
+            browser = wd.remote(url.parse('http://localhost:8888/wd/hub'));
+            browser.configUrl.hostname.should.equal('localhost');
+            browser.configUrl.port.should.equal('8888');
+            browser.configUrl.pathname.should.equal('/wd/hub');
+            should.not.exist(browser.configUrl.auth);
+            done(null);
+          });
         });
         describe("host, port, username, accesskey", function() {
           it("browser should be initialized with given parameters", function(done) {
             var browser;
             browser = wd.remote('localhost', 8888, 'mickey', 'mouse');
+            browser.configUrl.hostname.should.equal('localhost');
+            browser.configUrl.port.should.equal('8888');
+            browser.configUrl.pathname.should.equal('/wd/hub');
+            browser.configUrl.auth.should.equal('mickey:mouse');
+            done(null);
+          });
+          it("browser should be initialized with given parameters (url string)", function(done) {
+            var browser;
+            browser = wd.remote('http://mickey:mouse@localhost:8888/wd/hub');
+            browser.configUrl.hostname.should.equal('localhost');
+            browser.configUrl.port.should.equal('8888');
+            browser.configUrl.pathname.should.equal('/wd/hub');
+            browser.configUrl.auth.should.equal('mickey:mouse');
+            done(null);
+          });
+          it("browser should be initialized with given parameters (url object)", function(done) {
+            var browser;
+            browser = wd.remote(url.parse('http://mickey:mouse@localhost:8888/wd/hub'));
             browser.configUrl.hostname.should.equal('localhost');
             browser.configUrl.port.should.equal('8888');
             browser.configUrl.pathname.should.equal('/wd/hub');
