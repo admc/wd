@@ -149,6 +149,23 @@ describe("wd", function() {
           done(null);
         });
       });
+      describe("host, port, auth", function() { // accept [Node's `url.parse`](http://nodejs.org/docs/v0.10.0/api/url.html) syntax
+        it("browser should be initialized with given options", function(done) {
+          var browser;
+          browser = wd.remote({
+            host: 'localhost',
+            port: 8888,
+            auth: 'mickey:mouse'
+          });
+          browser.options.host.should.equal('localhost');
+          browser.options.port.should.equal(8888);
+          browser.options.path.should.equal('/wd/hub/session');
+          browser.basePath.should.equal('/wd/hub');
+          browser.username.should.equal('mickey');
+          browser.accessKey.should.equal('mouse');
+          done(null);
+        });
+      });
     });
   });
 });
