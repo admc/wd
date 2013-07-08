@@ -85,6 +85,38 @@ browser.init({
 });
 </pre>
 
+## Construction
+
+You can prepare a connection to a Selenium server with any of the following syntaxes:
+
+### Indexed parameters
+
+    wd.remote([hostname:127.0.0.1, [port:4444, [username, accessKey]]])
+
+All parameters are optional.
+If using a service that requires authentication (e.g. SauceLabs), provide the `username` and `accessKey` parameters to generate HTTP authentication headers.
+
+### Named parameters
+
+    wd.remote({
+      host: '127.0.0.1',  // even though named “host”, this can only be the hostname, without port information
+      port: 4444,
+      username: 'username',
+      accessKey: 'password',
+      auth: 'username:password'
+    })
+
+As above, all parameters are optional.
+
+The `auth` key is an alternate way to provide `username` and `accessKey` information, in a syntax compatible with Node’s [`url.parse`](http://nodejs.org/docs/v0.10.0/api/url.html#url_url).
+The explicit `username` and `accessKey` keys have higher precedence than `auth`.
+`host` is also aliased to `hostname` for `url.parse` compatibility. `hostname` has higher precedence than `host`, so that explicit `port` values are respected.
+
+### Environment variables
+
+Along with the syntaxes above, the `username` and `accessKey` parameters can also be passed through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables, respectively.
+This way of passing information has lower precedence than all others.
+
 ## Promises Api
 
 A promise api using [q](https://github.com/kriskowal/q) is
