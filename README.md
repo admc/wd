@@ -40,7 +40,7 @@ npm install wd
 ): wd shell
 > x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
-> x.init() or x.init({desired capabilities ovveride})
+> x.init() or x.init({desired capabilities override})
 > x.get("http://www.url.com")
 > x.eval("window.location.href", function(e, o) { console.log(o) })
 > x.quit()
@@ -177,7 +177,7 @@ browser
   })
   .queueAddAsync( function(cb) {
     // your code here
-    cb(null); 
+    cb(null);
   })
   .clickElement(el, function() {
     console.log("did the click!");
