@@ -742,8 +742,13 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Submit a FORM element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 submit(element, cb) -&gt; cb(err)<br>
 Submit a `FORM` element.<br>
+</p>
+<p>
+element.submit(cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
