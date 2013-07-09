@@ -29,6 +29,7 @@ npm install wd
   - Santiago Suarez Ordonez ([santiycr](https://github.com/santiycr))
   - Bernard Kobos ([bernii](https://github.com/bernii))
   - Jason Carr ([maudineormsby](https://github.com/maudineormsby))
+  - Matti Schneider ([MattiSG](https://github.com/MattiSG))
 
 ## License
 
@@ -40,7 +41,7 @@ npm install wd
 ): wd shell
 > x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
-> x.init() or x.init({desired capabilities ovveride})
+> x.init() or x.init({desired capabilities override})
 > x.get("http://www.url.com")
 > x.eval("window.location.href", function(e, o) { console.log(o) })
 > x.quit()
@@ -84,6 +85,73 @@ browser.init({
   });
 });
 </pre>
+
+## Browser initialization
+
+### Indexed parameters
+
+<pre>
+var browser = wd.remote();
+// or
+var browser = wd.remote('localhost');
+// or
+var browser = wd.remote('localhost', 8888);
+// or
+var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
+</pre>
+
+### Named parameters
+
+<pre>
+var browser = wd.remote()
+// or
+var browser = wd.remote({
+  hostname: '127.0.0.1', 
+  port: 4444,
+  user: 'username',
+  pwd: 'password',
+});
+// or
+var browser = wd.remote({
+  hostname: '127.0.0.1', 
+  port: 4444,
+  auth: 'username:password',
+});
+</pre>
+
+### Url string
+
+<pre>
+var browser = wd.remote('https://localhost:4444/wd/hub');
+// or
+var browser = wd.remote('https://user:apiKey@ondemand.saucelabs.com/wd/hub');
+</pre>
+
+### Url object created via `url.parse`
+
+[URL module documentation](http://nodejs.org/docs/v0.10.0/api/url.html#url_url)
+
+<pre>
+var url = require('url');
+var browser = wd.remote(url.parse('https://localhost:4444/wd/hub'));
+// or
+var browser = wd.remote(url.parse('https://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
+</pre>
+
+### Defaults
+
+<pre>
+{
+    protocol: 'http:'
+    hostname: '127.0.0.1',
+    port: '4444'
+    path: '/wd/hub'
+}
+</pre> 
+
+### Environment variables for Saucelabs
+
+When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
 
 ## Promises Api
 
@@ -145,7 +213,7 @@ browser
   })
   .queueAddAsync( function(cb) {
     // your code here
-    cb(null); 
+    cb(null);
   })
   .clickElement(el, function() {
     console.log("did the click!");
