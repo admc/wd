@@ -1027,6 +1027,14 @@ element.sendKeys(keys, cb) -&gt; cb(err)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+element.doubleClick(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
 </td>
 </tr>
