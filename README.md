@@ -40,7 +40,7 @@ npm install wd
 ): wd shell
 > x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
-> x.init() or x.init({desired capabilities ovveride})
+> x.init() or x.init({desired capabilities override})
 > x.get("http://www.url.com")
 > x.eval("window.location.href", function(e, o) { console.log(o) })
 > x.quit()
@@ -84,6 +84,38 @@ browser.init({
   });
 });
 </pre>
+
+## Construction
+
+You can prepare a connection to a Selenium server with any of the following syntaxes:
+
+### Indexed parameters
+
+    wd.remote([hostname:127.0.0.1, [port:4444, [username, accessKey]]])
+
+All parameters are optional.
+If using a service that requires authentication (e.g. SauceLabs), provide the `username` and `accessKey` parameters to generate HTTP authentication headers.
+
+### Named parameters
+
+    wd.remote({
+      host: '127.0.0.1',  // even though named “host”, this can only be the hostname, without port information
+      port: 4444,
+      username: 'username',
+      accessKey: 'password',
+      auth: 'username:password'
+    })
+
+As above, all parameters are optional.
+
+The `auth` key is an alternate way to provide `username` and `accessKey` information, in a syntax compatible with Node’s [`url.parse`](http://nodejs.org/docs/v0.10.0/api/url.html#url_url).
+The explicit `username` and `accessKey` keys have higher precedence than `auth`.
+`host` is also aliased to `hostname` for `url.parse` compatibility. `hostname` has higher precedence than `host`, so that explicit `port` values are respected.
+
+### Environment variables
+
+Along with the syntaxes above, the `username` and `accessKey` parameters can also be passed through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables, respectively.
+This way of passing information has lower precedence than all others.
 
 ## Promises Api
 
@@ -145,7 +177,7 @@ browser
   })
   .queueAddAsync( function(cb) {
     // your code here
-    cb(null); 
+    cb(null);
   })
   .clickElement(el, function() {
     console.log("did the click!");
