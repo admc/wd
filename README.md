@@ -91,31 +91,61 @@ You can prepare a connection to a Selenium server with any of the following synt
 
 ### Indexed parameters
 
-    wd.remote([hostname:127.0.0.1, [port:4444, [username, accessKey]]])
+wd.remote([hostname:127.0.0.1, [port:4444, [user, pwd]]])
 
-All parameters are optional.
-If using a service that requires authentication (e.g. SauceLabs), provide the `username` and `accessKey` parameters to generate HTTP authentication headers.
+<pre>
+var browser = wd.remote();
+// or
+var browser = wd.remote('localhost');
+// or
+var browser = wd.remote('localhost', 8888);
+// or
+var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
+</pre>
+
+`usr` and `pwd` are used for HTTP authentication.
+When using SauceLabs, use your Saucelabs user and access key for `usr` and `pwd`.
 
 ### Named parameters
 
-    wd.remote({
-      host: '127.0.0.1',  // even though named “host”, this can only be the hostname, without port information
-      port: 4444,
-      username: 'username',
-      accessKey: 'password',
-      auth: 'username:password'
-    })
+<pre>
+var browser = wd.remote()
+// or
+var browser = wd.remote({
+  hostname: '127.0.0.1', 
+  port: 4444,
+  user: 'username',
+  pwd: 'password',
+})
+// or
+var browser = wd.remote({
+  hostname: '127.0.0.1', 
+  port: 4444,
+  auth: 'username:password',
+})
+</pre>
 
-As above, all parameters are optional.
+Options field are defaulted in the same way as for indexed parameters.
 
-The `auth` key is an alternate way to provide `username` and `accessKey` information, in a syntax compatible with Node’s [`url.parse`](http://nodejs.org/docs/v0.10.0/api/url.html#url_url).
-The explicit `username` and `accessKey` keys have higher precedence than `auth`.
-`host` is also aliased to `hostname` for `url.parse` compatibility. `hostname` has higher precedence than `host`, so that explicit `port` values are respected.
+### Url string
 
-### Environment variables
+<pre>
+var browser = wd.remote('https://localhost:4444/wd/hub');
+// or
+var browser = wd.remote('https://user:apiKey@ondemand.saucelabs.com/wd/hub');
+</pre>
 
-Along with the syntaxes above, the `username` and `accessKey` parameters can also be passed through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables, respectively.
-This way of passing information has lower precedence than all others.
+### Url object created via `url.parse`
+<pre>
+var url = require('url');
+var browser = wd.remote(url.parse('https://localhost:4444/wd/hub'));
+// or
+var browser = wd.remote(url.parse('https://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
+</pre>
+
+### Environment variables for Saucelabs
+
+When connecting to Saucelabs, the `user` and `pwd` parameters can also be passed through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
 
 ## Promises Api
 
