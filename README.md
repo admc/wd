@@ -29,6 +29,7 @@ npm install wd
   - Santiago Suarez Ordonez ([santiycr](https://github.com/santiycr))
   - Bernard Kobos ([bernii](https://github.com/bernii))
   - Jason Carr ([maudineormsby](https://github.com/maudineormsby))
+  - Matti Schneider ([MattiSG](https://https://github.com/MattiSG))
 
 ## License
 
@@ -127,6 +128,9 @@ var browser = wd.remote('https://user:apiKey@ondemand.saucelabs.com/wd/hub');
 </pre>
 
 ### Url object created via `url.parse`
+
+[URL module documentation](http://nodejs.org/docs/v0.10.0/api/url.html#url_url)
+
 <pre>
 var url = require('url');
 var browser = wd.remote(url.parse('https://localhost:4444/wd/hub'));
