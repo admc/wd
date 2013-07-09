@@ -122,9 +122,9 @@ var browser = wd.remote({
 ### Url string
 
 <pre>
-var browser = wd.remote('https://localhost:4444/wd/hub');
+var browser = wd.remote('http://localhost:4444/wd/hub');
 // or
-var browser = wd.remote('https://user:apiKey@ondemand.saucelabs.com/wd/hub');
+var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 </pre>
 
 ### Url object created via `url.parse`
@@ -133,9 +133,9 @@ var browser = wd.remote('https://user:apiKey@ondemand.saucelabs.com/wd/hub');
 
 <pre>
 var url = require('url');
-var browser = wd.remote(url.parse('https://localhost:4444/wd/hub'));
+var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
 // or
-var browser = wd.remote(url.parse('https://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
+var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 </pre>
 
 ### Defaults
