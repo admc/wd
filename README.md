@@ -138,7 +138,7 @@ var browser = wd.remote(url.parse('https://localhost:4444/wd/hub'));
 var browser = wd.remote(url.parse('https://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 </pre>
 
-### Defaults for all method above:
+### Defaults
 
 <pre>
 {
@@ -151,7 +151,7 @@ var browser = wd.remote(url.parse('https://user:apiKey@ondemand.saucelabs.com:80
 
 ### Environment variables for Saucelabs
 
-When connecting to Saucelabs, the `user` and `pwd` parameters can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
+When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
 
 ## Promises Api
 

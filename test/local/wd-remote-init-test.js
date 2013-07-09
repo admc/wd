@@ -218,6 +218,54 @@ describe("wd", function() {
         done(null);
       });
     });
+    describe("automatic Saucelabs config", function() {
+      before(function() {
+        process.env.SAUCE_USERNAME = 'zorro'
+        process.env.SAUCE_ACCESS_KEY = '1234-5678'
+      });
+      after(function() {
+        delete process.env.SAUCE_USERNAME;
+        delete process.env.SAUCE_ACCESS_KEY;
+      });
+      it("browser should be initialized with indexed parameters", function(done) {
+        var browser;
+        browser = wd.remote('ondemand.saucelabs.com', 80);
+        browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
+        browser.configUrl.port.should.equal('80');
+        browser.configUrl.pathname.should.equal('/wd/hub');
+        browser.configUrl.auth.should.equal('zorro:1234-5678');
+        done();
+      });
+      it("browser should be initialized with named parameters", function(done) {
+        var browser;
+        browser = wd.remote({
+          hostname: 'ondemand.saucelabs.com', 
+          port:80 });
+        browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
+        browser.configUrl.port.should.equal('80');
+        browser.configUrl.pathname.should.equal('/wd/hub');
+        browser.configUrl.auth.should.equal('zorro:1234-5678');
+        done();
+      });
+      it("browser should be initialized with url string", function(done) {
+        var browser;
+        browser = wd.remote('http://ondemand.saucelabs.com/wd/hub');
+        browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
+        (browser.configUrl.port || '80').should.equal('80');
+        browser.configUrl.pathname.should.equal('/wd/hub');
+        browser.configUrl.auth.should.equal('zorro:1234-5678');
+        done();
+      });
+      it("browser should be initialized with url object", function(done) {
+        var browser;
+        browser = wd.remote(url.parse('http://ondemand.saucelabs.com/wd/hub'));
+        browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
+        (browser.configUrl.port || '80').should.equal('80');
+        browser.configUrl.pathname.should.equal('/wd/hub');
+        browser.configUrl.auth.should.equal('zorro:1234-5678');
+        done();
+      });
+    });
     describe("backward compatibility", function() {
       it("browser should be initialized with: host, port", function(done) {
         var browser;
