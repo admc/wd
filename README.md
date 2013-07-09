@@ -85,13 +85,9 @@ browser.init({
 });
 </pre>
 
-## Construction
-
-You can prepare a connection to a Selenium server with any of the following syntaxes:
+## Browser initialization
 
 ### Indexed parameters
-
-wd.remote([hostname:127.0.0.1, [port:4444, [user, pwd]]])
 
 <pre>
 var browser = wd.remote();
@@ -102,9 +98,6 @@ var browser = wd.remote('localhost', 8888);
 // or
 var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 </pre>
-
-`usr` and `pwd` are used for HTTP authentication.
-When using SauceLabs, use your Saucelabs user and access key for `usr` and `pwd`.
 
 ### Named parameters
 
@@ -125,8 +118,6 @@ var browser = wd.remote({
 })
 </pre>
 
-Options field are defaulted in the same way as for indexed parameters.
-
 ### Url string
 
 <pre>
@@ -143,9 +134,20 @@ var browser = wd.remote(url.parse('https://localhost:4444/wd/hub'));
 var browser = wd.remote(url.parse('https://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 </pre>
 
+### Defaults for all method above:
+
+<pre>
+{
+    protocol: 'http:'
+    hostname: '127.0.0.1',
+    port: '4444'
+    path: '/wd/hub'
+}
+</pre> 
+
 ### Environment variables for Saucelabs
 
-When connecting to Saucelabs, the `user` and `pwd` parameters can also be passed through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
+When connecting to Saucelabs, the `user` and `pwd` parameters can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
 
 ## Promises Api
 
