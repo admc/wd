@@ -94,7 +94,7 @@ describe("wd", function() {
         });
         it("browser should be initialized with: host, port, user, pwd", function(done) {
           var browser;
-          browser = wd.remote('localhost', 8888, 'mickey', 'mouse');
+          browser = wd.remote('localhost', '8888', 'mickey', 'mouse');
           browser.configUrl.hostname.should.equal('localhost');
           browser.configUrl.port.should.equal('8888');
           browser.configUrl.pathname.should.equal('/wd/hub');
@@ -131,7 +131,7 @@ describe("wd", function() {
         browser = wd.remote({
           protocol: 'https:',
           hostname: 'localhost',
-          port: 8888
+          port: '8888'
         });
         browser.configUrl.protocol.should.equal('https:');
         browser.configUrl.hostname.should.equal('localhost');
