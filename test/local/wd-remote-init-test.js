@@ -181,7 +181,7 @@ describe("wd", function() {
       it("browser should be initialized with: path", function(done) {
         var browser;
         browser = wd.remote({
-          path: '/taiwan'
+          pathname: '/taiwan'
         });
         browser.configUrl.hostname.should.equal('127.0.0.1');
         browser.configUrl.port.should.equal('4444');
@@ -194,7 +194,7 @@ describe("wd", function() {
         browser = wd.remote({
           hostname: 'localhost',
           port: 8888,
-          path: '/'
+          pathname: '/'
         });
         browser.configUrl.hostname.should.equal('localhost');
         browser.configUrl.port.should.equal('8888');
@@ -209,7 +209,7 @@ describe("wd", function() {
           port: 8888,
           user: 'mickey',
           pwd: 'mouse',
-          path: '/asia/taiwan'
+          pathname: '/asia/taiwan'
         });
         browser.configUrl.hostname.should.equal('localhost');
         browser.configUrl.port.should.equal('8888');
@@ -306,6 +306,17 @@ describe("wd", function() {
         browser.configUrl.port.should.equal('8888');
         browser.configUrl.pathname.should.equal('/wd/hub');
         browser.configUrl.auth.should.equal('mickey:mouse');
+        done(null);
+      });
+      it("browser should be initialized with: path", function(done) {
+        var browser;
+        browser = wd.remote({
+          path: '/taiwan'
+        });
+        browser.configUrl.hostname.should.equal('127.0.0.1');
+        browser.configUrl.port.should.equal('4444');
+        browser.configUrl.pathname.should.equal('/taiwan');
+        should.not.exist(browser.configUrl.auth);
         done(null);
       });
     });
