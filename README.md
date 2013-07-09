@@ -96,7 +96,7 @@ var browser = wd.remote('localhost');
 // or
 var browser = wd.remote('localhost', 8888);
 // or
-var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
+var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
 </pre>
 
 ### Named parameters
@@ -109,13 +109,13 @@ var browser = wd.remote({
   port: 4444,
   user: 'username',
   pwd: 'password',
-})
+});
 // or
 var browser = wd.remote({
   hostname: '127.0.0.1', 
   port: 4444,
   auth: 'username:password',
-})
+});
 </pre>
 
 ### Url string
