@@ -29,7 +29,7 @@ npm install wd
   - Santiago Suarez Ordonez ([santiycr](https://github.com/santiycr))
   - Bernard Kobos ([bernii](https://github.com/bernii))
   - Jason Carr ([maudineormsby](https://github.com/maudineormsby))
-  - Matti Schneider ([MattiSG](https://https://github.com/MattiSG))
+  - Matti Schneider ([MattiSG](https://github.com/MattiSG))
 
 ## License
 
