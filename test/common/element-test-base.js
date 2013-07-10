@@ -139,6 +139,29 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("element.doubleClick", function() {
+    it("element should be double-clicked", function(done) {
+      browser.elementByCss("#click a", function(err, anchor) {
+        should.not.exist(err);
+        should.exist(anchor);
+        async.series([
+          executeCoffee(browser, "jQuery ->\n  a = $('#click a')\n  a.dblclick ->\n    a.html 'doubleclicked'\n    false\n"), function(done) {
+            textShouldEqual(browser, anchor, "clicked", done);
+          }, function(done) {
+            anchor.doubleClick(function(err) {
+              should.not.exist(err);
+              done(null);
+            });
+          }, function(done) {
+            textShouldEqual(browser, anchor, "doubleclicked", done);
+          }
+        ], function(err) {
+          should.not.exist(err);
+          done(null);
+        });
+      });
+    });
+  });
   describe("element.getTagName", function() {
     it("should get correct tag name", function(done) {
       async.series([
