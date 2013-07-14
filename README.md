@@ -1293,7 +1293,7 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 ## Monkey patching
 
 You may want to monkey patch the webdriver class. There is an example 
-[here]()
+[here](https://github.com/admc/wd/blob/master/examples/example.monkey.patch.js)
 
 ## Adding new method / Contributing
 
