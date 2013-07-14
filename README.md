@@ -1290,6 +1290,11 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
   - make test_saucelabs
 </pre>
 
+## Monkey patching
+
+You may want to monkey patch the webdriver class. There is an example 
+[here]()
+
 ## Adding new method / Contributing
 
 If the method you want to use is not yet implemented, that should be
