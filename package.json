@@ -9,6 +9,20 @@
   ],
   "version": "0.0.32",
   "author": "Adam Christian <adam.christian@gmail.com>",
+  "contributors": [
+    "Ruben Daniels (https://github.com/javruben)",
+    "Peter Braden (https://github.com/peterbraden)",
+    "Seb Vincent (https://github.com/sebv)",
+    "Peter 'Pita' Martischka (https://github.com/Pita)",
+    "Jonathan Lipps (https://github.com/jlipps)",
+    "Phil Sarin (https://github.com/pdsarin)",
+    "Mathieu Sabourin (https://github.com/OniOni)",
+    "Bjorn Tipling (https://github.com/btipling)",
+    "Santiago Suarez Ordonez (https://github.com/santiycr)",
+    "Bernard Kobos (https://github.com/bernii)",
+    "Jason Carr (https://github.com/maudineormsby)",
+    "Matti Schneider <hi@mattischneider.fr> (https://github.com/MattiSG)"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/admc/wd.git"
