@@ -80,7 +80,8 @@ exports.desiredDefaults = {
     browserName: 'chrome',
   }
   , firefox: {
-    browserName: 'firefox'
+    browserName: 'firefox',
+    version: '22'
   }
   , explorer: {
     browserName: 'iexplore',
