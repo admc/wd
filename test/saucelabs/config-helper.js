@@ -74,3 +74,17 @@ exports.jobUpdate = function(jobId, name, tags, done) {
     done(err);
   });
 };
+
+exports.desiredDefaults = {
+  chrome: {
+    browserName: 'chrome',
+  }
+  , firefox: {
+    browserName: 'firefox'
+  }
+  , explorer: {
+    browserName: 'iexplore',
+    version: '9',
+    platform: 'Windows 2008',
+  }
+};

@@ -1,48 +1,34 @@
 /*global describe,before,it,after */
-var chromeDesired, configHelper, explorerDesired, firefoxDesired, nameBase, remoteWdConfig, test;
 
-test = require('../common/promise-test-base').test;
+var _ = require('underscore');
 
-configHelper = require('./config-helper');
+var test = require('../common/promise-test-base').test;
 
-remoteWdConfig = configHelper.getRemoteWdConfig();
+var configHelper = require('./config-helper');
 
-nameBase = "saucelabs promise test - ";
+var remoteWdConfig = configHelper.getRemoteWdConfig();
 
-chromeDesired = {
-  name: nameBase + 'chrome',
-  browserName: 'chrome',
-  tags: ['wd', 'test'],
-  "record-video": false
-};
+var nameBase = "saucelabs promise test - ";
 
-firefoxDesired = {
-  name: nameBase + 'firefox',
-  browserName: 'firefox',
-  tags: ['wd', 'test'],
-  "record-video": false
-};
+var browsers = ['chrome','firefox','explorer']
 
-explorerDesired = {
-  name: nameBase + 'explorer',
-  browserName: 'iexplore',
-  version: '9',
-  platform: 'Windows 2008',
-  tags: ['wd', 'test'],
-  "record-video": false
-};
+desired = {};
+
+_(browsers).each(function(b) {
+  desired[b] = _.defaults({
+    name: nameBase + b,
+    tags: ['wd', 'test'],
+    "record-video": false
+  }, configHelper.desiredDefaults[b]);
+});
 
 describe("wd", function() {
   describe("saucelabs", function() {
     describe("promise tests", function() {
-      describe("using chrome", function() {
-        test(remoteWdConfig, chromeDesired, configHelper.jobPassed );
-      });
-      describe("using firefox", function() {
-        test(remoteWdConfig, firefoxDesired, configHelper.jobPassed);
-      });
-      describe("using explorer", function() {
-        test(remoteWdConfig, explorerDesired, configHelper.jobPassed);
+      _(browsers).each(function(b) {
+        describe("using " + b, function() {
+          test(remoteWdConfig, desired[b], configHelper.jobPassed);
+        }, this);
       });
     });
   });

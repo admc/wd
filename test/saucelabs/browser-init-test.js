@@ -1,15 +1,14 @@
 /*global describe,before,it,after */
-var configHelper, remoteWdConfig, should, wd;
 
-wd = require('../common/wd-with-cov');
+var wd = require('../common/wd-with-cov');
 
-should = require('should');
+var should = require('should');
 
-configHelper = require('./config-helper');
+var configHelper = require('./config-helper');
 
 var TIMEOUT = 60000;
 
-remoteWdConfig = configHelper.getRemoteWdConfig();
+var remoteWdConfig = configHelper.getRemoteWdConfig();
 
 describe("wd", function() {
   describe("saucelabs", function() {
@@ -75,7 +74,7 @@ describe("wd", function() {
             browser.sessionCapabilities(function(err, capabilities) {
               should.not.exist(err);
               capabilities.browserName.should.equal('chrome');
-              capabilities.platform.should.equal('LINUX');
+              capabilities.platform.toLowerCase().should.equal('linux');
               browser.quit(function(err) {
                 should.not.exist(err);
                 done(null);
