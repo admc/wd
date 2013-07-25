@@ -106,14 +106,14 @@ var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
 var browser = wd.remote()
 // or
 var browser = wd.remote({
-  hostname: '127.0.0.1', 
+  hostname: '127.0.0.1',
   port: 4444,
   user: 'username',
   pwd: 'password',
 });
 // or
 var browser = wd.remote({
-  hostname: '127.0.0.1', 
+  hostname: '127.0.0.1',
   port: 4444,
   auth: 'username:password',
 });
@@ -147,7 +147,7 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
     port: '4444'
     path: '/wd/hub'
 }
-</pre> 
+</pre>
 
 ### Environment variables for Saucelabs
 
@@ -158,6 +158,25 @@ When connecting to Saucelabs, the `user` and `pwd` fields can also be set throug
 A promise api using [q](https://github.com/kriskowal/q) is
 available. Code sample is
 [here](https://github.com/admc/wd/blob/master/examples/example.promise.chrome.js).
+
+## Generators Api
+
+[Yiewd](https://github.com/jlipps/yiewd) is a wrapper around Wd.js that uses
+generators in order to avoid nested callbacks, like so:
+
+```js
+wd.remote(function*() {
+  yield this.init(desiredCaps);
+  yield this.get("http://mysite.com");
+  el = yield this.elementById("someId");
+  yield el.click();
+  el2 = yield this.elementById("anotherThing")
+  text = yield el2.text();
+  text.should.equal("What the text should be");
+  yield this.quit();
+});
+```
+
 
 ## Chain Api
 
@@ -1292,7 +1311,7 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 
 ## Monkey patching
 
-You may want to monkey patch the webdriver class in order to add custom functionalities. 
+You may want to monkey patch the webdriver class in order to add custom functionalities.
 There is an example [here](https://github.com/admc/wd/blob/master/examples/example.monkey.patch.js).
 
 ## Adding new method / Contributing
