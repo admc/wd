@@ -45,7 +45,8 @@
     "underscore": "1.4.x",
     "vargs": "~0.1.0",
     "q": "0.9.x",
-    "request": "~2.21.0"
+    "request": "~2.21.0",
+    "archiver": "~0.4.6"
   },
   "devDependencies": {
     "mocha": "1.9.x",
@@ -59,7 +60,6 @@
     "mu2": "0.5.x",
     "sv-selenium": "0.1.x",
     "colors": "~0.6.0-1",
-    "node-zip": "~1.0.1"
   },
   "scripts": {
     "test": "make test_saucelabs"

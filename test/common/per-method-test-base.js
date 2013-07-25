@@ -1919,11 +1919,19 @@ test = function(remoteWdConfig, desired) {
   // GhostDriver has not implemented this endpoint
   if (!process.env.GHOSTDRIVER_TEST) {
     describe("uploadFile", function() {
-      it("should upload a local file to remove server", function(done) {
+      it("should upload a small text file", function(done) {
         browser.uploadFile("test/mocha.opts", function(err, filepath) {
           should.not.exist(err);
           should.exist(filepath);
           filepath.should.include('mocha.opts');
+          done(null);
+        });
+      });
+      it("should upload a larger jpg file", function(done) {
+        browser.uploadFile("test/fixtures/tux.jpg", function(err, filepath) {
+          should.not.exist(err);
+          should.exist(filepath);
+          filepath.should.include('tux.jpg');
           done(null);
         });
       });
