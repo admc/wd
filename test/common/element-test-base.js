@@ -1,5 +1,3 @@
-/*global describe,before,it,after */
-
 var path = require('path');
 
 var CoffeeScript, Express, async, executeCoffee, should, test, textShouldEqual, wd;
@@ -423,14 +421,14 @@ test = function(remoteWdConfig, desired) {
         });
       });
     });
-    if (desired.browserName != "firefox") {
+    if (desired.browserName !== "firefox") {
       // this hangs and times out in ff, probably a ffdriver bug
       it("should not find an element not within itself", function(done) {
         browser.setImplicitWaitTimeout(0, function(err) {
           should.not.exist(err);
           browser.elementById("getComputedCss", function(err, el) {
             should.not.exist(err);
-            el.elementByTagName("textarea", function(err, el2) {
+            el.elementByTagName("textarea", function(err) {
               should.exist(err);
               done();
             });

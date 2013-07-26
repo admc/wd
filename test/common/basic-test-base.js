@@ -59,6 +59,7 @@ test = function(remoteWdConfig, desired, markAsPassed) {
         browser.elementById("submit", function(err, el) {
           should.not.exist(err);
           browser.clickElement(el, function() {
+            /* jshint evil: true */
             browser["eval"]("window.location.href", function(err, location) {
               should.not.exist(err);
               assert.ok(~location.indexOf("http://"), "Wrong location!");

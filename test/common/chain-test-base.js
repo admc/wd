@@ -1,4 +1,3 @@
-/*global describe,before,it,after */
 var async, should, test, wd;
 
 should = require('should');
@@ -26,6 +25,7 @@ test = function(browserName) {
   });
   describe("chaining", function() {
     it("should work", function(done) {
+      /* jshint evil: true */
       browser.chain().init({
         browserName: browserName,
         tags: ["examples"],
@@ -41,9 +41,10 @@ test = function(browserName) {
         // browser.clickElement(el, function(err) {
         //  should.not.exist.err;
         //});
-      })["eval"]("window.location.href", function(err, href) {
+      }).eval("window.location.href", function(err, href) {
         href.should.include('http');
       }).quit(function(err) {
+        should.not.exist(err);
         done(null);
       });
     });
@@ -65,8 +66,10 @@ test = function(browserName) {
         }, 250);
       }).elementById('submit', function(err, el) {
         should.not.exist(err);
+        should.exist(el);
         asyncCallCompleted.should.be.true;
       }).quit(function(err) {
+        should.not.exist(err);
         done(null);
       });
     });

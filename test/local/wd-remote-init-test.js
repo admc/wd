@@ -1,4 +1,3 @@
-/*global describe,before,it,after */
 var should = require('should'),
     url = require('url'),
     wd = require('../common/wd-with-cov'),
@@ -220,8 +219,8 @@ describe("wd", function() {
     });
     describe("automatic Saucelabs config", function() {
       before(function() {
-        process.env.SAUCE_USERNAME = 'zorro'
-        process.env.SAUCE_ACCESS_KEY = '1234-5678'
+        process.env.SAUCE_USERNAME = 'zorro';
+        process.env.SAUCE_ACCESS_KEY = '1234-5678';
       });
       after(function() {
         delete process.env.SAUCE_USERNAME;

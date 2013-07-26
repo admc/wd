@@ -1,4 +1,3 @@
-/*global describe,before,it,after */
 var config, should, request;
 
 should = require('should');
@@ -42,7 +41,7 @@ exports.jobPassed = function(jobId, done) {
     jar: false /* disable cookies: avoids CSRF issues */
   };
 
-  request(httpOpts, function(err, res) {
+  request(httpOpts, function(err) {
     if(err)
       { console.log(err); }
     else
@@ -66,7 +65,7 @@ exports.jobUpdate = function(jobId, name, tags, done) {
     jar: false /* disable cookies: avoids CSRF issues */
   };
 
-  request(httpOpts, function(err, res) {
+  request(httpOpts, function(err) {
     if(err)
       { console.log(err); }
     else

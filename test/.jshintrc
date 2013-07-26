@@ -1,0 +1,23 @@
+// jshint configuration for tests
+{
+  "curly": true,
+  "eqeqeq": true,
+  "expr": true,
+  "globals": { 
+    "describe": false,
+    "it": false,
+    "before": false,
+    "after": false    
+  },
+  "immed": true,
+  "latedef": true,
+  "laxcomma": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "boss": true,
+  "eqnull": true,
+  "node": true
+}

@@ -1,3 +1,5 @@
+/* jshint evil: true */
+
 var wd;
 try {
   wd = require('wd');

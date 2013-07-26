@@ -1,5 +1,3 @@
-/*global describe,before,it,after */
-
 var _ = require('underscore');
 
 var test = require('../common/promise-test-base').test;
@@ -10,9 +8,9 @@ var remoteWdConfig = configHelper.getRemoteWdConfig();
 
 var nameBase = "saucelabs promise test - ";
 
-var browsers = ['chrome','firefox','explorer']
+var browsers = ['chrome','firefox','explorer'];
 
-desired = {};
+var desired = {};
 
 _(browsers).each(function(b) {
   desired[b] = _.defaults({

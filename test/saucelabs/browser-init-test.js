@@ -1,5 +1,3 @@
-/*global describe,before,it,after */
-
 var wd = require('../common/wd-with-cov');
 
 var should = require('should');
