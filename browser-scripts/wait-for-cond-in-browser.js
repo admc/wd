@@ -2,18 +2,11 @@ var args = Array.prototype.slice.call(arguments, 0);
 var condExpr = args[0], timeout = args[1], 
     poll = args[2], cb = args[3];
 
-// shim Date.now if absent.
-if (!Date.now) {
-  Date.now = function now() {
-    return new Date().getTime();
-  };
-}
-
 // recursive implementation
 var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
   
   // timeout check
-  if (Date.now() < limit) {
+  if ((new Date().getTime()) < limit) {
     // condition check
     var res = eval(conditionExpr);
     if (res === true ) {
@@ -33,5 +26,5 @@ var waitForConditionImpl = function(conditionExpr, limit, poll, cb) {
 };
 
 // calling impl
-var limit = Date.now() + timeout;  
+var limit = (new Date().getTime()) + timeout;  
 waitForConditionImpl(condExpr, limit, poll, cb);
