@@ -102,6 +102,8 @@ var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
 
 ### Named parameters
 
+The parameters used are similar to those in the [url](http://nodejs.org/docs/latest/api/url.html) module. 
+
 <pre>
 var browser = wd.remote()
 // or
@@ -116,6 +118,17 @@ var browser = wd.remote({
   hostname: '127.0.0.1',
   port: 4444,
   auth: 'username:password',
+});
+</pre>
+
+The following parameters may also be used (as in earlier versions):
+
+<pre>
+var browser = wd.remote({
+  host: '127.0.0.1',
+  port: 4444,
+  username: 'username',
+  accessKey: 'password',
 });
 </pre>
 
