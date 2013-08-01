@@ -386,6 +386,7 @@ test = function(remoteWdConfig, desired) {
           el.getValue(function(err, filepath) {
             should.not.exist(err);
             filepath.should.include('mocha.opts');
+            filepath.should.not.include(text);  // check that the path was transformed, as the file was uploaded
             done(null);
           });
         });
