@@ -747,6 +747,9 @@ getLocation(element, cb) -&gt; cb(err, location)<br>
 <p>
 element.getLocation(cb) -&gt; cb(err, location)<br>
 </p>
+<p>
+element.getLocationInView(cb) -&gt; cb(err, location)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -755,7 +758,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Determine an element's location on the screen once it has been scrolled into view.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+getLocationInView(element, cb) -&gt; cb(err, location)<br>
 </td>
 </tr>
 <tr>

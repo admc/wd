@@ -1564,6 +1564,34 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
+  describe("getLocationInView (browser)", function() {
+    it("should retrieve x and y locations", function(done) {
+      browser.elementByCss("#elementLocation", function(err, locationDiv) {
+        should.not.exist(err);
+        should.exist(locationDiv);
+        browser.getLocationInView(locationDiv, function(err, location) {
+          should.not.exist(err);
+          should.exist(location.x);
+          should.exist(location.y);
+          done(null);
+        });
+      });
+    });
+  });
+  describe("getLocationInView (element)", function() {
+    it("should retrieve x and y locations", function(done) {
+      browser.elementByCss("#elementLocation", function(err, locationDiv) {
+        should.not.exist(err);
+        should.exist(locationDiv);
+        locationDiv.getLocationInView(function(err, location) {
+          should.not.exist(err);
+          should.exist(location.x);
+          should.exist(location.y);
+          done(null);
+        });
+      });
+    });
+  });
   describe("getSize (element)", function() {
     it("should retrieve height and width", function(done) {
       browser.elementByCss("#elementSize", function(err, sizeDiv) {
