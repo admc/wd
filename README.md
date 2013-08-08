@@ -102,7 +102,7 @@ var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
 
 ### Named parameters
 
-The parameters used are similar to those in the [url](http://nodejs.org/docs/latest/api/url.html) module. 
+The parameters used are similar to those in the [url](http://nodejs.org/docs/latest/api/url.html) module.
 
 <pre>
 var browser = wd.remote()
@@ -1186,6 +1186,7 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 setHTTPInactivityTimeout(ms)<br>
+ms: how many milliseconds to wait for any communication with the WebDriver server (i.e. any command to complete) before the connection is considered lost<br>
 </td>
 </tr>
 <tr>
