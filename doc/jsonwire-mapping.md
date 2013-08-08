@@ -837,7 +837,12 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Double-clicks at the current mouse coordinates (set by moveto).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 doubleclick(cb) -&gt; cb(err)<br>
+</p>
+<p>
+element.doubleClick(cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1040,14 +1045,6 @@ EXTRA
 Equivalent to the python sendKeys binding. Upload file if <br>
 a local file is detected, otherwise behaves like type.<br>
 element.sendKeys(keys, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-element.doubleClick(cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
