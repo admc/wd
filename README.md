@@ -950,6 +950,18 @@ getLocation(element, cb) -&gt; cb(err, location)<br>
 <p>
 element.getLocation(cb) -&gt; cb(err, location)<br>
 </p>
+<p>
+element.getLocationInView(cb) -&gt; cb(err, location)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location_in_view">/session/:sessionId/element/:id/location_in_view</a><br>
+Determine an element's location on the screen once it has been scrolled into view.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getLocationInView(element, cb) -&gt; cb(err, location)<br>
 </td>
 </tr>
 <tr>
@@ -1168,6 +1180,14 @@ windowName(cb) -&gt; cb(err, name)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+setHTTPInactivityTimeout(ms)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
 </td>
 </tr>
@@ -1277,6 +1297,14 @@ EXTRA
 Equivalent to the python sendKeys binding. Upload file if <br>
 a local file is detected, otherwise behaves like type.<br>
 element.sendKeys(keys, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+element.doubleClick(cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
