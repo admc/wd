@@ -923,6 +923,30 @@ windowName(cb) -&gt; cb(err, name)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+jshint evil: true<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+jshint evil: true<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setHTTPInactivityTimeout(ms)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
 </td>
 </tr>

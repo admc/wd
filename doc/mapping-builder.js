@@ -1,4 +1,4 @@
-var isFull = process.argv[2] === "full";
+var mappingType = process.argv[2] || 'supported';
 
 var fs = require("fs"),
     mu = require('mu2'),
@@ -57,8 +57,10 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
   current.wd_doc1 = current.wd_doc.length === 1? current.wd_doc : null;
   current.wd_docN = current.wd_doc.length > 1? current.wd_doc: null;
 
-  if(isFull || (current.wd_doc.length > 0)){
-    resMapping.push(current); 
+  if( (mappingType === 'full') ||
+      ((mappingType === 'supported') && (current.wd_doc.length > 0) ) ||
+      ((mappingType === 'unsupported') && (current.wd_doc.length === 0) ) ) {
+    resMapping.push(current);
   }
 });
 
@@ -68,7 +70,7 @@ _(jsonDocs).each(function (jsonDoc) {
     if(_(wd_v.tags).filter(function (t) {
        return t.type === 'jsonWire';
     }).length === 0){
-      current = {
+      var current = {
         extra: true,
         wd_doc: []
       };
@@ -79,7 +81,11 @@ _(jsonDocs).each(function (jsonDoc) {
       });
       current.wd_doc.push({ 'desc': desc });
       current.wd_doc1 = current.wd_doc;
-      resMapping.push(current);
+
+      if( (mappingType === 'full') ||
+          (mappingType === 'supported') ) {
+        resMapping.push(current);
+      }
     }
   });  
 });
@@ -91,9 +97,9 @@ _(jsonDocs).each(function (jsonDoc) {
     _(_(wd_v.tags).filter(function (t) {
        return t.type === 'jsonWire';
     })).each(function (t) {
-      tag = t.string;
+      var tag = t.string;
       if(!jsonWireFull[tag]){
-        current = {
+        var current = {
           missing: { 
             key:tag
           },

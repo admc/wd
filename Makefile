@@ -10,6 +10,7 @@ DEFAULT:
 	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
 	@echo '  mapping -> build the mapping (implemented only).'  
 	@echo '  full_mapping -> build the mapping (full).'  
+	@echo '  unsupported_mapping -> build the mapping (unsupported).'  
 	@echo
 
 # run unit and local tests, start selenium server first
@@ -66,6 +67,10 @@ mapping: _dox
 # build the mapping (full)
 full_mapping: _dox
 	@node doc/mapping-builder.js full
+
+# build the mapping (unsupported)
+unsupported_mapping: _dox
+	@node doc/mapping-builder.js unsupported
 
 .PHONY: \
 	test \

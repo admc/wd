@@ -1345,6 +1345,7 @@ To update the mappings run the following commands:
 <pre>
   - make mapping > doc/jsonwire-mapping.md
   - make full_mapping > doc/jsonwire-full-mapping.md
+  - make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
 </pre>
 
 The content of doc/jsonwire-mapping.md should then be manually integrated into
