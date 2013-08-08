@@ -1136,6 +1136,7 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 setHTTPInactivityTimeout(ms)<br>
+ms: how many milliseconds to wait for any communication with the WebDriver server (i.e. any command to complete) before the connection is considered lost<br>
 </td>
 </tr>
 <tr>
