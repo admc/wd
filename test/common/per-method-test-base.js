@@ -1261,6 +1261,20 @@ test = function(remoteWdConfig, desired) {
           });
         }, function(done) {
           textShouldEqual(browser, env.resDiv, 'button up', done);
+        }, function(done) {
+          browser.buttonDown(0, function(err) {
+            should.not.exist(err);
+            done(null);
+          });
+        }, function(done) {
+          textShouldEqual(browser, env.resDiv, 'button down', done);
+        }, function(done) {
+          browser.buttonUp(0, function(err) {
+            should.not.exist(err);
+            done(null);
+          });
+        }, function(done) {
+          textShouldEqual(browser, env.resDiv, 'button up', done);
         }
       ], function(err) {
         should.not.exist(err);
