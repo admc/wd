@@ -197,7 +197,7 @@ describe("wd", function() {
         });
         browser.configUrl.hostname.should.equal('localhost');
         browser.configUrl.port.should.equal('8888');
-        browser.configUrl.pathname.should.equal('/');
+        browser.configUrl.pathname.should.equal('');
         should.not.exist(browser.configUrl.auth);
         done(null);
       });
