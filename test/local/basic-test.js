@@ -1,4 +1,4 @@
-var _ = require("underscore");
+var _ = require("lodash");
 
 var test = require('../common/basic-test-base').test,
     utils = require('../common/utils');
