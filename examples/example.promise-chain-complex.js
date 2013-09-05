@@ -21,7 +21,7 @@ browser
   })
   .get('http://google.com/')
   .catch(function(err) {
-    throw err;
+    console.log(err.stack);
   })
   .then(function() {
     console.log("Hey I've finished");

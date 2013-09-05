@@ -22,7 +22,7 @@ browser
   .get('http://www.google.com')
   .then(search('wd'))
   .catch(function(err) {
-    console.log(err);
+    console.log(err.stack);
   })
   .sleep(5000)
   .quit()

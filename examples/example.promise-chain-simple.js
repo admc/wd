@@ -16,7 +16,7 @@ browser
     console.log('text is', text );
   })
   .catch(function(err) {
-    throw err;
+    console.log(err.stack);
   })
   .quit()
   .done();
