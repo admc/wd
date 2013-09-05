@@ -19,6 +19,7 @@ test = function(remoteWdConfig, desired, markAsPassed) {
     describe("remote", function() {
       it("should create browser", function(done) {
         browser = wd.promiseRemote(remoteWdConfig);
+        //browser._debugPromise();
         should.exist(browser);
         if (!process.env.WD_COV) {
           browser.on("status", function(info) {
