@@ -7,7 +7,7 @@
     "browser",
     "javascript"
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -42,11 +42,11 @@
   },
   "dependencies": {
     "async": "0.2.x",
-    "underscore": "1.4.x",
     "vargs": "~0.1.0",
     "q": "0.9.x",
     "request": "~2.21.0",
-    "archiver": "~0.4.6"
+    "archiver": "~0.4.6",
+    "lodash": "~1.3.1"
   },
   "devDependencies": {
     "mocha": "1.9.x",

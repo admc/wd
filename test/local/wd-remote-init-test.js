@@ -1,7 +1,7 @@
 var should = require('should'),
     url = require('url'),
     wd = require('../common/wd-with-cov'),
-    _ = require('underscore');
+    _ = require('lodash');
 
 process.env = _(process.env).omit('SAUCE_USERNAME', 'SAUCE_ACCESS_KEY');
 
@@ -238,7 +238,7 @@ describe("wd", function() {
       it("browser should be initialized with named parameters", function(done) {
         var browser;
         browser = wd.remote({
-          hostname: 'ondemand.saucelabs.com', 
+          hostname: 'ondemand.saucelabs.com',
           port:80 });
         browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
         browser.configUrl.port.should.equal('80');
