@@ -1,10 +1,3 @@
-var async, should, test, wd;
-
-should = require('should');
-
-async = require('async');
-
-wd = require('./wd-with-cov');
 
 test = function(browserName) {
   var browser;

@@ -1,14 +1,4 @@
 /*global describe,before,it,after */
-var Express, async, should, test, wd;
-
-should = require('should');
-
-async = require('async');
-
-Express = require('./express').Express;
-
-wd = require('./wd-with-cov');
-
 test = function(remoteWdConfig, desired) {
   var browser, browserName, express, frames, handles, refreshPage;
   browser = null;

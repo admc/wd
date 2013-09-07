@@ -1,10 +1,5 @@
-var wd = require('../common/wd-with-cov');
-
-var should = require('should');
 
 var configHelper = require('./config-helper');
-
-var TIMEOUT = 60000;
 
 var remoteWdConfig = configHelper.getRemoteWdConfig();
 
@@ -24,7 +19,7 @@ describe("wd", function() {
           });
           browser.init(function(err) {
             should.not.exist(err);
-            configHelper.jobUpdate( 
+            configHelper.jobUpdate(
               browser.sessionID,
               'browser init with default',
               ['wd', 'test'],

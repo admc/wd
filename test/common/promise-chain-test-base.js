@@ -1,7 +1,9 @@
 require("mocha-as-promised")();
-var chai = require("chai");
-var chaiAsPromised = require("chai-as-promised");
 
+var chai = require("chai");
+chai.should();
+
+var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 var Q = require('q');
@@ -86,14 +88,13 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
       });
     });
 
-    // todo
-    // if(markAsPassed) {
-    //   describe("marking job as passed", function() {
-    //     it("should mark job ass passed", function(done) {
-    //       markAsPassed(sessionID, done);
-    //     });
-    //   });
-    // }
+    if(markAsPassed) {
+      describe("marking job as passed", function() {
+        it("should mark job ass passed", function(done) {
+          markAsPassed(sessionID, done);
+        });
+      });
+    }
 
 
   });

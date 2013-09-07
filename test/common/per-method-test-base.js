@@ -1,17 +1,9 @@
 /*global describe,before,it,after */
-var CoffeeScript, Express, TIMEOUT_BASE, async, elementByCss, evalShouldEqual, executeCoffee, imageinfo, safeEvalShouldEqual, should, test, textShouldEqual, valueShouldEqual, wd;
-
-CoffeeScript = require('coffee-script');
-
-should = require('should');
-
-async = require('async');
+var TIMEOUT_BASE, elementByCss, evalShouldEqual, executeCoffee,
+imageinfo, safeEvalShouldEqual,
+test, textShouldEqual, valueShouldEqual;
 
 imageinfo = require('imageinfo');
-
-Express = require('./express').Express;
-
-wd = require('./wd-with-cov');
 
 TIMEOUT_BASE = 1000;
 
@@ -1895,7 +1887,7 @@ test = function(remoteWdConfig, desired) {
           should.not.exist(err);
           browser.getLocalStorageKey("bar", function(err, value) {
             should.not.exist(err);
-            should.not.exists(value);
+            should.not.exist(value);
             done(null);
           });
         });

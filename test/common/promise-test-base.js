@@ -1,12 +1,4 @@
-var TIMEOUT, assert, should, test;
-
-should = require('should');
-
-assert = require('assert');
-
-TIMEOUT = 60000;
-
-test = function(remoteWdConfig, desired, markAsPassed) {
+var test = function(remoteWdConfig, desired, markAsPassed) {
   var sessionID;
   var browser, wd;
   wd = require('./wd-with-cov');

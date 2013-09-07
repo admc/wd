@@ -1,7 +1,3 @@
-var should = require('should'),
-    url = require('url'),
-    wd = require('../common/wd-with-cov'),
-    _ = require('lodash');
 
 process.env = _(process.env).omit('SAUCE_USERNAME', 'SAUCE_ACCESS_KEY');
 

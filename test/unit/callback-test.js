@@ -1,10 +1,4 @@
-var nock, should, wd;
-
-wd = require('../common/wd-with-cov');
-
-nock = require('nock');
-
-should = require('should');
+var nock = require('nock');
 
 describe("wd", function() {
   describe("unit", function() {

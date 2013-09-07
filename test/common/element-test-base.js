@@ -1,16 +1,4 @@
-var path = require('path');
-
-var CoffeeScript, Express, async, executeCoffee, should, test, textShouldEqual, wd;
-
-CoffeeScript = require('coffee-script');
-
-should = require('should');
-
-async = require('async');
-
-Express = require('./express').Express;
-
-wd = require('./wd-with-cov');
+var executeCoffee, textShouldEqual;
 
 textShouldEqual = function(browser, element, expected, done) {
   browser.text(element, function(err, res) {
