@@ -77,6 +77,18 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
             });
         });
       });
+
+      describe("setting element scope with \'with\' method", function() {
+        it("should restore the element scope after calling with", function() {
+          var el = browser
+            .elementById('the_forms_id')
+            .elementById('>', 'unchecked_checkbox');
+            return el.click().click().getAttribute('type').should.become('checkbox')
+            .withEl(el).getAttribute('type').should.become('checkbox')
+            .withElement(el).getAttribute('type').should.become('checkbox');
+        });
+      });
+
       describe("clicking submit", function() {
         it("submit element should be clicked", function() {
           return browser
