@@ -1,4 +1,4 @@
-var chai = require("chai");
+chai = require("chai");
 should = chai.should();
 
 assert = require('assert');

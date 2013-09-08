@@ -1,13 +1,9 @@
 require("mocha-as-promised")();
 
-var chai = require("chai");
-chai.should();
-
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
-chai.should();
+
 var Q = require('q');
-var wd = require('./wd-with-cov');
 
 var verbose = true;
 
@@ -27,8 +23,6 @@ var initBrowser = function(remoteWdConfig) {
     }
   });
 };
-
-var TIMEOUT = 60000;
 
 var test = function(remoteWdConfig, desired, markAsPassed) {
   var browser, sessionID;
@@ -78,14 +72,14 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
         });
       });
 
-      describe("setting element scope with \'with\' method", function() {
+      describe("setting element scope with thenDo method", function() {
         it("should restore the element scope after calling with", function() {
           var el = browser
             .elementById('the_forms_id')
             .elementById('>', 'unchecked_checkbox');
             return el.click().click().getAttribute('type').should.become('checkbox')
-            .withEl(el).getAttribute('type').should.become('checkbox')
-            .withElement(el).getAttribute('type').should.become('checkbox');
+            .thenDo(el).getAttribute('type').should.become('checkbox')
+            .thenDo(el).getAttribute('type').should.become('checkbox');
         });
       });
 
