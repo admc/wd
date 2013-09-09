@@ -137,29 +137,6 @@ test = function(remoteWdConfig, desired) {
       });
     });
   });
-  describe("element.tap", function() {
-    it("element should be tapped", function(done) {
-      browser.elementByCss("#click a", function(err, anchor) {
-        should.not.exist(err);
-        should.exist(anchor);
-        async.series([
-          executeCoffee(browser, 'jQuery ->\n  a = $(\'#click a\')\n  a.html \'not tapped\'\n  false'), function(done) {
-            textShouldEqual(browser, anchor, "not tapped", done);
-          }, function(done) {
-            anchor.tap(function(err) {
-              should.not.exist(err);
-              done(null);
-            });
-          }, function(done) {
-            textShouldEqual(browser, anchor, "clicked", done);
-          }
-        ], function(err) {
-          should.not.exist(err);
-          done(null);
-        });
-      });
-    });
-  });
   describe("element.doubleClick", function() {
     it("element should be double-clicked", function(done) {
       browser.elementByCss("#click a", function(err, anchor) {
