@@ -90,5 +90,8 @@
   "DELETE /session/:sessionId/session_storage": "Clear the storage.",
   "GET /session/:sessionId/session_storage/key/:key": "Get the storage item for the given key.",
   "DELETE /session/:sessionId/session_storage/key/:key": "Remove the storage item for the given key.",
-  "GET /session/:sessionId/session_storage/size": "Get the number of items in the storage."
+  "GET /session/:sessionId/session_storage/size": "Get the number of items in the storage.",
+  "POST /session/:sessionId/log": "Get the log for a given log type.",
+  "GET /session/:sessionId/log/types": "Get available log types.",
+  "GET /session/:sessionId/application_cache/status": "Get the status of the html5 application cache."
 }
