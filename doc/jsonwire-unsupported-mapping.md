@@ -64,15 +64,6 @@ NA
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/click">/session/:sessionId/touch/click</a><br>
-Single tap on the touch enabled device.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/down">/session/:sessionId/touch/down</a><br>
 Finger down on the screen.
 </td>
@@ -210,6 +201,15 @@ NA
 <td style="border: 1px solid #ccc; padding: 5px;">
 GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/session_storage/size">/session/:sessionId/session_storage/size</a><br>
 Get the number of items in the storage.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+NA
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/application_cache/status">/session/:sessionId/application_cache/status</a><br>
+Get the status of the html5 application cache.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 NA

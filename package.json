@@ -7,7 +7,7 @@
     "browser",
     "javascript"
   ],
-  "version": "0.1.2",
+  "version": "0.1.5",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -27,6 +27,10 @@
     "type": "git",
     "url": "https://github.com/admc/wd.git"
   },
+  "licenses" : [{
+    "type": "Apache",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }],
   "bugs": {
     "url": "https://github.com/admc/wd/issues"
   },
