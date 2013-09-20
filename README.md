@@ -281,7 +281,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Create a new session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-init(desired, cb) -&gt; cb(err, sessionID)<br>
+init(desired, cb) -&gt; cb(err, sessionID, capabilities)<br>
 Initialize the browser.<br>
 </td>
 </tr>
@@ -1074,11 +1074,13 @@ Buttons: {left: 0, middle: 1 , right: 2}<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttondown">/session/:sessionId/buttondown</a><br>
-Click and hold any mouse button (at the coordinates set by the last moveto command).
+Click and hold the left mouse button (at the coordinates set by the last moveto command).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonDown(button, cb) -&gt; cb(err)<br>
-Buttons: {left: 0, middle: 1 , right: 2}<br>
+buttonDown(button ,cb) -&gt; cb(err)<br>
+button is optional.<br>
+{LEFT = 0, MIDDLE = 1 , RIGHT = 2}.<br>
+LEFT if not specified.<br>
 </td>
 </tr>
 <tr>
@@ -1088,7 +1090,9 @@ Releases the mouse button previously held (where the mouse is currently at).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 buttonUp(button, cb) -&gt; cb(err)<br>
-Buttons: {left: 0, middle: 1 , right: 2}<br>
+button is optional.<br>
+{LEFT = 0, MIDDLE = 1 , RIGHT = 2}.<br>
+LEFT if not specified.<br>
 </td>
 </tr>
 <tr>
@@ -1102,6 +1106,21 @@ doubleclick(cb) -&gt; cb(err)<br>
 </p>
 <p>
 element.doubleClick(cb) -&gt; cb(err)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/click">/session/:sessionId/touch/click</a><br>
+Single tap on the touch enabled device.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+tap(element) -&gt; cb(err)<br>
+Taps element<br>
+</p>
+<p>
+element.tap(cb) -&gt; cb(err)<br>
 </p>
 </td>
 </tr>
@@ -1160,6 +1179,24 @@ Remove the storage item for the given key.
 <td style="border: 1px solid #ccc; padding: 5px;">
 removeLocalStorageKey(key, cb) -&gt; cb(err)<br>
 # uses safeExecute() due to localStorage bug in Selenium<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/log">/session/:sessionId/log</a><br>
+Get the log for a given log type.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+log(logType, cb) -&gt; cb(err, arrayOfLogs)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/log/types">/session/:sessionId/log/types</a><br>
+Get available log types.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+logTypes(cb) -&gt; cb(err, arrayOfLogTypes)<br>
 </td>
 </tr>
 <tr>
@@ -1303,7 +1340,7 @@ return true if condition satisfied, error otherwise.<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-Equivalent to the python sendKeys binding. Upload file if <br>
+Equivalent to the python sendKeys binding. Upload file if<br>
 a local file is detected, otherwise behaves like type.<br>
 element.sendKeys(keys, cb) -&gt; cb(err)<br>
 </td>
