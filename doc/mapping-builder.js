@@ -2,7 +2,7 @@ var mappingType = process.argv[2] || 'supported';
 
 var fs = require("fs"),
     mu = require('mu2'),
-    _ = require('underscore');
+    _ = require('lodash');
 
 mu.root = __dirname;
 
@@ -17,7 +17,7 @@ var resMapping = [];
 // main mapping
 _(jsonWireFull).each(function (jw_v, jw_k) {
   var current = {
-    jsonWire: { 
+    jsonWire: {
       key: jw_k,
       method: jw_k.split(' ')[0],
       path: jw_k.split(' ')[1],
@@ -36,8 +36,8 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
         });
         var order = 1000000;
         if (orderTag.length > 0){
-         order =  parseInt(orderTag[0].string, 10); 
-        }         
+         order =  parseInt(orderTag[0].string, 10);
+        }
         var desc = _(wd_v.description.full.split('\n')).filter(function (l) {
           return l !== '';
         }).map(function (l) {
@@ -53,7 +53,7 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
   current.wd_doc = _(current.wd_doc).sortBy(function (docItem) {
     return docItem.order;
   });
-  current.wd_doc0 = current.wd_doc.length === 0; 
+  current.wd_doc0 = current.wd_doc.length === 0;
   current.wd_doc1 = current.wd_doc.length === 1? current.wd_doc : null;
   current.wd_docN = current.wd_doc.length > 1? current.wd_doc: null;
 
@@ -87,7 +87,7 @@ _(jsonDocs).each(function (jsonDoc) {
         resMapping.push(current);
       }
     }
-  });  
+  });
 });
 
 
@@ -100,7 +100,7 @@ _(jsonDocs).each(function (jsonDoc) {
       var tag = t.string;
       if(!jsonWireFull[tag]){
         var current = {
-          missing: { 
+          missing: {
             key:tag
           },
           wd_doc: []
@@ -113,9 +113,9 @@ _(jsonDocs).each(function (jsonDoc) {
         current.wd_doc.push({desc: desc});
         current.wd_doc1 = current.wd_doc;
         resMapping.push(current);
-      } 
+      }
     });
-  });  
+  });
 });
 
 var output = '';
