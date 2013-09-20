@@ -27,6 +27,10 @@
     "type": "git",
     "url": "https://github.com/admc/wd.git"
   },
+  "licenses" : [{
+    "type": "Apache",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }],
   "bugs": {
     "url": "https://github.com/admc/wd/issues"
   },
