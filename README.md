@@ -1074,10 +1074,11 @@ Buttons: {left: 0, middle: 1 , right: 2}<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttondown">/session/:sessionId/buttondown</a><br>
-Click and hold the left mouse button (at the coordinates set by the last moveto command).
+Click and hold any mouse button (at the coordinates set by the last moveto command).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonDown(cb) -&gt; cb(err)<br>
+buttonDown(button, cb) -&gt; cb(err)<br>
+Buttons: {left: 0, middle: 1 , right: 2}<br>
 </td>
 </tr>
 <tr>
@@ -1086,7 +1087,8 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Releases the mouse button previously held (where the mouse is currently at).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonUp(cb) -&gt; cb(err)<br>
+buttonUp(button, cb) -&gt; cb(err)<br>
+Buttons: {left: 0, middle: 1 , right: 2}<br>
 </td>
 </tr>
 <tr>
