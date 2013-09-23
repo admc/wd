@@ -9,7 +9,6 @@ var browser = wd.promiseRemote();
 var Q = browser.Q;
 
 // request logging
-require('colors');
 browser.on('status', function(info){
   console.log('\x1b[36m%s\x1b[0m', info);
 });
