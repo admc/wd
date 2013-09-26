@@ -1228,6 +1228,11 @@ test = function(remoteWdConfig, desired) {
           });
         }, function(done) {
           textShouldEqual(browser, env.current, 'a1', done);
+        }, function(done) {
+          browser.moveTo(null, 5, 5, function(err) {
+            should.not.exist(err);
+            done(null);
+          });
         }
       ], function(err) {
         should.not.exist(err);
