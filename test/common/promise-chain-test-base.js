@@ -83,6 +83,15 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
         });
       });
 
+      describe("testing sendKeys, an element only method", function() {
+        it("should work", function() {
+          var el = browser
+            .elementById('the_forms_id')
+            .elementById('>', 'unchecked_checkbox');
+            return el.sendKeys('X');
+        });
+      });
+
       describe("clicking submit", function() {
         it("submit element should be clicked", function() {
           return browser
