@@ -1354,6 +1354,7 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 
 ## Run the tests!
 
+```
   - Install the Selenium server and Chromedriver
       node_modules/.bin/install_selenium
       node_modules/.bin/install_chromedriver
@@ -1363,11 +1364,14 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
   - npm install .
   - make test
   - look at the results!
+```
 
 ## Run the tests on Sauce Labs cloud!
+```
   - cd wd
   - npm install .
   - make test_saucelabs
+```
 
 ## Monkey patching
 
