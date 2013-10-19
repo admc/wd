@@ -5,7 +5,7 @@ try {
   wd = require('../lib/main');
 }
 
-var browser = wd.promiseRemote();
+var browser = wd.promiseChainRemote();
 var Q = browser.Q;
 browser._debugPromise();
 

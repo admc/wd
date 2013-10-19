@@ -80,7 +80,7 @@ describe("wd", function() {
         browser = null;
         describe("browser initialization", function() {
           it("should initialize browser", function(done) {
-            browser = wd.promiseRemote({
+            browser = wd.promiseChainRemote({
               port: 5555
             });
             browser.init({}).then(

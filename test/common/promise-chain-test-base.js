@@ -8,7 +8,7 @@ var Q = require('q');
 var verbose = true;
 
 var initBrowser = function(remoteWdConfig) {
-  var browser = wd.promiseRemote(remoteWdConfig);
+  var browser = wd.promiseChainRemote(remoteWdConfig);
   return browser.init({
     browserName: 'chrome'
   }).then(function() {
@@ -69,17 +69,6 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
                 el.getAttribute('type').should.become('checkbox')
               ]);
             });
-        });
-      });
-
-      describe("setting element scope with thenDo method", function() {
-        it("should restore the element scope after calling with", function() {
-          var el = browser
-            .elementById('the_forms_id')
-            .elementById('>', 'unchecked_checkbox');
-            return el.click().click().getAttribute('type').should.become('checkbox')
-            .thenDo(el).getAttribute('type').should.become('checkbox')
-            .thenDo(el).getAttribute('type').should.become('checkbox');
         });
       });
 
