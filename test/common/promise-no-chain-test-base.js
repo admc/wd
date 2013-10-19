@@ -10,7 +10,7 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
   describe("remote promises", function() {
     describe("remote", function() {
       it("should create browser", function(done) {
-        browser = wd.promiseChainRemote(remoteWdConfig);
+        browser = wd.promiseRemote(remoteWdConfig, {chain: false});
         //browser._debugPromise();
         should.exist(browser);
         if (!process.env.WD_COV) {
@@ -38,7 +38,7 @@ var test = function(remoteWdConfig, desired, markAsPassed) {
         it("should navigate to test page and check title", function(done) {
           this.timeout(TIMEOUT);
           var getPromise = browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
-          assert( getPromise.elementById );
+          assert( !getPromise.elementById );
           getPromise.then(function() {
             return browser.title();
           }).done(function(title) {

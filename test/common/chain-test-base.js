@@ -1,10 +1,3 @@
-var async, should, test, wd;
-
-should = require('should');
-
-async = require('async');
-
-wd = require('./wd-with-cov');
 
 test = function(browserName) {
   var browser;
@@ -12,6 +5,7 @@ test = function(browserName) {
   describe("wd.remote", function() {
     it("should create browser", function(done) {
       browser = wd.remote({});
+      //browser.warnDeprecated = false;
       if (!process.env.WD_COV) {
         browser.on("status", function(info) {
           console.log("\u001b[36m%s\u001b[0m", info);

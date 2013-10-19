@@ -5,7 +5,7 @@ try {
   wd = require('../lib/main');
 }
 var assert = require('assert');
-var browser = wd.promiseChainRemote();
+var browser = wd.promiseRemote();
 
 browser.on('status', function(info){
   console.log('\x1b[36m%s\x1b[0m', info);

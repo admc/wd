@@ -1,6 +1,5 @@
-var config, should, request;
+var config, request;
 
-should = require('should');
 request = require('request');
 
 try {

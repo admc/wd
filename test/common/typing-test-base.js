@@ -1,13 +1,3 @@
-var CoffeeScript = require('coffee-script');
-
-var should = require('should');
-
-var async = require('async');
-
-var Express = require('./express').Express;
-
-var wd = require('./wd-with-cov');
-
 var altKey = wd.SPECIAL_KEYS.Alt;
 
 var nullKey = wd.SPECIAL_KEYS.NULL;

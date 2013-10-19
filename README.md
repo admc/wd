@@ -12,9 +12,9 @@ http://nodejs.org/#download
 
 ## Install
 
-<pre>
+```
 npm install wd
-</pre>
+```
 
 ## Authors
 
@@ -38,20 +38,14 @@ npm install wd
 
 ## Usage
 
-<pre>
-): wd shell
-> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
+### Promise chain
 
-> x.init() or x.init({desired capabilities override})
-> x.get("http://www.url.com")
-> x.eval("window.location.href", function(e, o) { console.log(o) })
-> x.quit()
-</pre>
+```js
+// todo
+```
 
-
-## Writing a test!
-
-<pre>
+### Pure async
+```js
 var wd = require('wd')
   , assert = require('assert')
   , colors = require('colors')
@@ -85,13 +79,13 @@ browser.init({
     });
   });
 });
-</pre>
+```
 
 ## Browser initialization
 
 ### Indexed parameters
 
-<pre>
+```js
 var browser = wd.remote();
 // or
 var browser = wd.remote('localhost');
@@ -99,13 +93,12 @@ var browser = wd.remote('localhost');
 var browser = wd.remote('localhost', 8888);
 // or
 var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
-</pre>
-
+```
 ### Named parameters
 
 The parameters used are similar to those in the [url](http://nodejs.org/docs/latest/api/url.html) module.
 
-<pre>
+```js
 var browser = wd.remote()
 // or
 var browser = wd.remote({
@@ -120,58 +113,51 @@ var browser = wd.remote({
   port: 4444,
   auth: 'username:password',
 });
-</pre>
+```
 
 The following parameters may also be used (as in earlier versions):
 
-<pre>
+```js
 var browser = wd.remote({
   host: '127.0.0.1',
   port: 4444,
   username: 'username',
   accessKey: 'password',
 });
-</pre>
-
+```
 ### Url string
 
-<pre>
+```js
 var browser = wd.remote('http://localhost:4444/wd/hub');
 // or
 var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
-</pre>
+```
 
 ### Url object created via `url.parse`
 
 [URL module documentation](http://nodejs.org/docs/v0.10.0/api/url.html#url_url)
 
-<pre>
+```js
 var url = require('url');
 var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
 // or
 var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
-</pre>
+```
 
 ### Defaults
 
-<pre>
+```js
 {
     protocol: 'http:'
     hostname: '127.0.0.1',
     port: '4444'
     path: '/wd/hub'
 }
-</pre>
+```
 
 ### Environment variables for Saucelabs
 
 When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
-
-## Promises Api
-
-A promise api using [q](https://github.com/kriskowal/q) is
-available. Code sample is
-[here](https://github.com/admc/wd/blob/master/examples/example.promise.chrome.js).
 
 ## Generators Api
 
@@ -191,67 +177,20 @@ wd.remote(function*() {
 });
 ```
 
+## Repl
 
-## Chain Api
-
-A chain api is also available. Code sample is [here](https://github.com/admc/wd/blob/master/examples/example.chain.chrome.js).
-
-### Injecting command to the chain
-
-As [queue](https://github.com/caolan/async#queue) implementation that we're using has some limitations, a special helper method *next* was added. It allows you to inject new calls to the execution chain inside callbacks.
-
-#### Example 1 - the problem
-
-```javascript
-browser
-  .chain()
-  // ...
-  .elementById('i am a link', function(err, el) {
-    // following call will be executed apart from the current execution chain
-    // you won't be able to pass results further in chain
-    // and it may cause racing conditions in your script
-    browser.clickElement(el, function() {
-      console.log("did the click!");
-    });
-  })
-  // ...
+```
+./node_modules/.bin/wd shell
 ```
 
-#### Example 2 - solution, use *next*
-
-```javascript
-browser
-  .chain()
-  // ...
-  .elementById('i am a link', function(err, el) {
-    // call to clickElement will be injected to the queue
-    // and will be executed sequentially after current function finishes
-    browser.next('clickElement', el, function() {
-      console.log("did the click!");
-    });
-  })
-  // ...
 ```
+): wd shell
+> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
-### Inserting async code with *queueAddAsync*
-
-```javascript
-browser
-  .chain()
-  // ...
-  .elementById('i am a link', function(err, el) {
-    // following call will be executed apart from the current execution chain
-    // you won't be able to pass results further in chain
-    // and it may cause racing conditions in your script
-  })
-  .queueAddAsync( function(cb) {
-    // your code here
-    cb(null);
-  })
-  .clickElement(el, function() {
-    console.log("did the click!");
-  })
-  // ...
+> x.init() or x.init({desired capabilities override})
+> x.get("http://www.url.com")
+> x.eval("window.location.href", function(e, o) { console.log(o) })
+> x.quit()
 ```
 
 ## Supported Methods
@@ -1363,13 +1302,12 @@ isVisible(cb) -&gt; cb(err, boolean)<br>
 [full mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
 
 ## More docs!
-<pre>
+
 WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
  - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
-</pre>
 
 ## Run the tests!
-<pre>
+
   - Install the Selenium server and Chromedriver
       node_modules/.bin/install_selenium
       node_modules/.bin/install_chromedriver
@@ -1379,14 +1317,11 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
   - npm install .
   - make test
   - look at the results!
-</pre>
 
 ## Run the tests on Sauce Labs cloud!
-<pre>
   - cd wd
   - npm install .
   - make test_saucelabs
-</pre>
 
 ## Monkey patching
 
@@ -1408,11 +1343,9 @@ comments using [dox](https://github.com/visionmedia/dox).
 
 To update the mappings run the following commands:
 
-<pre>
-  - make mapping > doc/jsonwire-mapping.md
-  - make full_mapping > doc/jsonwire-full-mapping.md
-  - make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
-</pre>
+- make mapping > doc/jsonwire-mapping.md
+- make full_mapping > doc/jsonwire-full-mapping.md
+- make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
 
 The content of doc/jsonwire-mapping.md should then be manually integrated into
 README.md.
@@ -1426,7 +1359,7 @@ avoiding browser hanging in some cases.
 
 An example below of expression hanging Chrome:
 
-```javascript
+```js
 browser.eval("wrong!!!", function(err, res) { // hangs
 browser.safeEval("wrong!!!", function(err, res) { // returns
 browser.execute("wrong!!!", function(err, res) { //hangs
