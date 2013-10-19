@@ -123,7 +123,7 @@ browser.init({
 
 ### Q promises without chaining
 
-See example [here](https://github.com/admc/wd/blob/master/examples/example.promise-no-chain.chrome.js)
+See example [here](https://github.com/admc/wd/blob/master/examples/example.promise-no-chain.chrome.js).
 
 ## Generators Api
 
