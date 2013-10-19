@@ -1355,22 +1355,25 @@ WD is simply implementing the Selenium JsonWireProtocol, for more details see th
 ## Run the tests!
 
 ```
-  - Install the Selenium server and Chromedriver
-      node_modules/.bin/install_selenium
-      node_modules/.bin/install_chromedriver
-  - Run the selenium server with chromedriver:
-      node_modules/.bin/start_selenium_with_chromedriver
-  - cd wd
-  - npm install .
-  - make test
-  - look at the results!
+# Install the Selenium server and Chromedriver
+node_modules/.bin/install_selenium
+node_modules/.bin/install_chromedriver
+
+#Run the selenium server with chromedriver:
+node_modules/.bin/start_selenium_with_chromedriver
+
+cd wd
+npm install
+make test
+
+# look at the results!
 ```
 
 ## Run the tests on Sauce Labs cloud!
 ```
-  - cd wd
-  - npm install .
-  - make test_saucelabs
+cd wd
+npm install
+make test_saucelabs
 ```
 
 ## Monkey patching
@@ -1393,9 +1396,11 @@ comments using [dox](https://github.com/visionmedia/dox).
 
 To update the mappings run the following commands:
 
-- make mapping > doc/jsonwire-mapping.md
-- make full_mapping > doc/jsonwire-full-mapping.md
-- make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
+```
+make mapping > doc/jsonwire-mapping.md
+make full_mapping > doc/jsonwire-full-mapping.md
+make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
+```
 
 The content of doc/jsonwire-mapping.md should then be manually integrated into
 README.md.
