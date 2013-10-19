@@ -41,15 +41,46 @@ npm install wd
 ### Promise chain
 
 ```js
-// todo
+var wd = require('wd'),
+  assert = require('assert'),
+  colors = require('colors'),
+  browser = wd.promiseChainRemote();
+
+browser.on('status', function(info) {
+  console.log(info.cyan);
+});
+
+browser.on('command', function(meth, path, data) {
+  console.log(' > ' + meth.yellow, path.grey, data || '');
+});
+
+browser.init({
+    browserName:'chrome',
+    tags : ['examples'],
+    name: 'This is an example test'
+  })
+  .get('http://admc.io/wd/test-pages/guinea-pig.html')
+  .title().then(function(title) {
+     assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
+  })
+  .elementById('i am a link')
+  .click()
+  .eval("window.location.href").then(function(href) {
+    assert.ok(~href.indexOf('guinea-pig2'));
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
+  .sleep(3000)
+  .quit();
 ```
 
 ### Pure async
 ```js
-var wd = require('wd')
-  , assert = require('assert')
-  , colors = require('colors')
-  , browser = wd.remote();
+var wd = require('wd'),
+  assert = require('assert'),
+  colors = require('colors'),
+  browser = wd.remote();
 
 browser.on('status', function(info) {
   console.log(info.cyan);
@@ -61,16 +92,16 @@ browser.on('command', function(meth, path, data) {
 
 browser.init({
     browserName:'chrome'
-    , tags : ["examples"]
-    , name: "This is an example test"
+    , tags : ['examples']
+    , name: 'This is an example test'
   }, function() {
 
-  browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
+  browser.get('http://admc.io/wd/test-pages/guinea-pig.html', function() {
     browser.title(function(err, title) {
       assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          browser.eval("window.location.href", function(err, href) {
+          browser.eval('window.location.href', function(err, href) {
             assert.ok(~href.indexOf('guinea-pig2'));
             browser.quit();
           });
@@ -79,6 +110,42 @@ browser.init({
     });
   });
 });
+```
+
+### Generators Api
+
+#### Yiewd
+
+[Yiewd](https://github.com/jlipps/yiewd) is a wrapper around Wd.js that uses
+generators in order to avoid nested callbacks, like so:
+
+```js
+wd.remote(function*() {
+  yield this.init(desiredCaps);
+  yield this.get("http://mysite.com");
+  el = yield this.elementById("someId");
+  yield el.click();
+  el2 = yield this.elementById("anotherThing")
+  text = yield el2.text();
+  text.should.equal("What the text should be");
+  yield this.quit();
+});
+```
+
+### Repl
+
+```
+./node_modules/.bin/wd shell
+```
+
+```
+): wd shell
+> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
+
+> x.init() or x.init({desired capabilities override})
+> x.get("http://www.url.com")
+> x.eval("window.location.href", function(e, o) { console.log(o) })
+> x.quit()
 ```
 
 ## Browser initialization
@@ -158,40 +225,6 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 ### Environment variables for Saucelabs
 
 When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
-
-## Generators Api
-
-[Yiewd](https://github.com/jlipps/yiewd) is a wrapper around Wd.js that uses
-generators in order to avoid nested callbacks, like so:
-
-```js
-wd.remote(function*() {
-  yield this.init(desiredCaps);
-  yield this.get("http://mysite.com");
-  el = yield this.elementById("someId");
-  yield el.click();
-  el2 = yield this.elementById("anotherThing")
-  text = yield el2.text();
-  text.should.equal("What the text should be");
-  yield this.quit();
-});
-```
-
-## Repl
-
-```
-./node_modules/.bin/wd shell
-```
-
-```
-): wd shell
-> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
-
-> x.init() or x.init({desired capabilities override})
-> x.get("http://www.url.com")
-> x.eval("window.location.href", function(e, o) { console.log(o) })
-> x.quit()
-```
 
 ## Supported Methods
 
