@@ -36,7 +36,7 @@ npm install wd
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
 
-## 0.1.6 Release
+## 0.2.0 Release
 
 This release contain the following major changes:
 
