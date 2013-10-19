@@ -112,7 +112,7 @@ browser.init({
 });
 ```
 
-### Q promises + no chaining
+### Q promises without chaining
 
 See example [here](https://github.com/admc/wd/blob/master/examples/example.promise-no-chain.chrome.js)
 
