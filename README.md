@@ -36,6 +36,15 @@ npm install wd
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
 
+## 0.1.6 Release
+
+This release contain the following major changes:
+
+- New wrapper: Promise chain
+- Old chain api is deprecated (It is still available, but you will see a depreciation message)
+- There are some changes in the way the element and webdriver classes are passed around
+which may affect external wrappers. External wrappers should now subclass those 2 classes. 
+
 ## Usage
 
 ### Q promises + chaining
