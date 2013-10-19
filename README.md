@@ -38,7 +38,7 @@ npm install wd
 
 ## Usage
 
-### Promise chain
+### Q promises + chaining
 
 ```js
 var wd = require('wd'),
@@ -112,9 +112,13 @@ browser.init({
 });
 ```
 
-### Generators Api
+### Q promises + no chaining
 
-#### Yiewd
+See example [here](https://github.com/admc/wd/blob/master/examples/example.promise-no-chain.chrome.js)
+
+## Generators Api
+
+### Yiewd
 
 [Yiewd](https://github.com/jlipps/yiewd) is a wrapper around Wd.js that uses
 generators in order to avoid nested callbacks, like so:
@@ -132,7 +136,7 @@ wd.remote(function*() {
 });
 ```
 
-### Repl
+## Repl
 
 ```
 ./node_modules/.bin/wd shell
