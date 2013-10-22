@@ -1006,7 +1006,7 @@ describe('api test (' + setup.testEnv + ')', function() {
   it('browser.uploadFile', function() {
     return browser
       .uploadFile("test/mocha.opts").should.eventually.include('mocha.opts')
-      .uploadFile("test/fixtures/tux.jpg").should.eventually.include('tux.jpg');
+      .uploadFile("test/midway/assets/tux.jpg").should.eventually.include('tux.jpg');
   });
 
   express.partials['browser.waitForCondition'] =
