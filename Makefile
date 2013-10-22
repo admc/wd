@@ -8,9 +8,9 @@ DEFAULT:
 	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
 	@echo '  make test_ghostdriver -> run the ghostdriver tests (start ghostdriver first).'
 	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
-	@echo '  mapping -> build the mapping (implemented only).'  
-	@echo '  full_mapping -> build the mapping (full).'  
-	@echo '  unsupported_mapping -> build the mapping (unsupported).'  
+	@echo '  mapping -> build the mapping (implemented only).'
+	@echo '  full_mapping -> build the mapping (full).'
+	@echo '  unsupported_mapping -> build the mapping (unsupported).'
 	@echo
 
 # run unit and local tests, start selenium server first
@@ -19,6 +19,15 @@ test:
 	test/unit/*-test.js \
 	test/local/*-test.js
 
+test_midway:
+	BROWSER=chrome ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-chrome' -i
+	BROWSER=firefox ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-firefox' -i
+
+test_e2e:
+	BROWSER=chrome ./node_modules/.bin/mocha test/e2e/*-specs.js -g '@skip-chrome' -i
+ 	BROWSER=firefox ./node_modules/.bin/mocha test/e2e/*-specs.js -g '@skip-firefox' -i
+
+#  -g '@skip-chrome' -i
 # run unit tests
 test_unit:
 	./node_modules/.bin/mocha --bail test/unit/*-test.js
@@ -78,6 +87,8 @@ unsupported_mapping: _dox
 	test_unit \
 	test_local \
 	test_saucelabs \
+  test_midway \
+  test_e2e \
 	test_coverage \
 	test_ghostdriver \
 	build_mapping \

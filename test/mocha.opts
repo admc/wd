@@ -1,5 +1,3 @@
---compilers coffee:coffee-script
 --ui bdd
 --reporter spec
 -t 60000
---require test/common/setup
