@@ -8,17 +8,13 @@
     "it": false,
     "before": false,
     "after": false,
+    "beforeEach": false,
+    "afterEach": false,
     "should": false,
     "assert": false,
-    "TIMEOUT": false,
-    "chai": false,
-    "async": false,
     "wd": false,
-    "CoffeeScript": false,
-    "Express": false,
-    "path": false,
-    "url": false,
-    "_": false
+    "_": false,
+    "Q": false
   },
   "immed": true,
   "latedef": true,
@@ -32,4 +28,3 @@
   "eqnull": true,
   "node": true
 }
-
