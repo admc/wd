@@ -36,7 +36,7 @@ module.exports = {
   testEnv: 'local/' + desired.browserName,
   TIMEOUT_BASE: process.env.TIMEOUT_BASE || 500,
   isBrowser: function(browserName){
-    return this.desired.browserName === browserName;
+    return desired.browserName === browserName;
   },
   urlRoot: 'http://localhost:8000/',
   Express: Express,
