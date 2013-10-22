@@ -1373,7 +1373,7 @@ make test
 ```
 cd wd
 npm install
-make test_saucelabs
+make test_e2e_sauce
 ```
 
 ## Monkey patching

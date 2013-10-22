@@ -3,40 +3,69 @@ var setup = require('../helpers/setup-async');
 describe('deprecated chaining tests(' + setup.testEnv + ')', function() {
 
   describe('full chaining', function() {
+    var testInfo = {
+      name: "e2e deprecated full chain",
+      tags: ['e2e']
+    };
+
     var browser;
+    var allPassed = true;
 
     before(function() {
       browser = setup.remote();
     });
 
+    afterEach(function() {
+      allPassed = allPassed && (this.currentTest.state === 'passed');
+    });
+
     it("full chaining should work", function(done) {
       /* jshint evil: true */
       browser.chain()
-        .init(setup.desired)
+        .init(setup.desiredWithTestInfo(testInfo))
         .get("http://admc.io/wd/test-pages/guinea-pig.html")
         .title(function(err, title) {
           title.should.include('I am a page title - Sauce Labs');
         })
         .quit(function(err) {
-          expect(err).to.not.exist;
+          should.not.exist(err);
           done();
         });
     });
+
+    after(function(done) {
+      setup.jobStatus(allPassed, done);
+    });
+
   });
 
   describe('partial chaining', function() {
     var browser;
+    var allPassed = true;
+
+    var testInfo = {
+      name: "e2e deprecated partial chain",
+      tags: ['e2e']
+    };
 
     before(function(done) {
-      browser = setup.initBrowser(done);
+      browser = setup.initBrowser(testInfo, done);
+    });
+
+    beforeEach(function(done) {
+      browser.get("http://admc.io/wd/test-pages/guinea-pig.html", done);
+    });
+
+    afterEach(function() {
+      allPassed = allPassed && (this.currentTest.state === 'passed');
     });
 
     after(function(done) {
       setup.closeBrowser(done);
     });
 
-    beforeEach(function(done) {
-      browser.get("http://admc.io/wd/test-pages/guinea-pig.html", done);
+    after(function(done) {
+      setup.jobStatus(allPassed, done);
     });
 
     it("partial chaining should work", function(done) {
@@ -46,7 +75,7 @@ describe('deprecated chaining tests(' + setup.testEnv + ')', function() {
           title.should.include('I am a page title - Sauce Labs');
         })
         .elementById('submit', function(err, el) {
-          expect(err).to.not.exist;
+          should.not.exist(err);
           should.exist(el);
 
           // Commenting this test, nothing preventing quit to be called first
@@ -74,7 +103,7 @@ describe('deprecated chaining tests(' + setup.testEnv + ')', function() {
           }, 250);
         })
         .elementById('submit', function(err, el) {
-          expect(err).to.not.exist;
+          should.not.exist(err);
           should.exist(el);
           asyncCallCompleted.should.be.true;
           done(null);

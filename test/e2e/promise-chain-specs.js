@@ -1,19 +1,33 @@
+var testInfo = {
+  name: "e2e promise chain",
+  tags: ['e2e']
+};
+
 var setup = require("../helpers/setup");
 
 describe('promise chain tests(' + setup.testEnv + ')', function() {
 
   var browser;
+  var allPassed = true;
 
   before(function() {
-    return browser = setup.initBrowser();
-  });
-
-  after(function() {
-    return setup.closeBrowser();
+    return browser = setup.initBrowser(testInfo);
   });
 
   beforeEach(function() {
     return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+  });
+
+  afterEach(function() {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+ after(function() {
+    return setup.closeBrowser();
+  });
+
+  after(function() {
+    return setup.jobStatus(allPassed);
   });
 
   it("should retrieve title", function() {

@@ -1,7 +1,8 @@
-
-process.env = _(process.env).omit('SAUCE_USERNAME', 'SAUCE_ACCESS_KEY');
+var url = require('url');
+require('../helpers/setup-async');
 
 describe("wd", function() {
+
   describe("local", function() {
     describe("wd remote tests", function() {
       describe("default", function() {

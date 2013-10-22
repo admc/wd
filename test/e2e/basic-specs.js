@@ -1,19 +1,33 @@
+var testInfo = {
+  name: "e2e basics",
+  tags: ['e2e']
+};
+
 var setup = require("../helpers/setup");
 
 describe('basic tests(' + setup.testEnv + ')', function() {
 
   var browser;
+  var allPassed = true;
 
   before(function() {
-    return browser = setup.initBrowser();
+    return browser = setup.initBrowser(testInfo);
+  });
+
+  beforeEach(function() {
+    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+  });
+
+  afterEach(function() {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
   });
 
   after(function() {
     return setup.closeBrowser();
   });
 
-  beforeEach(function() {
-    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+  after(function() {
+    return setup.jobStatus(allPassed);
   });
 
   it("should retrieve the page title", function() {
@@ -28,6 +42,7 @@ describe('basic tests(' + setup.testEnv + ')', function() {
       .click()
       .eval("window.location.href").should.eventually.include("http://");
   });
+
 });
 
 

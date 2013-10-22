@@ -1,6 +1,6 @@
 var setup = require('../helpers/setup');
 
-describe('status method tests(' + setup.testEnv + ')', function() {
+describe('status method tests(' + setup.testEnv + ') @multi', function() {
   var browser;
 
   before(function() {
