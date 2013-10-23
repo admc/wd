@@ -121,6 +121,53 @@ wd.remote(function*() {
   yield this.quit();
 });
 ```
+## Mocha integration
+
+```js
+...
+
+describe("using mocha-as-promised and chai-as-promised", function() {
+  var browser;
+
+  before(function() {
+    browser = wd.promiseChainRemote();
+    //browser._debugPromise();
+    browser.on('status', function(info) {
+      console.log(info);
+    });
+    browser.on('command', function(meth, path, data) {
+      console.log(' > ' + meth, path, data || '');
+    });
+    return browser
+      .init({browserName:'chrome'});
+  });
+
+  beforeEach(function() {
+    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+  });
+
+  after(function() {
+    return browser
+      .quit();
+  });
+
+  it("should retrieve the page title", function() {
+    return browser
+      .title().should.become("I am a page title - Sauce Labs");
+  });
+
+  it("submit element should be clicked", function() {
+    /* jshint evil: true */
+    return browser
+      .elementById("submit")
+      .click()
+      .eval("window.location.href").should.eventually.include("&submit");
+  });
+});
+```
+
+[full code here](https://github.com/admc/wd/blob/master/examples/promise/mocha-specs.js)
+
 
 ## Repl
 
