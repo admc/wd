@@ -243,7 +243,7 @@ If you need to do something more complicated, like reusing an element for 2 call
 can either Q promise functionnality (like then, Q.all or Q sequences), or retrieve your
 element twice (since the promise chain api is very terse, this is usually acceptable).
 
-Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/element-func-call.js)
+Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/chained-el-func-call.js)
 
 ### Monkey patching
 
