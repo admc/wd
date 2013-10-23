@@ -248,13 +248,12 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 ### Monkey patching
 
 You may want to monkey patch the webdriver class in order to add custom functionalities.
-There is an example [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
+See example [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
 
 ### Promise helpers
 
 This is a cleaner alternative to monkey patching.
-
-[here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
+See example [here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
 
 ### Environment variables for Saucelabs
 
