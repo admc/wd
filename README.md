@@ -133,8 +133,7 @@ describe("using mocha-as-promised and chai-as-promised", function() {
     browser = wd.promiseChainRemote();
     ...
 
-    return browser
-      .init({browserName:'chrome'});
+    return browser.init({browserName:'chrome'});
   });
 
   beforeEach(function() {
@@ -142,26 +141,22 @@ describe("using mocha-as-promised and chai-as-promised", function() {
   });
 
   after(function() {
-    return browser
-      .quit();
+    return browser.quit();
   });
 
   it("should retrieve the page title", function() {
-    return browser
-      .title().should.become("I am a page title - Sauce Labs");
+    return browser.title().should.become("I am a page title - Sauce Labs");
   });
 
   it("submit element should be clicked", function() {
     /* jshint evil: true */
-    return browser
-      .elementById("submit")
-      .click()
-      .eval("window.location.href").should.eventually.include("&submit");
+    return browser.elementById("submit").click().eval("window.location.href")
+      .should.eventually.include("&submit");
   });
 });
 ```
 
-[full code here](https://github.com/admc/wd/blob/master/examples/promise/mocha-specs.js)
+[example here](https://github.com/admc/wd/blob/master/examples/promise/mocha-specs.js)
 
 
 ## Repl
