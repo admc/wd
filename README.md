@@ -55,70 +55,36 @@ which may affect external wrappers. External wrappers should now subclass those 
 ### Q promises + chaining
 
 ```js
-var wd = require('wd'),
-  assert = require('assert'),
-  colors = require('colors'),
-  browser = wd.promiseChainRemote();
+...
 
-browser.on('status', function(info) {
-  console.log(info.cyan);
-});
-
-browser.on('command', function(meth, path, data) {
-  console.log(' > ' + meth.yellow, path.grey, data || '');
-});
-
-browser.init({
-    browserName:'chrome',
-    tags : ['examples'],
-    name: 'This is an example test'
-  })
-  .get('http://admc.io/wd/test-pages/guinea-pig.html')
-  .title().then(function(title) {
-     assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
-  })
-  .elementById('i am a link')
+browser
+  .init({browserName:'chrome'})
+  .get("http://admc.io/wd/test-pages/guinea-pig.html")
+  .title()
+    .should.become('I am a page title - Sauce Labs')
+  .elementById('ai am a link')
   .click()
-  .eval("window.location.href").then(function(href) {
-    assert.ok(~href.indexOf('guinea-pig2'));
-  })
-  .catch(function(err) {
-    console.log(err);
-  })
-  .sleep(3000)
-  .quit()
+  .eval("window.location.href")
+    .should.eventually.include('guinea-pig2')
+  .fin(function() { return browser.quit(); })
   .done();
+
 ```
+[full code here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js)
+
 
 ### Pure async
 
 ```js
-var wd = require('wd'),
-  assert = require('assert'),
-  colors = require('colors'),
-  browser = wd.remote();
-
-browser.on('status', function(info) {
-  console.log(info.cyan);
-});
-
-browser.on('command', function(meth, path, data) {
-  console.log(' > ' + meth.yellow, path.grey, data || '');
-});
-
-browser.init({
-    browserName:'chrome'
-    , tags : ['examples']
-    , name: 'This is an example test'
-  }, function() {
-
-  browser.get('http://admc.io/wd/test-pages/guinea-pig.html', function() {
+browser.init({browserName:'chrome'}, function() {
+  browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
-      assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
+      title.should.include('I am a page title - Sauce Labs');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          browser.eval('window.location.href', function(err, href) {
-            assert.ok(~href.indexOf('guinea-pig2'));
+          /* jshint evil: true */
+          browser.eval("window.location.href", function(err, href) {
+            href.should.include('guinea-pig2');
             browser.quit();
           });
         });
@@ -126,12 +92,13 @@ browser.init({
     });
   });
 });
-
 ```
+[full code here](https://github.com/admc/wd/blob/master/examples/async/chrome.js)
+
 
 ### Q promises without chaining
 
-See example [here](https://github.com/admc/wd/blob/master/examples/example.promise-no-chain.chrome.js).
+See example [here](https://github.com/admc/wd/blob/master/examples/promise/no-chain.js).
 
 ## Generators Api
 
