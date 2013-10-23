@@ -239,8 +239,9 @@ using the principles below:
 - You may use "<" as the first parameter to get out of the element scope.
 - You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
 
-If you need to do something more complicated, like reusing an element for 2 call, then 
-you should probably be using Q promise functionnality (like Q.all or Q sequences).
+If you need to do something more complicated, like reusing an element for 2 calls, then 
+can either Q promise functionnality (like then, Q.all or Q sequences), or retrieve your
+element twice (since the promise chain api is very terse, this is usually acceptable).
 
 Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/element-func-call.js)
 
