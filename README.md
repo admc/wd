@@ -225,7 +225,7 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 }
 ```
 
-### Element function chaining (when using promise chains)
+### Element function chaining (using promise chains)
 
 With the promise chain api the method from the `browser` prototype and the 
 `element` prototype are all available within the `browser` instance, so it might
