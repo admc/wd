@@ -131,13 +131,8 @@ describe("using mocha-as-promised and chai-as-promised", function() {
 
   before(function() {
     browser = wd.promiseChainRemote();
-    //browser._debugPromise();
-    browser.on('status', function(info) {
-      console.log(info);
-    });
-    browser.on('command', function(meth, path, data) {
-      console.log(' > ' + meth, path, data || '');
-    });
+    ...
+
     return browser
       .init({browserName:'chrome'});
   });
