@@ -146,6 +146,11 @@ wd.remote(function*() {
 
 [full json wire mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
 
+### JsonWireProtocol
+
+WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
+ - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
+
 ### Browser initialization
 
 #### Indexed parameters
@@ -220,10 +225,39 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 }
 ```
 
+### Element function chaining (when using promise chains)
+
+With the promise chain api the method from the `browser` prototype and the 
+`element` prototype are all available within the `browser` instance, so it might
+be confusing at first. However we tried to keep the logic as simple as possible 
+using the principles below: 
+
+- There is no state passed between calls, except for what the method returns.
+- If the method returns an element the element scope is propagated.
+- If the method returns nothing (click, type etc...) we make the method return the current element, so the element scope is propagated.
+- If the method returns something (text, getAttribute...), the element scope is lost.
+- You may use "<" as the first parameter to get out of the element scope.
+- You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
+
+If you need to do something more complicated, like reusing an element for 2 call, then 
+you should probably be using Q promise functionnality (like Q.all or Q sequences).
+
+Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/element-func-call.js)
+
 ### Monkey patching
 
 You may want to monkey patch the webdriver class in order to add custom functionalities.
-There is an example [here](https://github.com/admc/wd/blob/master/examples/example.monkey.patch.js).
+There is an example [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
+
+### Promise helpers
+
+This is a cleaner alternative to monkey patching.
+
+[here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
+
+### Environment variables for Saucelabs
+
+When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
 
 ### Safe Methods
 
@@ -240,16 +274,6 @@ browser.safeEval("wrong!!!", function(err, res) { // returns
 browser.execute("wrong!!!", function(err, res) { //hangs
 browser.safeExecute("wrong!!!", function(err, res) { //returns
 ```
-
-### Environment variables for Saucelabs
-
-When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
-
-
-### JsonWireProtocol
-
-WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
- - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
 
 ## Run the tests!
 
