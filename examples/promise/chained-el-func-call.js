@@ -1,6 +1,6 @@
 //
 // Example demonstrating element function chaining.
-// see doc here
+// Please refer to the 'Element function chaining' section in README.
 //
 
 require('colors');
