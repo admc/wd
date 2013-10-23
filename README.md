@@ -76,6 +76,8 @@ browser
 ### Pure async
 
 ```js
+...
+
 browser.init({browserName:'chrome'}, function() {
   browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
