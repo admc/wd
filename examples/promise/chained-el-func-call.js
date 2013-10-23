@@ -32,7 +32,7 @@ browser
   .get('http://angularjs.org/')
   .elementById('the-basics')
   .click().text().text()
-  .elementById('the-basics')
-  .text('>').click('>').text()
+  //.elementById('the-basics')
+  //.text('>').click('>').text()
   .fin(function() { return browser.quit(); })
   .done();
