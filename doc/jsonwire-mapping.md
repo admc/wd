@@ -24,7 +24,8 @@ Create a new session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 init(desired, cb) -&gt; cb(err, sessionID, capabilities)<br>
-Initialize the browser.<br>
+Initialize the browser. capabilities return may be<br>
+absent, depending on driver.<br>
 </td>
 </tr>
 <tr>
@@ -563,6 +564,9 @@ special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
 <p>
 element.type(keys, cb) -&gt; cb(err)<br>
 </p>
+<p>
+element.keys(keys, cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -798,8 +802,15 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Move the mouse by an offset of the specificed element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 moveTo(element, xoffset, yoffset, cb) -&gt; cb(err)<br>
-Move to element, xoffset and y offset are optional.<br>
+Move to element, element may be null, xoffset and y offset<br>
+are optional.<br>
+</p>
+<p>
+element.moveTo(xoffset, yoffset, cb) -&gt; cb(err)<br>
+xoffset and y offset are optional.<br>
+</p>
 </td>
 </tr>
 <tr>
