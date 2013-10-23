@@ -149,7 +149,6 @@ describe("using mocha-as-promised and chai-as-promised", function() {
   });
 
   it("submit element should be clicked", function() {
-    /* jshint evil: true */
     return browser.elementById("submit").click().eval("window.location.href")
       .should.eventually.include("&submit");
   });
