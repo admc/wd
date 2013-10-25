@@ -48,16 +48,10 @@ endif
 # test_ghostdriver:
 # 	./node_modules/.bin/mocha --bail test/ghostdriver/*-test.js
 
-# todo: setup coverage using new tests
 # run test coverage, install jscoverage first
-# test_coverage:
-# 	rm -rf lib-cov
-# 	jscoverage --no-highlight lib lib-cov --exclude=bin.js
-# 	WD_COV=1 ./node_modules/.bin/mocha --bail --reporter html-cov \
-# 	test/unit/*-test.js \
-# 	test/local/*-test.js \
-# 	test/saucelabs/*-test.js \
-#   > coverage.html
+test_coverage:
+	rm -rf coverage
+	./node_modules/.bin/istanbul cover test/coverage/run_tests.js --
 
 _dox:
 	@mkdir -p tmp

@@ -6,7 +6,7 @@ chai.use(chaiAsPromised);
 GLOBAL.expect = chai.expect;
 GLOBAL.should = chai.should();
 
-GLOBAL.wd = process.env.WD_COV? require('../../lib-cov/main') : require('../../lib/main');
+GLOBAL.wd = require('../../lib/main');
 GLOBAL.Q = GLOBAL.wd.Q;
 GLOBAL._ = require('lodash');
 
@@ -22,6 +22,9 @@ var desired = process.env.DESIRED? JSON.parse(process.env.DESIRED) : {
   browserName: process.env.BROWSER || 'chrome'
 };
 
+var TIMEOUT_BASE = process.env.TIMEOUT_BASE || 500;
+TIMEOUT_BASE = parseInt(TIMEOUT_BASE, 10);
+
 module.exports = {
   remoteConfig: remoteConfig,
   desired: desired,
@@ -34,7 +37,7 @@ module.exports = {
     return desired;
   },
   testEnv: 'local/' + desired.browserName,
-  TIMEOUT_BASE: process.env.TIMEOUT_BASE || 500,
+  TIMEOUT_BASE: TIMEOUT_BASE,
   isBrowser: function(browserName){
     return desired.browserName === browserName;
   },
