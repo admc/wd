@@ -16,6 +16,8 @@ try {
   wd = require('../../lib/main');
 }
 
+chai.promisifyWith(wd.buildPromisify());
+
 var Q = wd.Q;
 
 var browser = wd.promiseChainRemote();
@@ -57,7 +59,7 @@ browser
   .elementById('add-some-control')
   .elementById('>', 'the-basics') // This looks for an element in the current element scope
   .text().should.become('The Basics')
-  .should.be.rejected.with(/status: 7/) // no 'the-basics' subelement
+  .should.be.rejectedWith(/status: 7/) // no 'the-basics' subelement
 
   // getting out of the element scope
   .elementById('the-basics')

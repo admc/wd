@@ -55,7 +55,7 @@ describe('api test (' + setup.testEnv + ')', function() {
   it('browser.element', function() {
     return browser
       .element("name", "theDiv").should.eventually.exist
-      .element("name", "theDiv2").should.be.rejected.with(/status: 7/);
+      .element("name", "theDiv2").should.be.rejectedWith(/status: 7/);
   });
 
   express.partials['browser.elementOrNull'] =
@@ -92,7 +92,7 @@ describe('api test (' + setup.testEnv + ')', function() {
         '}, arguments[0]);\n',
         [0.75 * TIMEOUT_BASE]
       )
-      .elementByCss("#theDiv .child").should.be.rejected.with(/status: 7/)
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
       .waitForElement("css selector", "#theDiv .child", 2 * TIMEOUT_BASE)
         .should.be.fulfilled
       .waitForElement("css selector", "#wrongsel .child", 2 * TIMEOUT_BASE)
@@ -217,7 +217,7 @@ describe('api test (' + setup.testEnv + ')', function() {
     it('browser.' + elementFuncName, function() {
       return browser
         [elementFuncName](suffixFields.searchOne).should.eventually.exist
-        [elementFuncName](suffixFields.searchOneInvalid).should.be.rejected.with(/status: 7/);
+        [elementFuncName](suffixFields.searchOneInvalid).should.be.rejectedWith(/status: 7/);
     });
 
     var elementFuncNameOrNull = 'element' + suffix + 'OrNull';
@@ -256,7 +256,7 @@ describe('api test (' + setup.testEnv + ')', function() {
           '}, args[1]);\n',
           [suffixFields.childHtml, 0.75 * TIMEOUT_BASE]
         )
-        [elementFuncName](suffixFields.searchChild).should.be.rejected.with(/status: 7/)
+        [elementFuncName](suffixFields.searchChild).should.be.rejectedWith(/status: 7/)
         [waitForElementFuncName](suffixFields.searchChild, 2 * TIMEOUT_BASE)
           .should.be.fulfilled
         [waitForElementFuncName]("__wrongsel", 2 * TIMEOUT_BASE)
@@ -367,7 +367,7 @@ describe('api test (' + setup.testEnv + ')', function() {
       .safeEval('document.title').should.become("WD Tests")
       .safeEval('$("#eval").length').should.become(1)
       .safeEval('$("#eval li").length').should.become(2)
-      .safeEval('invalid-code> here').should.be.rejected.with(Error);
+      .safeEval('invalid-code> here').should.be.rejectedWith(Error);
   });
 
   it('browser.execute', function() {
@@ -394,11 +394,11 @@ describe('api test (' + setup.testEnv + ')', function() {
       // without args
       .safeExecute('window.wd_sync_execute_test = "It worked!"')
       .eval('window.wd_sync_execute_test').should.become('It worked!')
-      .safeExecute('invalid-code> here').should.be.rejected.with(Error)
+      .safeExecute('invalid-code> here').should.be.rejectedWith(Error)
       // with args
       .safeExecute(jsScript, [6, 4])
       .eval('window.wd_sync_execute_test').should.become('It worked! 10')
-      .safeExecute('invalid-code> here', [6, 4]).should.be.rejected.with(Error);
+      .safeExecute('invalid-code> here', [6, 4]).should.be.rejectedWith(Error);
   });
 
   it('browser.executeAsync', function() {
@@ -426,9 +426,9 @@ describe('api test (' + setup.testEnv + ')', function() {
       'done("OK " + (args[0] + args[1]));';
     return browser
       .safeExecuteAsync(jsScript).should.become('OK')
-      .safeExecuteAsync('123 invalid<script').should.be.rejected.with(Error)
+      .safeExecuteAsync('123 invalid<script').should.be.rejectedWith(Error)
       .safeExecuteAsync(jsScriptWithArgs, [10, 5]).should.become('OK 15')
-      .safeExecuteAsync('123 invalid<script', [10, 5]).should.be.rejected.with(Error);
+      .safeExecuteAsync('123 invalid<script', [10, 5]).should.be.rejectedWith(Error);
   });
 
   express.partials['browser.setImplicitWaitTimeout'] =
@@ -441,7 +441,7 @@ describe('api test (' + setup.testEnv + ')', function() {
         'setTimeout(function() {\n' +
         '$("#setWaitTimeout").html("<div class=\\"child\\">a child</div>");\n' +
         '}, arguments[0]);', [TIMEOUT_BASE])
-      .elementByCss('#setWaitTimeout .child').should.be.rejected.with(/status\: 7/)
+      .elementByCss('#setWaitTimeout .child').should.be.rejectedWith(/status\: 7/)
       .setImplicitWaitTimeout(2 * TIMEOUT_BASE)
       .elementByCss('#setWaitTimeout .child')
       .setImplicitWaitTimeout(0);
@@ -456,7 +456,7 @@ describe('api test (' + setup.testEnv + ')', function() {
       '}, arguments[0]);';
     return browser
       .setAsyncScriptTimeout( TIMEOUT_BASE/2 )
-      .executeAsync( jsScript, [TIMEOUT_BASE]).should.be.rejected.with(/status\: 28/)
+      .executeAsync( jsScript, [TIMEOUT_BASE]).should.be.rejectedWith(/status\: 28/)
       .setAsyncScriptTimeout( 2* TIMEOUT_BASE )
       .executeAsync( jsScript, [TIMEOUT_BASE])
       .setAsyncScriptTimeout(0);
@@ -1021,7 +1021,7 @@ describe('api test (' + setup.testEnv + ')', function() {
         ,
         [1.5 * TIMEOUT_BASE]
       )
-      .elementByCss("#theDiv .child").should.be.rejected.with(/status: 7/)
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
       .waitForCondition(exprCond, 2 * TIMEOUT_BASE, 200).should.eventually.be.ok
       .waitForCondition(exprCond, 2 * TIMEOUT_BASE).should.eventually.be.ok
       .waitForCondition(exprCond).should.eventually.be.ok
@@ -1040,7 +1040,7 @@ describe('api test (' + setup.testEnv + ')', function() {
         ,
         [1.5 * TIMEOUT_BASE]
       )
-      .elementByCss("#theDiv .child").should.be.rejected.with(/status: 7/)
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
       .setAsyncScriptTimeout(5 * TIMEOUT_BASE)
       .waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE, 0.2 * TIMEOUT_BASE)
         .should.eventually.be.ok

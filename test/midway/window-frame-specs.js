@@ -50,31 +50,30 @@ describe('window/frame test (' + setup.testEnv + ')', function() {
         return browser
           .setWindowSize(size.width -20, size.height - 10, 'window-3')
           // todo: strange to pass the window as the last parameter
-          .getWindowSize('window-3')
-            .should.eventually.be.a('object')
-              .with.property('width', size.width -20)
-              .with.property('height', size.height - 10)
+          .getWindowSize('window-3').then(function(newSize) {
+            newSize.should.have.property('width', size.width - 20);
+            newSize.should.have.property('height', size.height - 10);
+          })
           .setWindowSize(size.width -25, size.height - 15)
-          .getWindowSize()
-            .should.eventually.be.a('object')
-              .with.property('width', size.width -25)
-              .with.property('height', size.height - 15);
+          .getWindowSize().then(function(newSize) {
+            newSize.should.have.property('width', size.width - 25);
+            newSize.should.have.property('height', size.height - 15);
+          });
       })
       .getWindowPosition('window-3').then(function(pos) {
         return browser
           .setWindowPosition(pos.x + 10, pos.y + 5, 'window-3')
           // todo: strange to pass the window as the last parameter
-          .getWindowPosition('window-3')
-            .should.eventually.be.a('object')
-              .with.property('x', pos.x + 10)
-              .with.property('y', pos.y + 5)
-
+          .getWindowPosition('window-3').then(function(newPos) {
+            newPos.should.have.property('x', pos.x + 10);
+            newPos.should.have.property('y', pos.y + 5);
+          })
           .setWindowPosition(pos.x + 15, pos.y + 10)
           // todo: strange to pass the window as the last parameter
-          .getWindowPosition()
-            .should.eventually.be.a('object')
-              .with.property('x', pos.x + 15)
-              .with.property('y', pos.y + 10);
+          .getWindowPosition().then(function(newPos) {
+            newPos.should.have.property('x', pos.x + 15);
+            newPos.should.have.property('y', pos.y + 10);
+          });
       })
       .close()
       .windowHandles().should.eventually.have.length(1)

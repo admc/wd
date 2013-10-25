@@ -63,7 +63,7 @@
     "mu2": "~0.5.19",
     "sv-selenium": "~0.1.6",
     "colors": "~0.6.2",
-    "chai-as-promised": "~3.3.1",
+    "chai-as-promised": "https://github.com/sebv/chai-as-promised/archive/master.tar.gz",
     "chai": "~1.8.1",
     "mocha-as-promised": "~1.4.0",
     "hbs": "~2.4.0",

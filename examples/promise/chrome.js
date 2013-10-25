@@ -11,6 +11,8 @@ try {
   wd = require('../../lib/main');
 }
 
+chai.promisifyWith(wd.buildPromisify());
+
 var browser = wd.promiseChainRemote();
 
 // optional extra logging
@@ -28,7 +30,7 @@ browser
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
     .should.become('I am a page title - Sauce Labs')
-  .elementById('ai am a link')
+  .elementById('i am a link')
   .click()
   .eval("window.location.href")
     .should.eventually.include('guinea-pig2')

@@ -14,6 +14,8 @@ try {
   wd = require('../../lib/main');
 }
 
+chai.promisifyWith(wd.buildPromisify());
+
 var browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, username, accessKey);
 
 // optional extra logging

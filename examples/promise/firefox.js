@@ -11,6 +11,8 @@ try {
   wd = require('../../lib/main');
 }
 
+chai.promisifyWith(wd.buildPromisify());
+
 var browser = wd.promiseChainRemote();
 
 // optional extra logging
