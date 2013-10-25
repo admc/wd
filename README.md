@@ -358,4 +358,4 @@ make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
 
 ## Test Coverage
 
-[test coverage](http://admc.io/wd/coverage.html)
+[test coverage](http://admc.io/wd/istanbul/coverage/lcov-report/index.html)
