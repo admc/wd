@@ -7,9 +7,6 @@ var Mocha = require('mocha'),
 var sauceUsername = process.env.SAUCE_USERNAME;
 var sauceAccessKey = process.env.SAUCE_ACCESS_KEY;
 
-//process.env.TIMEOUT_BASE=1000;
-//var reporter='spec'
-
 function runSpecs(dir, mochaConfig) {
   mochaConfig = mochaConfig || [];
   return Q.nfcall(function(done) {

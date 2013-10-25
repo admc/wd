@@ -24,8 +24,7 @@ Express.prototype.start = function() {
   });
 
   this.app.use(express["static"](this.rootDir + '/public'));
-  this.server = this.app.listen(8181);
-
+  this.server = this.app.listen(env.EXPRESS_PORT);
 };
 
 Express.prototype.stop = function() {

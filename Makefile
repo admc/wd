@@ -40,7 +40,7 @@ else
 	SAUCE=1 make test_e2e
 endif
 else
-	JOB_ID=`git rev-parse --short HEAD`  SAUCE=1 make test_e2e
+	SAUCE_JOB_ID=`git rev-parse --short HEAD`  SAUCE=1 make test_e2e
 endif
 
 # todo: reconfigure that

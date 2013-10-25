@@ -9,9 +9,7 @@ describe("wd", function() {
       server = null;
       before(function(done) {
         server = nock('http://127.0.0.1:5555').filteringRequestBody(/.*/, '*');
-        if (process.env.WD_COV === null) {
-          server.log(console.log);
-        }
+        server.log(console.log);
         server.post('/wd/hub/session', '*').reply(303, "OK", {
           'Location': '/wd/hub/session/1234'
         });
@@ -69,9 +67,7 @@ describe("wd", function() {
       server = null;
       before(function(done) {
         server = nock('http://127.0.0.1:5555').filteringRequestBody(/.*/, '*');
-        if (process.env.WD_COV === null) {
-          server.log(console.log);
-        }
+        server.log(console.log);
         server.post('/wd/hub/session', '*').reply(303, "OK", {
           'Location': '/wd/hub/session/1234'
         });

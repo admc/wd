@@ -14,7 +14,8 @@
     "assert": false,
     "wd": false,
     "_": false,
-    "Q": false
+    "Q": false,
+    "env": false
   },
   "immed": true,
   "latedef": true,

@@ -1,13 +1,6 @@
 
 var setup = require('../helpers/setup');
 
-// var browser1 = 'firefox',
-//     browser2 = 'chrome';
-
-// if(utils.isTravis()){
-//   browser2 = 'firefox';
-// }
-
 describe('browser. tests (' + setup.testEnv + ') @multi', function() {
 
   var browser;
@@ -54,7 +47,7 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
       .sessionCapabilities().should.eventually.have.property('browserName', 'chrome');
   });
 
-  if(process.env.SAUCE){
+  if(env.SAUCE){
 
     it("setting browser platform to VISTA @saucelabs", function() {
       browser.defaultCapabilities.platform = 'VISTA';
