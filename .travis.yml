@@ -1,8 +1,9 @@
 language: node_js
+addons:
+  sauce_connect: true
 node_js:
-  - "0.11"
   - "0.10"
-  - "0.8"
+  - "0.9"
 env:
   - [
       {secure: "P6rr9zRzJfodqw7dCKZAQtBi8rcMwYAhXwyk27k+8tRbKdoMyxPDGByo1EEW\n39Y7W53gmXYgjb6FZcwwJ/d+yr6DpZuxbcGt75HmsHltJPTJB4OzXQCliod+\nMRw6VQmHdnZVMS2yHBc4OXrVfM99o4k2uNcq4dapgX8K3oflY5A="},
@@ -10,6 +11,5 @@ env:
     ]
 script:
   - "make test_unit"
+  - "test_midway_sauce_connect"
   - "make test_e2e_sauce"
-
-# Note: local test have been disabled cause firefox and chrome selenenium seems to be broken in travis
