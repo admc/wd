@@ -23,7 +23,7 @@ describe('api test (' + setup.testEnv + ')', function() {
   beforeEach(function() {
     var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
     return browser.get(
-      'http://127.0.0.1:8181/test-page?partial=' +
+      env.MIDWAY_ROOT_URL + '/test-page?partial=' +
         encodeURIComponent(cleanTitle));
   });
 
@@ -46,7 +46,7 @@ describe('api test (' + setup.testEnv + ')', function() {
       return browser
         .setPageLoadTimeout(TIMEOUT_BASE / 2)
         .setPageLoadTimeout(TIMEOUT_BASE / 2)
-        .get('http://127.0.0.1:8181/test-page')
+        .get( env.MIDWAY_ROOT_URL + '/test-page')
         .setPageLoadTimeout(defaultTimeout);
     });
   }
@@ -55,9 +55,9 @@ describe('api test (' + setup.testEnv + ')', function() {
     return browser.refresh();
   });
 
-  it.only('back/forward', function() {
+  it('back/forward', function() {
     return browser
-      .get('http://127.0.0.1:8181/test-page?p=2')
+      .get( env.MIDWAY_ROOT_URL +  '/test-page?p=2')
       .url().should.eventually.include("?p=2")
       .back()
       .url().should.eventually.not.include("?p=2")

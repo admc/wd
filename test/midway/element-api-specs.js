@@ -21,7 +21,7 @@ describe('element api test (' + setup.testEnv + ')', function() {
   beforeEach(function() {
     var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
     return browser.get(
-      'http://127.0.0.1:8181/test-page?partial=' +
+      env.MIDWAY_ROOT_URL + '/test-page?partial=' +
         encodeURIComponent(cleanTitle));
   });
 

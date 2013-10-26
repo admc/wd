@@ -17,7 +17,7 @@ describe('window - frame api test (' + setup.testEnv + ')', function() {
   }
 
   var getUrlBase = function(test) {
-    return 'http://127.0.0.1:8181/test-page?partial=' +
+    return env.MIDWAY_ROOT_URL + '/test-page?partial=' +
       encodeURIComponent(cleanTitle(test.runnable().title));
   };
 
@@ -179,7 +179,7 @@ describe('window - frame api test (' + setup.testEnv + ')', function() {
   it('browser.frame', function() {
     return browser
       .init(setup.desiredWithTestInfo(testInfo('#10')))
-      .get("http://127.0.0.1:8181/frame-test/index.html")
+      .get( env.MIDWAY_ROOT_URL + "/frame-test/index.html")
       .elementsByTagName('frame').should.eventually.have.length(3)
       .frame(0)
       .elementsByTagName('body').text().should.eventually.include("Menu!")

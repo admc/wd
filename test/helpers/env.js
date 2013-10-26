@@ -29,6 +29,8 @@ jsonEnv('DESIRED', {browserName: env.BROWSER});
 
 intEnv('EXPRESS_PORT', 8181);
 
+stringEnv('MIDWAY_ROOT_URL', "http://localhost:" + env.EXPRESS_PORT);
+
 booleanEnv('SAUCE_CONNECT', false);
 booleanEnv('SAUCE', env.SAUCE_CONNECT);
 
