@@ -139,10 +139,11 @@ describe('api test (' + setup.testEnv + ')', function() {
     '  <div name="elementsByName">Hello World!</div>\n' +
     '  <div name="elementsByName">Hello World!</div>\n' +
     '</div>\n';
-  it('browser.elements', function() {
+  it('browser.elements @the-test', function() {
     return browser
       .elements("name", "elementsByName").should.eventually.have.length(3)
-      .elements("name", "elementsByName2").should.eventually.deep.equal([]);
+      .elements("name", "elementsByName2").should.eventually.deep.equal([])
+      .printError();
   });
 
   // get suffix specific fields

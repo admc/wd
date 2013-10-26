@@ -14,5 +14,5 @@ script:
   # - "make test_midway_sauce_connect"
   # - "make test_e2e_sauce"
   #
-  - "SAUCE_CONNECT=1 BROWSER=android ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-android|@multi' -i"
-
+  # - "SAUCE_CONNECT=1 BROWSER=android ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-android|@multi' -i"
+  - "SAUCE_CONNECT=1 BROWSER=android ./node_modules/.bin/mocha test/midway/*-specs.js -g '@the-test'"
