@@ -25,7 +25,7 @@ java -jar Sauce-Connect.jar --readyfile $READY_FILE \
     --tunnel-identifier $TRAVIS_JOB_NUMBER \
     $SAUCE_USERNAME $SAUCE_ACCESS_KEY > sauce_connect.log &
 
-echo 'waiting 5 sec for sauce connect to start'
+echo 'waiting for sauce connect to start'
 # tail -f sauce_connect.log &
 
 # Wait for Connect to be ready before exiting
