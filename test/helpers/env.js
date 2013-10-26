@@ -40,12 +40,12 @@ stringEnv('TRAVIS_JOB_NUMBER', undefined);
 if( env.TRAVIS_JOB_ID ){
   env.TRAVIS = true;
   console.log("Travis environment detected.");
-  console.log("TRAVIS_JOB_ID --> ", process.env.TRAVIS_JOB_ID);
-  console.log("TRAVIS_JOB_NUMBER --> ", process.env.TRAVIS_JOB_NUMBER);
+  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
+  console.log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
 }
 
 if(env.SAUCE){
-  stringEnv('SAUCE_JOB_ID', process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60)));
+  stringEnv('SAUCE_JOB_ID', env.TRAVIS_JOB_NUMBER || Math.round(new Date().getTime() / (1000*60)));
   stringEnv('SAUCE_USERNAME', '');
   stringEnv('SAUCE_ACCESS_KEY', '');
   stringEnv('SAUCE_PLATFORM', 'LINUX');
