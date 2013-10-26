@@ -58,14 +58,11 @@ describe('api test (' + setup.testEnv + ')', function() {
   it('back/forward', function() {
     return browser
       .get( env.MIDWAY_ROOT_URL +  '/test-page?p=2')
-      .sleep(2000)
       .url().should.eventually.include("?p=2")
-      // .back()
-      // .url().should.eventually.not.include("?p=2")
-      // .forward()
-      // .url().should.eventually.include("?p=2")
-      .printError()
-      ;
+      .back()
+      .url().should.eventually.not.include("?p=2")
+      .forward()
+      .url().should.eventually.include("?p=2");
   });
 
   express.partials['browser.element'] =
