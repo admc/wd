@@ -141,8 +141,10 @@ describe('api test (' + setup.testEnv + ')', function() {
     '</div>\n';
   it('browser.elements @the-test', function() {
     return browser
+      .sleep(5)
       .elements("name", "elementsByName").should.eventually.have.length(3)
-      .elements("name", "elementsByName2").should.eventually.deep.equal([])
+      //.elements("name", "elementsByName2").should.eventually.deep.equal([])
+      .sleep(5)
       .printError();
   });
 
