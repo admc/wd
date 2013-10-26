@@ -22,7 +22,7 @@ describe('element api test (' + setup.testEnv + ')', function() {
     var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
     return browser.get(
       env.MIDWAY_ROOT_URL + '/test-page?partial=' +
-        encodeURIComponent(cleanTitle));
+        encodeURIComponent(cleanTitle)).printError();
   });
 
   afterEach(function() {

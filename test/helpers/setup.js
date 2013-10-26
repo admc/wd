@@ -12,7 +12,8 @@ module.exports = _.extend({
       .promiseChainRemote(base.remoteConfig);
     base.configureLogging(this.browser);
     return this.browser
-      .init(base.desiredWithTestInfo(testInfo));
+      .init(base.desiredWithTestInfo(testInfo))
+      .printError();
   },
   jobStatus: function(passed) {
     return this.browser
