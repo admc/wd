@@ -140,7 +140,7 @@ describe('api test (' + setup.testEnv + ')', function() {
     '  <div name="elementsByName">Hello World!</div>\n' +
     '  <div name="elementsByName">Hello World!</div>\n' +
     '</div>\n';
-  it('browser.elements @the-test', function() {
+  it('browser.elements', function() {
     return browser
       .sleep(5)
       .elements("name", "elementsByName").should.eventually.have.length(3)
