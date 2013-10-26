@@ -12,6 +12,7 @@ describe('deprecated chaining tests(' + setup.testEnv + ')', function() {
     var allPassed = true;
 
     before(function() {
+      this.timeout(env.INIT_TIMEOUT);
       browser = setup.remote();
     });
 
@@ -20,6 +21,8 @@ describe('deprecated chaining tests(' + setup.testEnv + ')', function() {
     });
 
     it("full chaining should work", function(done) {
+      this.timeout(env.INIT_TIMEOUT);
+
       /* jshint evil: true */
       browser.chain()
         .init(setup.desiredWithTestInfo(testInfo))
@@ -49,6 +52,7 @@ describe('deprecated chaining tests(' + setup.testEnv + ')', function() {
     };
 
     before(function(done) {
+      this.timeout(env.INIT_TIMEOUT);
       browser = setup.initBrowser(testInfo, done);
     });
 

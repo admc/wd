@@ -8,10 +8,11 @@ function testInfo(testDesc) {
 var setup = require('../helpers/setup');
 
 describe('browser. tests (' + setup.testEnv + ') @multi', function() {
-
+  this.timeout(env.INIT_TIMEOUT);
   var browser;
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     browser = setup.remote();
   });
 

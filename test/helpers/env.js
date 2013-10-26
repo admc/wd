@@ -22,14 +22,18 @@ function intEnv(name, _default) {
 
 booleanEnv('VERBOSE', false);
 intEnv('TIMEOUT_BASE', 500);
+intEnv('INIT_TIMEOUT', 60000);
 
 stringEnv('REMOTE_CONFIG', undefined);
 stringEnv('BROWSER', 'chrome');
 jsonEnv('DESIRED', {browserName: env.BROWSER});
 
+booleanEnv('ANDROID', false);
+booleanEnv('IOS', false);
 
 // android config
 if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
+  env.ANDROID = true;
   env.DESIRED = {
     'browserName': 'android',
     'version': '4.0',
@@ -40,6 +44,7 @@ if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
 }
 
 if(env.BROWSER === 'android_phone'){
+  env.ANDROID = true;
   env.DESIRED = {
     'browserName': 'android',
     'version': '4.0',
@@ -50,6 +55,7 @@ if(env.BROWSER === 'android_phone'){
 
 // ipad config
 if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
+  env.IOS = true;
   env.DESIRED = {
     'browserName': 'ipad',
     'version': '6.1',
@@ -60,6 +66,7 @@ if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
 
 // iphone config
 if(env.BROWSER === 'iphone'){
+  env.IOS = true;
   env.DESIRED = {
     'browserName': 'iphone',
     'version': '6.1',
@@ -70,8 +77,11 @@ if(env.BROWSER === 'iphone'){
 
 intEnv('EXPRESS_PORT', 8181);
 
-//stringEnv('MIDWAY_ROOT_HOST', 'localhost');
-stringEnv('MIDWAY_ROOT_HOST', '10.0.2.2');
+stringEnv('MIDWAY_ROOT_HOST', 'localhost');
+if(env.ANDROID){
+  env.MIDWAY_ROOT_HOST = '10.0.2.2';
+  env.INIT_TIMEOUT = 300000;
+}
 
 stringEnv('MIDWAY_ROOT_URL', "http://" + env.MIDWAY_ROOT_HOST + ":" + env.EXPRESS_PORT);
 

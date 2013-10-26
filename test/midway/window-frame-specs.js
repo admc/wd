@@ -8,7 +8,7 @@ function testInfo(testDesc) {
 var setup = require('../helpers/setup');
 
 describe('window - frame api test (' + setup.testEnv + ') @skip-android', function() {
-
+  this.timeout(env.INIT_TIMEOUT);
   var browser;
   var express = new setup.Express( __dirname + '/assets' );
 

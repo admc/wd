@@ -25,6 +25,7 @@ describe('typing test (' + setup.testEnv + ')', function() {
     '</div>\n';
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     express.start();
     return browser = setup.initBrowser(testInfo);
   });

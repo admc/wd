@@ -11,6 +11,7 @@ describe('promise chain tests(' + setup.testEnv + ')', function() {
   var allPassed = true;
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     return browser = setup.initBrowser(testInfo);
   });
 

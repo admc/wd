@@ -16,6 +16,7 @@ describe('api test (' + setup.testEnv + ')', function() {
   var express = new setup.Express( __dirname + '/assets' );
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     express.start();
     return browser = setup.initBrowser(testInfo);
   });

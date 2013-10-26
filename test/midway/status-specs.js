@@ -10,6 +10,7 @@ describe('status method tests(' + setup.testEnv + ') @multi', function() {
   var allPassed = true;
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     return browser = setup.initBrowser(testInfo);
   });
 

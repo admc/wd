@@ -10,6 +10,7 @@ describe('promise no chain tests(' + setup.testEnv + ')', function() {
   var allPassed = true;
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     return setup.initBrowser(testInfo).then(function() {
       browser = setup.browser;
     });

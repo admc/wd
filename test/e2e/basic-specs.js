@@ -6,11 +6,11 @@ var testInfo = {
 var setup = require("../helpers/setup");
 
 describe('basic tests(' + setup.testEnv + ')', function() {
-
   var browser;
   var allPassed = true;
 
   before(function() {
+    this.timeout(env.INIT_TIMEOUT);
     return browser = setup.initBrowser(testInfo);
   });
 
