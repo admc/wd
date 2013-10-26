@@ -38,7 +38,6 @@ module.exports = {
   isBrowser: function(browserName){
     return env.DESIRED.browserName === browserName;
   },
-  urlRoot: 'http://localhost:8000/',
   Express: Express,
   configureLogging: function (browser){
     if(env.VERBOSE) {

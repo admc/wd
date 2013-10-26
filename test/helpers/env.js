@@ -70,7 +70,10 @@ if(env.BROWSER === 'iphone'){
 
 intEnv('EXPRESS_PORT', 8181);
 
-stringEnv('MIDWAY_ROOT_URL', "http://localhost:" + env.EXPRESS_PORT);
+//stringEnv('MIDWAY_ROOT_HOST', 'localhost');
+stringEnv('MIDWAY_ROOT_HOST', '10.0.2.2');
+
+stringEnv('MIDWAY_ROOT_URL', "http://" + env.MIDWAY_ROOT_HOST + ":" + env.EXPRESS_PORT);
 
 booleanEnv('SAUCE_CONNECT', false);
 booleanEnv('SAUCE', env.SAUCE_CONNECT);
