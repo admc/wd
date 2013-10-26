@@ -34,10 +34,14 @@ stringEnv('MIDWAY_ROOT_URL', "http://localhost:" + env.EXPRESS_PORT);
 booleanEnv('SAUCE_CONNECT', false);
 booleanEnv('SAUCE', env.SAUCE_CONNECT);
 
-if( process.env.TRAVIS_JOB_ID ){
+stringEnv('TRAVIS_JOB_ID', undefined);
+stringEnv('TRAVIS_JOB_NUMBER', undefined);
+
+if( env.TRAVIS_JOB_ID ){
+  env.TRAVIS = true;
   console.log("Travis environment detected.");
   console.log("TRAVIS_JOB_ID --> ", process.env.TRAVIS_JOB_ID);
-  env.TRAVIS = true;
+  console.log("TRAVIS_JOB_NUMBER --> ", process.env.TRAVIS_JOB_NUMBER);
 }
 
 if(env.SAUCE){

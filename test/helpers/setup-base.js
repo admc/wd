@@ -28,6 +28,9 @@ module.exports = {
         desired.tags = _.union(desired.tags, testInfo.tags);
       }
     }
+    if(env.TRAVIS_JOB_NUMBER){
+      desired['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER;
+    }
     return desired;
   },
   testEnv: 'local/' + env.DESIRED.browserName,
