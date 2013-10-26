@@ -26,10 +26,9 @@ java -jar Sauce-Connect.jar --readyfile $READY_FILE \
     $SAUCE_USERNAME $SAUCE_ACCESS_KEY > sauce_connect.log &
 
 echo 'waiting 5 sec for sauce connect to start'
+# tail -f sauce_connect.log &
 
 # Wait for Connect to be ready before exiting
 while [ ! -f $READY_FILE ]; do
   sleep .5
 done
-
-cat sauce_connect.log
