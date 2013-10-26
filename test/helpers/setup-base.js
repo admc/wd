@@ -23,8 +23,10 @@ module.exports = {
   desiredWithTestInfo: function(testInfo) {
     var desired = _.clone(env.DESIRED);
     if(env.SAUCE){
-      if(testInfo.name) { desired.name = testInfo.name; }
-      if(testInfo.tags) { desired.tags = _.union(desired.tags, testInfo.tags); }
+      if(testInfo && testInfo.name) { desired.name = testInfo.name; }
+      if(testInfo && testInfo.tags) {
+        desired.tags = _.union(desired.tags, testInfo.tags);
+      }
     }
     return desired;
   },
@@ -46,6 +48,7 @@ module.exports = {
       });
     }
   },
-  _jobStatus: sauce.jobStatus
+  _jobStatus: sauce.jobStatus,
+  _jobUpdate: sauce.jobUpdate
 };
 

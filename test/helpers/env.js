@@ -27,21 +27,33 @@ stringEnv('REMOTE_CONFIG', undefined);
 stringEnv('BROWSER', 'chrome');
 jsonEnv('DESIRED', {browserName: env.BROWSER});
 
-console.log("env.DESIRED-->", env.DESIRED);
-
 intEnv('EXPRESS_PORT', 8181);
 
-if(process.env.SAUCE){
+booleanEnv('SAUCE_CONNECT', false);
+booleanEnv('SAUCE', env.SAUCE_CONNECT);
+
+if( process.env.TRAVIS_JOB_ID ){
+  console.log("Travis environment detected.");
+  console.log("TRAVIS_JOB_ID --> ", process.env.TRAVIS_JOB_ID);
+  env.TRAVIS = true;
+}
+
+if(env.SAUCE){
   stringEnv('SAUCE_JOB_ID', process.env.TRAVIS_JOB_ID || Math.round(new Date().getTime() / (1000*60)));
-  booleanEnv('SAUCE', false);
   stringEnv('SAUCE_USERNAME', '');
   stringEnv('SAUCE_ACCESS_KEY', '');
   stringEnv('SAUCE_PLATFORM', 'LINUX');
   booleanEnv('SAUCE_RECORD_VIDEO', true);
 
-  env.REMOTE_CONFIG =
-    'http://' + env.SAUCE_USERNAME + ':' + env.SAUCE_ACCESS_KEY +
-      '@ondemand.saucelabs.com/wd/hub';
+  if(env.SAUCE_CONNECT){
+    env.REMOTE_CONFIG =
+      'http://' + env.SAUCE_USERNAME + ':' + env.SAUCE_ACCESS_KEY +
+        '@localhost:4445/wd/hub';
+  } else {
+    env.REMOTE_CONFIG =
+      'http://' + env.SAUCE_USERNAME + ':' + env.SAUCE_ACCESS_KEY +
+        '@ondemand.saucelabs.com/wd/hub';
+  }
   env.DESIRED = {
     browserName: env.BROWSER,
     platform: env.SAUCE_PLATFORM,

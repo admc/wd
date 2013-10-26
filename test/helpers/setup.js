@@ -20,6 +20,12 @@ module.exports = _.extend({
         return base._jobStatus(passed ,sessionId);
       });
   },
+  jobUpdate: function(passed) {
+    return this.browser
+      .getSessionId().then(function(sessionId) {
+        return base._jobUpdate(passed ,sessionId);
+      });
+  },
   closeBrowser: function() {
     return this.browser
       //.sleep(2000)

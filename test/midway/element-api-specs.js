@@ -1,3 +1,8 @@
+var testInfo = {
+  name: "midway element api",
+  tags: ['midway']
+};
+
 var setup = require('../helpers/setup');
 
 var path = require('path');
@@ -5,16 +10,12 @@ var path = require('path');
 describe('element api test (' + setup.testEnv + ')', function() {
 
   var browser;
+  var allPassed = true;
   var express = new setup.Express( __dirname + '/assets' );
 
   before(function() {
     express.start();
-    return browser = setup.initBrowser();
-  });
-
-  after(function() {
-    express.stop();
-    return setup.closeBrowser();
+    return browser = setup.initBrowser(testInfo);
   });
 
   beforeEach(function() {
@@ -22,6 +23,19 @@ describe('element api test (' + setup.testEnv + ')', function() {
     return browser.get(
       'http://127.0.0.1:8181/test-page?partial=' +
         encodeURIComponent(cleanTitle));
+  });
+
+  afterEach(function() {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(function() {
+    express.stop();
+    return setup.closeBrowser();
+  });
+
+  after(function() {
+    return setup.jobStatus(allPassed);
   });
 
   express.partials['element.text'] =

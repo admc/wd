@@ -1,3 +1,9 @@
+function testInfo(testDesc) {
+  return {
+    name: "midway init " + testDesc ,
+    tags: ['midway']
+  };
+}
 
 var setup = require('../helpers/setup');
 
@@ -13,30 +19,25 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
     return setup.closeBrowser();
   });
 
+  afterEach(function() {
+    return setup.jobStatus(this.currentTest.state === 'passed');
+  });
+
   it("default should be firefox", function() {
-    browser.defaultCapabilities.should.deep.equal({
-      browserName: 'firefox',
-      version: '',
-      javascriptEnabled: true,
-      platform: 'ANY'
-    });
+    browser.defaultCapabilities.browserName.should.equal('firefox');
+    browser.defaultCapabilities.javascriptEnabled.should.be.ok;
     return browser
       .init()
+      .then(function() { return setup.jobUpdate(testInfo('#1')); })
       .sessionCapabilities().should.eventually.have.property('browserName', 'firefox');
   });
 
   it("setting browser default", function() {
     browser.defaultCapabilities.browserName = 'chrome';
     browser.defaultCapabilities.javascriptEnabled = false;
-
-    browser.defaultCapabilities.should.deep.equal({
-      browserName: 'chrome',
-      version: '',
-      javascriptEnabled: false,
-      platform: 'ANY'
-    });
     return browser
       .init()
+      .then(function() { return setup.jobUpdate(testInfo('#2')); })
       .sessionCapabilities().should.eventually.have.property('browserName', 'chrome');
   });
 
@@ -44,6 +45,7 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
     browser.defaultCapabilities.browserName = 'firefox';
     return browser
       .init({browserName: 'chrome'})
+      .then(function() { return setup.jobUpdate(testInfo('#3')); })
       .sessionCapabilities().should.eventually.have.property('browserName', 'chrome');
   });
 
@@ -55,6 +57,7 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
 
       return browser
         .init()
+        .then(function() { return setup.jobUpdate(testInfo('#4')); })
         .sessionCapabilities().should.eventually.have.property('platform', 'XP');
     });
 
@@ -64,7 +67,8 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
 
       return browser
         .init()
-        .sessionCapabilities().should.eventually.have.property('platform', 'LINUX');
+        .then(function() { return setup.jobUpdate(testInfo('#5')); })
+        .sessionCapabilities().should.eventually.have.property('platform', 'linux');
     });
 
     it("configuring explorer in desired @saucelabs", function() {
@@ -79,6 +83,7 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
 
       return browser
         .init(desired)
+        .then(function() { return setup.jobUpdate(testInfo('#6')); })
         .sessionCapabilities().then(function(sessionCapabilities) {
           sessionCapabilities.platform.should.equal('WINDOWS');
           sessionCapabilities.browserName.should.include('explorer');

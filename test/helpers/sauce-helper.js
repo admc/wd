@@ -18,42 +18,43 @@ function jobStatus(passed, sessionId) {
     };
 
     return Q.nfcall(request, httpOpts).then(function() {
-      console.log("> job:", sessionId, "marked as " +
-        (passed? "pass" : "fail") + "." );
-      return;
+      if(env.VERBOSE){
+        console.log("> job:", sessionId, "marked as " +
+          (passed? "pass" : "fail") + "." );
+      }
+    });
+  });
+}
+
+function jobUpdate(jsonData , sessionId) {
+  return Q.fcall(function() {
+    if(!env.SAUCE) {return;}
+    var httpOpts = {
+      url: 'http://' + env.SAUCE_USERNAME + ':' +
+        env.SAUCE_ACCESS_KEY + '@saucelabs.com/rest/v1/' +
+        env.SAUCE_USERNAME + '/jobs/' + sessionId,
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'text/json'
+      },
+      body: JSON.stringify(jsonData),
+      jar: false /* disable cookies: avoids CSRF issues */
+    };
+
+    return Q.nfcall(request, httpOpts).then(function() {
+      if(env.VERBOSE){
+        console.log("> job:", sessionId, "updated ");
+      }
     });
   });
 }
 
 module.exports = {
-  jobStatus: jobStatus
+  jobStatus: jobStatus,
+  jobUpdate: jobUpdate
 };
 
 // Looks like the code below is not needed, leaving it commented for now.
-
-// function jobUpdate(jobId, name, tags, done) {
-//   var httpOpts = {
-//     url: 'http://' + username + ':' + accessKey + '@saucelabs.com/rest/v1/' + username + '/jobs/' + jobId,
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'text/json'
-//     },
-//     body: JSON.stringify({
-//           name: name,
-//           tags: tags,
-//           "record-video": false
-//         }),
-//     jar: false /* disable cookies: avoids CSRF issues */
-//   };
-
-//   request(httpOpts, function(err) {
-//     if(err)
-//       { console.log(err); }
-//     else
-//       { console.log("> job:", jobId, "updated." ); }
-//     done(err);
-//   });
-// }
 
 // exports.desiredDefaults = {
 //   chrome: {

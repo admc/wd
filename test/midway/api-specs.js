@@ -1,3 +1,8 @@
+var testInfo = {
+  name: "midway api",
+  tags: ['midway']
+};
+
 var setup = require('../helpers/setup');
 
 var imageinfo = require('imageinfo');
@@ -7,16 +12,12 @@ var TIMEOUT_BASE = setup.TIMEOUT_BASE;
 describe('api test (' + setup.testEnv + ')', function() {
 
   var browser;
+  var allPassed = true;
   var express = new setup.Express( __dirname + '/assets' );
 
   before(function() {
     express.start();
-    return browser = setup.initBrowser();
-  });
-
-  after(function() {
-    express.stop();
-    return setup.closeBrowser();
+    return browser = setup.initBrowser(testInfo);
   });
 
   beforeEach(function() {
@@ -26,14 +27,29 @@ describe('api test (' + setup.testEnv + ')', function() {
         encodeURIComponent(cleanTitle));
   });
 
-  it('browser.setPageLoadTimeout', function() {
-    var defaultTimeout = (setup.desired && (setup.desired.browserName === 'firefox'))? -1 : TIMEOUT_BASE;
-    return browser
-      .setPageLoadTimeout(TIMEOUT_BASE / 2)
-      .setPageLoadTimeout(TIMEOUT_BASE / 2)
-      .get('http://127.0.0.1:8181/test-page')
-      .setPageLoadTimeout(defaultTimeout);
+  afterEach(function() {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
   });
+
+  after(function() {
+    express.stop();
+    return setup.closeBrowser();
+  });
+
+  after(function() {
+    return setup.jobStatus(allPassed);
+  });
+
+  if(!env.SAUCE){ // page timeout seems to be disabled in sauce
+    it('browser.setPageLoadTimeout', function() {
+      var defaultTimeout = (setup.desired && (setup.desired.browserName === 'firefox'))? -1 : TIMEOUT_BASE;
+      return browser
+        .setPageLoadTimeout(TIMEOUT_BASE / 2)
+        .setPageLoadTimeout(TIMEOUT_BASE / 2)
+        .get('http://127.0.0.1:8181/test-page')
+        .setPageLoadTimeout(defaultTimeout);
+    });
+  }
 
   it('browser.refresh', function() {
     return browser.refresh();
@@ -676,11 +692,16 @@ describe('api test (' + setup.testEnv + ')', function() {
             .should.become('clicked 1')
           .elementByCss('#theDiv .buttonNumber').text()
             .should.become('0')
-          .click()
-          .elementByCss('#theDiv .numOfClicks').text()
-            .should.become('clicked 2')
-          .elementByCss('#theDiv .buttonNumber').text()
-            .should.become('0');
+          .then(function() {
+            if(!env.SAUCE){ // sauce complains when button is missing
+              browser
+                .click()
+                .elementByCss('#theDiv .numOfClicks').text()
+                  .should.become('clicked 2')
+                .elementByCss('#theDiv .buttonNumber').text()
+                  .should.become('0');
+            }
+          });
       });
   });
 

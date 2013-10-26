@@ -17,17 +17,19 @@ DEFAULT:
 test: test_unit test_midway test_e2e
 
 test_unit:
-	SAUCE_USERNAME= SAUCE_ACCESS_KEY= ./node_modules/.bin/mocha --bail test/specs/*-specs.js
+	SAUCE_USERNAME= SAUCE_ACCESS_KEY= ./node_modules/.bin/mocha test/specs/*-specs.js
 
 test_midway:
 	BROWSER=chrome ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-chrome|@multi' -i
 	BROWSER=firefox ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-firefox|@multi' -i
 	./node_modules/.bin/mocha test/midway/*-specs.js -g '@multi'
 
+test_midway_sauce_connect:
+	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_midway
+
 test_e2e:
 	BROWSER=chrome ./node_modules/.bin/mocha test/e2e/*-specs.js -g '@skip-chrome' -i
 	BROWSER=firefox ./node_modules/.bin/mocha test/e2e/*-specs.js -g '@skip-firefox' -i
-
 
 # run saucelabs test, configure username/key first
 test_e2e_sauce:
@@ -40,7 +42,7 @@ else
 	SAUCE=1 make test_e2e
 endif
 else
-	SAUCE_JOB_ID=`git rev-parse --short HEAD`  SAUCE=1 make test_e2e
+	SAUCE=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_e2e
 endif
 
 # todo: reconfigure that
