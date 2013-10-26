@@ -558,7 +558,7 @@ describe('api test (' + setup.testEnv + ')', function() {
     return browser
       .elementByCss('#theDiv a').then(function(el) {
         return browser
-          .getComputedCss(el, 'color').should.eventually.match(/rgba/);
+          .getComputedCss(el, 'color').should.eventually.match(/rgb/);
       }).elementByCss('#theDiv  a').getComputedCss('color')
         .should.eventually.match(/rgba/);
   });

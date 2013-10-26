@@ -27,6 +27,47 @@ stringEnv('REMOTE_CONFIG', undefined);
 stringEnv('BROWSER', 'chrome');
 jsonEnv('DESIRED', {browserName: env.BROWSER});
 
+
+// android config
+if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
+  env.DESIRED = {
+    'browserName': 'android',
+    'version': '4.0',
+    'platform': 'Linux',
+    'device-type': 'tablet',
+    'device-orientation': 'portrait', // 'landscape'
+  };
+}
+
+if(env.BROWSER === 'android_phone'){
+  env.DESIRED = {
+    'browserName': 'android',
+    'version': '4.0',
+    'platform': 'Linux',
+    'device-orientation': 'portrait', // 'landscape'
+  };
+}
+
+// ipad config
+if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
+  env.DESIRED = {
+    'browserName': 'ipad',
+    'version': '6.1',
+    'platform': 'OS X 10.8',
+    'device-orientation': 'portrait', // 'landscape'
+  };
+}
+
+// iphone config
+if(env.BROWSER === 'iphone'){
+  env.DESIRED = {
+    'browserName': 'iphone',
+    'version': '6.1',
+    'platform': 'OS X 10.8',
+    'device-orientation': 'portrait', // 'landscape'
+  };
+}
+
 intEnv('EXPRESS_PORT', 8181);
 
 stringEnv('MIDWAY_ROOT_URL', "http://localhost:" + env.EXPRESS_PORT);
@@ -63,11 +104,9 @@ if(env.SAUCE){
       'http://' + env.SAUCE_USERNAME + ':' + env.SAUCE_ACCESS_KEY +
         '@ondemand.saucelabs.com/wd/hub';
   }
-  env.DESIRED = {
-    browserName: env.BROWSER,
-    platform: env.SAUCE_PLATFORM,
-    build:  env.SAUCE_JOB_ID,
-    "record-video": env.SAUCE_RECORD_VIDEO,
-    tags: ['wd']
-  };
+  env.DESIRED.platform = env.DESIRED.platform || env.SAUCE_PLATFORM;
+  env.DESIRED.build = env.SAUCE_JOB_ID;
+  env.DESIRED["record-video"] = env.SAUCE_RECORD_VIDEO;
+  env.DESIRED.tags = env.DESIRED.tags || [];
+  env.DESIRED.tags.push('wd');
 }

@@ -59,16 +59,22 @@ module.exports = {
 // exports.desiredDefaults = {
 //   chrome: {
 //     browserName: 'chrome',
-//   }
-//   , firefox: {
+//   },
+//   firefox: {
 //     browserName: 'firefox',
 //     version: '22'
-//   }
-//   , explorer: {
+//   },
+//   explorer: {
 //     browserName: 'iexplore',
 //     version: '9',
 //     platform: 'Windows 2008',
+//   },
+//   android = {
+//     'browser': 'android',
+//     'version': '4',
+//     'platform': 'linux',
+//     'deviceOrientation': 'portrait',
+//     'deviceType': 'tablet'
 //   }
 // };
-
 

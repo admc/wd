@@ -24,6 +24,10 @@ test_midway:
 	BROWSER=firefox ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-firefox|@multi' -i
 	./node_modules/.bin/mocha test/midway/*-specs.js -g '@multi'
 
+test_midway_mobile:
+  BROWSER=android ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-android|@multi' -i
+  # BROWSER=ios ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-ios|@multi' -i
+
 test_midway_sauce_connect:
 	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_midway
 
