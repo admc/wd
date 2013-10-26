@@ -55,7 +55,7 @@ describe('api test (' + setup.testEnv + ')', function() {
     return browser.refresh();
   });
 
-  it('back/forward', function() {
+  it.only('back/forward', function() {
     return browser
       .get('http://127.0.0.1:8181/test-page?p=2')
       .url().should.eventually.include("?p=2")
@@ -64,7 +64,6 @@ describe('api test (' + setup.testEnv + ')', function() {
       .forward()
       .url().should.eventually.include("?p=2");
   });
-
 
   express.partials['browser.element'] =
     '<div name="theDiv">Hello World!</div>';
