@@ -11,5 +11,6 @@ env:
     ]
 script:
   # - "make test_unit"
-  - "make test_midway_sauce_connect"
+  # - "make test_midway_sauce_connect"
   # - "make test_e2e_sauce"
+  - "SAUCE_CONNECT=1 BROWSER=chrome ./node_modules/.bin/mocha test/midway/*-specs.js -g 'back/forward'"
