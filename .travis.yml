@@ -10,6 +10,7 @@ env:
 before_script:
   - "./travis_sauce_connect.sh"
 script:
-  - "make test_unit"
-  - "make test_midway_sauce_connect"
-  - "make test_e2e_sauce"
+  # - "make test_unit"
+  # - "make test_midway_sauce_connect"
+  # - "make test_e2e_sauce"
+  - "BROWSER=chrome ./node_modules/.bin/mocha test/midway/*-specs.js -g '@the-test'"

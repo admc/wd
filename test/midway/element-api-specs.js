@@ -40,9 +40,11 @@ describe('element api test (' + setup.testEnv + ')', function() {
 
   express.partials['element.text'] =
     '<div id="theDiv">I am some text</div>';
-  it('element.text', function() {
+  it('element.text @the-test', function() {
     return browser.elementById("theDiv").then(function(el) {
-      el.text().should.eventually.include("I am some text");
+      el.text().should.eventually.include("I am some text")
+      .printError()
+      ;
     });
   });
 
