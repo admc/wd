@@ -62,7 +62,9 @@ describe('api test (' + setup.testEnv + ')', function() {
       .back()
       .url().should.eventually.not.include("?p=2")
       .forward()
-      .url().should.eventually.include("?p=2");
+      .url().should.eventually.include("?p=2")
+      .printError()
+      ;
   });
 
   express.partials['browser.element'] =
