@@ -11,5 +11,5 @@ env:
     ]
 script:
   - "make test_unit"
-  - "test_midway_sauce_connect"
+  - "make test_midway_sauce_connect"
   - "make test_e2e_sauce"
