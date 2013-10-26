@@ -52,6 +52,13 @@ describe('api test (' + setup.testEnv + ')', function() {
     });
   }
 
+  express.partials['browser.get'] =
+    '<div name="theDiv">Hello World!</div>';
+  it('browser.get', function() {
+    return browser.text().
+      should.eventually.include('Hello World!');
+  });
+
   it('browser.refresh', function() {
     return browser.refresh();
   });
