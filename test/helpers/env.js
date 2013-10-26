@@ -45,11 +45,14 @@ if( env.TRAVIS_JOB_ID ){
 }
 
 if(env.SAUCE){
-  stringEnv('SAUCE_JOB_ID', env.TRAVIS_JOB_NUMBER || Math.round(new Date().getTime() / (1000*60)));
+  env.SAUCE_JOB_ID =
+    env.TRAVIS_JOB_NUMBER ||
+    process.env.SAUCE_JOB_ID ||
+    Math.round(new Date().getTime() / (1000*60));
   stringEnv('SAUCE_USERNAME', '');
   stringEnv('SAUCE_ACCESS_KEY', '');
   stringEnv('SAUCE_PLATFORM', 'LINUX');
-  booleanEnv('SAUCE_RECORD_VIDEO', true);
+  booleanEnv('SAUCE_RECORD_VIDEO', false);
 
   if(env.SAUCE_CONNECT){
     env.REMOTE_CONFIG =
