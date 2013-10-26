@@ -75,7 +75,7 @@ if(env.BROWSER === 'iphone'){
   };
 }
 
-intEnv('EXPRESS_PORT', 8181);
+intEnv('EXPRESS_PORT', 3000);
 
 stringEnv('MIDWAY_ROOT_HOST', 'localhost');
 if(env.ANDROID){
