@@ -356,6 +356,14 @@ make full_mapping > doc/jsonwire-full-mapping.md
 make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
 ```
 
+## Publishing
+
+```
+npm version [patch|minor|major]
+git commit --tags
+npm publish
+```
+
 ## Test Coverage
 
 [test coverage](http://admc.io/wd/istanbul/coverage/lcov-report/index.html)
