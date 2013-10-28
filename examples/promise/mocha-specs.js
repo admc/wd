@@ -15,6 +15,8 @@ try {
   wd = require('../../lib/main');
 }
 
+chai.promisifyWith(wd.buildPromisify());
+
 describe('mocha spec examples', function() {
 
   // using mocha-as-promised and chai-as-promised is the best way

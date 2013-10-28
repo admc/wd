@@ -276,7 +276,7 @@ describe('element api test (' + setup.testEnv + ')', function() {
         return el.elementByTagName("a").text().should.become("a link");
       })
       .elementById("theDiv").then(function(el) {
-        return el.elementByTagName("textarea").should.be.rejected.with(/status: 7/);
+        return el.elementByTagName("textarea").should.be.rejectedWith(/status: 7/);
       })
       ;
   });

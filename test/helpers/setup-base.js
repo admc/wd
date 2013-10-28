@@ -1,20 +1,18 @@
-GLOBAL.env = require("./env");
+GLOBAL.env = require('./env');
+
+GLOBAL._ = require('lodash');
+GLOBAL.wd = require('../../lib/main');
+GLOBAL.Q = GLOBAL.wd.Q;
 
 require("mocha-as-promised")();
-
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
-
+chai.promisifyWith(wd.buildPromisify());
 GLOBAL.expect = chai.expect;
 GLOBAL.should = chai.should();
 
-GLOBAL.wd = require('../../lib/main');
-GLOBAL.Q = GLOBAL.wd.Q;
-GLOBAL._ = require('lodash');
-
 var Express = require("./express-helper").Express;
-
 var sauce = require('./sauce-helper');
 
 module.exports = {

@@ -26,6 +26,8 @@ wd.webdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeou
   });
 };
 
+chai.promisifyWith(wd.buildPromisify());
+
 var browser = wd.promiseChainRemote();
 
 // optional extra logging
@@ -43,8 +45,9 @@ browser
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
     .should.become('I am a page title - Sauce Labs')
-  .elementByCssSelectorWhenReady('#your_comments', 2000)
-    .should.eventually.exist
+  //.elementByCssSelector('#your_comments', 2000).should.eventually.exist
+    .elementByCssSelectorWhenReady('#your_comments', 2000)
+  //   .should.eventually.exist
   .fin(function() { return browser.quit(); })
   .done();
 
