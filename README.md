@@ -360,7 +360,7 @@ make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
 
 ```
 npm version [patch|minor|major]
-git commit --tags
+git push --tags
 npm publish
 ```
 
