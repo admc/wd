@@ -37,8 +37,10 @@ test_midway:
 ifeq ($(BROWSER),multi)
 	./node_modules/.bin/mocha test/midway/*-specs.js -g '@multi'
 else
-	./node_modules/.bin/mocha test/midway/*-specs.js -g "@skip-${BROWSER}|@multi" -i
-	./node_modules/.bin/mocha test/midway/suffixes/*-specs.js -g "@skip-${BROWSER}|@multi" -i
+	./node_modules/.bin/mocha \
+		test/midway/*-specs.js -g \
+		test/midway/suffixes/*-specs.js \
+		-g "@skip-${BROWSER}|@multi" -i
 endif
 
 test_e2e:

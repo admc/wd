@@ -12,7 +12,10 @@ env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
 
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 env.BROWSER = process.env.BROWSER || 'chrome';
-if(env.BROWSER === 'multi') { env.BROWSER = 'chrome'; }
+if(env.BROWSER === 'multi') { 
+    env.BROWSER = 'chrome';
+    env.MULTI = true;
+}
 env.DESIRED = process.env.DESIRED ? JSON.parse(process.env.DESIRED) :
   {browserName: env.BROWSER};
 
@@ -114,5 +117,9 @@ if(env.SAUCE){
   }
 }
 
-env.ENV_DESC =  '(' + (env.SAUCE? 'sauce' : 'local') + ', ' +
-  (env.DESIRED.browserName || 'default') + ')';
+if(env.MULTI){
+    env.ENV_DESC =  '(' + (env.SAUCE? 'sauce' : 'local') + ', multi)';
+} else {
+    env.ENV_DESC =  '(' + (env.SAUCE? 'sauce' : 'local') + ', ' +
+        (env.DESIRED.browserName || 'default') + ')';
+}
