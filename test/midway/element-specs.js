@@ -4,7 +4,7 @@ require('../helpers/setup');
 
 var path = require('path');
 
-describe('element api ' + env.ENV_DESC, function() {
+describe('element ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var browser;

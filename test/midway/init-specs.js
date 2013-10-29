@@ -83,7 +83,7 @@ describe('init ' + env.ENV_DESC + ' @multi', function() {
 
     it("configuring explorer in desired @saucelabs", function() {
       return browser
-        .init(buildDesired( this.runnable().parent.title + " #5",
+        .init(buildDesired( this.runnable().parent.title + " #6",
           'iexplore', 'Windows 2008'))
         .sessionCapabilities().then(function(sessionCapabilities) {
           sessionCapabilities.platform.should.equal('WINDOWS');

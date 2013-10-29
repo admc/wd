@@ -2,7 +2,7 @@
 
 require('../helpers/setup');
 
-describe('typing ' + env.ENV_DESC, function() {
+describe('keying ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var browser;
