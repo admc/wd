@@ -67,7 +67,8 @@
     "chai": "~1.8.1",
     "mocha-as-promised": "~1.4.0",
     "hbs": "~2.4.0",
-    "istanbul": "~0.1.44"
+    "istanbul": "~0.1.44",
+    "string": "~1.6.0"
   },
   "scripts": {
     "test": "make test",
