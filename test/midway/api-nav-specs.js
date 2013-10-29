@@ -259,47 +259,6 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.type'] =
-    '<div id="theDiv"><input type="text"></div>\n';
-  it('browser.type', function() {
-    var altKey = wd.SPECIAL_KEYS.Alt;
-    var nullKey = wd.SPECIAL_KEYS.NULL;
-    return browser
-      .elementByCss("#theDiv input").then(function(el) {
-        return browser
-          .getValue(el).should.become('')
-          .type(el, 'Hello')
-          .getValue(el).should.become('Hello')
-          .type(el, [altKey, nullKey, " World"])
-          .getValue(el).should.become('Hello World')
-          .type(el, "\n")
-          .getValue(el).should.become('Hello World');
-      })
-      .elementByCss("#theDiv input")
-        .type(" World").getValue().should.become('Hello World World');
-  });
-
-  express.partials['browser.keys'] =
-    '<div id="theDiv"><input type="text"></div>\n';
-  it('browser.keys', function() {
-    var altKey = wd.SPECIAL_KEYS.Alt;
-    var nullKey = wd.SPECIAL_KEYS.NULL;
-    return browser
-      .elementByCss("#theDiv input").then(function(el) {
-        return browser
-          .getValue(el).should.become('')
-          .clickElement(el)
-          .keys('Hello')
-          .getValue(el).should.become('Hello')
-          .clickElement(el).keys([altKey, nullKey, " World"])
-          .getValue(el).should.become('Hello World')
-          .clickElement(el).keys("\n")
-          .getValue(el).should.become('Hello World')
-          ;
-      });
-      // todo: rename the keys method
-  });
-
   express.partials['browser.clear'] =
     '<div id="theDiv">\n' +
     '  <input type="text" value="not cleared">\n' +
@@ -353,70 +312,6 @@ describe('api-nav ' + env.ENV_DESC, function() {
       )
       .elementByCss("#theDiv a").click()
       .dismissAlert();
-  });
-
-  express.partials['browser.active'] =
-    '<div id="theDiv">\n' +
-    '  <input class="i1" type="text" value="input 1">\n' +
-    '  <input class="i2" type="text" value="input 2">\n' +
-    '</div>\n';
-  it('browser.active', function() {
-    return browser
-      .elementByCss("#theDiv .i1").click()
-      .active().getValue().should.become("input 1")
-      .elementByCss("#theDiv .i2").click()
-      .active().getValue().should.become("input 2");
-  });
-
-  express.partials['browser.isVisible'] =
-    '<div id="theDiv">\n' +
-    '  <a href="#">a1</a>\n' +
-    '</div>\n';
-  it('browser.isVisible', function() {
-    return browser
-      .elementByCss("#theDiv a").then(function(el) {
-        return browser
-          .isVisible(el).should.eventually.be.ok;
-      })
-      .elementByCss("#theDiv a").isVisible().should.eventually.be.ok
-      .isVisible("css selector", "#theDiv a").should.eventually.be.ok
-      .execute('$("#theDiv a").hide();')
-      .elementByCss("#theDiv a").isVisible().should.eventually.not.be.ok
-      .isVisible("css selector", "#theDiv a").should.eventually.not.be.ok;
-  });
-
-  express.partials['browser.isDisplayed'] =
-    '<div id="theDiv">\n' +
-    '  <input class="displayed" type="text" value="Hello">\n' +
-    '  <input class="hidden" type="hidden" value="Hello">\n' +
-    '</div>\n';
-  it('browser.isDisplayed', function() {
-    return browser
-      .elementByCss('#theDiv .displayed').then(function(el) {
-        return browser.isDisplayed(el).should.eventually.be.ok;
-      })
-      .elementByCss('#theDiv .hidden').then(function(el) {
-        return browser.isDisplayed(el).should.eventually.not.be.ok;
-      })
-      .elementByCss('#theDiv .displayed').isDisplayed().should.eventually.be.ok
-      .elementByCss('#theDiv .hidden').isDisplayed().should.eventually.not.be.ok;
-  });
-
-  express.partials['browser.isEnabled'] =
-    '<div id="theDiv">\n' +
-    '  <input class="enabled" type="text" value="Hello">\n' +
-    '  <input class="disabled" type="text" value="Hello" disabled>\n' +
-    '</div>\n';
-  it('browser.isEnabled', function() {
-    return browser
-      .elementByCss('#theDiv .enabled').then(function(el) {
-        return browser.isEnabled(el).should.eventually.be.ok;
-      })
-      .elementByCss('#theDiv .disabled').then(function(el) {
-        return browser.isEnabled(el).should.eventually.not.be.ok;
-      })
-      .elementByCss('#theDiv .enabled').isEnabled().should.eventually.be.ok
-      .elementByCss('#theDiv .disabled').isEnabled().should.eventually.not.be.ok;
   });
 
 });
