@@ -1,29 +1,32 @@
-var testInfo = {
-  name: "midway element api",
-  tags: ['midway']
-};
+/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-var setup = require('../helpers/setup');
+require('../helpers/setup');
 
 var path = require('path');
 
-describe('element api test (' + setup.testEnv + ')', function() {
+describe('element api ' + env.ENV_DESC, function() {
+  this.timeout(env.TIMEOUT);
 
   var browser;
   var allPassed = true;
-  var express = new setup.Express( __dirname + '/assets' );
+  var express = new Express( __dirname + '/assets' );
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
     express.start();
-    return browser = setup.initBrowser(testInfo);
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['midway']
+    };
+    return browser
+      .configureLogging()
+      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
   });
 
   beforeEach(function() {
-    var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
-    return browser.get(
-      env.MIDWAY_ROOT_URL + '/test-page?partial=' +
-        encodeURIComponent(cleanTitle)).printError();
+    return browser.get( midwayUrl(
+      this.currentTest.parent.title,
+      this.currentTest.title));
   });
 
   afterEach(function() {
@@ -32,20 +35,17 @@ describe('element api test (' + setup.testEnv + ')', function() {
 
   after(function() {
     express.stop();
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   express.partials['element.text'] =
     '<div id="theDiv">I am some text</div>';
   it('element.text', function() {
     return browser.elementById("theDiv").then(function(el) {
-      el.text().should.eventually.include("I am some text")
-      .printError()
-      ;
+      el.text().should.eventually.include("I am some text");
     });
   });
 

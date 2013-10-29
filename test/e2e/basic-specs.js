@@ -1,21 +1,26 @@
-var testInfo = {
-  name: "e2e basics",
-  tags: ['e2e']
-};
+/* global sauceJobTitle, mergeDesired */
 
-var setup = require("../helpers/setup");
+require('../helpers/setup');
 
-describe('basic tests(' + setup.testEnv + ')', function() {
+describe('basic ' + env.ENV_DESC, function() {
+  this.timeout(env.TIMEOUT);
+
   var browser;
   var allPassed = true;
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
-    return browser = setup.initBrowser(testInfo);
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['e2e']
+    };
+    return browser
+      .configureLogging()
+      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
   });
 
   beforeEach(function() {
-    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+    return browser.get('http://admc.io/wd/test-pages/guinea-pig.html');
   });
 
   afterEach(function() {
@@ -23,11 +28,10 @@ describe('basic tests(' + setup.testEnv + ')', function() {
   });
 
   after(function() {
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   it("should retrieve the page title", function() {

@@ -1,5 +1,5 @@
 var nock = require('nock');
-require('../helpers/setup-async');
+require('../helpers/setup');
 
 
 describe("wd", function() {

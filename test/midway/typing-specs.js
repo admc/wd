@@ -1,17 +1,13 @@
-var testInfo = {
-  name: "midway typing",
-  tags: ['midway']
-};
+/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-var setup = require('../helpers/setup');
+require('../helpers/setup');
 
-var isBrowser = setup.isBrowser;
-
-describe('typing test (' + setup.testEnv + ')', function() {
+describe('typing ' + env.ENV_DESC, function() {
+  this.timeout(env.TIMEOUT);
 
   var browser;
   var allPassed = true;
-  var express = new setup.Express( __dirname + '/assets' );
+  var express = new Express( __dirname + '/assets' );
 
   var altKey = wd.SPECIAL_KEYS.Alt;
   var nullKey = wd.SPECIAL_KEYS.NULL;
@@ -25,16 +21,21 @@ describe('typing test (' + setup.testEnv + ')', function() {
     '</div>\n';
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
     express.start();
-    return browser = setup.initBrowser(testInfo);
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['midway']
+    };
+    return browser
+      .configureLogging()
+      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
   });
 
-  beforeEach(function() {
-    var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
-    return browser.get(
-      env.MIDWAY_ROOT_URL + '/test-page?partial=' +
-        encodeURIComponent(cleanTitle));
+ beforeEach(function() {
+    return browser.get( midwayUrl(
+      this.currentTest.parent.title,
+      this.currentTest.title));
   });
 
   afterEach(function() {
@@ -43,11 +44,10 @@ describe('typing test (' + setup.testEnv + ')', function() {
 
   after(function() {
     express.stop();
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   express.partials['typing nothing'] = typingPartial;
@@ -104,7 +104,8 @@ describe('typing test (' + setup.testEnv + ')', function() {
       .elementByCss("#theDiv input").type(['Hello','\r'])
         .getValue().should.become('Hello')
       .elementByCss("#theDiv textarea").type(['Hello','\r'])
-        .getValue().should.become( isBrowser('firefox')? 'Hello\n': 'Hello');
+        .getValue().should.become( env.DESIRED.browserName === 'firefox'?
+          'Hello\n': 'Hello');
   });
 
   express.partials['typing [returnKey]'] = typingPartial;
@@ -202,7 +203,8 @@ describe('typing test (' + setup.testEnv + ')', function() {
       .elementByCss("#theDiv input").click().keys(['Hello','\r'])
         .getValue().should.become('Hello')
       .elementByCss("#theDiv textarea").click().keys(['Hello','\r'])
-        .getValue().should.become( isBrowser('firefox')? 'Hello\n': 'Hello');
+        .getValue().should.become( env.DESIRED.browserName === 'firefox'?
+          'Hello\n': 'Hello');
   });
 
   express.partials['keying [returnKey]'] = typingPartial;

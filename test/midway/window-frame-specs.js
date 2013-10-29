@@ -1,52 +1,63 @@
-function testInfo(testDesc) {
-  return {
-    name: "midway window - frame " + testDesc ,
-    tags: ['midway']
-  };
-}
+/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-var setup = require('../helpers/setup');
+require('../helpers/setup');
 
-describe('window - frame api test (' + setup.testEnv + ') ' +
-  '@skip-android @skip-ios', function() {
-  this.timeout(env.INIT_TIMEOUT);
+describe('window - frame ' + env.ENV_DESC + ' @skip-android @skip-ios', function() {
+  this.timeout(env.TIMEOUT);
+
   var browser;
-  var express = new setup.Express( __dirname + '/assets' );
-
-  function cleanTitle(title) {
-    return title.replace(/@[-\w]+/g, '').trim();
-  }
-
-  var getUrlBase = function(test) {
-    return env.MIDWAY_ROOT_URL + '/test-page?partial=' +
-      encodeURIComponent(cleanTitle(test.runnable().title));
-  };
+  var allPassed = true;
+  var express = new Express( __dirname + '/assets' );
 
   before(function() {
     express.start();
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['midway']
+    };
+    return browser
+      .configureLogging()
+      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
   });
 
   beforeEach(function() {
-    return browser = setup.remote();
+
+    return browser
+      .windowHandles().should.eventually.have.length.below(2)
+      .get( midwayUrl(
+        this.currentTest.parent.title,
+        this.currentTest.title) + "&window_num=1" ).printError();
   });
 
   afterEach(function() {
-    return setup.closeBrowser();
-  });
-
-  afterEach(function() {
-    return setup.jobStatus(this.currentTest.state === 'passed');
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+    return browser
+      .windowHandles().then(function(handles) {
+        var seq = [];
+        _(handles).each(function(handle, i) {
+          if(i>0) {
+            seq.push(function() { return browser.window(handle).close(); });
+          }
+        });
+        if(handles.length > 0) {
+          seq.push(function() {return browser.window(handles[0]);});
+        }
+        return seq.reduce(Q.when, new Q());
+      });
   });
 
   after(function() {
     express.stop();
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   express.partials['browser.windowName'] = "";
   it('browser.windowName', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#1')))
-      .get( getUrlBase(this) + "&window_num=1")
       .execute('window.name="window-1"')
       .windowName().should.become('window-1');
   });
@@ -54,54 +65,53 @@ describe('window - frame api test (' + setup.testEnv + ') ' +
   express.partials['browser.windowHandle'] = "";
   it('browser.windowHandle', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#2')))
-      .get( getUrlBase(this) + "&window_num=1")
-      .windowHandle().should.eventually.have.length.above(0);
+      .windowHandle()
+      .should.eventually.have.length.above(0)
+      .then(); // going round mocha-as-promised bug
   });
 
   express.partials['browser.newWindow'] = "";
   it('browser.newWindow', function() {
-    return browser
-      .init(setup.desiredWithTestInfo(testInfo('#3')))
-      .get( getUrlBase(this) + "&window_num=1")
-      .newWindow(getUrlBase(this) + "&window_num=2", 'window-2');
+    return browser.url(function(url) {
+      return browser
+        .newWindow( url.replace("window_num=1", "window_num=2"),'window-2');
+    });
   });
 
   express.partials['browser.window'] = "";
   it('browser.window', function() {
-    var that = this;
-    return browser
-      .init(setup.desiredWithTestInfo(testInfo('#4')))
-      .get( getUrlBase(this) + "&window_num=1")
-      .windowHandle().then(function(handle1) {
-        return browser
-          .newWindow(getUrlBase(that) + "&window_num=2", 'window-2')
-          .window('window-2')
-          .windowName().should.become('window-2')
-          .window(handle1)
-          .windowHandle().should.become(handle1);
-      })
-      ;
+    return Q.all([
+        browser.url(),
+        browser.windowHandle()
+    ]).then(function(res) {
+      var url = res[0];
+      var handle1 = res[1];
+      return browser
+        .newWindow(url.replace("window_num=1", "window_num=2"), 'window-2')
+        .window('window-2')
+        .windowName().should.become('window-2')
+        .window(handle1)
+        .windowHandle().should.become(handle1);
+    });
   });
 
   express.partials['browser.windowHandles'] = "";
   it('browser.windowHandles', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#5')))
-      .get( getUrlBase(this) + "&window_num=1")
-      .windowHandles().should.eventually.have.length(1)
-      .newWindow(getUrlBase(this) + "&window_num=2", 'window-2')
-      .windowHandles().should.eventually.have.length(2)
-      .window('window-2')
-      .close()
-      .windowHandles().should.eventually.have.length(1);
+      .url()
+      .then(function(url) {
+        return browser
+          .newWindow(url.replace("window_num=1", "window_num=2"), 'window-2')
+          .windowHandles().should.eventually.have.length(2)
+          .window('window-2')
+          .close()
+          .windowHandles().should.eventually.have.length(1);
+      });
   });
 
   express.partials['browser.getWindowSize'] = "";
   it('browser.getWindowSize', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#6')))
-      .get( getUrlBase(this) + "&window_num=1")
       .getWindowSize().then(function(size) {
         size.width.should.exist;
         size.height.should.exist;
@@ -118,8 +128,6 @@ describe('window - frame api test (' + setup.testEnv + ') ' +
   express.partials['browser.setWindowSize'] = "";
   it('browser.setWindowSize', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#7')))
-      .get( getUrlBase(this) + "&window_num=1")
       .getWindowSize().then(function(size) {
         return browser
           .setWindowSize(size.width - 10, size.height - 5)
@@ -141,8 +149,6 @@ describe('window - frame api test (' + setup.testEnv + ') ' +
   express.partials['browser.getWindowPosition'] = "";
   it('browser.getWindowPosition', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#8')))
-      .get( getUrlBase(this) + "&window_num=1")
       .getWindowPosition().then(function(pos) {
         pos.x.should.exist;
         pos.y.should.exist;
@@ -159,8 +165,6 @@ describe('window - frame api test (' + setup.testEnv + ') ' +
   express.partials['browser.setWindowPosition'] = "";
   it('browser.setWindowPosition', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#9')))
-      .get( getUrlBase(this) + "&window_num=1")
       .getWindowPosition().then(function(pos) {
         return browser
           // not working whithout handle
@@ -179,7 +183,6 @@ describe('window - frame api test (' + setup.testEnv + ') ' +
 
   it('browser.frame', function() {
     return browser
-      .init(setup.desiredWithTestInfo(testInfo('#10')))
       .get( env.MIDWAY_ROOT_URL + "/frame-test/index.html")
       .elementsByTagName('frame').should.eventually.have.length(3)
       .frame(0)

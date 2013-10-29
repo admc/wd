@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>WD Tests</title>
+  <title>WD Tests - {{testSuite}}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css">
   <!--[if lt IE 9]>
@@ -16,10 +16,11 @@
     <div class="grid">
       <header class="unit span-grid" role="banner">
         <h1 class="site-title">WD Tests</h1>
-        <h2 class="site-tagline">{{testTitle}}</h2>
+        <h2 class="site-tagline">{{testSuite}}</h2>
+        <h3 class="site-tagline">{{testTitle}}</h2>
       </header>
-      <hr class="unit span-grid">
-      <div class="unit four-of-four">
+
+      <div id="test-container" class="unit four-of-four">
         {{{content}}}
       </div>
     </div>

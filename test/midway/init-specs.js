@@ -1,35 +1,46 @@
-function testInfo(testDesc) {
-  return {
-    name: "midway init " + testDesc ,
+/* global sauceJobTitle, mergeDesired */
+
+require('../helpers/setup');
+
+function buildDesired(title, browser, platform) {
+  var sauceExtra =  {
+    name: sauceJobTitle(title),
     tags: ['midway']
   };
+  var desired = mergeDesired( env.DESIRED,
+    env.SAUCE? sauceExtra : null
+  );
+  delete desired.browserName;
+  delete desired.platform;
+  if(browser) { desired.browserName = browser; }
+  if(platform) { desired.platform = platform; }
+  return desired;
 }
 
-var setup = require('../helpers/setup');
+describe('init ' + env.ENV_DESC + ' @multi', function() {
+  this.timeout(env.TIMEOUT);
 
-describe('browser. tests (' + setup.testEnv + ') @multi', function() {
-  this.timeout(env.INIT_TIMEOUT);
   var browser;
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
-    browser = setup.remote();
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    return browser.configureLogging();
   });
 
   afterEach(function() {
-    return setup.closeBrowser();
-  });
-
-  afterEach(function() {
-    return setup.jobStatus(this.currentTest.state === 'passed');
+    var _this = this;
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(_this.currentTest.state === 'passed')); }
+      });
   });
 
   it("default should be firefox", function() {
     browser.defaultCapabilities.browserName.should.equal('firefox');
     browser.defaultCapabilities.javascriptEnabled.should.be.ok;
     return browser
-      .init()
-      .then(function() { return setup.jobUpdate(testInfo('#1')); })
+      .init(buildDesired( this.runnable().parent.title + " #1",
+        undefined, env.DESIRED.platform ))
       .sessionCapabilities().should.eventually.have.property('browserName', 'firefox');
   });
 
@@ -37,16 +48,16 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
     browser.defaultCapabilities.browserName = 'chrome';
     browser.defaultCapabilities.javascriptEnabled = false;
     return browser
-      .init()
-      .then(function() { return setup.jobUpdate(testInfo('#2')); })
+      .init(buildDesired( this.runnable().parent.title + " #2",
+        undefined, env.DESIRED.platform ))
       .sessionCapabilities().should.eventually.have.property('browserName', 'chrome');
   });
 
   it("desired browser as parameter", function() {
     browser.defaultCapabilities.browserName = 'firefox';
     return browser
-      .init({browserName: 'chrome'})
-      .then(function() { return setup.jobUpdate(testInfo('#3')); })
+      .init(buildDesired( this.runnable().parent.title + " #3",
+        'chrome', env.DESIRED.platform))
       .sessionCapabilities().should.eventually.have.property('browserName', 'chrome');
   });
 
@@ -57,8 +68,7 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
       browser.defaultCapabilities.browserName = 'firefox';
 
       return browser
-        .init()
-        .then(function() { return setup.jobUpdate(testInfo('#4')); })
+        .init(buildDesired( this.runnable().parent.title + " #4"))
         .sessionCapabilities().should.eventually.have.property('platform', 'XP');
     });
 
@@ -67,24 +77,14 @@ describe('browser. tests (' + setup.testEnv + ') @multi', function() {
       browser.defaultCapabilities.platform = 'LINUX';
 
       return browser
-        .init()
-        .then(function() { return setup.jobUpdate(testInfo('#5')); })
+        .init(buildDesired( this.runnable().parent.title + " #5"))
         .sessionCapabilities().should.eventually.have.property('platform', 'linux');
     });
 
     it("configuring explorer in desired @saucelabs", function() {
-      // todo: clone setup desired and modify it
-      var desired = {
-        browserName: 'iexplore',
-        platform: 'Windows 2008',
-        name: 'browser init using desired',
-        tags: ['wd', 'test'],
-        "record-video": false
-      };
-
       return browser
-        .init(desired)
-        .then(function() { return setup.jobUpdate(testInfo('#6')); })
+        .init(buildDesired( this.runnable().parent.title + " #5",
+          'iexplore', 'Windows 2008'))
         .sessionCapabilities().then(function(sessionCapabilities) {
           sessionCapabilities.platform.should.equal('WINDOWS');
           sessionCapabilities.browserName.should.include('explorer');

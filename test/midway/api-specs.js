@@ -1,31 +1,32 @@
-var testInfo = {
-  name: "midway api",
-  tags: ['midway']
-};
+/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-var setup = require('../helpers/setup');
+require('../helpers/setup');
 
 var imageinfo = require('imageinfo');
 
-var TIMEOUT_BASE = setup.TIMEOUT_BASE;
-
-describe('api test (' + setup.testEnv + ')', function() {
+describe('api ' + env.ENV_DESC, function() {
+  this.timeout(env.TIMEOUT);
 
   var browser;
   var allPassed = true;
-  var express = new setup.Express( __dirname + '/assets' );
+  var express = new Express( __dirname + '/assets' );
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
     express.start();
-    return browser = setup.initBrowser(testInfo);
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['midway']
+    };
+    return browser
+      .configureLogging()
+      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
   });
 
   beforeEach(function() {
-    var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
-    return browser.get(
-      env.MIDWAY_ROOT_URL + '/test-page?partial=' +
-        encodeURIComponent(cleanTitle));
+    return browser.get( midwayUrl(
+      this.currentTest.parent.title,
+      this.currentTest.title));
   });
 
   afterEach(function() {
@@ -34,19 +35,18 @@ describe('api test (' + setup.testEnv + ')', function() {
 
   after(function() {
     express.stop();
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   if(!env.SAUCE){ // page timeout seems to be disabled in sauce
     it('browser.setPageLoadTimeout', function() {
-      var defaultTimeout = (setup.desired && (setup.desired.browserName === 'firefox'))? -1 : TIMEOUT_BASE;
+      var defaultTimeout = (env.DESIRED.browserName === 'firefox')? -1 : env.BASE_TIME_UNIT;
       return browser
-        .setPageLoadTimeout(TIMEOUT_BASE / 2)
-        .setPageLoadTimeout(TIMEOUT_BASE / 2)
+        .setPageLoadTimeout(env.BASE_TIME_UNIT / 2)
+        .setPageLoadTimeout(env.BASE_TIME_UNIT / 2)
         .get( env.MIDWAY_ROOT_URL + '/test-page')
         .setPageLoadTimeout(defaultTimeout);
     });
@@ -59,26 +59,35 @@ describe('api test (' + setup.testEnv + ')', function() {
       should.eventually.include('Hello World!');
   });
 
+  it('browser.url', function() {
+    return browser
+      .url().should.eventually.include("http://")
+      .url().should.eventually.include("test-page");
+  });
+
   it('browser.refresh', function() {
     return browser.refresh();
   });
 
   it('back/forward', function() {
-    return browser
-      .get( env.MIDWAY_ROOT_URL +  '/test-page?p=2')
-      .url().should.eventually.include("?p=2")
-      .back()
-      .url().should.eventually.not.include("?p=2")
-      .forward()
-      .url().should.eventually.include("?p=2");
+    return browser.url().then(function(url) {
+      return browser
+        .get( url + '&thePage=2')
+        .url().should.eventually.include("&thePage=2")
+        .back()
+        .url().should.eventually.not.include("&thePage=2")
+        .forward()
+        .url().should.eventually.include("&thePage=2");
+    });
   });
 
   express.partials['browser.element'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.element', function() {
-    return browser
-      .element("name", "theDiv").should.eventually.exist
-      .element("name", "theDiv2").should.be.rejectedWith(/status: 7/);
+    return Q.all([
+      browser.element("name", "theDiv").should.eventually.exist,
+      browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/)
+    ]);
   });
 
   express.partials['browser.elementOrNull'] =
@@ -113,13 +122,16 @@ describe('api test (' + setup.testEnv + ')', function() {
         'setTimeout(function() {\n' +
         ' $("#theDiv").append("<div class=\\"child\\">a waitForElement child</div>");\n' +
         '}, arguments[0]);\n',
-        [0.75 * TIMEOUT_BASE]
+        [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitForElement("css selector", "#theDiv .child", 2 * TIMEOUT_BASE)
-        .should.be.fulfilled
-      .waitForElement("css selector", "#wrongsel .child", 2 * TIMEOUT_BASE)
-        .should.be.rejected;
+      .waitForElement("css selector", "#theDiv .child", 2 * env.BASE_TIME_UNIT)
+      .should.be.fulfilled
+      .then(function() {
+        return browser
+          .waitForElement("css selector", "#wrongsel .child", 0.1 * env.BASE_TIME_UNIT)
+          .should.be.rejectedWith(/Element didn't appear/);
+      });
   });
 
   express.partials['browser.waitForVisible'] =
@@ -132,13 +144,17 @@ describe('api test (' + setup.testEnv + ')', function() {
         'setTimeout(function() {\n' +
         ' $("#theDiv .child").show();\n' +
         '}, arguments[0]);\n',
-        [0.75 * TIMEOUT_BASE]
+        [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.eventually.exist
-      .waitForVisible("css selector", "#theDiv .child", 2 * TIMEOUT_BASE)
+      .waitForVisible("css selector", "#theDiv .child", 2 * env.BASE_TIME_UNIT)
         .should.be.fulfilled
-      .waitForVisible("css selector", "#wrongsel .child", 2 * TIMEOUT_BASE)
-        .should.be.rejected;
+      .then(function() {
+        return browser
+          .waitForVisible("css selector", "#wrongsel .child", 0.1 * env.BASE_TIME_UNIT)
+          .should.be.rejectedWith(/Element didn\'t become visible/);
+
+      });
   });
 
   express.partials['browser.elements'] =
@@ -238,9 +254,10 @@ describe('api test (' + setup.testEnv + ')', function() {
     var elementFuncName = 'element' + suffix;
     express.partials['browser.' + elementFuncName] = allElementsPartial;
     it('browser.' + elementFuncName, function() {
-      return browser
-        [elementFuncName](suffixFields.searchOne).should.eventually.exist
-        [elementFuncName](suffixFields.searchOneInvalid).should.be.rejectedWith(/status: 7/);
+      return Q.all([
+        browser[elementFuncName](suffixFields.searchOne).should.eventually.exist,
+        browser[elementFuncName](suffixFields.searchOneInvalid).should.be.rejectedWith(/status: 7/)
+      ]);
     });
 
     var elementFuncNameOrNull = 'element' + suffix + 'OrNull';
@@ -277,13 +294,16 @@ describe('api test (' + setup.testEnv + ')', function() {
           'setTimeout(function() {\n' +
           ' $("#theDiv").append(args[0]);\n' +
           '}, args[1]);\n',
-          [suffixFields.childHtml, 0.75 * TIMEOUT_BASE]
+          [suffixFields.childHtml, env.BASE_TIME_UNIT]
         )
         [elementFuncName](suffixFields.searchChild).should.be.rejectedWith(/status: 7/)
-        [waitForElementFuncName](suffixFields.searchChild, 2 * TIMEOUT_BASE)
-          .should.be.fulfilled
-        [waitForElementFuncName]("__wrongsel", 2 * TIMEOUT_BASE)
-          .should.be.rejected;
+        [waitForElementFuncName](suffixFields.searchChild, 2 * env.BASE_TIME_UNIT)
+        .should.be.fulfilled
+        .then(function() {
+          return browser
+            [waitForElementFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
+              .should.be.rejectedWith(/Element didn\'t appear/);
+        });
     });
 
     var waitForVisibleFuncName = 'waitForVisible' + suffix;
@@ -298,13 +318,16 @@ describe('api test (' + setup.testEnv + ')', function() {
           'setTimeout(function() {\n' +
           ' $("#theDiv .child").show();\n' +
           '}, args[1]);\n',
-          [suffixFields.childHtml, 0.75 * TIMEOUT_BASE]
+          [suffixFields.childHtml, env.BASE_TIME_UNIT]
         )
-        [elementFuncName](suffixFields.searchChild).should.eventually.exist
-        [waitForVisibleFuncName](suffixFields.searchChild, 2 * TIMEOUT_BASE)
-          .should.be.fulfilled
-        [waitForVisibleFuncName]("__wrongsel", 2 * TIMEOUT_BASE)
-          .should.be.rejected;
+        .elementByCss(".child").should.eventually.exist
+        [waitForVisibleFuncName](suffixFields.searchChild, 2 * env.BASE_TIME_UNIT)
+        .should.be.fulfilled
+        .then(function() {
+          return browser
+            [waitForVisibleFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
+              .should.be.rejectedWith(/Element didn\'t become visible/);
+        });
     });
 
     var elementsFuncName = 'elements' + suffix;
@@ -376,7 +399,7 @@ describe('api test (' + setup.testEnv + ')', function() {
     /* jshint evil: true */
     return browser
       .eval('1+2').should.become(3)
-      .eval('document.title').should.become("WD Tests")
+      .eval('document.title').should.eventually.include("WD Tests")
       .eval('$("#eval").length').should.become(1)
       .eval('$("#eval li").length').should.become(2);
   });
@@ -387,10 +410,13 @@ describe('api test (' + setup.testEnv + ')', function() {
     /* jshint evil: true */
     return browser
       .safeEval('1+2').should.become(3)
-      .safeEval('document.title').should.become("WD Tests")
+      .safeEval('document.title').should.eventually.include("WD Tests")
       .safeEval('$("#eval").length').should.become(1)
       .safeEval('$("#eval li").length').should.become(2)
-      .safeEval('invalid-code> here').should.be.rejectedWith(Error);
+      .then(function() {
+        return browser
+          .safeEval('invalid-code> here').should.be.rejectedWith(/status: 13/);
+      });
   });
 
   it('browser.execute', function() {
@@ -414,14 +440,18 @@ describe('api test (' + setup.testEnv + ')', function() {
       'var a = arguments[0], b = arguments[1];\n' +
       'window.wd_sync_execute_test = \'It worked! \' + (a+b)';
     return browser
-      // without args
       .safeExecute('window.wd_sync_execute_test = "It worked!"')
       .eval('window.wd_sync_execute_test').should.become('It worked!')
-      .safeExecute('invalid-code> here').should.be.rejectedWith(Error)
-      // with args
+      .then(function() {
+        return browser
+          .safeExecute('invalid-code> here').should.be.rejectedWith(/status: 13/);
+      })
       .safeExecute(jsScript, [6, 4])
       .eval('window.wd_sync_execute_test').should.become('It worked! 10')
-      .safeExecute('invalid-code> here', [6, 4]).should.be.rejectedWith(Error);
+      .then(function() {
+        return browser
+          .safeExecute('invalid-code> here', [6, 4]).should.be.rejectedWith(/status: 13/);
+      });
   });
 
   it('browser.executeAsync', function() {
@@ -447,11 +477,17 @@ describe('api test (' + setup.testEnv + ')', function() {
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
       'done("OK " + (args[0] + args[1]));';
-    return browser
-      .safeExecuteAsync(jsScript).should.become('OK')
-      .safeExecuteAsync('123 invalid<script').should.be.rejectedWith(Error)
-      .safeExecuteAsync(jsScriptWithArgs, [10, 5]).should.become('OK 15')
-      .safeExecuteAsync('123 invalid<script', [10, 5]).should.be.rejectedWith(Error);
+      browser
+        .safeExecuteAsync(jsScript).should.become('OK')
+        .then(function() {
+          return browser.safeExecuteAsync('123 invalid<script')
+            .should.be.rejectedWith(/status: 13/);
+      })
+        .safeExecuteAsync(jsScriptWithArgs, [10, 5]).should.become('OK 15')
+        .then(function() {
+          return browser.safeExecuteAsync('123 invalid<script', [10, 5])
+            .should.be.rejectedWith(/status: 13/);
+      });
   });
 
   express.partials['browser.setImplicitWaitTimeout'] =
@@ -463,9 +499,9 @@ describe('api test (' + setup.testEnv + ')', function() {
       .execute(
         'setTimeout(function() {\n' +
         '$("#setWaitTimeout").html("<div class=\\"child\\">a child</div>");\n' +
-        '}, arguments[0]);', [TIMEOUT_BASE])
+        '}, arguments[0]);', [env.BASE_TIME_UNIT])
       .elementByCss('#setWaitTimeout .child').should.be.rejectedWith(/status\: 7/)
-      .setImplicitWaitTimeout(2 * TIMEOUT_BASE)
+      .setImplicitWaitTimeout(2 * env.BASE_TIME_UNIT)
       .elementByCss('#setWaitTimeout .child')
       .setImplicitWaitTimeout(0);
   });
@@ -478,10 +514,10 @@ describe('api test (' + setup.testEnv + ')', function() {
         'done("OK");\n' +
       '}, arguments[0]);';
     return browser
-      .setAsyncScriptTimeout( TIMEOUT_BASE/2 )
-      .executeAsync( jsScript, [TIMEOUT_BASE]).should.be.rejectedWith(/status\: 28/)
-      .setAsyncScriptTimeout( 2* TIMEOUT_BASE )
-      .executeAsync( jsScript, [TIMEOUT_BASE])
+      .setAsyncScriptTimeout( env.BASE_TIME_UNIT/2 )
+      .executeAsync( jsScript, [env.BASE_TIME_UNIT]).should.be.rejectedWith(/status\: 28/)
+      .setAsyncScriptTimeout( 2* env.BASE_TIME_UNIT )
+      .executeAsync( jsScript, [env.BASE_TIME_UNIT])
       .setAsyncScriptTimeout(0);
   });
 
@@ -794,7 +830,7 @@ describe('api test (' + setup.testEnv + ')', function() {
   });
 
   it('browser.title', function() {
-    return browser.title().should.become("WD Tests");
+    return browser.title().should.eventually.include("WD Tests");
   });
 
   express.partials['browser.text'] =
@@ -937,12 +973,6 @@ describe('api test (' + setup.testEnv + ')', function() {
       .active().getValue().should.become("input 2");
   });
 
-  it('browser.url', function() {
-    return browser
-      .url().should.eventually.include("http://")
-      .url().should.eventually.include("test-page");
-  });
-
   it('browser.takeScreenshot', function() {
     return browser
       .takeScreenshot().then(function(res) {
@@ -1047,13 +1077,15 @@ describe('api test (' + setup.testEnv + ')', function() {
         ' $("#theDiv").html("<div class=\\"child\\">a waitForCondition child</div>");\n' +
         ' }, arguments[0]);\n' //+
         ,
-        [1.5 * TIMEOUT_BASE]
+        [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitForCondition(exprCond, 2 * TIMEOUT_BASE, 200).should.eventually.be.ok
-      .waitForCondition(exprCond, 2 * TIMEOUT_BASE).should.eventually.be.ok
+      .waitForCondition(exprCond, 2 * env.BASE_TIME_UNIT, 200).should.eventually.be.ok
+      .waitForCondition(exprCond, 2 * env.BASE_TIME_UNIT).should.eventually.be.ok
       .waitForCondition(exprCond).should.eventually.be.ok
-      .waitForCondition('$wrong expr!!!').should.be.rejected;
+      .then(function() {
+        return browser.waitForCondition('$wrong expr!!!').should.be.rejectedWith(/status: 13/);
+      });
   });
 
   express.partials['browser.waitForConditionInBrowser'] =
@@ -1066,16 +1098,19 @@ describe('api test (' + setup.testEnv + ')', function() {
         ' $("#theDiv").html("<div class=\\"child\\">a waitForCondition child</div>");\n' +
         ' }, arguments[0]);\n' //+
         ,
-        [1.5 * TIMEOUT_BASE]
+        [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .setAsyncScriptTimeout(5 * TIMEOUT_BASE)
-      .waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE, 0.2 * TIMEOUT_BASE)
+      .setAsyncScriptTimeout(5 * env.BASE_TIME_UNIT)
+      .waitForConditionInBrowser(exprCond, 2 * env.BASE_TIME_UNIT, 0.2 * env.BASE_TIME_UNIT)
         .should.eventually.be.ok
-      .waitForConditionInBrowser(exprCond, 2 * TIMEOUT_BASE)
+      .waitForConditionInBrowser(exprCond, 2 * env.BASE_TIME_UNIT)
         .should.eventually.be.ok
       .waitForConditionInBrowser(exprCond).should.eventually.be.ok
-      .waitForConditionInBrowser("totally #} wrong == expr").should.be.rejected
+      .then(function() {
+        return browser.waitForConditionInBrowser("totally #} wrong == expr")
+          .should.be.rejectedWith(/status: 13/);
+      })
       .setAsyncScriptTimeout(0);
   });
 

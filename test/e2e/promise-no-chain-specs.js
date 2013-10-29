@@ -1,23 +1,27 @@
-var testInfo = {
-  name: "e2e promise no chain",
-  tags: ['e2e']
-};
+/* global sauceJobTitle, mergeDesired */
 
-var setup = require("../helpers/setup-promise-no-chain");
+require('../helpers/setup');
 
-describe('promise no chain tests(' + setup.testEnv + ')', function() {
+describe('promise no-chain ' + env.ENV_DESC, function() {
+  this.timeout(env.TIMEOUT);
+
   var browser;
   var allPassed = true;
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
-    return setup.initBrowser(testInfo).then(function() {
-      browser = setup.browser;
-    });
+    browser = wd.promiseRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['e2e']
+    };
+    return browser
+      .configureLogging().then(function() {
+        return browser.init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
+      });
   });
 
   beforeEach(function() {
-    return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
+    return browser.get('http://admc.io/wd/test-pages/guinea-pig.html');
   });
 
   afterEach(function() {
@@ -25,11 +29,10 @@ describe('promise no chain tests(' + setup.testEnv + ')', function() {
   });
 
   after(function() {
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   it("should retrieve the title", function() {

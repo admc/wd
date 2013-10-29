@@ -108,12 +108,12 @@
 p, .p, ul, ol, hr, table, form, pre,
 h1, .alpha, h2, .beta {
   margin-bottom: 30px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 h1, .alpha {
-  font-size: 60px;
-  font-size: 3rem;
+  font-size: 40px;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1;
 }
@@ -122,7 +122,7 @@ h2, .beta {
   font-size: 30px;
   font-size: 1.5rem;
   font-weight: 400;
-  line-height: 2;
+  line-height: 1;
 }
 
 h3, .gamma {
@@ -155,4 +155,8 @@ body {
   html {
     font-size: 100%;
   }
+}
+
+#test-container {
+  margin-top: 1rem;
 }
