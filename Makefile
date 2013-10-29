@@ -1,62 +1,77 @@
 TEST_DIR = test/common test/unit test/local test/saucelabs test/ghostdriver
+ifndef BROWSER
+BROWSER := chrome
+endif
 
 DEFAULT:
 	@echo
-	@echo '  make test -> run the unit, midway, and e2e tests (start selenium with chromedriver first).'
+	@echo '  make test -> run all local tests (start selenium with chromedriver first).'
+	@echo '  make test_sauce -> run all sauce tests (start sauce connect first).'
 	@echo '  make test_unit -> run the unit tests'
 	@echo '  make test_midway -> run the midway tests (start selenium with chromedriver first).'
 	@echo '  make test_e2e -> run the e2e tests (start selenium with chromedriver first).'
-	@echo '  make test_e2e_sauce -> run the e2e tests on tests (set SAUCE_USERNAME/SAUCE_ACCESS_KEY first).'
-	#@echo '  make test_ghostdriver -> run the ghostdriver tests (start ghostdriver first).'
-	#@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
+	@echo '  make test_midway_sauce_connect -> run the midway tests using sauce connect.'
+	@echo '  make test_e2e_sauce -> run the e2e tests on sauce.'
 	@echo '  mapping -> build the mapping (implemented only).'
 	@echo '  full_mapping -> build the mapping (full).'
 	@echo '  unsupported_mapping -> build the mapping (unsupported).'
-	@echo
+	@echo ''
+	@echo 'Notes:'
+	@echo '  - For midway and e2e test, BROWSER=[chrome|firefox|explorer|ios|android|multi].'
+	@echo '  - To test on sauce, set SAUCE_USERNAME/SAUCE_ACCESS_KEY first'
 
-test: test_unit test_midway test_e2e
+test:
+	BROWSER=multi make test_unit test_midway
+	BROWSER=chrome make test_midway test_e2e
+	BROWSER=firefox make test_midway test_e2e
+
+test_sauce:
+	BROWSER=multi make test_unit test_midway_sauce_connect
+	BROWSER=chrome make test_midway_sauce_connect test_e2e_sauce
+	BROWSER=firefox make test_midway_sauce_connect test_e2e_sauce
 
 test_unit:
 	SAUCE_USERNAME= SAUCE_ACCESS_KEY= ./node_modules/.bin/mocha test/specs/*-specs.js
 
 test_midway:
-	BROWSER=chrome ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-chrome|@multi' -i
-	BROWSER=firefox ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-firefox|@multi' -i
+ifeq ($(BROWSER),multi)
 	./node_modules/.bin/mocha test/midway/*-specs.js -g '@multi'
+else
+	./node_modules/.bin/mocha test/midway/*-specs.js -g "@skip-${BROWSER}|@multi" -i
+	./node_modules/.bin/mocha test/midway/suffixes/*-specs.js -g "@skip-${BROWSER}|@multi" -i
+endif
 
-test_midway_android:
-	BROWSER=android ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-android|@multi' -i
-
-test_midway_ios:
-	BROWSER=ios ./node_modules/.bin/mocha test/midway/*-specs.js -g '@skip-ios|@multi' -i
+test_e2e:
+	./node_modules/.bin/mocha test/e2e/*-specs.js -g "@skip-${BROWSER}|@multi" -i
 
 test_midway_sauce_connect:
 	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_midway
 
-test_e2e:
-	BROWSER=chrome ./node_modules/.bin/mocha test/e2e/*-specs.js -g '@skip-chrome' -i
-	BROWSER=firefox ./node_modules/.bin/mocha test/e2e/*-specs.js -g '@skip-firefox' -i
-
 # run saucelabs test, configure username/key first
 test_e2e_sauce:
-ifdef TRAVIS
-	# secure env variables are not available for pull reuqests
-	# so you won't be able to run test against Sauce on these
+	SAUCE=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_e2e
+
+test_ios:
+	BROWSER=ios make test_midway_sauce_connect
+	BROWSER=ios make test_e2e_sauce
+
+test_android:
+	BROWSER=android make test_midway_sauce_connect
+	BROWSER=android make test_e2e_sauce
+
+test_travis:
 ifneq ($(TRAVIS_PULL_REQUEST),false)
 	@echo 'Skipping Sauce Labs tests as this is a pull request'
 else
-	SAUCE=1 make test_e2e
-endif
+ifeq ($(BROWSER),multi)
+	make test_unit
+	make test_midway_sauce_connect
 else
-	SAUCE=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_e2e
+	make test_midway_sauce_connect
+	make test_e2e_sauce
+endif
 endif
 
-# todo: reconfigure that
-# run ghostdriver test, start ghostdriver first
-# test_ghostdriver:
-# 	./node_modules/.bin/mocha --bail test/ghostdriver/*-test.js
-
-# run test coverage, install jscoverage first
 test_coverage:
 	rm -rf coverage
 	./node_modules/.bin/istanbul cover test/coverage/run_tests.js --
@@ -79,14 +94,19 @@ unsupported_mapping: _dox
 	@node doc/mapping-builder.js unsupported
 
 .PHONY: \
-	test \
 	DEFAULT \
+	test \
+	test_sauce \
 	test_unit \
 	test_midway \
 	test_e2e \
-	test_saucelabs \
+	test_midway_sauce_connect \
+	test_e2e_sauce \
+	test_ios \
+	test_android \
+	test_travis \
 	test_coverage \
-	test_ghostdriver \
-	build_mapping \
-	build_full_mapping \
+	mapping \
+	full_mapping \
+	unsupported_mapping \
 	_dox

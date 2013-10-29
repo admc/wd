@@ -26,7 +26,8 @@ wd.webdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeou
   });
 };
 
-chai.promisifyWith(wd.buildPromisify());
+// this should be called after monkey patching
+chai.transferPromiseness(wd.buildPromisifier());
 
 var browser = wd.promiseChainRemote();
 

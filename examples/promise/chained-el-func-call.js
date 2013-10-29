@@ -16,7 +16,7 @@ try {
   wd = require('../../lib/main');
 }
 
-chai.promisifyWith(wd.buildPromisify());
+chai.transferPromiseness(wd.buildPromisify());
 
 var Q = wd.Q;
 
