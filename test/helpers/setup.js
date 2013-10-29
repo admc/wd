@@ -52,7 +52,7 @@ require("mocha-as-promised")();
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
-chaiAsPromised.transferPromiseness = wd.buildTransferPromiseness();
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 GLOBAL.expect = chai.expect;
 GLOBAL.should = chai.should();
 

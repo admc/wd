@@ -14,7 +14,7 @@ try {
   wd = require('../../lib/main');
 }
 
-chaiAsPromised.transferPromiseness = wd.buildTransferPromiseness();
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 var browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, username, accessKey);
 
@@ -40,9 +40,9 @@ browser
   .title()
     .should.become('I am a page title - Sauce Labs')
   .elementById('i am a link')
-  .click()
-  .eval("window.location.href")
-    .should.eventually.include('guinea-pig2')
-  .fin(function() { return browser.quit(); })
-  .sauceJobStatus(true)
+  // .click()
+  // .eval("window.location.href")
+  //   .should.eventually.include('guinea-pig2')
+  // .fin(function() { return browser.quit(); })
+  // .sauceJobStatus(true)
   .done();
