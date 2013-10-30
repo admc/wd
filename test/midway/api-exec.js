@@ -1,43 +1,11 @@
-/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
-
 require('../helpers/setup');
 
 describe('api-exec ' + env.ENV_DESC, function() {
-  this.timeout(env.TIMEOUT);
 
-  var browser;
-  var allPassed = true;
-  var express = new Express( __dirname + '/assets' );
-
-  before(function() {
-    express.start();
-    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
-    var sauceExtra = {
-      name: sauceJobTitle(this.runnable().parent.title),
-      tags: ['midway']
-    };
-    return browser
-      .configureLogging()
-      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
-  });
-
-  beforeEach(function() {
-    return browser.get( midwayUrl(
-      this.currentTest.parent.title,
-      this.currentTest.title));
-  });
-
-  afterEach(function() {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(function() {
-    express.stop();
-    return browser
-      .quit().then(function() {
-        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
-      });
-  });
+  var ctx = require('./midway-base')(this),
+      express = ctx.express,
+      browser;
+  ctx.browser.then(function(_browser) { browser = _browser; });
 
   express.partials['browser.eval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';

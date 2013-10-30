@@ -1,5 +1,3 @@
-/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
-
 // spliting the test cause it takes too long, list of possible suffixes below
 // var suffixes =
 //   ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText',
@@ -10,41 +8,11 @@ exports.test = function function_name (suffixes, extraDesc) {
   require('../helpers/setup');
 
   describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, function() {
-    this.timeout(env.TIMEOUT);
 
-    var browser;
-    var allPassed = true;
-    var express = new Express( __dirname + '/assets' );
-
-    before(function() {
-      express.start();
-      browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
-      var sauceExtra = {
-        name: sauceJobTitle(this.runnable().parent.title),
-        tags: ['midway']
-      };
-      return browser
-        .configureLogging()
-        .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
-    });
-
-    beforeEach(function() {
-      return browser.get( midwayUrl(
-        this.currentTest.parent.title,
-        this.currentTest.title));
-    });
-
-    afterEach(function() {
-      allPassed = allPassed && (this.currentTest.state === 'passed');
-    });
-
-    after(function() {
-      express.stop();
-      return browser
-        .quit().then(function() {
-          if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
-        });
-    });
+    var ctx = require('./midway-base')(this),
+        express = ctx.express,
+        browser;
+    ctx.browser.then(function(_browser) { browser = _browser; });
 
     // get suffix specific fields
     function getSuffixFields(suffix) {
