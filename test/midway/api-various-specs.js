@@ -236,7 +236,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .elementByCss('#theDiv .disabled').isEnabled().should.eventually.not.be.ok;
   });
 
-  it.only('browser.sleep', function() {
+  it('browser.sleep', function() {
     return browser.sleep(100).should.be.fulfilled;
   });
 
