@@ -11,6 +11,9 @@ try {
   wd = require('../../lib/main');
 }
 
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
+
 // monkey patch
 wd.PromiseChainWebdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeout) {
   return this
@@ -19,9 +22,6 @@ wd.PromiseChainWebdriver.prototype.elementByCssSelectorWhenReady = function(sele
 };
 
 // DO NOT call rewrap after this, this would reset the PromiseChainWebdriver prototype
-
-// enables chai assertion chaining
-chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 var browser = wd.promiseChainRemote();
 
