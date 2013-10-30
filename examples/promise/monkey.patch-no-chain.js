@@ -45,7 +45,7 @@ browser
     return browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
   })
   .then(function () {
-    return browser.title().should.become('I am a page title - Sauce Labs');
+    return browser.title().should.become('WD Tests');
   })
   .then(function() {
     return browser

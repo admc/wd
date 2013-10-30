@@ -22,7 +22,7 @@ browser.on('command', function(meth, path, data) {
 browser.init({browserName:'chrome'}, function() {
   browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
-      title.should.include('I am a page title - Sauce Labs');
+      title.should.include('WD');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
           /* jshint evil: true */

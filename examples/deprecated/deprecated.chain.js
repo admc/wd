@@ -25,7 +25,7 @@ browser
   .init({ browserName: 'chrome' })
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title(function(err, title) {
-    title.should.include('I am a page title - Sauce Labs');
+    title.should.include('WD');
   })
   .queueAddAsync(function(cb) {
     console.log("simulating async call, waiting 500ms");

@@ -48,7 +48,7 @@ describe('mocha spec examples', function() {
 
     it("should retrieve the page title", function() {
       return browser
-        .title().should.become("I am a page title - Sauce Labs");
+        .title().should.become("WD Tests");
     });
 
     it("submit element should be clicked", function() {
@@ -94,7 +94,7 @@ describe('mocha spec examples', function() {
       browser
         .title()
         .then(function(title) {
-          title.should.equal("I am a page title - Sauce Labs");
+          title.should.equal("WD Tests");
         })
         .nodeify(done);
     });

@@ -38,7 +38,7 @@ browser
   .init({browserName:'chrome'})
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
-  .should.become('I am a page title - Sauce Labs')
+  .should.become('WD Tests')
   .elementByCssSelector('#comments').getTagName().should.become('textarea')
   .elementByCssSelectorWhenReady('#comments', 2000)
     .should.eventually.exist

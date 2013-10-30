@@ -61,7 +61,7 @@ browser
   .init({browserName:'chrome'})
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
-    .should.become('I am a page title - Sauce Labs')
+    .should.become('WD Tests')
   .elementById('i am a link')
   .click()
   .eval("window.location.href")
@@ -81,7 +81,7 @@ browser
 browser.init({browserName:'chrome'}, function() {
   browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
     browser.title(function(err, title) {
-      title.should.include('I am a page title - Sauce Labs');
+      title.should.include('WD');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
           /* jshint evil: true */
@@ -145,7 +145,7 @@ describe("using mocha-as-promised and chai-as-promised", function() {
   });
 
   it("should retrieve the page title", function() {
-    return browser.title().should.become("I am a page title - Sauce Labs");
+    return browser.title().should.become("WD Tests");
   });
 
   it("submit element should be clicked", function() {

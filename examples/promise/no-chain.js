@@ -27,7 +27,7 @@ browser
   })
   .then(function () { return browser.title();})
   .then(function (title) {
-    title.should.equal('I am a page title - Sauce Labs');
+    title.should.equal('WD Tests');
     return browser.elementById('i am a link');
   })
   .then(function (el) { return browser.clickElement(el); })

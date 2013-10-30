@@ -30,7 +30,7 @@ browser
   .init({browserName:'firefox'})
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
-    .should.become('I am a page title - Sauce Labs')
+    .should.become('WD Tests')
   .elementById('i am a link')
   .click()
   .eval("window.location.href")
