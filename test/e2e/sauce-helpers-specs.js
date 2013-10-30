@@ -25,7 +25,7 @@ if(env.SAUCE){
         .configureLogging()
         .init(desired)
         .get('http://admc.io/wd/test-pages/guinea-pig.html')
-        .title().should.eventually.include("I am a page title - Sauce Labs");
+        .title().should.eventually.include("WD");
     });
 
     after(function() {

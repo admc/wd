@@ -33,7 +33,7 @@ describe('deprecated chain - full' + env.ENV_DESC, function() {
       .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ))
       .get("http://admc.io/wd/test-pages/guinea-pig.html")
       .title(function(err, title) {
-        title.should.include('I am a page title - Sauce Labs');
+        title.should.include('WD');
       })
       .quit(function(err) {
         should.not.exist(err);
@@ -80,7 +80,7 @@ describe('deprecated chain - partial' + env.ENV_DESC, function() {
     /* jshint evil: true */
     browser.chain()
       .title(function(err, title) {
-        title.should.include('I am a page title - Sauce Labs');
+        title.should.include('WD');
       })
       .elementById('submit', function(err, el) {
         should.not.exist(err);
@@ -102,7 +102,7 @@ describe('deprecated chain - partial' + env.ENV_DESC, function() {
   it("browser.queueAddAsync", function(done) {
     browser.chain()
       .title(function(err, title) {
-        title.should.include('I am a page title - Sauce Labs');
+        title.should.include('WD');
       })
       .queueAddAsync( function(cb) {
         setTimeout(function() {

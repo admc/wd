@@ -36,7 +36,7 @@ describe('promise chain ' + env.ENV_DESC, function() {
 
   it("should retrieve title", function() {
     return browser
-      .title().should.eventually.contain("I am a page title - Sauce Labs");
+      .title().should.eventually.contain("WD");
   });
 
  it("should retrieve title a subelement value", function() {

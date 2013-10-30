@@ -37,7 +37,7 @@ describe('promise no-chain ' + env.ENV_DESC, function() {
 
   it("should retrieve the title", function() {
     return browser
-      .title().should.eventually.include("I am a page title - Sauce Labs");
+      .title().should.eventually.include("WD");
   });
 
   it("should retrieve a subelement value", function() {

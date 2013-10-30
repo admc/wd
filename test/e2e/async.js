@@ -38,7 +38,7 @@ describe('async' + env.ENV_DESC, function() {
   it("should retrieve title", function(done) {
     browser.title(function(err, title) {
       should.not.exist(err);
-      title.should.include('I am a page title - Sauce Labs');
+      title.should.include('WD');
       done();
     });
   });
