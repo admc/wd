@@ -60,7 +60,7 @@ Incompatibilities:
 
   - There is a new method to call, `wd.rewrap()`, to propagate async monkey 
   patching to promise. (see [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35) and the monkey patch section below)
-  - The chai-as-promised setup has changed in V4, look out for the `transferPromiseness` 
+  - The chai-as-promised setup has changed in v4, look out for the `transferPromiseness` 
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
 
 ## Usage
@@ -254,7 +254,7 @@ var browser = wd.remote('http://localhost:4444/wd/hub');
 var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 ```
 
-#### Url object created via `url.parse`
+#### Url object created via url.parse
 
 [URL module documentation](http://nodejs.org/docs/v0.10.0/api/url.html#url_url)
 
