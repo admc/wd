@@ -12,7 +12,7 @@ env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
 
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 env.BROWSER = process.env.BROWSER || 'chrome';
-if(env.BROWSER === 'multi') { 
+if(env.BROWSER === 'multi') {
     env.BROWSER = 'chrome';
     env.MULTI = true;
 }
@@ -113,7 +113,7 @@ if(env.SAUCE){
   env.DESIRED.tags = env.DESIRED.tags || [];
   env.DESIRED.tags.push('wd');
   if(env.TRAVIS_JOB_NUMBER){
-    env.desired['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER;
+    env.DESIRED['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER;
   }
 }
 
