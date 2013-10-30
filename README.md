@@ -46,12 +46,12 @@ which may affect external wrappers. External wrappers should now subclass those 
 ### 0.2.1
  
 - New test suite using the promise chain api.
-- `browser.Q` was moved to `wd.Q`
+- `browser.Q` was moved to `wd.Q`.
 
 ### 0.2.2 
-- chai-as-promised v4 compatible
-- Promise wrappers can now be monkey patched directly
-- New saucelabs helpers
+- chai-as-promised v4 compatible.
+- Promise wrappers can now be monkey patched directly.
+- New saucelabs helpers.
 
 Incompatibility: There is a new method to call, `wd.rewrap()` to propagate
 async monkey patching to promise.
