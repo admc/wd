@@ -188,7 +188,6 @@ describe('api-el ' + env.ENV_DESC, function() {
       })
       .elementByCss("#theDiv").textPresent('sunny').should.eventually.be.ok
       .elementByCss("#theDiv").textPresent('raining').should.eventually.not.be.ok;
-      //todo: the args are in the wrong order
   });
 
 });
