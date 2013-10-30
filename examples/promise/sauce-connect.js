@@ -7,12 +7,16 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
+
 var wd;
 try {
   wd = require('wd');
 } catch( err ) {
   wd = require('../../lib/main');
 }
+
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 var browser = wd.promiseChainRemote(
   "localhost", 4445, username, accessKey);

@@ -16,7 +16,8 @@ try {
   wd = require('../../lib/main');
 }
 
-chai.transferPromiseness(wd.buildPromisify());
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 var Q = wd.Q;
 

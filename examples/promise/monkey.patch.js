@@ -26,8 +26,8 @@ wd.webdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeou
   });
 };
 
-// this should be called after monkey patching
-chai.transferPromiseness(wd.buildPromisifier());
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 var browser = wd.promiseChainRemote();
 

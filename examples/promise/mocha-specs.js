@@ -15,7 +15,8 @@ try {
   wd = require('../../lib/main');
 }
 
-chai.promisifyWith(wd.buildPromisify());
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('mocha spec examples', function() {
 

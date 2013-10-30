@@ -12,7 +12,7 @@ try {
 }
 
 // enables chai assertion chaining
-chaiAsPromised.transferPromiseness = wd.buildTransferPromiseness();
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 var browser = wd.promiseChainRemote();
 
