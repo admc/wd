@@ -4,7 +4,7 @@ echo got $r
 while [ $r -ge 4 ]
 do
   echo 'waiting 60 sec'
-  sleep 2s
+  sleep 60s
   r=$[ ( $RANDOM % 10 ) ]
   echo got $r
 done
