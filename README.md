@@ -1,14 +1,12 @@
 # WD.js -- WebDriver/Selenium 2 for node.js
   - Mailing List: https://groups.google.com/forum/#!forum/wdjs
 
+## Status
+
 [![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
 [![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com/u/wdjs)
 
 [![Selenium Test Status](https://saucelabs.com/browser-matrix/wdjs.svg)](https://saucelabs.com/u/wdjs)
-
-## Update node to latest
-
-http://nodejs.org/#download
 
 ## Install
 
@@ -46,10 +44,16 @@ npm install wd
 which may affect external wrappers. External wrappers should now subclass those 2 classes. 
 
 ### 0.2.1
-
+ 
 - New test suite using the promise chain api.
 - `browser.Q` was moved to `wd.Q` 
+- chai-as-promised v4 compatible
+- Promise wrappers can now be monkey patched directly
+- New saucelabs helpers
 
+Incompatibility: There is a new method to call, `wd.rewrap()` to propagate
+async monkey patching to promise.
+ 
 ## Usage
 
 ### Q promises + chaining
@@ -286,16 +290,26 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 ### Monkey patching
 
 You may want to monkey patch the webdriver class in order to add custom functionalities.
-See example [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
+Please refer to the following examples:
+
+- [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
+- [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js).
+- [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js).
+- [here](https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js).
+
+Caveat: Call `wd.rewrap()` to propagate async monkey patching to the promise wrapper. This will
+ovewrite the promise wrapper prototype, so you need to do thing in order, async first, then promise.
 
 ### Promise helpers
 
-This is a cleaner alternative to monkey patching.
+This is a clean alternative to monkey patching.
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
 
 ### Environment variables for Saucelabs
 
 When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
+
+The following helper are also available to update job status: `sauceJobUpdate` and `sauceJobStatus`.
 
 ### Safe Methods
 
@@ -316,7 +330,7 @@ browser.safeExecute("wrong!!!", function(err, res) { //returns
 ## Run the tests!
 
 ```
-# Install the Selenium server and Chromedriver
+# Install the Selenium server, Chromedriver connect
 node_modules/.bin/install_selenium
 node_modules/.bin/install_chromedriver
 
@@ -331,10 +345,19 @@ make test
 ```
 
 ## Run the tests on Sauce Labs cloud!
+
 ```
+# Install sauce connect
+node_modules/.bin/install_sauce_connect
+
+# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY 
+
+# Start sauce connect:
+node_modules/.bin/start_sauce_connect
+
 cd wd
 npm install
-make test_e2e_sauce
+make test_midway_sauce_connect
 ```
 
 ## Adding new method / Contributing
