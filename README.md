@@ -292,13 +292,14 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 You may want to monkey patch the webdriver class in order to add custom functionalities.
 Please refer to the following examples:
 
-- [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
-- [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js).
-- [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js).
-- [here](https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js).
+- [pur promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
+- [async patch used by promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js).
+- [promise no-chain](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js).
+- [full async](https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js).
 
-Caveat: Call `wd.rewrap()` to propagate async monkey patching to the promise wrapper. This will
-ovewrite the promise wrapper prototype, so you need to do thing in order, async first, then promise.
+Caveat: You now need to call `wd.rewrap()` to propagate async monkey patching to the 
+promise wrapper. This will ovewrite the promise wrapper prototype, so you need to do 
+your monkey patching in order, async first, call `wd.rewrap()` , and only then promise.
 
 ### Promise helpers
 
@@ -309,7 +310,7 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/helpe
 
 When connecting to Saucelabs, the `user` and `pwd` fields can also be set through the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
 
-The following helper are also available to update job status: `sauceJobUpdate` and `sauceJobStatus`.
+The following helper are also available to update sauce jobs: `sauceJobUpdate` and `sauceJobStatus`.
 
 ### Safe Methods
 
@@ -347,17 +348,20 @@ make test
 ## Run the tests on Sauce Labs cloud!
 
 ```
-# Install sauce connect
+# Install Sauce Connect
 node_modules/.bin/install_sauce_connect
 
 # Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY 
 
-# Start sauce connect:
+# Start Sauce Sonnect:
 node_modules/.bin/start_sauce_connect
 
 cd wd
 npm install
+make test_e2e_sauce # may be run without sauce connect
 make test_midway_sauce_connect
+
+# look at the results on Saucelabs site!
 ```
 
 ## Adding new method / Contributing
