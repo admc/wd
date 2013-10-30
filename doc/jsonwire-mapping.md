@@ -1093,6 +1093,33 @@ return true if condition satisfied, error otherwise.<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+# Updates saucelabs job:<br>
+sauceJobUpdate(jsonData, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+# Set saucelabs job status:<br>
+sauceJobStatus(hasPassed, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+# Helper sleep method:<br>
+sleep(ms, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Equivalent to the python sendKeys binding. Upload file if<br>
 a local file is detected, otherwise behaves like type.<br>
 element.sendKeys(keys, cb) -&gt; cb(err)<br>
