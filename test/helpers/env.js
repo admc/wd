@@ -88,7 +88,7 @@ if( env.TRAVIS_JOB_ID ){
 
 if(env.SAUCE){
   env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 1000).toInt();
-  env.TIMEOUT = S(process.env.TIMEOUT || 300000).toInt();
+  env.TIMEOUT = S(process.env.TIMEOUT || 600000).toInt();
 
   env.SAUCE_JOB_ID =
     env.TRAVIS_BUILD_NUMBER ||
