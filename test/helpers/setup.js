@@ -41,7 +41,7 @@ GLOBAL.mergeDesired = function(desired, extra){
 };
 
 GLOBAL.sauceJobTitle = function(title) {
-  return (env.TRAVIS_JOB_NUMBER? '[' + env.TRAVIS_JOB_NUMBER + ']' : '') +
+  return (env.TRAVIS_JOB_NUMBER? '[' + env.TRAVIS_JOB_NUMBER + '] ' : '') +
     title
       .replace(/\(.*\)/g,'')
       .replace(/\@[\w\-]+/g,'')

@@ -76,12 +76,14 @@ env.SAUCE = toBoolean(process.env.SAUCE) || env.SAUCE_CONNECT;
 
 env.TRAVIS_JOB_ID = process.env.TRAVIS_JOB_ID;
 env.TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
+env.TRAVIS_BUILD_NUMBER = process.env.TRAVIS_BUILD_NUMBER;
 
 if( env.TRAVIS_JOB_ID ){
   env.TRAVIS = true;
   console.log("Travis environment detected.");
-  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
+  console.log("TRAVIS_BUILD_NUMBER --> ", env.TRAVIS_BUILD_NUMBER);
   console.log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
+  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
 }
 
 if(env.SAUCE){
@@ -89,7 +91,7 @@ if(env.SAUCE){
   env.TIMEOUT = S(process.env.TIMEOUT || 300000).toInt();
 
   env.SAUCE_JOB_ID =
-    env.TRAVIS_JOB_NUMBER ||
+    env.TRAVIS_BUILD_NUMBER ||
     process.env.SAUCE_JOB_ID ||
     Math.round(new Date().getTime() / (1000*60));
   env.SAUCE_USERNAME = process.env.SAUCE_USERNAME;
@@ -113,8 +115,10 @@ if(env.SAUCE){
   env.DESIRED.tags = env.DESIRED.tags || [];
   env.DESIRED.tags.push('wd');
   if(env.TRAVIS_JOB_NUMBER){
+    env.DESIRED.tags.push('travis');
     env.DESIRED['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER;
   }
+
   // special case for window
   if (env.BROWSER === 'explorer') {
     env.DESIRED.browserName = 'internet explorer';
