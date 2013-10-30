@@ -1,108 +1,64 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>I am a page title - Sauce Labs</title>
-  <link href="./styles/jquery-ui-1.8.5.custom.css" media="screen" rel="stylesheet" type="text/css">
-  <script type="text/javascript" src="./js/jquery.min.js"></script>
-  <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
-<script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>WD Tests</title>
+    <link href="./styles/toast.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/script.js"></script>
+    <script>window["_GOOG_TRANS_EXT_VER"] = "1";</script>
+</head>
+
 <body>
-
-<h1>This page is a Selenium sandbox</h1>
-
-I am some page content
-<div id="i_am_an_id" class="i_am_a_class">I am a div</div>
-<a href="guinea-pig2.html" id="i am a link">i am a link</a>
-     <div>i appear 3 times</div>
-     <div>i appear 3 times</div>
-     <div>i appear 3 times</div>
-<div id="invisible div" style="display:none;">i am invisible</div>
-<form id="the_forms_id" action="#" method="get">
-<p>
-<input id="i_am_a_textbox" name="i_am_a_textbox" type="text" value="i has no focus">
-</p>
-<input type="checkbox" id="unchecked_checkbox" name="unchecked_checkbox">
-<input type="checkbox" id="checked_checkbox" name="checked_checkbox" checked="checked">
-
-</form>
-<span id="your_comments">
-Your comments: None<br>
-</span>
-ñ☃
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#i_am_a_textbox").focus(function(){$(this).val("");})
-                            .blur(function(){$(this).val("i has no focus");});
-    });
-</script>
-  
-  <div class="border">
-    
-  <script type="text/javascript">
-    var resetFeedback = function() {
-     $(".jumpOkButton").css("display", "none")
-     $("form#jumpContact").css("display", "block");
-     $(".formMessage").css("display", "none");
-     $("#comments").attr("value", "");
-     $("#comments").trigger("focus");
-    }
-    var setupJumpFeedback = function(){
-      $("#jumpContact input[type=submit]").button();
-      $("form#jumpContact").submit(function() {
-        form = $(this);
-        $("#comments").trigger("focus");
-        //$("input[type=submit]", form).slideUp();
-        data = form.serialize();
-        $.ajax({
-            type: "POST",
-            url: "/jumpstart-send",
-            data: data,
-            success: function(response){
-                if (response == "Message sent") {
-                        $(".formMessage").text("Thanks for your feedback, we'll get back to you soon if needed.")
-                                         .slideDown("normal");
-                        form.slideUp("normal");
-                } else {
-                        $(".formMessage").text("Oops! Looks like something went wrong, please try again.")
-                                         .slideDown("normal");
-                        $("input[type=submit]", form).slideDown();
-                }
-                $(".jumpOkButton").css("display", "block");
-            },
-            error: function(){
-                $(".formMessage").text("Oops! Looks like something went wrong, please try again.")
-                                 .slideDown("normal");
-                $("input[type=submit]", form).slideDown();
-            }
-        });
-        return false;
-      });
-    };
-  </script>
-
-  <form id="jumpContact" method="get" action="#jumpContact">
-    <p>
-      <label for="comments">Comments:</label><br>
-      <textarea id="comments" style="width:400px;height:100px" name="comments"></textarea>
-    </p>
-    <div style="float:right">
-      <input class="jumpButton" type="submit" name="submit" id="submit" value="send">
+  <div class="container">
+    <div class="grid">
+      <div class="unit four-of-four">
+        <h1>WD Tests</h1>
+      </div>
     </div>
-  </form>
-  <div class="formMessage"></div><br><br>
-  <center>
-    <input style="display:none" class="jumpOkButton" type="button" value="OK" onclick="resetFeedback();">
-  </center>
-
   </div>
-  
-  <p>Server time: <span id="servertime">1352345337</span></p>
-  <p>Client time: <span id="clienttime">1352345444</span></p>
-  <script type="text/javascript">
-      $("#clienttime").text(parseInt(new Date().getTime() / 1000))
-  </script>
+  <div class="container">
+    <div class="grid">
+      <div class="unit two-of-four">
+        <div id="i_am_an_id" class="i_am_a_class">I am a div</div>
+        <a href="guinea-pig2.html" id="i am a link">i am a link</a>
+             <div>i appear 3 times</div>
+             <div>i appear 3 times</div>
+             <div>i appear 3 times</div>
+        <div id="invisible div" style="display:none;">i am invisible</div>
+        <form id="the_forms_id" action="#" method="get">
+        <p>
+        <input id="i_am_a_textbox" name="i_am_a_textbox" type="text" value="i has no focus">
+        </p>
+        <input type="checkbox" id="unchecked_checkbox" name="unchecked_checkbox">
+        <input type="checkbox" id="checked_checkbox" name="checked_checkbox" checked="checked">
 
-  <p id="useragent">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11</p>
+        </form>
+      </div>
+      <div class="unit two-of-four">
+        <span id="your_comments">
+        Your comments: None<br>
+        </span>
 
+        <div class="border">
 
+          <form id="jumpContact" method="get" action="#jumpContact">
+            <p>
+              <label for="comments">Comments:</label><br>
+              <textarea id="comments" style="width:400px;height:100px" name="comments"></textarea>
+            </p>
+            <div style="float:right">
+              <input class="jumpButton" type="submit" name="submit" id="submit" value="send">
+            </div>
+          </form>
+          <div class="formMessage"></div><br><br>
+          <center>
+            <input style="display:none" class="jumpOkButton" type="button" value="OK" onclick="resetFeedback();">
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 
-</body></html>
+</html>
