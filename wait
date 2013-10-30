@@ -1,10 +1,10 @@
 #! /bin/bash
-r=$[ ( $RANDOM % 20 ) ]
+r=$[ ( $RANDOM % 100 ) ]
 echo got $r
-while [ $r -ge 6 ]
+while [ $r -ge 25 ]
 do
   echo 'waiting 60 sec'
   sleep 60s
-  r=$[ ( $RANDOM % 20 ) ]
+  r=$[ ( $RANDOM % 100 ) ]
   echo got $r
 done
