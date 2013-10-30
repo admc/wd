@@ -49,13 +49,18 @@ which may affect external wrappers. External wrappers should now subclass those 
 - `browser.Q` was moved to `wd.Q`.
 
 ### 0.2.2 
+
 - chai-as-promised v4 compatible.
 - Promise wrappers can now be monkey patched directly.
 - New saucelabs helpers.
 
-Incompatibility: There is a new method to call, `wd.rewrap()` to propagate
-async monkey patching to promise.
- 
+Incompatibilities: 
+
+  - There is a new method to call, `wd.rewrap()` to propagate async monkey 
+  patching to promise.
+  - The chai-as-promised initialization has changed in V4, look out for the `transferPromiseness` in
+  the examples
+
 ## Usage
 
 ### Q promises + chaining
