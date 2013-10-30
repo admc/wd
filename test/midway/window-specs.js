@@ -66,8 +66,7 @@ describe('window ' + env.ENV_DESC + ' @skip-android @skip-ios', function() {
   it('browser.windowHandle', function() {
     return browser
       .windowHandle()
-      .should.eventually.have.length.above(0)
-      .then(); // going round mocha-as-promised bug
+      .should.eventually.have.length.above(0);
   });
 
   express.partials['browser.newWindow'] = "";
