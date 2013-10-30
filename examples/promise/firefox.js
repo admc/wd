@@ -36,5 +36,4 @@ browser
   .eval("window.location.href")
     .should.eventually.include('guinea-pig2')
   .fin(function() { return browser.quit(); })
-  .quit()
   .done();
