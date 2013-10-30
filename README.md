@@ -1,7 +1,9 @@
-# WD.js -- WebDriver/Selenium 2 for node.js
-  - Mailing List: https://groups.google.com/forum/#!forum/wdjs
+# WD.js
 
-## Status
+**WebDriver/Selenium 2 for node.js**
+
+- [Site](http://admc.io/wd/)
+- [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
 
 [![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
 [![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com/u/wdjs)
