@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="WD.js : node.js webdriver/selenium 2 client" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>WD.js</title>
+    <title>WD.js by admc</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>WD.js</h1>
+        <h2>node.js webdriver/selenium 2 client</h2>
+        <a href="https://github.com/admc/wd" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/admc/wd">View on GitHub</a>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="wdjs----webdriverselenium-2-for-nodejs" class="anchor" href="#wdjs----webdriverselenium-2-for-nodejs"><span class="octicon octicon-link"></span></a>WD.js -- WebDriver/Selenium 2 for node.js</h1>
 
-          <h1 id="project_title">WD.js</h1>
-          <h2 id="project_tagline">node.js webdriver/selenium 2 client</h2>
+<ul>
+<li>Mailing List: <a href="https://groups.google.com/forum/#!forum/wdjs">https://groups.google.com/forum/#!forum/wdjs</a>
+</li>
+</ul><h2>
+<a name="status" class="anchor" href="#status"><span class="octicon octicon-link"></span></a>Status</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/admc/wd/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/admc/wd/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+<p><a href="http://travis-ci.org/admc/wd"><img src="https://secure.travis-ci.org/admc/wd.png?branch=master" alt="Build Status"></a>
+<a href="https://saucelabs.com/u/wdjs"><img src="https://saucelabs.com/buildstatus/wdjs" alt="Selenium Test Status"></a></p>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>WD.js -- WebDriver/Selenium 2 for node.js</h1>
+<p><a href="https://saucelabs.com/u/wdjs"><img src="https://saucelabs.com/browser-matrix/wdjs.svg" alt="Selenium Test Status"></a></p>
 
-<h2>Update node to latest</h2>
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
 
-<p><a href="http://nodejs.org/#download">http://nodejs.org/#download</a></p>
+<pre><code>npm install wd
+</code></pre>
 
-<h2>Install</h2>
-
-<pre>
-npm install wd
-</pre>
-
-<h2>Authors</h2>
+<h2>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h2>
 
 <ul>
 <li>Adam Christian (<a href="http://github.com/admc">admc</a>)</li>
 <li>Ruben Daniels (<a href="https://github.com/javruben">javruben</a>)</li>
 <li>Peter Braden (<a href="https://github.com/peterbraden">peterbraden</a>)</li>
-<li>Seb Vincent (<a href="https://github.com/sebv">sebv</a>)</li>
+<li>Seb Vincent (<a href="https://github.com/admc">sebv</a>)</li>
 <li>Peter 'Pita' Martischka (<a href="https://github.com/Pita">pita</a>)</li>
 <li>Jonathan Lipps (<a href="https://github.com/jlipps">jlipps</a>)</li>
 <li>Phil Sarin (<a href="https://github.com/pdsarin">pdsarin</a>)</li>
@@ -58,964 +64,376 @@ npm install wd
 <li>Santiago Suarez Ordonez (<a href="https://github.com/santiycr">santiycr</a>)</li>
 <li>Bernard Kobos (<a href="https://github.com/bernii">bernii</a>)</li>
 <li>Jason Carr (<a href="https://github.com/maudineormsby">maudineormsby</a>)</li>
-</ul><h2>License</h2>
+<li>Matti Schneider (<a href="https://github.com/MattiSG">MattiSG</a>)</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <ul>
 <li>License - Apache 2: <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
 </li>
-</ul><h2>Usage</h2>
+</ul><h2>
+<a name="02x-release" class="anchor" href="#02x-release"><span class="octicon octicon-link"></span></a>0.2.x Release</h2>
 
-<pre>
-): wd shell
+<h3>
+<a name="020" class="anchor" href="#020"><span class="octicon octicon-link"></span></a>0.2.0</h3>
+
+<ul>
+<li>New wrapper: promise chain.</li>
+<li>Old chain api is deprecated (It is still available, but you will see a depreciation message).</li>
+<li>There are some changes in the way the element and webdriver classes are passed around
+which may affect external wrappers. External wrappers should now subclass those 2 classes. </li>
+</ul><h3>
+<a name="021" class="anchor" href="#021"><span class="octicon octicon-link"></span></a>0.2.1</h3>
+
+<ul>
+<li>New test suite using the promise chain api.</li>
+<li>
+<code>browser.Q</code> was moved to <code>wd.Q</code>.</li>
+</ul><h3>
+<a name="022" class="anchor" href="#022"><span class="octicon octicon-link"></span></a>0.2.2</h3>
+
+<ul>
+<li>chai-as-promised v4 compatible.</li>
+<li>Promise wrappers can now be monkey patched directly.</li>
+<li>New saucelabs helpers.</li>
+</ul><p>Incompatibilities: </p>
+
+<ul>
+<li>There is a new method to call, <code>wd.rewrap()</code>, to propagate async monkey
+patching to promise. (see <a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35">here</a> and the monkey patch section below)</li>
+<li>The chai-as-promised setup has changed in V4, look out for the <code>transferPromiseness</code>
+line in the examples. (see <a href="https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15">here</a>)</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="q-promises--chaining" class="anchor" href="#q-promises--chaining"><span class="octicon octicon-link"></span></a>Q promises + chaining</h3>
+
+<div class="highlight highlight-js"><pre><span class="p">...</span>
+
+<span class="nx">browser</span>
+  <span class="p">.</span><span class="nx">init</span><span class="p">({</span><span class="nx">browserName</span><span class="o">:</span><span class="s1">'chrome'</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"http://admc.io/wd/test-pages/guinea-pig.html"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">title</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">become</span><span class="p">(</span><span class="s1">'WD Tests'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">elementById</span><span class="p">(</span><span class="s1">'i am a link'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">click</span><span class="p">()</span>
+  <span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="s2">"window.location.href"</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">eventually</span><span class="p">.</span><span class="nx">include</span><span class="p">(</span><span class="s1">'guinea-pig2'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">back</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">elementByCss</span><span class="p">(</span><span class="s1">'#comments'</span><span class="p">).</span><span class="nx">type</span><span class="p">(</span><span class="s1">'Bonjour!'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">getValue</span><span class="p">().</span><span class="nx">should</span><span class="p">.</span><span class="nx">become</span><span class="p">(</span><span class="s1">'Bonjour!'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">fin</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">done</span><span class="p">();</span>
+</pre></div>
+
+<p><a href="https://github.com/admc/wd/blob/master/examples/promise/chrome.js">full code here</a></p>
+
+<h3>
+<a name="pure-async" class="anchor" href="#pure-async"><span class="octicon octicon-link"></span></a>Pure async</h3>
+
+<div class="highlight highlight-js"><pre><span class="p">...</span>
+
+<span class="nx">browser</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span><span class="nx">browserName</span><span class="o">:</span><span class="s1">'chrome'</span><span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"http://admc.io/wd/test-pages/guinea-pig.html"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">browser</span><span class="p">.</span><span class="nx">title</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">title</span><span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">include</span><span class="p">(</span><span class="s1">'WD'</span><span class="p">);</span>
+      <span class="nx">browser</span><span class="p">.</span><span class="nx">elementById</span><span class="p">(</span><span class="s1">'i am a link'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">browser</span><span class="p">.</span><span class="nx">clickElement</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="cm">/* jshint evil: true */</span>
+          <span class="nx">browser</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="s2">"window.location.href"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">href</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">href</span><span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">include</span><span class="p">(</span><span class="s1">'guinea-pig2'</span><span class="p">);</span>
+            <span class="nx">browser</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+          <span class="p">});</span>
+        <span class="p">});</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+<p><a href="https://github.com/admc/wd/blob/master/examples/async/chrome.js">full code here</a></p>
+
+<h3>
+<a name="q-promises-without-chaining" class="anchor" href="#q-promises-without-chaining"><span class="octicon octicon-link"></span></a>Q promises without chaining</h3>
+
+<p>See example <a href="https://github.com/admc/wd/blob/master/examples/promise/no-chain.js">here</a>.</p>
+
+<h2>
+<a name="generators-api" class="anchor" href="#generators-api"><span class="octicon octicon-link"></span></a>Generators Api</h2>
+
+<h3>
+<a name="yiewd" class="anchor" href="#yiewd"><span class="octicon octicon-link"></span></a>Yiewd</h3>
+
+<p><a href="https://github.com/jlipps/yiewd">Yiewd</a> is a wrapper around Wd.js that uses
+generators in order to avoid nested callbacks, like so:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="kd">function</span><span class="o">*</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">yield</span> <span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">desiredCaps</span><span class="p">);</span>
+  <span class="nx">yield</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"http://mysite.com"</span><span class="p">);</span>
+  <span class="nx">el</span> <span class="o">=</span> <span class="nx">yield</span> <span class="k">this</span><span class="p">.</span><span class="nx">elementById</span><span class="p">(</span><span class="s2">"someId"</span><span class="p">);</span>
+  <span class="nx">yield</span> <span class="nx">el</span><span class="p">.</span><span class="nx">click</span><span class="p">();</span>
+  <span class="nx">el2</span> <span class="o">=</span> <span class="nx">yield</span> <span class="k">this</span><span class="p">.</span><span class="nx">elementById</span><span class="p">(</span><span class="s2">"anotherThing"</span><span class="p">)</span>
+  <span class="nx">text</span> <span class="o">=</span> <span class="nx">yield</span> <span class="nx">el2</span><span class="p">.</span><span class="nx">text</span><span class="p">();</span>
+  <span class="nx">text</span><span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">"What the text should be"</span><span class="p">);</span>
+  <span class="nx">yield</span> <span class="k">this</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="mocha-integration" class="anchor" href="#mocha-integration"><span class="octicon octicon-link"></span></a>Mocha integration</h2>
+
+<div class="highlight highlight-js"><pre><span class="p">...</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">"using mocha-as-promised and chai-as-promised"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">browser</span><span class="p">;</span>
+
+  <span class="nx">before</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">promiseChainRemote</span><span class="p">();</span>
+    <span class="p">...</span>
+
+    <span class="k">return</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span><span class="nx">browserName</span><span class="o">:</span><span class="s1">'chrome'</span><span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"http://admc.io/wd/test-pages/guinea-pig.html"</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">after</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"should retrieve the page title"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">title</span><span class="p">().</span><span class="nx">should</span><span class="p">.</span><span class="nx">become</span><span class="p">(</span><span class="s2">"WD Tests"</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"submit element should be clicked"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">elementById</span><span class="p">(</span><span class="s2">"submit"</span><span class="p">).</span><span class="nx">click</span><span class="p">().</span><span class="nb">eval</span><span class="p">(</span><span class="s2">"window.location.href"</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">eventually</span><span class="p">.</span><span class="nx">include</span><span class="p">(</span><span class="s2">"&amp;submit"</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+<p><a href="https://github.com/admc/wd/blob/master/examples/promise/mocha-specs.js">example here</a></p>
+
+<h2>
+<a name="repl" class="anchor" href="#repl"><span class="octicon octicon-link"></span></a>Repl</h2>
+
+<pre><code>./node_modules/.bin/wd shell
+</code></pre>
+
+<pre><code>): wd shell
 &gt; x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
 
-&gt; x.init() or x.init({desired capabilities ovveride})
+&gt; x.init() or x.init({desired capabilities override})
 &gt; x.get("http://www.url.com")
 &gt; x.eval("window.location.href", function(e, o) { console.log(o) })
 &gt; x.quit()
-</pre>
+</code></pre>
 
-<h2>Writing a test!</h2>
+<h2>
+<a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Doc</h2>
 
-<pre>
-var webdriver = require('wd')
-  , assert = require('assert');
+<h3>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>Api</h3>
 
-var browser = webdriver.remote();
+<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-mapping.md">supported</a></p>
 
-browser.on('status', function(info){
-  console.log('\x1b[36m%s\x1b[0m', info);
-});
-browser.on('command', function(meth, path){
-  console.log(' &gt; \x1b[33m%s\x1b[0m: %s', meth, path);
-});
+<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md">full json wire mapping</a></p>
 
-desired = {
-  browserName:'chrome'
-  , tags: ["examples"]
-  , name: "This is an example test"
-};
+<h3>
+<a name="jsonwireprotocol" class="anchor" href="#jsonwireprotocol"><span class="octicon octicon-link"></span></a>JsonWireProtocol</h3>
 
-browser.init(desired, function() {
-  browser.get("http://admc.io/wd/test-pages/guinea-pig.html", function() {
-    browser.title(function(err, title) {
-      assert.ok(~title.indexOf('I am a page title - Sauce Labs'), 'Wrong title!');
-      browser.elementById('i am a link', function(err, el) {
-        browser.clickElement(el, function() {
-          browser.eval("window.location.href", function(err, location) {
-            assert.ok(~location.indexOf('guinea-pig2'));
-            browser.quit();
-          });
-        });
-      });
-    });
-  });
-});
-</pre>
+<p>WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:</p>
 
-<h2>Promises Api</h2>
+<ul>
+<li>
+<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol"></a><a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
+</li>
+</ul><h3>
+<a name="browser-initialization" class="anchor" href="#browser-initialization"><span class="octicon octicon-link"></span></a>Browser initialization</h3>
 
-<p>A promise api using <a href="https://github.com/kriskowal/q">q</a> is
-available. Code sample is
-<a href="https://github.com/admc/wd/blob/master/examples/example.promise.chrome.js">here</a>.</p>
+<h4>
+<a name="indexed-parameters" class="anchor" href="#indexed-parameters"><span class="octicon octicon-link"></span></a>Indexed parameters</h4>
 
-<h2>Chain Api</h2>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">();</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">8888</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="s2">"ondemand.saucelabs.com"</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">,</span> <span class="s2">"apikey"</span><span class="p">);</span>
+</pre></div>
 
-<p>A chain api is also available. Code sample is <a href="https://github.com/admc/wd/blob/master/examples/example.chain.chrome.js">here</a>.</p>
+<h4>
+<a name="named-parameters" class="anchor" href="#named-parameters"><span class="octicon octicon-link"></span></a>Named parameters</h4>
 
-<h2>Supported Methods</h2>
+<p>The parameters used are similar to those in the <a href="http://nodejs.org/docs/latest/api/url.html">url</a> module.</p>
 
-<table>
-<tr>
-<td width="50%">
-<strong>JsonWireProtocol</strong>
-</td>
-<td width="50%">
-<strong>wd</strong>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/status">/status</a><br>
-Query the server's current status.
-</td>
-<td>
-status(cb) -&gt; cb(err, status)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session">/session</a><br>
-Create a new session.
-</td>
-<td>
-init(desired, cb) -&gt; cb(err, sessionID)<br>
-Initialize the browser.<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessions">/sessions</a><br>
-Returns a list of the currently active sessions.
-</td>
-<td>
-<p>
-sessions(cb) -&gt; cb(err, sessions)<br></p>
-<p>
-## Alternate strategy to get session capabilities from server session list<br>
-altSessionCapabilities(cb) -&gt; cb(err, capabilities)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId">/session/:sessionId</a><br>
-Retrieve the capabilities of the specified session.
-</td>
-<td>
-sessionCapabilities(cb) -&gt; cb(err, capabilities)<br>
-</td>
-</tr>
-<tr>
-<td>
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId">/session/:sessionId</a><br>
-Delete the session.
-</td>
-<td>
-quit(cb) -&gt; cb(err)<br>
-Destroy the browser.<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts">/session/:sessionId/timeouts</a><br>
-Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client.
-</td>
-<td>
-setPageLoadTimeout(ms, cb) -&gt; cb(err)<br>
-(use setImplicitWaitTimeout and setAsyncScriptTimeout to set the other timeouts)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts/async_script">/session/:sessionId/timeouts/async_script</a><br>
-Set the amount of time, in milliseconds, that asynchronous scripts executed by /session/:sessionId/execute_async are permitted to run before they are aborted and a |Timeout| error is returned to the client.
-</td>
-<td>
-setAsyncScriptTimeout(ms, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts/implicit_wait">/session/:sessionId/timeouts/implicit_wait</a><br>
-Set the amount of time the driver should wait when searching for elements.
-</td>
-<td>
-setImplicitWaitTimeout(ms, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handle">/session/:sessionId/window_handle</a><br>
-Retrieve the current window handle.
-</td>
-<td>
-windowHandle(cb) -&gt; cb(err, handle)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handles">/session/:sessionId/window_handles</a><br>
-Retrieve the list of all window handles available to the session.
-</td>
-<td>
-windowHandles(cb) -&gt; cb(err, arrayOfHandles)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/url">/session/:sessionId/url</a><br>
-Retrieve the URL of the current page.
-</td>
-<td>
-url(cb) -&gt; cb(err, url)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/url">/session/:sessionId/url</a><br>
-Navigate to a new URL.
-</td>
-<td>
-get(url,cb) -&gt; cb(err)<br>
-Get a new url.<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/forward">/session/:sessionId/forward</a><br>
-Navigate forwards in the browser history, if possible.
-</td>
-<td>
-forward(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/back">/session/:sessionId/back</a><br>
-Navigate backwards in the browser history, if possible.
-</td>
-<td>
-back(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/refresh">/session/:sessionId/refresh</a><br>
-Refresh the current page.
-</td>
-<td>
-refresh(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute">/session/:sessionId/execute</a><br>
-Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
-</td>
-<td>
-<p>
-execute(code, args, cb) -&gt; cb(err, result)<br>
-execute(code, cb) -&gt; cb(err, result)<br>
-args: script argument array (optional)<br></p>
-<p>
-Execute script using eval(code):<br>
-safeExecute(code, args, cb) -&gt; cb(err, result)<br>
-safeExecute(code, cb) -&gt; cb(err, result)<br>
-args: script argument array (optional)<br></p>
-<p>
-Evaluate expression (using execute):<br>
-eval(code, cb) -&gt; cb(err, value)<br></p>
-<p>
-Evaluate expression (using safeExecute):<br>
-safeEval(code, cb) -&gt; cb(err, value)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute_async">/session/:sessionId/execute_async</a><br>
-Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
-</td>
-<td>
-<p>
-executeAsync(code, args, cb) -&gt; cb(err, result)<br>
-executeAsync(code, cb) -&gt; cb(err, result)<br>
-args: script argument array (optional)<br></p>
-<p>
-Execute async script using eval(code):<br>
-safeExecuteAsync(code, args, cb) -&gt; cb(err, result)<br>
-safeExecuteAsync(code, cb) -&gt; cb(err, result)<br>
-args: script argument array (optional)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/screenshot">/session/:sessionId/screenshot</a><br>
-Take a screenshot of the current page.
-</td>
-<td>
-takeScreenshot(cb) -&gt; cb(err, screenshot)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/frame">/session/:sessionId/frame</a><br>
-Change focus to another frame on the page.
-</td>
-<td>
-frame(frameRef, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window">/session/:sessionId/window</a><br>
-Change focus to another window.
-</td>
-<td>
-window(name, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/window">/session/:sessionId/window</a><br>
-Close the current window.
-</td>
-<td>
-close(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/size">/session/:sessionId/window/:windowHandle/size</a><br>
-Change the size of the specified window.
-</td>
-<td>
-<p>
-windowSize(handle, width, height, cb) -&gt; cb(err)<br></p>
-<p>
-setWindowSize(width, height, handle, cb) -&gt; cb(err)<br>
-setWindowSize(width, height, cb) -&gt; cb(err)<br>
-width: width in pixels to set size to<br>
-height: height in pixels to set size to<br>
-handle: window handle to set size for (optional, default: 'current')<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/size">/session/:sessionId/window/:windowHandle/size</a><br>
-Get the size of the specified window.
-</td>
-<td>
-getWindowSize(handle, cb) -&gt; cb(err, size)<br>
-getWindowSize(cb) -&gt; cb(err, size)<br>
-handle: window handle to get size (optional, default: 'current')<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/maximize">/session/:sessionId/window/:windowHandle/maximize</a><br>
-Maximize the specified window if not already maximized.
-</td>
-<td>
-maximize(handle, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
-Retrieve all cookies visible to the current page.
-</td>
-<td>
-allCookies() -&gt; cb(err, cookies)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
-Set a cookie.
-</td>
-<td>
-setCookie(cookie, cb) -&gt; cb(err)<br>
-cookie example:<br>
-{name:'fruit', value:'apple'}<br>
-## Optional cookie fields<br>
-path, domain, secure, expiry<br>
-</td>
-</tr>
-<tr>
-<td>
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
-Delete all cookies visible to the current page.
-</td>
-<td>
-deleteAllCookies(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/cookie/:name">/session/:sessionId/cookie/:name</a><br>
-Delete the cookie with the given name.
-</td>
-<td>
-deleteCookie(name, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/source">/session/:sessionId/source</a><br>
-Get the current page source.
-</td>
-<td>
-source(cb) -&gt; cb(err, source)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/title">/session/:sessionId/title</a><br>
-Get the current page title.
-</td>
-<td>
-title(cb) -&gt; cb(err, title)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a><br>
-Search for an element on the page, starting from the document root.
-</td>
-<td>
-<p>
-element(using, value, cb) -&gt; cb(err, element)<br></p>
-<p>
-elementByClassName(value, cb) -&gt; cb(err, element)<br>
-elementByCssSelector(value, cb) -&gt; cb(err, element)<br>
-elementById(value, cb) -&gt; cb(err, element)<br>
-elementByName(value, cb) -&gt; cb(err, element)<br>
-elementByLinkText(value, cb) -&gt; cb(err, element)<br>
-elementByPartialLinkText(value, cb) -&gt; cb(err, element)<br>
-elementByTagName(value, cb) -&gt; cb(err, element)<br>
-elementByXPath(value, cb) -&gt; cb(err, element)<br>
-elementByCss(value, cb) -&gt; cb(err, element)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/elements">/session/:sessionId/elements</a><br>
-Search for multiple elements on the page, starting from the document root.
-</td>
-<td>
-<p>
-elements(using, value, cb) -&gt; cb(err, elements)<br></p>
-<p>
-elementsByClassName(value, cb) -&gt; cb(err, elements)<br>
-elementsByCssSelector(value, cb) -&gt; cb(err, elements)<br>
-elementsById(value, cb) -&gt; cb(err, elements)<br>
-elementsByName(value, cb) -&gt; cb(err, elements)<br>
-elementsByLinkText(value, cb) -&gt; cb(err, elements)<br>
-elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)<br>
-elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
-elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
-elementsByCss(value, cb) -&gt; cb(err, elements)<br></p>
-<p>
-## Retrieve an element avoiding not found exception and returning null instead<br>
-elementOrNull(using, value, cb) -&gt; cb(err, element)<br></p>
-<p>
-elementByClassNameOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByCssSelectorOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByIdOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByNameOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByLinkTextOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByPartialLinkTextOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByTagNameOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
-elementByCssOrNull(value, cb) -&gt; cb(err, element)<br></p>
-<p>
-## Retrieve an element avoiding not found exception and returning undefined instead<br>
-elementIfExists(using, value, cb) -&gt; cb(err, element)<br></p>
-<p>
-elementByClassNameIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByCssSelectorIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByIdIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByNameIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByLinkTextIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByPartialLinkTextIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByTagNameIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
-elementByCssIfExists(value, cb) -&gt; cb(err, element)<br></p>
-<p>
-## Check if element exists<br>
-hasElement(using, value, cb) -&gt; cb(err, boolean)<br></p>
-<p>
-hasElementByClassName(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByCssSelector(value, cb) -&gt; cb(err, boolean)<br>
-hasElementById(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByName(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByLinkText(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByPartialLinkText(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByTagName(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
-hasElementByCss(value, cb) -&gt; cb(err, boolean)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active">/session/:sessionId/element/active</a><br>
-Get the element on the page that currently has focus.
-</td>
-<td>
-active(cb) -&gt; cb(err, element)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/element">/session/:sessionId/element/:id/element</a><br>
-Search for an element on the page, starting from the identified element.
-</td>
-<td>
-<p>
-element.element(using, value, cb) -&gt; cb(err, element)<br></p>
-<p>
-element.elementByClassName(value, cb) -&gt; cb(err, element)<br>
-element.elementByCssSelector(value, cb) -&gt; cb(err, element)<br>
-element.elementById(value, cb) -&gt; cb(err, element)<br>
-element.elementByName(value, cb) -&gt; cb(err, element)<br>
-element.elementByLinkText(value, cb) -&gt; cb(err, element)<br>
-element.elementByPartialLinkText(value, cb) -&gt; cb(err, element)<br>
-element.elementByTagName(value, cb) -&gt; cb(err, element)<br>
-element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
-element.elementByCss(value, cb) -&gt; cb(err, element)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/elements">/session/:sessionId/element/:id/elements</a><br>
-Search for multiple elements on the page, starting from the identified element.
-</td>
-<td>
-<p>
-element.elements(using, value, cb) -&gt; cb(err, elements)<br></p>
-<p>
-element.elementsByClassName(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByCssSelector(value, cb) -&gt; cb(err, elements)<br>
-element.elementsById(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByName(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByLinkText(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
-element.elementsByCss(value, cb) -&gt; cb(err, elements)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click">/session/:sessionId/element/:id/click</a><br>
-Click on an element.
-</td>
-<td>
-<p>
-clickElement(element, cb) -&gt; cb(err)<br></p>
-<p>
-element.click(cb) -&gt; cb(err)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/submit">/session/:sessionId/element/:id/submit</a><br>
-Submit a FORM element.
-</td>
-<td>
-submit(element, cb) -&gt; cb(err)<br>
-Submit a `FORM` element.<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/text">/session/:sessionId/element/:id/text</a><br>
-Returns the visible text for the element.
-</td>
-<td>
-<p>
-text(element, cb) -&gt; cb(err, text)<br>
-element: specific element, 'body', or undefined<br></p>
-<p>
-element.text(cb) -&gt; cb(err, text)<br></p>
-<p>
-## Check if text is present<br>
-textPresent(searchText, element, cb) -&gt; cb(err, boolean)<br>
-element: specific element, 'body', or undefined<br></p>
-<p>
-element.textPresent(searchText, cb) -&gt; cb(err, boolean)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/value">/session/:sessionId/element/:id/value</a><br>
-Send a sequence of key strokes to an element.
-</td>
-<td>
-<p>
-type(element, keys, cb) -&gt; cb(err)<br>
-Type keys (all keys are up at the end of command).<br>
-special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br></p>
-<p>
-element.type(keys, cb) -&gt; cb(err)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/keys">/session/:sessionId/keys</a><br>
-Send a sequence of key strokes to the active element.
-</td>
-<td>
-keys(keys, cb) -&gt; cb(err)<br>
-Press keys (keys may still be down at the end of command).<br>
-special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/name">/session/:sessionId/element/:id/name</a><br>
-Query for an element's tag name.
-</td>
-<td>
-<p>
-getTagName(element, cb) -&gt; cb(err, name)<br></p>
-<p>
-element.getTagName(cb) -&gt; cb(err, name)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/clear">/session/:sessionId/element/:id/clear</a><br>
-Clear a TEXTAREA or text INPUT element's value.
-</td>
-<td>
-<p>
-clear(element, cb) -&gt; cb(err)<br></p>
-<p>
-element.clear(cb) -&gt; cb(err)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/selected">/session/:sessionId/element/:id/selected</a><br>
-Determine if an OPTION element, or an INPUT element of type checkbox or radiobutton is currently selected.
-</td>
-<td>
-isSelected(element, cb) -&gt; cb(err, selected)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/attribute/:name">/session/:sessionId/element/:id/attribute/:name</a><br>
-Get the value of an element's attribute.
-</td>
-<td>
-<p>
-getAttribute(element, attrName, cb) -&gt; cb(err, value)<br></p>
-<p>
-element.getAttribute(attrName, cb) -&gt; cb(err, value)<br></p>
-<p>
-Get element value (in value attribute):<br>
-getValue(element, cb) -&gt; cb(err, value)<br></p>
-<p>
-element.getValue(cb) -&gt; cb(err, value)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/displayed">/session/:sessionId/element/:id/displayed</a><br>
-Determine if an element is currently displayed.
-</td>
-<td>
-<p>
-isDisplayed(element, cb) -&gt; cb(err, displayed)<br></p>
-<p>
-element.isDisplayed(cb) -&gt; cb(err, displayed)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location">/session/:sessionId/element/:id/location</a><br>
-Determine an element's location on the page.
-</td>
-<td>
-<p>
-getLocation(element, cb) -&gt; cb(err, location)<br></p>
-<p>
-element.getLocation(cb) -&gt; cb(err, location)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/size">/session/:sessionId/element/:id/size</a><br>
-Determine an element's size in pixels.
-</td>
-<td>
-<p>
-getSize(element, cb) -&gt; cb(err, size)<br></p>
-<p>
-element.getSize(cb) -&gt; cb(err, size)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName">/session/:sessionId/element/:id/css/:propertyName</a><br>
-Query the value of an element's computed CSS property.
-</td>
-<td>
-<p>
-getComputedCss(element, cssProperty , cb) -&gt; cb(err, value)<br></p>
-<p>
-element.getComputedCss(cssProperty , cb) -&gt; cb(err, value)<br></p>
-<p>
-element.getComputedCss(cssProperty , cb) -&gt; cb(err, value)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/orientation">/session/:sessionId/orientation</a><br>
-Get the current browser orientation.
-</td>
-<td>
-getOrientation(cb) -&gt; cb(err, orientation)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/orientation">/session/:sessionId/orientation</a><br>
-Set the browser orientation.
-</td>
-<td>
-setOrientation(cb) -&gt; cb(err, orientation)<br>
-</td>
-</tr>
-<tr>
-<td>
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/alert_text">/session/:sessionId/alert_text</a><br>
-Gets the text of the currently displayed JavaScript alert(), confirm(), or prompt() dialog.
-</td>
-<td>
-alertText(cb) -&gt; cb(err, text)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/alert_text">/session/:sessionId/alert_text</a><br>
-Sends keystrokes to a JavaScript prompt() dialog.
-</td>
-<td>
-alertKeys(keys, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/accept_alert">/session/:sessionId/accept_alert</a><br>
-Accepts the currently displayed alert dialog.
-</td>
-<td>
-acceptAlert(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/dismiss_alert">/session/:sessionId/dismiss_alert</a><br>
-Dismisses the currently displayed alert dialog.
-</td>
-<td>
-dismissAlert(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/moveto">/session/:sessionId/moveto</a><br>
-Move the mouse by an offset of the specificed element.
-</td>
-<td>
-moveTo(element, xoffset, yoffset, cb) -&gt; cb(err)<br>
-Move to element, xoffset and y offset are optional.<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/click">/session/:sessionId/click</a><br>
-Click any mouse button (at the coordinates set by the last moveto command).
-</td>
-<td>
-click(button, cb) -&gt; cb(err)<br>
-Click on current element.<br>
-Buttons: {left: 0, middle: 1 , right: 2}<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttondown">/session/:sessionId/buttondown</a><br>
-Click and hold the left mouse button (at the coordinates set by the last moveto command).
-</td>
-<td>
-buttonDown(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttonup">/session/:sessionId/buttonup</a><br>
-Releases the mouse button previously held (where the mouse is currently at).
-</td>
-<td>
-buttonUp(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/doubleclick">/session/:sessionId/doubleclick</a><br>
-Double-clicks at the current mouse coordinates (set by moveto).
-</td>
-<td>
-doubleclick(cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/flick">/session/:sessionId/touch/flick</a><br>
-Flick on the touch screen using finger motion events.
-</td>
-<td>
-<p>
-flick(xSpeed, ySpeed, swipe, cb) -&gt; cb(err)<br>
-Flicks, starting anywhere on the screen.<br>
-flick(element, xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
-Flicks, starting at element center.<br></p>
-<p>
-element.flick(xoffset, yoffset, speed, cb) -&gt; cb(err)<br></p>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-Opens a new window (using Javascript window.open):<br>
-newWindow(url, name, cb) -&gt; cb(err)<br>
-newWindow(url, cb) -&gt; cb(err)<br>
-name: optional window name<br>
-Window can later be accessed by name with the window method,<br>
-or by getting the last handle returned by the windowHandles method.<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-windowName(cb) -&gt; cb(err, name)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-waitForElementByClassName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementById(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByTagName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByXPath(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByCss(value, timeout, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-waitForVisibleByClassName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleById(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByTagName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByXPath(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByCss(value, timeout, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-isVisible(element , cb) -&gt; cb(err, boolean)<br>
-isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-Retrieves the pageIndex element (added for Appium):<br>
-getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-Waits for JavaScript condition to be true (polling within wd client):<br>
-waitForCondition(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-waitForCondition(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
-waitForCondition(conditionExpr, cb) -&gt; cb(err, boolean)<br>
-conditionExpr: condition expression, should return a boolean<br>
-timeout: timeout (optional, default: 1000)<br>
-pollFreq: pooling frequency (optional, default: 100)<br>
-return true if condition satisfied, error otherwise.<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-Waits for JavaScript condition to be true (async script polling within browser):<br>
-waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-waitForConditionInBrowser(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
-waitForConditionInBrowser(conditionExpr, cb) -&gt; cb(err, boolean)<br>
-conditionExpr: condition expression, should return a boolean<br>
-timeout: timeout (optional, default: 1000)<br>
-pollFreq: pooling frequency (optional, default: 100)<br>
-return true if condition satisfied, error otherwise.<br>
-</td>
-</tr>
-<tr>
-<td>
-EXTRA
-</td>
-<td>
-isVisible(cb) -&gt; cb(err, boolean)<br>
-</td>
-</tr>
-</table><h2>JsonWireProtocol mapping</h2>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">()</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">({</span>
+  <span class="nx">hostname</span><span class="o">:</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="mi">4444</span><span class="p">,</span>
+  <span class="nx">user</span><span class="o">:</span> <span class="s1">'username'</span><span class="p">,</span>
+  <span class="nx">pwd</span><span class="o">:</span> <span class="s1">'password'</span><span class="p">,</span>
+<span class="p">});</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">({</span>
+  <span class="nx">hostname</span><span class="o">:</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="mi">4444</span><span class="p">,</span>
+  <span class="nx">auth</span><span class="o">:</span> <span class="s1">'username:password'</span><span class="p">,</span>
+<span class="p">});</span>
+</pre></div>
 
-<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-mapping.md">supported mapping</a></p>
+<p>The following parameters may also be used (as in earlier versions):</p>
 
-<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md">full mapping</a></p>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">({</span>
+  <span class="nx">host</span><span class="o">:</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="mi">4444</span><span class="p">,</span>
+  <span class="nx">username</span><span class="o">:</span> <span class="s1">'username'</span><span class="p">,</span>
+  <span class="nx">accessKey</span><span class="o">:</span> <span class="s1">'password'</span><span class="p">,</span>
+<span class="p">});</span>
+</pre></div>
 
-<h2>More docs!</h2>
+<h4>
+<a name="url-string" class="anchor" href="#url-string"><span class="octicon octicon-link"></span></a>Url string</h4>
 
-<pre>
-WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
- - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
-</pre>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="s1">'http://localhost:4444/wd/hub'</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="s1">'http://user:apiKey@ondemand.saucelabs.com/wd/hub'</span><span class="p">);</span>
+</pre></div>
 
-<h2>Run the tests!</h2>
+<h4>
+<a name="url-object-created-via-urlparse" class="anchor" href="#url-object-created-via-urlparse"><span class="octicon octicon-link"></span></a>Url object created via <code>url.parse</code>
+</h4>
 
-<pre>
-  - Run the selenium server with chromedriver:
-      java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=&lt;PATH&gt;/chromedriver
-  - cd wd
-  - npm install .
-  - make test
-  - look at the results!
-</pre>
+<p><a href="http://nodejs.org/docs/v0.10.0/api/url.html#url_url">URL module documentation</a></p>
 
-<h2>Run the tests on Sauce Labs cloud!</h2>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'http://localhost:4444/wd/hub'</span><span class="p">));</span>
+<span class="c1">// or</span>
+<span class="kd">var</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">wd</span><span class="p">.</span><span class="nx">remote</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'</span><span class="p">));</span>
+</pre></div>
 
-<pre>
-  - cd wd
-  - npm install .
-  - make test_saucelabs
-</pre>
+<h4>
+<a name="defaults" class="anchor" href="#defaults"><span class="octicon octicon-link"></span></a>Defaults</h4>
 
-<h2>Adding new method / Contributing</h2>
+<div class="highlight highlight-js"><pre><span class="p">{</span>
+    <span class="nx">protocol</span><span class="o">:</span> <span class="s1">'http:'</span>
+    <span class="nx">hostname</span><span class="o">:</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+    <span class="nx">port</span><span class="o">:</span> <span class="s1">'4444'</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">'/wd/hub'</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="element-function-chaining-using-promise-chains" class="anchor" href="#element-function-chaining-using-promise-chains"><span class="octicon octicon-link"></span></a>Element function chaining (using promise chains)</h3>
+
+<p>With the promise chain api the method from the <code>browser</code> prototype and the
+<code>element</code> prototype are all available within the <code>browser</code> instance, so it might
+be confusing at first. However we tried to keep the logic as simple as possible
+using the principles below: </p>
+
+<ul>
+<li>There is no state passed between calls, except for what the method returns.</li>
+<li>If the method returns an element the element scope is propagated.</li>
+<li>If the method returns nothing (click, type etc...) we make the method return the current element, so the element scope is propagated.</li>
+<li>If the method returns something (text, getAttribute...), the element scope is lost.</li>
+<li>You may use "&lt;" as the first parameter to get out of the element scope.</li>
+<li>You may use "&gt;" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).</li>
+</ul><p>If you need to do something more complicated, like reusing an element for 2 calls, then
+can either Q promise functionnality (like then, Q.all or Q sequences), or retrieve your
+element twice (since the promise chain api is very terse, this is usually acceptable).</p>
+
+<p>Element function chaining example <a href="https://github.com/admc/wd/blob/master/examples/promise/chained-el-func-call.js">here</a></p>
+
+<h3>
+<a name="monkey-patching" class="anchor" href="#monkey-patching"><span class="octicon octicon-link"></span></a>Monkey patching</h3>
+
+<p>You may want to monkey patch the webdriver class in order to add custom functionalities.
+Please refer to the following examples:</p>
+
+<ul>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js">pure promise</a>.</li>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js">async patch used by promise</a>.</li>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js">promise no-chain</a>.</li>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js">full async</a>.</li>
+</ul><p>Caveat: You now need to call <code>wd.rewrap()</code> to propagate async monkey patching to the
+promise wrapper. This will ovewrite the promise wrapper prototype, so you need to do
+your monkey patching in order, async first, call <code>wd.rewrap()</code> , and only then promise.</p>
+
+<h3>
+<a name="promise-helpers" class="anchor" href="#promise-helpers"><span class="octicon octicon-link"></span></a>Promise helpers</h3>
+
+<p>This is a clean alternative to monkey patching.
+See example <a href="https://github.com/admc/wd/blob/master/examples/promise/helper.js">here</a>.</p>
+
+<h3>
+<a name="environment-variables-for-saucelabs" class="anchor" href="#environment-variables-for-saucelabs"><span class="octicon octicon-link"></span></a>Environment variables for Saucelabs</h3>
+
+<p>When connecting to Saucelabs, the <code>user</code> and <code>pwd</code> fields can also be set through the <code>SAUCE_USERNAME</code> and <code>SAUCE_ACCESS_KEY</code> environment variables.</p>
+
+<p>The following helper are also available to update sauce jobs: <code>sauceJobUpdate</code> and <code>sauceJobStatus</code>.</p>
+
+<h3>
+<a name="safe-methods" class="anchor" href="#safe-methods"><span class="octicon octicon-link"></span></a>Safe Methods</h3>
+
+<p>The <code>safeExecute</code> and <code>safeEval</code> methods are equivalent to <code>execute</code> and <code>eval</code> but the code is
+executed within a <code>eval</code> block. They are safe in the sense that eventual
+code syntax issues are tackled earlier returning as syntax error and
+avoiding browser hanging in some cases.</p>
+
+<p>An example below of expression hanging Chrome:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">browser</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="s2">"wrong!!!"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// hangs</span>
+<span class="nx">browser</span><span class="p">.</span><span class="nx">safeEval</span><span class="p">(</span><span class="s2">"wrong!!!"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// returns</span>
+<span class="nx">browser</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="s2">"wrong!!!"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//hangs</span>
+<span class="nx">browser</span><span class="p">.</span><span class="nx">safeExecute</span><span class="p">(</span><span class="s2">"wrong!!!"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//returns</span>
+</pre></div>
+
+<h2>
+<a name="run-the-tests" class="anchor" href="#run-the-tests"><span class="octicon octicon-link"></span></a>Run the tests!</h2>
+
+<pre><code># Install the Selenium server, Chromedriver connect
+node_modules/.bin/install_selenium
+node_modules/.bin/install_chromedriver
+
+#Run the selenium server with chromedriver:
+node_modules/.bin/start_selenium_with_chromedriver
+
+cd wd
+npm install
+make test
+
+# look at the results!
+</code></pre>
+
+<h2>
+<a name="run-the-tests-on-sauce-labs-cloud" class="anchor" href="#run-the-tests-on-sauce-labs-cloud"><span class="octicon octicon-link"></span></a>Run the tests on Sauce Labs cloud!</h2>
+
+<pre><code># Install Sauce Connect
+node_modules/.bin/install_sauce_connect
+
+# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY
+
+# Start Sauce Sonnect:
+node_modules/.bin/start_sauce_connect
+
+cd wd
+npm install
+make test_e2e_sauce # may be run without sauce connect
+make test_midway_sauce_connect
+
+# look at the results on Saucelabs site!
+</code></pre>
+
+<h2>
+<a name="adding-new-method--contributing" class="anchor" href="#adding-new-method--contributing"><span class="octicon octicon-link"></span></a>Adding new method / Contributing</h2>
 
 <p>If the method you want to use is not yet implemented, that should be
 easy to add it to <code>lib/webdriver.js</code>. You can use the <code>doubleclick</code>
@@ -1023,36 +441,50 @@ method as a template for methods not returning data, and <code>getOrientation</c
 for methods which returns data. No need to modify README as the doc
 generation is automated. Other contributions are welcomed.</p>
 
-<h2>Doc</h2>
+<h2>
+<a name="generating-doc" class="anchor" href="#generating-doc"><span class="octicon octicon-link"></span></a>Generating doc</h2>
 
 <p>The JsonWire mappings in the README and mapping files are generated from code
 comments using <a href="https://github.com/visionmedia/dox">dox</a>.</p>
 
 <p>To update the mappings run the following commands:</p>
 
-<pre>
-  - make mapping &gt; doc/jsonwire-mapping.md
-  - make full_mapping &gt; doc/jsonwire-full-mapping.md
-</pre>
+<pre><code>make mapping &gt; doc/jsonwire-mapping.md
+make full_mapping &gt; doc/jsonwire-full-mapping.md
+make unsupported_mapping &gt; doc/jsonwire-unsupported-mapping.md
+</code></pre>
 
-<p>The content of doc/jsonwire-mapping.md should then be manually integrated into
-README.md.</p>
+<h2>
+<a name="publishing" class="anchor" href="#publishing"><span class="octicon octicon-link"></span></a>Publishing</h2>
 
-<h2>Test Coverage</h2>
+<pre><code>npm version [patch|minor|major]
+git push --tags
+npm publish
+</code></pre>
 
-<p><a href="http://admc.io/wd/coverage.html">test coverage</a></p>
-      </section>
+<h2>
+<a name="test-coverage" class="anchor" href="#test-coverage"><span class="octicon octicon-link"></span></a>Test Coverage</h2>
+
+<p><a href="http://admc.io/wd/istanbul/coverage/lcov-report/index.html">test coverage</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/admc/wd/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/admc/wd/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/admc/wd"></a> is maintained by <a href="https://github.com/admc">admc</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">WD.js maintained by <a href="https://github.com/admc">admc</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
 
   </body>
 </html>
