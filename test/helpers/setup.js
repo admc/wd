@@ -18,6 +18,8 @@ wd.webdriver.prototype.configureLogging = function (done){
   done();
 };
 
+wd.rewrap();
+
 GLOBAL.midwayUrl = function(testSuite, title){
   var cleanTitle = title.replace(/@[-\w]+/g, '').trim();
   return env.MIDWAY_ROOT_URL + '/test-page' +
