@@ -3,8 +3,8 @@ r=$[ ( $RANDOM % 10 ) ]
 echo got $r
 while [ $r -ge 1 ]
 do
-  echo 'waiting 30 sec'
-  sleep 30s
+  echo 'waiting 60 sec'
+  sleep 60s
   r=$[ ( $RANDOM % 10 ) ]
   echo got $r
 done
