@@ -1,0 +1,5 @@
+while [ $[ ( $RANDOM % 10 ) ] -ge 3 ]
+do
+  echo 'waiting 60 sec'
+  sleep 60s
+done
