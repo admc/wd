@@ -35,5 +35,8 @@ browser
   .click()
   .eval("window.location.href")
     .should.eventually.include('guinea-pig2')
+  .back()
+  .elementByCss('#comments').type('Bonjour!')
+  .getValue().should.become('Bonjour!')
   .fin(function() { return browser.quit(); })
   .done();

@@ -27,7 +27,7 @@ browser.on('command', function(meth, path, data) {
 
 /* jshint evil: true */
 browser
-  .init({browserName:'firefox'})
+  .init({browserName:'chrome'})
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
     .should.become('WD Tests')
@@ -35,5 +35,8 @@ browser
   .click()
   .eval("window.location.href")
     .should.eventually.include('guinea-pig2')
+  .back()
+  .elementByCss('#comments').type('Bonjour!')
+  .getValue().should.become('Bonjour!')
   .fin(function() { return browser.quit(); })
   .done();
