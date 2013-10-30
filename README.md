@@ -56,10 +56,10 @@ which may affect external wrappers. External wrappers should now subclass those 
 
 Incompatibilities: 
 
-  - There is a new method to call, `wd.rewrap()` to propagate async monkey 
-  patching to promise.
-  - The chai-as-promised initialization has changed in V4, look out for the `transferPromiseness` in
-  the examples
+  - There is a new method to call, `wd.rewrap()`, to propagate async monkey 
+  patching to promise(see [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35) and the monkey patch section below).
+  - The chai-as-promised setup has changed in V4, look out for the `transferPromiseness` 
+  line in the examples(see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15)).
 
 ## Usage
 
