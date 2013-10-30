@@ -299,7 +299,7 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 You may want to monkey patch the webdriver class in order to add custom functionalities.
 Please refer to the following examples:
 
-- [pur promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
+- [pure promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
 - [async patch used by promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js).
 - [promise no-chain](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js).
 - [full async](https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js).
