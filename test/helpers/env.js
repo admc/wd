@@ -115,6 +115,12 @@ if(env.SAUCE){
   if(env.TRAVIS_JOB_NUMBER){
     env.DESIRED['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER;
   }
+  // special case for window
+  if (env.BROWSER === 'explorer') {
+    env.DESIRED.browserName = 'internet explorer';
+    env.DESIRED.platform = 'Windows 7';
+    env.DESIRED.version = '10';
+  }
 }
 
 if(env.MULTI){
