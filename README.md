@@ -1,6 +1,6 @@
 # WD.js
 
-**WebDriver/Selenium 2 for node.js**
+**node.js Webdriver/Selenium 2 client**
 
 - [Site](http://admc.io/wd/)
 - [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
