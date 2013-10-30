@@ -21,8 +21,8 @@ matrix:
     - node_js: "0.8"
       env: BROWSER=chrome
 before_script:
+  - ./wait
   - ./node_modules/.bin/install_sauce_connect
   - ./node_modules/.bin/travis_start_sauce_connect
 script:
-  - ./wait
   - "make test_travis"
