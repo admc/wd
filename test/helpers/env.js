@@ -9,6 +9,8 @@ var toBoolean = function(str) {
 env.VERBOSE = toBoolean(process.env.VERBOSE);
 env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 500).toInt();
 env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
+if(process.env.HTTP_TIMEOUT)
+  { env.HTTP_TIMEOUT = S(process.env.HTTP_TIMEOUT).toInt(); }
 
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 env.BROWSER = process.env.BROWSER || 'chrome';

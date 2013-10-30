@@ -13,6 +13,7 @@ module.exports = function(that) {
   before(function() {
     express.start();
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    if(env.HTTP_TIMEOUT) browser.setHTTPInactivityTimeout(env.HTTP_TIMEOUT);
     deferred.resolve(browser);
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
