@@ -1,6 +1,6 @@
 require('../helpers/setup');
 
-describe('typing ' + env.ENV_DESC, function() {
+describe('keying ' + env.ENV_DESC, function() {
 
   var ctx = require('./midway-base')(this),
       express = ctx.express,

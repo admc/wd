@@ -13,12 +13,12 @@ Express.prototype.start = function() {
   var partials = this.partials;
   this.app.get('/test-page', function(req, res) {
     var content = '';
-    if(req.query.partial){
-      content = partials[req.query.partial];
+    if(req.query.p){
+      content = partials[req.query.p];
     }
-
     res.render('test-page', {
-      testTitle: req.query.partial,
+      testSuite: req.query.ts,
+      testTitle: req.query.p,
       content: content
     });
   });

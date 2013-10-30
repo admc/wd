@@ -14,6 +14,9 @@ try {
   wd = require('../../lib/main');
 }
 
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
+
 var browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, username, accessKey);
 
 // optional extra logging
@@ -27,13 +30,13 @@ browser.on('command', function(meth, path, data) {
 
 var desired = {
   platform: 'LINUX',
-  tags: ["examples"],
-  name: "This is an example test"
+  name: "example test"
 };
 
 /* jshint evil: true */
 browser
   .init(desired)
+  .sauceJobUpdate({tags:['example']})
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
     .should.become('I am a page title - Sauce Labs')
@@ -42,4 +45,5 @@ browser
   .eval("window.location.href")
     .should.eventually.include('guinea-pig2')
   .fin(function() { return browser.quit(); })
+  .sauceJobStatus(true)
   .done();

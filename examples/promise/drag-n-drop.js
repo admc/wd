@@ -11,6 +11,9 @@ try {
   wd = require('../../lib/main');
 }
 
+// enables chai assertion chaining
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
+
 var Q = wd.Q;
 
 var browser = wd.promiseChainRemote();

@@ -1,51 +1,19 @@
-var testInfo = {
-  name: "midway element api",
-  tags: ['midway']
-};
-
-var setup = require('../helpers/setup');
+require('../helpers/setup');
 
 var path = require('path');
 
-describe('element api test (' + setup.testEnv + ')', function() {
+describe('element ' + env.ENV_DESC, function() {
 
-  var browser;
-  var allPassed = true;
-  var express = new setup.Express( __dirname + '/assets' );
-
-  before(function() {
-    this.timeout(env.INIT_TIMEOUT);
-    express.start();
-    return browser = setup.initBrowser(testInfo);
-  });
-
-  beforeEach(function() {
-    var cleanTitle = this.currentTest.title.replace(/@[-\w]+/g, '').trim();
-    return browser.get(
-      env.MIDWAY_ROOT_URL + '/test-page?partial=' +
-        encodeURIComponent(cleanTitle)).printError();
-  });
-
-  afterEach(function() {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(function() {
-    express.stop();
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
-  });
+  var ctx = require('./midway-base')(this),
+      express = ctx.express,
+      browser;
+  ctx.browser.then(function(_browser) { browser = _browser; });
 
   express.partials['element.text'] =
     '<div id="theDiv">I am some text</div>';
   it('element.text', function() {
     return browser.elementById("theDiv").then(function(el) {
-      el.text().should.eventually.include("I am some text")
-      .printError()
-      ;
+      el.text().should.eventually.include("I am some text");
     });
   });
 
@@ -276,7 +244,7 @@ describe('element api test (' + setup.testEnv + ')', function() {
         return el.elementByTagName("a").text().should.become("a link");
       })
       .elementById("theDiv").then(function(el) {
-        return el.elementByTagName("textarea").should.be.rejected.with(/status: 7/);
+        return el.elementByTagName("textarea").should.be.rejectedWith(/status: 7/);
       })
       ;
   });

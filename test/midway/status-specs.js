@@ -1,17 +1,22 @@
-var testInfo = {
-  name: "midway status",
-  tags: ['midway']
-};
+/* global sauceJobTitle, mergeDesired */
 
-var setup = require('../helpers/setup');
+require('../helpers/setup');
 
-describe('status method tests(' + setup.testEnv + ') @multi', function() {
+describe('status ' + env.ENV_DESC + ' @multi', function() {
+  this.timeout(env.TIMEOUT);
+
   var browser;
   var allPassed = true;
 
   before(function() {
-    this.timeout(env.INIT_TIMEOUT);
-    return browser = setup.initBrowser(testInfo);
+    browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    var sauceExtra = {
+      name: sauceJobTitle(this.runnable().parent.title),
+      tags: ['midway']
+    };
+    return browser
+      .configureLogging()
+      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
   });
 
   afterEach(function() {
@@ -19,11 +24,10 @@ describe('status method tests(' + setup.testEnv + ') @multi', function() {
   });
 
   after(function() {
-    return setup.closeBrowser();
-  });
-
-  after(function() {
-    return setup.jobStatus(allPassed);
+    return browser
+      .quit().then(function() {
+        if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
+      });
   });
 
   it("browser.status", function() {

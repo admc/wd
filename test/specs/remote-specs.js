@@ -1,5 +1,5 @@
 var url = require('url');
-require('../helpers/setup-async');
+require('../helpers/setup');
 
 describe("wd", function() {
 

@@ -61,13 +61,14 @@
     "imageinfo": "~1.0.4",
     "dox": "~0.4.4",
     "mu2": "~0.5.19",
-    "sv-selenium": "~0.1.6",
+    "sv-selenium": "~0.2.2",
     "colors": "~0.6.2",
-    "chai-as-promised": "~3.3.1",
+    "chai-as-promised": "~4.1.0",
     "chai": "~1.8.1",
     "mocha-as-promised": "~1.4.0",
     "hbs": "~2.4.0",
-    "istanbul": "~0.1.44"
+    "istanbul": "~0.1.44",
+    "string": "~1.6.0"
   },
   "scripts": {
     "test": "make test",
