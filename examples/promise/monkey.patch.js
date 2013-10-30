@@ -46,9 +46,9 @@ browser
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
     .should.become('I am a page title - Sauce Labs')
-  //.elementByCssSelector('#your_comments', 2000).should.eventually.exist
+    .elementByCssSelector('#your_comments', 2000).should.eventually.exist
     .elementByCssSelectorWhenReady('#your_comments', 2000)
-  //   .should.eventually.exist
+     .should.eventually.exist
   .fin(function() { return browser.quit(); })
   .done();
 
