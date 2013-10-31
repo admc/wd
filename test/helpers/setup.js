@@ -15,6 +15,12 @@ wd.webdriver.prototype.configureLogging = function (done){
       console.log(' > ' + meth, path, data || '');
     });
   }
+  if(env.DEBUG_CONNECTION) {
+    this.on('http', function(message) {
+      console.log('http > ' + message );
+    });
+  }
+
   done();
 };
 

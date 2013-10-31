@@ -10,7 +10,7 @@ describe('async' + env.ENV_DESC, function() {
 
   before(function(done) {
     browser = wd.remote(env.REMOTE_CONFIG);
-    if(env.HTTP_TIMEOUT) browser.setHTTPInactivityTimeout(env.HTTP_TIMEOUT);
+    browser.configureHttp(env.HTTP_CONFIG);
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['e2e']

@@ -10,7 +10,7 @@ describe('status ' + env.ENV_DESC + ' @multi', function() {
 
   before(function() {
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
-    if(env.HTTP_TIMEOUT) browser.setHTTPInactivityTimeout(env.HTTP_TIMEOUT);
+    browser.configureHttp(env.HTTP_CONFIG);
 
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
