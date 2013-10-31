@@ -64,7 +64,7 @@ Incompatibilities:
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
 
 ### 0.2.3 (In progress) 
-  - Http retry functionality
+  - http retry functionality.
   
 ## Usage
 
@@ -332,10 +332,10 @@ browser.configureHttp({
 ``` 
 
 - timeout: http timeout in ms, default is `undefined` (uses the server timeout, 
-  usually 60 seconds). `'default'` or `undefined` for server default.
-- retries: Number of reconnect retries when the connection is dropped. Default
-  is `3`. Pass `0` or `always` to keep trying. Pass `-1` or `never` to disable.
-- retryDelay: the retry delay in ms before reconnecting default is `15`.
+  usually 60 seconds). Use `'default'` or `undefined` for server default.
+- retries: Number of reconnection attempte in case  the connection is dropped. 
+  Default is `3`. Pass `0` or `always` to keep trying. Pass `-1` or `never` to disable.
+- retryDelay: the number of ms to wait before reconnecting. Default is `15`.
 - If a field is not specified, the current configuration for this field is
   unchanged.
 
