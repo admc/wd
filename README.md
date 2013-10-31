@@ -333,7 +333,7 @@ browser.configureHttp({
 
 - timeout: http timeout in ms, default is `undefined` (uses the server timeout, 
   usually 60 seconds). Use `'default'` or `undefined` for server default.
-- retries: Number of reconnection attempte in case  the connection is dropped. 
+- retries: Number of reconnection attempts in case the connection is dropped. 
   Default is `3`. Pass `0` or `always` to keep trying. Pass `-1` or `never` to disable.
 - retryDelay: the number of ms to wait before reconnecting. Default is `15`.
 - If a field is not specified, the current configuration for this field is
