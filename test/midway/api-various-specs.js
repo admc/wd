@@ -245,11 +245,24 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
   it('browser.setHttpTimeout', function() {
-    console.log("env.HTTP_TIMEOUT -->", env.HTTP_TIMEOUT);
     return browser
       .setHttpTimeout(env.HTTP_TIMEOUT || 60000).should.be.fulfilled
          .setHTTPInactivityTimeout(env.HTTP_TIMEOUT || 60000).should.be.fulfilled
          .setHttpTimeout(env.HTTP_TIMEOUT).should.be.fulfilled;
+   });
+
+  it('browser.configureHttp', function() {
+    return browser
+      .configureHttp({
+        timeout: env.HTTP_TIMEOUT || 60000,
+        retries: env.HTTP_RETRIES || 10,
+        retryDelay: env.HTTP_RETRY_DELAY || 50
+      }).should.be.fulfilled
+      .configureHttp({
+        timeout: env.HTTP_TIMEOUT,
+        retries: env.HTTP_RETRIES || 3,
+        retryDelay: env.HTTP_RETRY_DELAY || 15
+      }).should.be.fulfilled;
    });
 
   it('err.inspect', function() {
