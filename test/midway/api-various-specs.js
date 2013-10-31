@@ -240,6 +240,18 @@ describe('api-various ' + env.ENV_DESC, function() {
     return browser.sleep(100).should.be.fulfilled;
   });
 
+  it('browser.getSessionId', function() {
+    return browser.getSessionId(100).should.eventually.have.length.above(0);
+  });
+
+  it('browser.setHttpTimeout', function() {
+    console.log("env.HTTP_TIMEOUT -->", env.HTTP_TIMEOUT);
+    return browser
+      .setHttpTimeout(env.HTTP_TIMEOUT || 60000).should.be.fulfilled
+         .setHTTPInactivityTimeout(env.HTTP_TIMEOUT || 60000).should.be.fulfilled
+         .setHttpTimeout(env.HTTP_TIMEOUT).should.be.fulfilled;
+   });
+
   it('err.inspect', function() {
     return browser
       .safeExecute("invalid-code> here").then(
