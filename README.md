@@ -60,7 +60,7 @@ Incompatibilities:
 
   - There is a new method to call, `wd.rewrap()`, to propagate async monkey 
   patching to promise. (see [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35) and the monkey patch section below)
-  - The chai-as-promised setup has changed in v4, look out for the `transferPromiseness` 
+  - The chai-as-promised setup has changed in v4, look out for the `transferPromiseness` (Requires chai-as-promised 4.1.0 or greater)
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
 
 ### 0.2.3 (In progress) 
