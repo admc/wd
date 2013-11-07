@@ -14,7 +14,7 @@ env:
     - BROWSER=multi
     - BROWSER=chrome
     - BROWSER=firefox
-    - BROWSER=explorer
+    # - BROWSER=explorer
 matrix:
   include:
     - node_js: "0.11"
