@@ -132,7 +132,7 @@ if(env.SAUCE){
   // special case for window
   if (env.BROWSER === 'explorer') {
     env.DESIRED.browserName = 'internet explorer';
-    env.DESIRED.platform = 'Windows 7';
+    env.DESIRED.platform = 'Windows 8';
     env.DESIRED.version = '10';
   }
 }
