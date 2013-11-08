@@ -1164,6 +1164,16 @@ NA
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+Retrieves the current session id.<br>
+getSessionId(cb) -&gt; cb(err, sessionId)<br>
+getSessionId()<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Opens a new window (using Javascript window.open):<br>
 newWindow(url, name, cb) -&gt; cb(err)<br>
 newWindow(url, cb) -&gt; cb(err)<br>
@@ -1185,8 +1195,22 @@ windowName(cb) -&gt; cb(err, name)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-setHTTPInactivityTimeout(ms)<br>
-ms: how many milliseconds to wait for any communication with the WebDriver server (i.e. any command to complete) before the connection is considered lost<br>
+setHttpTimeout(ms, cb) --&gt; cb(err);<br>
+setHttpTimeout(ms)<br>
+ms: http request completion timeout.<br>
+more info in README.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+configureHttp(opts, cb) --&gt; cb(err);<br>
+configureHttp(opts)<br>
+opts example:<br>
+{timeout:60000, retries: 3, 'retry-timeout': 15}<br>
+more info in README.<br>
 </td>
 </tr>
 <tr>
@@ -1203,6 +1227,14 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+waitForNotVisible(using, value, timeout, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
