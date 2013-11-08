@@ -10,6 +10,13 @@ describe('wait-for ' + env.ENV_DESC, function() {
   var removeChildren =
     ' $("#theDiv").empty();\n';
 
+  // util function used tag chai assertion errors
+  var tagChaiAssertionError = function(err) {
+    // throw error and tag as retriable to poll again
+    err.retriable = err instanceof AssertionError;
+    throw err;
+  };
+
   var asserter = function(browser, cb) {
     browser.text(function(err, text) {
       if(err) { return cb(err); }
@@ -19,9 +26,11 @@ describe('wait-for ' + env.ENV_DESC, function() {
 
  var promisedAsserter = function(browser) {
     return browser
-      .text().should.eventually.include('a waitFor child')
-      .thenResolve("It worked!")
-      .catch(function() {});
+      .text().then(function(text) {
+        text.should.include('a waitFor child');
+        return text;
+      })
+      .catch(tagChaiAssertionError);
   };
 
   var asserterFalse = function(browser, cb) {
@@ -38,8 +47,8 @@ describe('wait-for ' + env.ENV_DESC, function() {
   var promisedElAsserter = function(el) {
     return el
       .text().should.eventually.have.length.above(0)
-      .thenResolve("OK")
-      .catch(function() {});
+      .text()
+      .catch(tagChaiAssertionError);
   };
 
   var elAsserterFalse = function(el, cb) {
@@ -66,7 +75,8 @@ describe('wait-for ' + env.ENV_DESC, function() {
 
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
-      .waitFor( promisedAsserter , 2 * env.BASE_TIME_UNIT).should.become("It worked!")
+      .waitFor( promisedAsserter , 2 * env.BASE_TIME_UNIT)
+        .should.eventually.include('a waitFor child')
 
       .then(function() {
         return browser

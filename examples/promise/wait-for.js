@@ -23,38 +23,43 @@ var appendChild =
 var removeChildren =
   ' $("#i_am_an_id").empty();\n';
 
+// tagging chai assertion errors for retry
+var tagChaiAssertionError = function(err) {
+  // throw error and tag as retriable to poll again
+  err.retriable = err instanceof chai.AssertionError;
+  throw err;
+};
+
 // simple asserter, just making sure that the element (or browser)
-// text is non-empty.
+// text is non-empty and returning the text.
 // It will be called until the promise is resolved with a defined value.
 var textNonEmpty = function(target) { // browser or el
   return target
-    // condition implemented with chai as promised
-    .text().should.eventually.have.length.above(0)
-    .thenResolve("OK")  // always return something when positive,
-                        // el will be returned by waitForElement no matter what.
-    .catch(function(/*err*/) {}); // error catching here,
-                                  // no return or undefined to try again.
+    .text().then(function(text) {
+      // condition implemented with chai within a then
+      text.should.have.length.above(0);
+      return text; // this will be returned by waitFor
+                   // and ignored by waitForElement.
+    })
+    .catch(tagChaiAssertionError); // tag errors for retry in catch.
 };
 
 // another simple element asserter
 var isVisible = function(el) {
   return el
     .isVisible().should.eventually.be.ok
-    .thenResolve(true)
-    .catch(function(/*err*/) {});
+    .catch(tagChaiAssertionError);
 };
 
 // asserter generator
 var textInclude = function(text) {
-  // It will be called until the promise is resolve with a defined value.
   return function(target) { // browser or el
     return target
       // condition implemented with chai as promised
       .text().should.eventually.include(text)
-      .thenResolve("OK")  // value will be returned by waitFor,
-                          // always return something when positive
-      .catch(function(/*err*/) {}); // error catching here
-                                    // no return or undefined to try again.
+      .text() // this will be returned by waitFor
+              // and ignored by waitForElement.
+      .catch(tagChaiAssertionError); // tag errors for retry in catch.
   };
 };
 
@@ -75,7 +80,7 @@ browser
   .execute(removeChildren)
   .execute( appendChild, [500] )
   .waitFor(textInclude('a waitFor child') , 2000)
-  .should.become("OK")
+  .should.eventually.include('a waitFor child')
 
   // waitForElement without asserter
   .execute(removeChildren)
