@@ -24,6 +24,7 @@ describe('init ' + env.ENV_DESC + ' @multi', function() {
 
   before(function() {
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    browser.configureHttp(env.HTTP_CONFIG);
     return browser.configureLogging();
   });
 

@@ -10,6 +10,16 @@ env.VERBOSE = toBoolean(process.env.VERBOSE);
 env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 500).toInt();
 env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
 
+env.HTTP_CONFIG = {}
+if(process.env.HTTP_TIMEOUT)
+  { env.HTTP_CONFIG.timeout = S(process.env.HTTP_TIMEOUT).toInt(); }
+if(process.env.HTTP_RETRIES)
+  { env.HTTP_CONFIG.retries = S(process.env.HTTP_RETRIES).toInt(); }
+if(process.env.HTTP_RETRY_DELAY)
+  { env.HTTP_CONFIG.retryDelay = S(process.env.HTTP_RETRY_DELAY).toInt(); }
+
+env.DEBUG_CONNECTION = process.env.DEBUG_CONNECTION;
+
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 env.BROWSER = process.env.BROWSER || 'chrome';
 if(env.BROWSER === 'multi') {
@@ -122,7 +132,7 @@ if(env.SAUCE){
   // special case for window
   if (env.BROWSER === 'explorer') {
     env.DESIRED.browserName = 'internet explorer';
-    env.DESIRED.platform = 'Windows 7';
+    env.DESIRED.platform = 'Windows 8';
     env.DESIRED.version = '10';
   }
 }

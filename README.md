@@ -1,6 +1,6 @@
 # WD.js
 
-**WebDriver/Selenium 2 for node.js**
+**node.js Webdriver/Selenium 2 client**
 
 - [Site](http://admc.io/wd/)
 - [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
@@ -60,9 +60,12 @@ Incompatibilities:
 
   - There is a new method to call, `wd.rewrap()`, to propagate async monkey 
   patching to promise. (see [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35) and the monkey patch section below)
-  - The chai-as-promised setup has changed in V4, look out for the `transferPromiseness` 
+  - The chai-as-promised setup has changed in v4, look out for the `transferPromiseness` (Requires chai-as-promised 4.1.0 or greater)
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
 
+### 0.2.3 (In progress) 
+  - http retry functionality.
+  
 ## Usage
 
 ### Q promises + chaining
@@ -254,7 +257,7 @@ var browser = wd.remote('http://localhost:4444/wd/hub');
 var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 ```
 
-#### Url object created via `url.parse`
+#### Url object created via url.parse
 
 [URL module documentation](http://nodejs.org/docs/v0.10.0/api/url.html#url_url)
 
@@ -314,6 +317,27 @@ your monkey patching in order, async first, call `wd.rewrap()` , and only then p
 
 This is a clean alternative to monkey patching.
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
+
+### Http configuration
+
+Http behaviour may be configured via the browser `configureHttp` method as 
+in the code below:
+
+```js
+browser.configureHttp({
+  timeout: 60000,
+  retries: 3,
+  retryDelay: 100
+});
+``` 
+
+- timeout: http timeout in ms, default is `undefined` (uses the server timeout, 
+  usually 60 seconds). Use `'default'` or `undefined` for server default.
+- retries: Number of reconnection attempts in case the connection is dropped. 
+  Default is `3`. Pass `0` or `always` to keep trying. Pass `-1` or `never` to disable.
+- retryDelay: the number of ms to wait before reconnecting. Default is `15`.
+- If a field is not specified, the current configuration for this field is
+  unchanged.
 
 ### Environment variables for Saucelabs
 

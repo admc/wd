@@ -10,6 +10,8 @@ describe('status ' + env.ENV_DESC + ' @multi', function() {
 
   before(function() {
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+    browser.configureHttp(env.HTTP_CONFIG);
+
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['midway']

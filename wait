@@ -1,7 +1,7 @@
 #! /bin/bash
 r=$[ ( $RANDOM % 100 ) ]
 echo got $r
-while [ $r -ge 25 ]
+while [ $r -ge 20 ]
 do
   echo 'waiting 60 sec'
   sleep 60s

@@ -15,6 +15,7 @@ if(env.SAUCE){
 
     before(function() {
       browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
+      browser.configureHttp(env.HTTP_CONFIG);
       var sauceExtra = {
         name: sauceJobTitle(this.runnable().parent.title),
         tags: ['e2e']
