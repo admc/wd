@@ -56,7 +56,7 @@ describe('api-el ' + env.ENV_DESC, function() {
       .then(function() {
         return browser
           .waitForElement("css selector", "#wrongsel .child", 0.1 * env.BASE_TIME_UNIT)
-          .should.be.rejectedWith(/Element didn't appear/);
+          .should.be.rejectedWith('Element condition wasn\'t satisfied!');
       });
   });
 

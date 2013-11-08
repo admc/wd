@@ -144,7 +144,7 @@ exports.test = function function_name (suffixes, extraDesc) {
           .then(function() {
             return browser
               [waitForElementFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
-                .should.be.rejectedWith(/Element didn\'t appear/);
+                .should.be.rejectedWith('Element condition wasn\'t satisfied!');
           });
       });
 
