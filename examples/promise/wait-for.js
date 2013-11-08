@@ -23,9 +23,29 @@ var appendChild =
 var removeChildren =
   ' $("#i_am_an_id").empty();\n';
 
+// simple asserter, just checking the element (or browser) text is non-empty.
+// It will be called until the promise is resolve with a defined value.
+var textNonEmpty = function(target) { // browser or el
+  return target
+    .text().should.eventually.have.length.above(0)
+    // el will be returned by waitFor no matter what,
+    // but always return something when positive
+    .thenResolve("OK")
+    .catch(function() {}); // error catching here
+};
 
+// another simple element asserter
+var isVisible = function(el) {
+  return el
+    .isVisible().should.eventually.be.ok
+    // el will be returned by waitFor no matter what,
+    // but always return something when positive
+    .thenResolve(true)
+    .catch(function() {}); // error catching here
+};
+
+// asserter generator
 var textInclude = function(text) {
-  // asserter used by waitFor.
   // It will be called until the promise is resolve with a defined value.
   return function(target) { // browser or el
     return target
@@ -36,17 +56,6 @@ var textInclude = function(text) {
       .catch(function(/*err*/) {}); // error catching here
 
   };
-};
-
-// asserter used by waitForElement.
-// It will be called until the promise is resolve with a defined value.
-var textNonEmpty = function(target) { // browser or el
-  return target
-    .text().should.eventually.have.length.above(0)
-    // el will be returned by waitFor no matter what,
-    // but always return something when positive
-    .thenResolve("OK")
-    .catch(function() {}); // error catching here
 };
 
 // optional monkey patching
@@ -78,6 +87,10 @@ browser
   .execute(removeChildren)
   .execute( appendChild, [500] )
   .waitForElementByCss("#i_am_an_id .child", textNonEmpty , 2000)
+  .text().should.become('a waitFor child')
+
+  // trying isVisible asserter
+  .waitForElementByCss("#i_am_an_id .child", isVisible , 2000)
   .text().should.become('a waitFor child')
 
   // monkey patched method
