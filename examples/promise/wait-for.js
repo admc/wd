@@ -23,25 +23,25 @@ var appendChild =
 var removeChildren =
   ' $("#i_am_an_id").empty();\n';
 
-// simple asserter, just checking the element (or browser) text is non-empty.
-// It will be called until the promise is resolve with a defined value.
+// simple asserter, just making sure that the element (or browser)
+// text is non-empty.
+// It will be called until the promise is resolved with a defined value.
 var textNonEmpty = function(target) { // browser or el
   return target
+    // condition implemented with chai as promised
     .text().should.eventually.have.length.above(0)
-    // el will be returned by waitFor no matter what,
-    // but always return something when positive
-    .thenResolve("OK")
-    .catch(function() {}); // error catching here
+    .thenResolve("OK")  // always return something when positive,
+                        // el will be returned by waitForElement no matter what.
+    .catch(function(/*err*/) {}); // error catching here,
+                                  // no return or undefined to try again.
 };
 
 // another simple element asserter
 var isVisible = function(el) {
   return el
     .isVisible().should.eventually.be.ok
-    // el will be returned by waitFor no matter what,
-    // but always return something when positive
     .thenResolve(true)
-    .catch(function() {}); // error catching here
+    .catch(function(/*err*/) {});
 };
 
 // asserter generator
@@ -49,12 +49,12 @@ var textInclude = function(text) {
   // It will be called until the promise is resolve with a defined value.
   return function(target) { // browser or el
     return target
+      // condition implemented with chai as promised
       .text().should.eventually.include(text)
-      // value will be returned by waitFor
-      // always return something when positive
-      .thenResolve("OK")
+      .thenResolve("OK")  // value will be returned by waitFor,
+                          // always return something when positive
       .catch(function(/*err*/) {}); // error catching here
-
+                                    // no return or undefined to try again.
   };
 };
 
