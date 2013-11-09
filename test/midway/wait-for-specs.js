@@ -218,4 +218,27 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .text().should.become('');
   });
 
+  express.partials['asserters.jsCondition'] =
+    '<div id="theDiv"></div>\n';
+  it('asserters.jsCondition', function() {
+    var exprCond = "$('#theDiv .child').length > 0";
+    return browser
+      .executeAsync(
+        'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+        'var done = args[args.length -1];\n' +
+        ' setTimeout(function() {\n' +
+        ' $("#theDiv").html("<div class=\\"child\\">a waitForCondition child</div>");\n' +
+        ' }, arguments[0]);\n' +
+        'done();\n',
+        [env.BASE_TIME_UNIT]
+      )
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
+      .waitFor(asserters.jsCondition(exprCond) , 2 * env.BASE_TIME_UNIT, 200)
+        .should.eventually.be.ok
+      .waitFor(asserters.jsCondition(exprCond, true) , 2 * env.BASE_TIME_UNIT, 200)
+        .should.eventually.be.ok
+      .then(function() {
+        return browser.waitFor(asserters.jsCondition('$wrong expr!!!')).should.be.rejectedWith(/status: 13/);
+      });
+  });
 });
