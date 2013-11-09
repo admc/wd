@@ -1,14 +1,29 @@
 require('../helpers/setup');
 
 describe('wait-for ' + env.ENV_DESC, function() {
+  var asserters = wd.asserters;
   var page = '<div id="theDiv"></div>';
+
   var appendChild =
     'setTimeout(function() {\n' +
     ' $("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
     '}, arguments[0]);\n';
 
   var removeChildren =
-    ' $("#theDiv").empty();\n';
+    '$("#theDiv").empty();\n';
+
+  var appendChildAndHide =
+    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
+    'setTimeout(function() {\n' +
+    ' $("#theDiv .child").hide();\n' +
+    '}, arguments[0]);\n';
+
+  var appendChildHideAndShow =
+    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
+    '$("#theDiv .child").hide();\n' +
+    'setTimeout(function() {\n' +
+    ' $("#theDiv .child").show();\n' +
+    '}, arguments[0]);\n';
 
   // util function used tag chai assertion errors
   var tagChaiAssertionError = function(err) {
@@ -167,6 +182,40 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .execute( appendChild, [env.BASE_TIME_UNIT] )
       .waitForElementByCss("#theDiv .child", { asserter: elAsserter,
         timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 100 });
+  });
+
+  express.partials['asserters.nonEmptyText'] = page;
+  it('asserters.nonEmptyText', function() {
+    return browser
+      .execute( appendChild, [env.BASE_TIME_UNIT] )
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
+      .waitForElementByCss("#theDiv .child", asserters.nonEmptyText ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('a waitFor child');
+  });
+
+  express.partials['asserters.textInclude'] = page;
+  it('asserters.textInclude', function() {
+    return browser
+      .execute( appendChild, [env.BASE_TIME_UNIT] )
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
+      .waitForElementByCss("#theDiv .child", asserters.textInclude('a waitFor child') ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('a waitFor child');
+  });
+
+  express.partials['asserters.isVisible'] = page;
+  it('asserters.isVisible', function() {
+    return browser
+      .execute( appendChildHideAndShow, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('a waitFor child');
+  });
+
+  express.partials['asserters.isHidden'] = page;
+  it('asserters.isHidden', function() {
+    return browser
+      .execute( appendChildAndHide, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('');
   });
 
 });

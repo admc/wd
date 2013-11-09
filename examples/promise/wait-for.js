@@ -11,6 +11,8 @@ try {
   wd = require('../../lib/main');
 }
 
+var asserters = wd.asserters; // commonly used asserters
+
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
@@ -81,6 +83,11 @@ browser
   .execute( appendChild, [500] )
   .waitFor(textInclude('a waitFor child') , 2000)
   .should.eventually.include('a waitFor child')
+  // using prebuilt asserter
+  .execute(removeChildren)
+  .execute( appendChild, [500] )
+  .waitFor(asserters.textInclude('a waitFor child') , 2000)
+  .should.eventually.include('a waitFor child')
 
   // waitForElement without asserter
   .execute(removeChildren)
@@ -92,10 +99,17 @@ browser
   .execute(removeChildren)
   .execute( appendChild, [500] )
   .waitForElementByCss("#i_am_an_id .child", textNonEmpty , 2000)
+  // using prebuilt asserter
+  .execute(removeChildren)
+  .execute( appendChild, [500] )
+  .waitForElementByCss("#i_am_an_id .child", asserters.textNonEmpty , 2000)
   .text().should.become('a waitFor child')
 
   // trying isVisible asserter
   .waitForElementByCss("#i_am_an_id .child", isVisible , 2000)
+  .text().should.become('a waitFor child')
+  // using prebuilt asserter
+  .waitForElementByCss("#i_am_an_id .child", asserters.isVisible , 2000)
   .text().should.become('a waitFor child')
 
   // monkey patched method
