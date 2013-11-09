@@ -125,11 +125,13 @@ describe('api-exec ' + env.ENV_DESC, function() {
   it('browser.waitForCondition', function() {
     var exprCond = "$('#theDiv .child').length > 0";
     return browser
-      .execute(
+      .executeAsync(
+        'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+        'var done = args[args.length -1];\n' +
         ' setTimeout(function() {\n' +
         ' $("#theDiv").html("<div class=\\"child\\">a waitForCondition child</div>");\n' +
-        ' }, arguments[0]);\n' //+
-        ,
+        ' }, arguments[0]);\n' +
+        'done();\n',
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
@@ -146,11 +148,13 @@ describe('api-exec ' + env.ENV_DESC, function() {
   it('browser.waitForConditionInBrowser', function() {
     var exprCond = "$('#theDiv .child').length > 0";
     return browser
-      .execute(
+      .executeAsync(
+        'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+        'var done = args[args.length -1];\n' +
         ' setTimeout(function() {\n' +
         ' $("#theDiv").html("<div class=\\"child\\">a waitForCondition child</div>");\n' +
-        ' }, arguments[0]);\n' //+
-        ,
+        ' }, arguments[0]);\n' +
+        'done();\n',
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)

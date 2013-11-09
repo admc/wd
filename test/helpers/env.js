@@ -10,7 +10,7 @@ env.VERBOSE = toBoolean(process.env.VERBOSE);
 env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 500).toInt();
 env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
 
-env.HTTP_CONFIG = {}
+env.HTTP_CONFIG = {};
 if(process.env.HTTP_TIMEOUT)
   { env.HTTP_CONFIG.timeout = S(process.env.HTTP_TIMEOUT).toInt(); }
 if(process.env.HTTP_RETRIES)
@@ -97,7 +97,7 @@ if( env.TRAVIS_JOB_ID ){
 }
 
 if(env.SAUCE){
-  env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 2000).toInt();
+  env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 3000).toInt();
   env.TIMEOUT = S(process.env.TIMEOUT || 600000).toInt();
 
   env.SAUCE_JOB_ID =

@@ -44,10 +44,13 @@ describe('api-el ' + env.ENV_DESC, function() {
     '<div id="theDiv"></div>';
   it('browser.waitForElement', function() {
     return browser
-      .execute(
+      .executeAsync(
+        'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+        'var done = args[args.length -1];\n' +
         'setTimeout(function() {\n' +
         ' $("#theDiv").append("<div class=\\"child\\">a waitForElement child</div>");\n' +
-        '}, arguments[0]);\n',
+        '}, arguments[0]);\n' +
+        'done();\n',
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
@@ -64,12 +67,15 @@ describe('api-el ' + env.ENV_DESC, function() {
     '<div id="theDiv"></div>';
   it('browser.waitForVisible', function() {
     return browser
-      .execute(
+      .executeAsync(
+        'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+        'var done = args[args.length -1];\n' +
         '$("#theDiv").append("<div class=\\"child\\">a waitForVisible child</div>");\n' +
         '$("#theDiv .child").hide();\n' +
         'setTimeout(function() {\n' +
         ' $("#theDiv .child").show();\n' +
-        '}, arguments[0]);\n',
+        '}, arguments[0]);\n' +
+        'done();\n',
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.eventually.exist

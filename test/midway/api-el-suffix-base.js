@@ -131,11 +131,13 @@ exports.test = function function_name (suffixes, extraDesc) {
         '<div id="theDiv"></div>';
       it('browser.' + waitForElementFuncName, function() {
         return browser
-          .execute(
+          .executeAsync(
             'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+            'var done = args[args.length -1];\n' +
             'setTimeout(function() {\n' +
             ' $("#theDiv").append(args[0]);\n' +
-            '}, args[1]);\n',
+            '}, args[1]);\n' +
+            'done();\n',
             [suffixFields.childHtml, env.BASE_TIME_UNIT]
           )
           [elementFuncName](suffixFields.searchChild).should.be.rejectedWith(/status: 7/)
@@ -153,13 +155,15 @@ exports.test = function function_name (suffixes, extraDesc) {
         '<div id="theDiv"></div>';
       it('browser.' + waitForVisibleFuncName, function() {
         return browser
-          .execute(
+          .executeAsync(
             'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+            'var done = args[args.length -1];\n' +
             '$("#theDiv").append(args[0]);\n' +
             '$("#theDiv .child").hide();\n' +
             'setTimeout(function() {\n' +
             ' $("#theDiv .child").show();\n' +
-            '}, args[1]);\n',
+            '}, args[1]);\n' +
+            'done();\n',
             [suffixFields.childHtml, env.BASE_TIME_UNIT]
           )
           .elementByCss(".child").should.eventually.exist
