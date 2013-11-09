@@ -112,6 +112,10 @@ browser
   .waitForElementByCss("#i_am_an_id .child", asserters.isVisible , 2000)
   .text().should.become('a waitFor child')
 
+  // prebuild jsCondition asserter
+  .waitFor(asserters.jsCondition('$("#i_am_an_id .child")? true: false') , 2000)
+  .should.eventually.be.ok
+
   // monkey patched method
   .execute(removeChildren)
   .execute( appendChild, [500] )
