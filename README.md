@@ -36,7 +36,7 @@ npm install wd
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
 
-## Release Notes
+## Release notes
 
 Many changes have been introduced in 0.2.x versions, please check 
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
@@ -95,7 +95,7 @@ browser.init({browserName:'chrome'}, function() {
 
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/no-chain.js).
 
-## Generators Api
+## Generators api
 
 ### Yiewd
 
