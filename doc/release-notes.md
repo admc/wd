@@ -28,7 +28,7 @@ Incompatibilities:
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
 
 ### 0.2.3 (In progress) 
-  - http configuration enhancements, see section below.
+  - http configuration enhancements, see doc [here](https://github.com/admc/wd#http-configuration).
   - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
   - monkey patching enhancement (todo)
   - new saveScreenshot method (todo)

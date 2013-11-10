@@ -36,10 +36,10 @@ npm install wd
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
 
-## Release Notes (from 0.2.0)
+## Release Notes
 
-Many changes have been intruduced in 0.2.x versions, please check 
-[here]() for more details.
+Many changes have been introduced in 0.2.x versions, please check 
+[here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
 
 ## Usage
 
