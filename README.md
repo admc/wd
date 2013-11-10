@@ -320,10 +320,17 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/helpe
 
 ### Http configuration
 
-Http behaviour may be configured via the browser `configureHttp` method as 
+Http behaviour may be configured via the `configureHttp` method as 
 in the code below:
 
 ```js
+// global config
+wd.configureHttp({
+  timeout: 60000,
+  retries: 3,
+  retryDelay: 100
+});
+// per browser config
 browser.configureHttp({
   timeout: 60000,
   retries: 3,
