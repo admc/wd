@@ -957,6 +957,16 @@ logTypes(cb) -&gt; cb(err, arrayOfLogTypes)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+Retrieves the current session id.<br>
+getSessionId(cb) -&gt; cb(err, sessionId)<br>
+getSessionId()<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Opens a new window (using Javascript window.open):<br>
 newWindow(url, name, cb) -&gt; cb(err)<br>
 newWindow(url, cb) -&gt; cb(err)<br>
@@ -978,8 +988,11 @@ windowName(cb) -&gt; cb(err, name)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-setHTTPInactivityTimeout(ms)<br>
-ms: how many milliseconds to wait for any communication with the WebDriver server (i.e. any command to complete) before the connection is considered lost<br>
+configureHttp(opts, cb) --&gt; cb(err);<br>
+configureHttp(opts)<br>
+opts example:<br>
+{timeout:60000, retries: 3, 'retryDelay': 15}<br>
+more info in README.<br>
 </td>
 </tr>
 <tr>
@@ -987,7 +1000,11 @@ ms: how many milliseconds to wait for any communication with the WebDriver serve
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
+waitFor(asserter, timeout, pollFreq, cb) -&gt; cb(err, return_value)<br>
+timeout and pollFreq are optional (default 1000ms/200ms)<br>
+waitFor(opts, cb) -&gt; cb(err)<br>
+opts with the following fields: timeout, pollFreq, asserter.<br>
+asserter like: function(browser , cb) -&gt; cb(err, satisfied, return_value)<br>
 </td>
 </tr>
 <tr>
@@ -995,7 +1012,12 @@ waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
+waitForElement(using, value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElement(using, value, timeout, pollFreq, cb) -&gt; cb(err)<br>
+timeout and pollFreq are optional (default 1000ms/200ms)<br>
+waitForElement(using, value, opts, cb) -&gt; cb(err)<br>
+opts with the following fields: timeout, pollFreq, asserter.<br>
+asserter like: function(element , cb) -&gt; cb(err, satisfied)<br>
 </td>
 </tr>
 <tr>
@@ -1003,15 +1025,17 @@ waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForElementByClassName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementById(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByTagName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByXPath(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByCss(value, timeout, cb) -&gt; cb(err)<br>
+waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByCssSelector(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementById(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByPartialLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
+as in waitForElement.<br>
 </td>
 </tr>
 <tr>
@@ -1064,12 +1088,9 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (polling within wd client):<br>
-waitForCondition(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-waitForCondition(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
-waitForCondition(conditionExpr, cb) -&gt; cb(err, boolean)<br>
-conditionExpr: condition expression, should return a boolean<br>
-timeout: timeout (optional, default: 1000)<br>
-pollFreq: pooling frequency (optional, default: 100)<br>
+waitForJsCondition(jsConditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
+timeout and pollFreq optional, default are 1000/200<br>
+jsConditionExpr: condition expression, should return a boolean<br>
 return true if condition satisfied, error otherwise.<br>
 </td>
 </tr>
