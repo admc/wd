@@ -5,9 +5,11 @@ GLOBAL._ = require('lodash');
 GLOBAL.wd = require('../../lib/main');
 
 // monkey patching
-wd.webdriver.prototype.configureLogging = function (done){
+wd.addAsyncMethod(
+  'configureLogging', 
+  function (done){
   if(env.VERBOSE) {
-    //browser._debugPromise();
+    //this._debugPromise();
     this.on('status', function(info) {
       console.log(info);
     });
@@ -22,9 +24,8 @@ wd.webdriver.prototype.configureLogging = function (done){
   }
 
   done();
-};
-
-wd.rewrap();
+  }
+);
 
 GLOBAL.midwayUrl = function(testSuite, title){
   var cleanTitle = title.replace(/@[-\w]+/g, '').trim();
