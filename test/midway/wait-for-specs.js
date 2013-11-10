@@ -238,7 +238,9 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .waitFor(asserters.jsCondition(exprCond, true) , 2 * env.BASE_TIME_UNIT, 200)
         .should.eventually.be.ok
       .then(function() {
-        return browser.waitFor(asserters.jsCondition('$wrong expr!!!')).should.be.rejectedWith(/status: 13/);
+        // unsafe mode might hangs selenium
+        return browser.waitFor(asserters.jsCondition('$wrong expr!!!', true))
+          .should.be.rejectedWith(/status: 13/);
       });
   });
 });
