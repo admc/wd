@@ -267,6 +267,42 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  // todo: add test for other suffixed methods
+  express.partials['element.sleep'] =
+    '<div id="theDiv"></div>\n' +
+  it('element.sleep', function() {
+    return browser
+      .setImplicitWaitTimeout(0)
+      .elementById("theDiv").then(function(el) {
+        return el
+          .sleep(100).should.be.fulfilled
+          .sleep(100).should.be.fulfilled;
+      });
+  });
+
+  express.partials['element.noop'] =
+    '<div id="theDiv"></div>\n' +
+  it('element.noop', function() {
+    return browser
+      .setImplicitWaitTimeout(0)
+      .elementById("theDiv").then(function(el) {
+        return el
+          .noop().should.be.fulfilled
+          .sleep(100).should.be.fulfilled
+          .noop().should.be.fulfilled;
+      });
+  });
+
+  express.partials['element.chain (promise)'] =
+    '<div id="theDiv"></div>\n' +
+  it('element.chain (promise)', function() {
+    return browser
+      .setImplicitWaitTimeout(0)
+      .elementById("theDiv").then(function(el) {
+        return el
+          .chain().should.be.fulfilled
+          .chain()
+          .sleep(100).should.be.fulfilled;
+      });
+  });
 
 });

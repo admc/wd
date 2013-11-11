@@ -237,11 +237,22 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
   it('browser.sleep', function() {
-    return browser.sleep(100).should.be.fulfilled;
+    return browser
+      .sleep(100).should.be.fulfilled
+      .sleep(100).should.be.fulfilled;
   });
 
-  it.only('browser.noop', function() {
-    return browser.noop().should.be.fulfilled;
+  it('browser.noop', function() {
+    return browser
+      .noop().should.be.fulfilled
+      .sleep(100).should.be.fulfilled
+      .noop().should.be.fulfilled;
+  });
+
+  it('browser.chain (promise chain)', function() {
+    return browser
+      .chain().should.be.fulfilled
+      .chain().sleep(0).should.be.fulfilled;
   });
 
   it('browser.getSessionId', function() {
