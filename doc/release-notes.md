@@ -32,6 +32,6 @@ Incompatibilities:
   - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
   - addPromiseChainMethod/addPromiseMethod/addAsyncMethod/removeMethod replacing monkey patching.
   Please refer to the add method section in README.
-  - support for external promise libraries.
-  - new saveScreenshot method (todo)
+  - Support for external promise libraries.
+  - New saveScreenshot method (todo)
   - rootUrl functionality (todo)
