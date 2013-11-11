@@ -278,10 +278,10 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 
 Below are the methods to use to wait for a condition:
 
-- `browser.waitFor(asserter, timeout, pollFreq, cb) -> cb(err, value)`: generic wait method, returns the asserter 'return_value'.
+- `browser.waitFor(asserter, timeout, pollFreq, cb) -> cb(err, value)`: generic wait method, the return value is provided by the asserter when the condition is satisfied.
 - `browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb) -> cb(err, el)`: waits for a element then a 
-condition. Returns the element.
-- `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser.
+condition, then returns the element.
+- `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser, then returns a boolean.
 
 Asserters should be written using either models below . `target` may be `browser` and/or `element` depending on the context.
 
@@ -313,9 +313,9 @@ Library of commonly used asserters [here](https://github.com/admc/wd/blob/master
 
 ### Adding custom methods
 
-- `wd.addAsyncMethod(name, method)`: This is for regular async methods with callback at the end. This will not only add the method to the async browser prototype, but it will also wrap the method and add it to the promise and promiseChain prototypes.
-- `wd.addPromiseMethod(name, method)`: This is for methods returning promise but NOT USING CHAIN internally. This will not only add the method to the promise browser prototype, but it will also wrap the method and add it to the promiseChain prototype (but not to the async prototype).
-- `wd.addPromiseChainMethod(name, method)`: This is for methods returning promise USING CHAIN internally. This will only add the method to the promiseChain browser prototype (but neither to async nor to promise browser prototypes).
+- `wd.addAsyncMethod(name, method)`: This is for regular async methods with callback as the last argument. This will not only add the method to the async browser prototype, but also wrap the method and add it to the promise and promiseChain prototypes.
+- `wd.addPromiseMethod(name, method)`: This is for promise returning methods NOT USING CHAIN internally. This will not only add the method to the promise browser prototype, but also wrap the method and add it to the promiseChain prototype (but not to the async prototype).
+- `wd.addPromiseChainMethod(name, method)`: This is for promise returning methods USING CHAIN internally. This will only add the method to the promiseChain browser prototype (but neither to async nor to promise browser prototypes).
 
 If you are only using the promise chain api, you should probably stick with `wd.addPromiseChainMethod(name, method)`.
 
@@ -337,25 +337,27 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/helpe
 
 ### Starting the promise chain
 
-The `browser` and `element` object are not themselves promises so that they may be themselves used as the result of a promise. However, if you need to start the chain straight form the browser, you may use:
+The `browser` and `element` object are not themselves promises (cause that would lead to chaos), if you need to start the chain straight form the browser, you may use:
 
 - `browser.chain()`
 - `browser.noop()`
-- `browser.resolve(promise)`, if you need to resolve a promise immediately.
+- `browser.resolve(promise)`
 
 - `element.chain()`
 - `element.noop()`
-- `element.resolve(promise)`, if you need to resolve a promise immediately.
+- `element.resolve(promise)`
+
+The resolve method works like Q thenResolve.
 
 ### Working with external promise libraries
 
-`wd` uses Q internally, but you may use the external promises with the following methods:
+`wd` uses `Q` internally, but you may use promises from other libraries with the following methods:
 
 - `browser.resolve(externalPromise)`
 - `wd.addPromiseChainMethod(name, externalPromise)`
 - `wd.addPromiseMethod(name, externalPromise)`
 
-The external promise will be automatically wrap within a Q promise using `new Q(externalPromise)`.
+The external promise will be automatically wrapped within a Q promise using `new Q(externalPromise)`.
 
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/external-promise.js).
 
