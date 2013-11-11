@@ -11,6 +11,7 @@ try {
   wd = require('../../lib/main');
 }
 
+var Asserter = wd.Asserter; // asserter base class
 var asserters = wd.asserters; // commonly used asserters
 
 // enables chai assertion chaining
@@ -35,34 +36,40 @@ var tagChaiAssertionError = function(err) {
 // simple asserter, just making sure that the element (or browser)
 // text is non-empty and returning the text.
 // It will be called until the promise is resolved with a defined value.
-var textNonEmpty = function(target) { // browser or el
-  return target
-    .text().then(function(text) {
-      // condition implemented with chai within a then
-      text.should.have.length.above(0);
-      return text; // this will be returned by waitFor
-                   // and ignored by waitForElement.
-    })
-    .catch(tagChaiAssertionError); // tag errors for retry in catch.
-};
+var textNonEmpty = new Asserter( 
+  function(target) { // browser or el
+    return target
+      .text().then(function(text) {
+        // condition implemented with chai within a then
+        text.should.have.length.above(0);
+        return text; // this will be returned by waitFor
+                     // and ignored by waitForElement.
+      })
+      .catch(tagChaiAssertionError); // tag errors for retry in catch.
+  }
+);
 
 // another simple element asserter
-var isVisible = function(el) {
-  return el
-    .isVisible().should.eventually.be.ok
-    .catch(tagChaiAssertionError);
-};
+var isVisible = new Asserter(
+  function(el) {
+    return el
+      .isVisible().should.eventually.be.ok
+      .catch(tagChaiAssertionError);
+  }
+);
 
 // asserter generator
 var textInclude = function(text) {
-  return function(target) { // browser or el
-    return target
-      // condition implemented with chai as promised
-      .text().should.eventually.include(text)
-      .text() // this will be returned by waitFor
-              // and ignored by waitForElement.
-      .catch(tagChaiAssertionError); // tag errors for retry in catch.
-  };
+  return new Asserter(
+    function(target) { // browser or el
+      return target
+        // condition implemented with chai as promised
+        .text().should.eventually.include(text)
+        .text() // this will be returned by waitFor
+                // and ignored by waitForElement.
+        .catch(tagChaiAssertionError); // tag errors for retry in catch.
+    }
+  );
 };
 
 // optional monkey patching

@@ -176,12 +176,12 @@ describe('add-methods ' + env.ENV_DESC, function() {
       browser = newPromiseChainRemote();
       return initAndGet(this, 'pc/3').then(function() {
         return browser
-          .sleepAndElementById('theDiv')
-            .should.be.fulfilled
-          .sleepAndText()
-            .should.be.fulfilled
-          .sleepAndElementById('theDiv')
-          .sleepAndText().should.eventually.include("Hello World!")
+          // .sleepAndElementById('theDiv')
+          //   .should.be.fulfilled
+          // .sleepAndText()
+          //   .should.be.fulfilled
+          // .sleepAndElementById('theDiv')
+          // .sleepAndText().should.eventually.include("Hello World!")
           .elementByCssWhenReady('#theDiv', 500).text()
             .should.become("Hello World!");
       });

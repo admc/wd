@@ -2,6 +2,7 @@ require('../helpers/setup');
 
 describe('wait-for ' + env.ENV_DESC, function() {
   var asserters = wd.asserters;
+  var Asserter = wd.Asserter;
   var page = '<div id="theDiv"></div>';
 
   var appendChild =
@@ -32,43 +33,55 @@ describe('wait-for ' + env.ENV_DESC, function() {
     throw err;
   };
 
-  var asserter = function(browser, cb) {
-    browser.text(function(err, text) {
-      if(err) { return cb(err); }
-      cb( null, text.match(/a waitFor child/), "It worked!" );
-    });
-  };
+  var asserter = new Asserter( 
+    function(browser, cb) {
+      browser.text(function(err, text) {
+        if(err) { return cb(err); }
+        cb( null, text.match(/a waitFor child/), "It worked!" );
+      });
+    }
+  );
 
- var promisedAsserter = function(browser) {
-    return browser
-      .text().then(function(text) {
-        text.should.include('a waitFor child');
-        return text;
-      })
-      .catch(tagChaiAssertionError);
-  };
+ var promisedAsserter = new Asserter(
+    function(browser) {
+      return browser
+        .text().then(function(text) {
+          text.should.include('a waitFor child');
+          return text;
+        })
+        .catch(tagChaiAssertionError);
+    }
+  );
 
-  var asserterFalse = function(browser, cb) {
-    cb( null, false);
-  };
+  var asserterFalse = new Asserter(
+    function(browser, cb) {
+      cb( null, false);
+    }
+  );
 
-  var elAsserter = function(el, cb) {
-    el.text(function(err, text) {
-      if(err) { return cb(err); }
-        cb( null, text && text.length >0);
-    });
-  };
+  var elAsserter = new Asserter(
+    function(el, cb) {
+      el.text(function(err, text) {
+        if(err) { return cb(err); }
+          cb( null, text && text.length >0);
+      });
+    }
+  );
 
-  var promisedElAsserter = function(el) {
-    return el
-      .text().should.eventually.have.length.above(0)
-      .text()
-      .catch(tagChaiAssertionError);
-  };
+  var promisedElAsserter = new Asserter(
+    function(el) {
+      return el
+        .text().should.eventually.have.length.above(0)
+        .text()
+        .catch(tagChaiAssertionError);
+    }
+  );
 
-  var elAsserterFalse = function(el, cb) {
-    cb( null, false);
-  };
+  var elAsserterFalse = new Asserter( 
+    function(el, cb) {
+      cb( null, false);
+    }
+  );
 
   var ctx = require('./midway-base')(this),
       express = ctx.express,

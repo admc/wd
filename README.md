@@ -285,13 +285,31 @@ condition. Returns the element.
 
 Asserters should be written using either models below (`target` may be browser and/or element depending on the context):
 
-- async style: `function myAsserter(target,cb) -> cb(err, satisfied, return_value)`
-- promise: myAsserter(target) -> a promised resolved with `return_value`. Promise asserter should 
-throw errors marked with `err.retriable=true` when the condition is not satisfied.
+```js
+# async
+var asyncAsserter = new Asserter(
+  function(target,cb) {
+    ...
+    cb(err, satisfied, return_value);
+  }
+);
 
-[here](https://github.com/admc/wd/blob/master/lib/asserters.js) is a library of commonly used asserter.
+# promise
+var promiseAsserter = new Asserter(
+  function(target) {
+    ...
+    return promise; # promise resolved with the wait_for return value.
+    
+    # Promise asserter should throw errors marked with `err.retriable=true` 
+    # when the condition is not satisfied.    
+  }
+);
 
-Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for.js)
+```
+
+Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for.js).
+
+Library of commonly used asserter [here](https://github.com/admc/wd/blob/master/lib/asserters.js).
 
 ### Adding custom methods
 
