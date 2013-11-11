@@ -91,7 +91,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
     express.stop();
   });
 
-  describe('promise chain ' + env.ENV_DESC, function() {
+  describe('promise chain', function() {
 
     var browser;
 
@@ -108,6 +108,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
         .configureLogging()
         .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ))
         .get( midwayUrl(
+          that.runnable().parent.parent.title,
           that.runnable().parent.title,
           that.runnable().title)
         );
@@ -179,7 +180,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
 
   });
 
-  describe('promise no-chain ' + env.ENV_DESC, function() {
+  describe('promise no-chain', function() {
 
     var browser;
 
@@ -198,6 +199,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
           return browser.init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null )); 
         }).then(function() {
           return browser.get( midwayUrl(
+            that.runnable().parent.parent.title,
             that.runnable().parent.title,
             that.runnable().title)
           );          
@@ -255,7 +257,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
 
   });
 
-  describe('promise async ' + env.ENV_DESC, function() {
+  describe('async', function() {
 
     var browser;
 
@@ -273,7 +275,11 @@ describe('add-methods ' + env.ENV_DESC, function() {
         browser.init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null) , function(err) {
           if(err) { return cb(err); }
           browser.get( 
-            midwayUrl(that.runnable().parent.title, that.runnable().title),
+            midwayUrl(
+              that.runnable().parent.parent.title,
+              that.runnable().parent.title,
+              that.runnable().title
+            ),
             cb
           );
         });        

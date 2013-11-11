@@ -18,7 +18,7 @@ Express.prototype.start = function() {
     }
     res.render('test-page', {
       testSuite: req.query.ts,
-      testTitle: req.query.p,
+      testTitle: (req.query.c? req.query.c + ' - ': '') + req.query.p,
       content: content
     });
   });

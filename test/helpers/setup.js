@@ -27,11 +27,16 @@ wd.addAsyncMethod(
   }
 );
 
-GLOBAL.midwayUrl = function(testSuite, title){
+GLOBAL.midwayUrl = function(testSuite, cat, title){
+  if(!title) { 
+    title = cat;
+    cat = undefined;
+  }
   var cleanTitle = title.replace(/@[-\w]+/g, '').trim();
   return env.MIDWAY_ROOT_URL + '/test-page' +
     '?p=' + encodeURIComponent(cleanTitle) +
-    '&ts=' + encodeURIComponent(testSuite);
+    '&ts=' + encodeURIComponent(testSuite) +
+    (cat? '&c=' +encodeURIComponent(cat) : '');
 };
 
 GLOBAL.mergeDesired = function(desired, extra){
