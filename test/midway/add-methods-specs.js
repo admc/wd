@@ -19,6 +19,13 @@ describe('add-methods ' + env.ENV_DESC, function() {
         if(err) { return cb(err); }
         _this.text(el, cb);
       });
+    },
+    elementByCssWhenReady: function(selector, timeout, cb) {
+      var _this = this;
+      _this.waitForElementByCss(selector, timeout, function(err) {
+        if(err) { return cb(err); }
+        _this.elementByCss(selector, cb);
+      });
     }
   };
 
@@ -170,11 +177,13 @@ describe('add-methods ' + env.ENV_DESC, function() {
       return initAndGet(this, 'pc/3').then(function() {
         return browser
           .sleepAndElementById('theDiv')
-          .should.be.fulfilled
+            .should.be.fulfilled
           .sleepAndText()
-          .should.be.fulfilled
+            .should.be.fulfilled
           .sleepAndElementById('theDiv')
-          .sleepAndText().should.eventually.include("Hello World!");
+          .sleepAndText().should.eventually.include("Hello World!")
+          .elementByCssWhenReady('#theDiv', 500).text()
+            .should.become("Hello World!");
       });
     });
 
