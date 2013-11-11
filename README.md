@@ -278,12 +278,12 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 
 Below are the methods to use to wait for a condition:
 
-- `browser.waitFor(asserter, timeout, pollFreq, cb)` -> cb(err, value): generic wait method. Returns the asserter 'return_value'.
-- `browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb)` -> cb(err, el): wait for a element then a 
+- `browser.waitFor(asserter, timeout, pollFreq, cb) -> cb(err, value)`: generic wait method, returns the asserter 'return_value'.
+- `browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb) -> cb(err, el)`: waits for a element then a 
 condition. Returns the element.
-- `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb)` -> cb(err, boolean): wait for a js condition within a browser.
+- `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser.
 
-Asserters should be written using either models below (target may be browser and/or element depending on the context):
+Asserters should be written using either models below . `target` may be `browser` and/or `element` depending on the context.
 
 ```js
 // async
@@ -309,11 +309,9 @@ var promiseAsserter = new Asserter(
 
 Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for.js).
 
-Library of commonly used asserter [here](https://github.com/admc/wd/blob/master/lib/asserters.js).
+Library of commonly used asserters [here](https://github.com/admc/wd/blob/master/lib/asserters.js).
 
 ### Adding custom methods
-
-You may add method using the following method:
 
 - `wd.addAsyncMethod(name, method)`: This is for regular async methods with callback at the end. This will not only add the method to the async browser prototype, but it will also wrap the method and add it to the promise and promiseChain prototypes.
 - `wd.addPromiseMethod(name, method)`: This is for methods returning promise but NOT USING CHAIN internally. This will not only add the method to the promise browser prototype, but it will also wrap the method and add it to the promiseChain prototype (but not to the async prototype).
@@ -330,7 +328,7 @@ Please refer to the following examples:
 - [promise no-chain](https://github.com/admc/wd/blob/master/examples/promise/add-method-no-chain.js).
 - [async](https://github.com/admc/wd/blob/master/examples/async/add-method.js).
 
-Note: no need to call rewrap anymore
+Note: No need to call rewrap anymore.
 
 ### Promise helpers
 
