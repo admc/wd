@@ -126,7 +126,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod (chain)', function() {
       _(extraPromiseChainMethods).each(function(method, name) {
-        wd.addPromisedMethod(name, method, {chainOnly: true});
+        wd.addPromiseChainMethod(name, method);
       });
       
       browser = newPromiseChainRemote();
@@ -145,7 +145,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod (no-chain)', function() {
       _(extraPromiseNoChainMethods).each(function(method, name) {
-        wd.addPromisedMethod(name, method);
+        wd.addPromiseMethod(name, method);
       });
       
       browser = newPromiseChainRemote();
@@ -218,7 +218,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod', function() {
       _(extraPromiseNoChainMethods).each(function(method, name) {
-        wd.addPromisedMethod(name, method);
+        wd.addPromiseMethod(name, method);
       });
       
       browser = newPromiseRemote();

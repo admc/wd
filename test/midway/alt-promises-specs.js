@@ -95,7 +95,7 @@ describe('alt-promises ' + env.ENV_DESC, function() {
     '<div id="theDiv">Hello World!</div>';
   it('addPromisedMethod (alt promise)', function() {
     _(extraMethods).each(function(method, name) {
-      wd.addPromisedMethod(name, method, {chainOnly: true});
+      wd.addPromiseChainMethod(name, method, {chainOnly: true});
     });
     
     browser = newPromiseChainRemote();
@@ -112,7 +112,7 @@ describe('alt-promises ' + env.ENV_DESC, function() {
     '<div id="theDiv">Hello World!</div>';
   it('addPromisedMethod (mixed promise)', function() {
     _(extraMethods).each(function(method, name) {
-      wd.addPromisedMethod(name, method, {chainOnly: true});
+      wd.addPromiseChainMethod(name, method, {chainOnly: true});
     });
     
     browser = newPromiseChainRemote();
@@ -132,10 +132,6 @@ describe('alt-promises ' + env.ENV_DESC, function() {
   express.partials['browser.resolve (alt promise)'] =
     '<div id="theDiv">Hello World!</div>';
   it('browser.resolve (alt promise)', function() {
-    _(extraMethods).each(function(method, name) {
-      wd.addPromisedMethod(name, method, {chainOnly: true});
-    });
-    
     browser = newPromiseChainRemote();
     return initAndGet(this, 'ap/1').then(function() {
       return browser
