@@ -1,7 +1,3 @@
-//
-// It is now possible to monkey patch using promise returning functions instead.
-//
-
 require('colors');
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
@@ -18,21 +14,15 @@ try {
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-// Monkey patching need to be implemented before creating the browser.
-wd.webdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeout/*, cb*/) {
-  // 'wd.findCallback' is a small helper which looks for the callback in a safe way, and avoids
-  // hanging when the number of arguments passed is wrong.
-  // There is also a 'wd.varargs' for methods with variable argument number.
-  var cb = wd.findCallback(arguments);
-
-  var _this = this;
-  this.waitForElementByCssSelector(selector, timeout, function() {
-    _this.elementByCssSelector(selector, cb);
-  });
-};
-
-// Actualises the promise wrappers
-wd.rewrap();
+// adding custom promise chain method
+wd.addPromiseChainMethod( 
+  'elementByCssSelectorWhenReady',
+  function(selector, timeout) {
+    return this
+      .waitForElementByCssSelector(selector, timeout)
+      .elementByCssSelector(selector);
+  }
+);
 
 var browser = wd.promiseChainRemote();
 
@@ -57,3 +47,4 @@ browser
     .type('Bonjour!').getValue().should.become('Bonjour!')
   .fin(function() { return browser.quit(); })
   .done();
+

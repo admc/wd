@@ -1,3 +1,7 @@
+//
+// It is now possible to monkey patch using promise returning functions instead.
+//
+
 require('colors');
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
@@ -14,14 +18,21 @@ try {
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-// monkey patch
-wd.PromiseChainWebdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeout) {
-  return this
-    .waitForElementByCssSelector(selector, timeout)
-    .elementByCssSelector(selector);
-};
+// Monkey patching need to be implemented before creating the browser.
+wd.addAsyncMethod( 
+  'elementByCssSelectorWhenReady',
+  function(selector, timeout/*, cb*/) {
+    // 'wd.findCallback' is a small helper which looks for the callback in a safe way, and avoids
+    // hanging when the number of arguments passed is wrong.
+    // There is also a 'wd.varargs' for methods with variable argument number.
+    var cb = wd.findCallback(arguments);
 
-// DO NOT call rewrap after this, this would reset the PromiseChainWebdriver prototype
+    var _this = this;
+    this.waitForElementByCssSelector(selector, timeout, function() {
+      _this.elementByCssSelector(selector, cb);
+    });
+  }
+);
 
 var browser = wd.promiseChainRemote();
 
@@ -41,9 +52,8 @@ browser
   .should.become('WD Tests')
   .elementByCssSelector('#comments').getTagName().should.become('textarea')
   .elementByCssSelectorWhenReady('#comments', 2000)
-    .should.eventually.exist
-  .elementByCssSelectorWhenReady('#comments', 2000)
-    .type('Bonjour!').getValue().should.become('Bonjour!')
+  //   .should.eventually.exist
+  // .elementByCssSelectorWhenReady('#comments', 2000)
+  //   .type('Bonjour!').getValue().should.become('Bonjour!')
   .fin(function() { return browser.quit(); })
   .done();
-

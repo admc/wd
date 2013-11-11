@@ -1,6 +1,6 @@
 require('colors');
 var chai = require('chai');
-chai.should();
+var should = chai.should();
 
 var wd;
 try {
@@ -9,18 +9,21 @@ try {
   wd = require('../../lib/main');
 }
 
-// Monkey patching need to be implemented before creating the browser.
-wd.webdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeout/*, cb*/) {
-  // 'wd.findCallback' is a small helper which looks for the callback in a safe way, and avoids
-  // hanging when the number of arguments passed is wrong.
-  // There is also a 'wd.varargs' for methods with variable argument number.
-  var cb = wd.findCallback(arguments);
+// add method
+wd.addAsyncMethod(
+  'elementByCssSelectorWhenReady',
+  function(selector, timeout/*, cb*/) {
+    // 'wd.findCallback' is a small helper which looks for the callback in a safe way, and avoids
+    // hanging when the number of arguments passed is wrong.
+    // There is also a 'wd.varargs' for methods with variable argument number.
+    var cb = wd.findCallback(arguments);
 
-  var _this = this;
-  this.waitForElementByCssSelector(selector, timeout, function() {
-    _this.elementByCssSelector(selector, cb);
-  });
-};
+    var _this = this;
+    this.waitForElementByCssSelector(selector, timeout, function() {
+      _this.elementByCssSelector(selector, cb);
+    });
+  }
+);
 
 var browser = wd.remote();
 
@@ -37,7 +40,7 @@ browser.init({browserName:'chrome'}, function() {
     browser.title(function(err, title) {
       title.should.include('WD');
       browser.elementByCssSelectorWhenReady('#your_comments', 500, function(err, el) {
-        el.should.exist;
+        should.exist(el);
         browser.quit();
       });
     });

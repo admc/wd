@@ -95,7 +95,7 @@ describe('alt-promises ' + env.ENV_DESC, function() {
     '<div id="theDiv">Hello World!</div>';
   it('addPromisedMethod (alt promise)', function() {
     _(extraMethods).each(function(method, name) {
-      wd.addPromiseChainMethod(name, method, {chainOnly: true});
+      wd.addPromiseChainMethod(name, method);
     });
     
     browser = newPromiseChainRemote();
@@ -112,7 +112,7 @@ describe('alt-promises ' + env.ENV_DESC, function() {
     '<div id="theDiv">Hello World!</div>';
   it('addPromisedMethod (mixed promise)', function() {
     _(extraMethods).each(function(method, name) {
-      wd.addPromiseChainMethod(name, method, {chainOnly: true});
+      wd.addPromiseChainMethod(name, method);
     });
     
     browser = newPromiseChainRemote();

@@ -14,15 +14,18 @@ try {
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-// monkey patch
-wd.PromiseWebdriver.prototype.elementByCssSelectorWhenReady = function(selector, timeout) {
+// add promise method
+wd.addPromiseMethod( 
+  'elementByCssSelectorWhenReady',
+  function(selector, timeout) {
   var browser = this;
   return browser
     .waitForElementByCssSelector(selector, timeout)
     .then(function() {
       return browser.elementByCssSelector(selector);
     });
-};
+  }
+);
 
 // DO NOT call rewrap after this, this would reset the PromiseChainWebdriver prototype
 
