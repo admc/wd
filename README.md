@@ -274,7 +274,7 @@ element twice (since the promise chain api is very terse, this is usually accept
 
 Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/chained-el-func-call.js)
 
-### Adding custom method
+### Adding custom methods
 
 You may add method using the following method:
 
@@ -297,6 +297,26 @@ Note: no need to call rewrap anymore
 
 This is an alternative to add method.
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
+
+### Starting the promise chain
+
+The `browser` and `element` object are not themselves promises so that they may be themselves used as the result of a promise. However, if you need to start the chain straight form the browser, you may use:
+
+- `browser.chain()`
+- `browser.noop()`
+- `browser.resolve(promise)`, if you need to resolve a promise immediately.
+
+### Working with external promise libraries
+
+`wd` uses Q internally, but you may use the external promises with the following methods:
+
+- `browser.resolve(externalPromise)`
+- `wd.addPromiseChainMethod(name, externalPromise)`
+- `wd.addPromiseMethod(name, externalPromise)`
+
+Your promise will be automatically wrap within a Q promise using `new Q(externalPromise)`.
+
+See example [here](https://github.com/admc/wd/blob/master/examples/async/external-promise.js)
 
 ### Http configuration
 

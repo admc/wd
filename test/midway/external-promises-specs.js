@@ -3,7 +3,7 @@
 require('../helpers/setup');
 var PromiseSimple = require('promise-simple');
 
-describe('alt-promises ' + env.ENV_DESC, function() {
+describe('external-promises ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var extraMethods = {
