@@ -298,7 +298,7 @@ var asyncAsserter = new Asserter(
 var promiseAsserter = new Asserter(
   function(target) {
     ...
-    return promise; # promise resolved with the wait_for return value.
+    return promise; // promise resolved with the wait_for return value.
     
     // Promise asserter should throw errors marked with `err.retriable=true` 
     // when the condition is not satisfied.    
@@ -319,7 +319,7 @@ Library of commonly used asserters [here](https://github.com/admc/wd/blob/master
 
 If you are only using the promise chain api, you should probably stick with `wd.addPromiseChainMethod(name, method)`.
 
-You may remove method with `wd.removeMethod(name)`. Not sure why you would want to do that, but that will remove the method from the 3 prototypes.
+You may remove a custom method with `wd.removeMethod(name)`. Not sure why you would want to do that, but that will remove the method from the 3 prototypes.
 
 Please refer to the following examples:
 
@@ -337,7 +337,7 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/helpe
 
 ### Starting the promise chain
 
-The `browser` and `element` object are not themselves promises (cause that would lead to chaos), if you need to start the chain straight form the browser, you may use:
+The `browser` and `element` object are not themselves promises (cause that would lead to chaos). If you need to start the chain straight from the browser, you may use:
 
 - `browser.chain()`
 - `browser.noop()`
@@ -347,7 +347,7 @@ The `browser` and `element` object are not themselves promises (cause that would
 - `element.noop()`
 - `element.resolve(promise)`
 
-The resolve method works like Q thenResolve.
+The `resolve` methods work like `Q` `thenResolve`.
 
 ### Working with external promise libraries
 
