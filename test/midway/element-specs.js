@@ -307,7 +307,7 @@ describe('element ' + env.ENV_DESC, function() {
 
   express.partials['element.resolve'] =
     '<div id="theDiv"></div>\n' +
-  it.only('element.resolve', function() {
+  it('element.resolve', function() {
     var deferred = Q.defer();    
     setTimeout(function() {
       deferred.resolve('123');
