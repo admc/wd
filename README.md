@@ -342,7 +342,6 @@ The `browser` and `element` object are not themselves promises (cause that would
 - `browser.chain()`
 - `browser.noop()`
 - `browser.resolve(promise)`
-
 - `element.chain()`
 - `element.noop()`
 - `element.resolve(promise)`
