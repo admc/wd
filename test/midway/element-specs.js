@@ -305,4 +305,21 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
+  express.partials['element.resolve'] =
+    '<div id="theDiv"></div>\n' +
+  it.only('element.resolve', function() {
+    var deferred = Q.defer();    
+    setTimeout(function() {
+      deferred.resolve('123');
+    }, 250);
+    return browser
+      .setImplicitWaitTimeout(0)
+      .elementById("theDiv").then(function(el) {
+        return el
+          .resolve(deferred.promise)
+          .noop()
+          .resolve(deferred.promise)
+          .should.become('123');
+      });
+  });
 });

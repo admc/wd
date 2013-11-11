@@ -255,6 +255,18 @@ describe('api-various ' + env.ENV_DESC, function() {
       .chain().sleep(0).should.be.fulfilled;
   });
 
+  it('browser.resolve', function() {
+    var deferred = Q.defer();    
+    setTimeout(function() {
+      deferred.resolve('123');
+    }, 250);
+    return browser
+      .resolve(deferred.promise)
+      .noop()
+      .resolve(deferred.promise)
+        .should.become('123');
+  });
+
   it('browser.getSessionId', function() {
     return browser.getSessionId(100).should.eventually.have.length.above(0);
   });
