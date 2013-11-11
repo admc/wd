@@ -274,23 +274,28 @@ element twice (since the promise chain api is very terse, this is usually accept
 
 Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/chained-el-func-call.js)
 
-### Monkey patching
+### Adding custom method
 
-You may want to monkey patch the webdriver class in order to add custom functionalities.
+You may add method using the following method:
+
+- `addAsyncMethod(name method)`: This is for regular async methods with callback at the end. This will not only add the method to the async browser prototype, but it will also wrap the method and add it to the promise and promiseChain prototypes.
+- `addPromiseMethod(name method)`: This is for methods returning promise but NOT USING CHAIN internally. This will not only add the method to the promise browser prototype, but it will also wrap the method and add it to the promiseChain prototype (but not to the async prototype).
+- `addPromiseChainMethod(name method)`: This is for methods returning promise USING CHAIN internally. This will only add the method to the promiseChain browser prototype (but neither to async nor to promise browser prototypes).
+
+You may remove method with `removeMethod(name)`. Not sure why you would want to do that, but that will remove the method from the 3 prototypes.
+
 Please refer to the following examples:
 
-- [pure promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js).
-- [async patch used by promise](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js).
-- [promise no-chain](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js).
-- [full async](https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js).
+- [pure promise chain](https://github.com/admc/wd/blob/master/examples/promise/add-method.js).
+- [async patch used by promise chain](https://github.com/admc/wd/blob/master/examples/promise/add-method-async.js).
+- [promise no-chain](https://github.com/admc/wd/blob/master/examples/promise/add-method-no-chain.js).
+- [full async](https://github.com/admc/wd/blob/master/examples/async/add-method.js).
 
-Caveat: You now need to call `wd.rewrap()` to propagate async monkey patching to the 
-promise wrapper. This will ovewrite the promise wrapper prototype, so you need to do 
-your monkey patching in order, async first, call `wd.rewrap()` , and only then promise.
+Note: no need to call rewrap anymore
 
 ### Promise helpers
 
-This is a clean alternative to monkey patching.
+This is an alternative to add method.
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/helper.js).
 
 ### Http configuration

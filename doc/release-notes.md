@@ -30,5 +30,8 @@ Incompatibilities:
 ### 0.2.3 (In progress) 
   - http configuration enhancements, see doc [here](https://github.com/admc/wd#http-configuration).
   - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
-  - monkey patching enhancement (todo)
+  - addPromiseChainMethod/addPromiseMethod/addAsyncMethod/removeMethod replacing monkey patching.
+  Please refer to the add method section in README.
+  - support for external promise libraries.
   - new saveScreenshot method (todo)
+  - rootUrl functionality (todo)
