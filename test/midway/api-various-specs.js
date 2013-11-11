@@ -240,6 +240,10 @@ describe('api-various ' + env.ENV_DESC, function() {
     return browser.sleep(100).should.be.fulfilled;
   });
 
+  it.only('browser.noop', function() {
+    return browser.noop().should.be.fulfilled;
+  });
+
   it('browser.getSessionId', function() {
     return browser.getSessionId(100).should.eventually.have.length.above(0);
   });
