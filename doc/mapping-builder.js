@@ -93,7 +93,6 @@ _(jsonDocs).each(function (jsonDoc) {
   });
 });
 
-
 // missing section, looking for errors
 _(jsonDocs).each(function (jsonDoc) {
   _(jsonDoc).each(function (wd_v) {

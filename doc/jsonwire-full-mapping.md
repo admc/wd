@@ -1198,7 +1198,7 @@ EXTRA
 configureHttp(opts, cb) --&gt; cb(err);<br>
 configureHttp(opts)<br>
 opts example:<br>
-{timeout:60000, retries: 3, 'retryDelay': 15}<br>
+{timeout:60000, retries: 3, 'retryDelay': 15, baseUrl='http://example.com/'}<br>
 more info in README.<br>
 </td>
 </tr>
@@ -1225,6 +1225,19 @@ timeout and pollFreq are optional (default 1000ms/200ms)<br>
 waitForElement(using, value, opts, cb) -&gt; cb(err)<br>
 opts with the following fields: timeout, pollFreq, asserter.<br>
 asserter like: function(element , cb) -&gt; cb(err, satisfied)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+Calls the official jsonWire API for 'takeScreenshot', which<br>
+returns base64 data, and saves it to a real image on the<br>
+local filesystem, using the specified file name.<br>
+saveScreenshot(path, cb) -&gt; cb(err, filePath)<br>
+path maybe a full file path, a directory path (finishing with /), the screenshot <br>
+name, or left blank (will create a file in the system temp dir).<br>
 </td>
 </tr>
 <tr>
@@ -1307,12 +1320,9 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (async script polling within browser):<br>
-waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-waitForConditionInBrowser(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
-waitForConditionInBrowser(conditionExpr, cb) -&gt; cb(err, boolean)<br>
+waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean) <br>
 conditionExpr: condition expression, should return a boolean<br>
-timeout: timeout (optional, default: 1000)<br>
-pollFreq: pooling frequency (optional, default: 100)<br>
+timeout and  pollFreq are optional, default: 1000/100.<br>
 return true if condition satisfied, error otherwise.<br>
 </td>
 </tr>
@@ -1348,6 +1358,15 @@ sleep(ms, cb) -&gt; cb(err)<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+# Helper noop method:<br>
+noop(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Equivalent to the python sendKeys binding. Upload file if<br>
 a local file is detected, otherwise behaves like type.<br>
 element.sendKeys(keys, cb) -&gt; cb(err)<br>
@@ -1359,6 +1378,24 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+# Helper sleep method:<br>
+element.sleep(ms, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+# Helper noop method:<br>
+element.noop(cb) -&gt; cb(err)<br>
 </td>
 </tr>
 </tbody>
