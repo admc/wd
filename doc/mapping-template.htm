@@ -2,7 +2,7 @@
   <tbody>
     <tr>
       <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
-        <strong>Category</strong>
+        <strong>Category/JsonWireProtocol method</strong>
       </td>
       <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
         <strong>wd methods</strong>
@@ -12,18 +12,17 @@
       <tr>
         <td style="border: 1px solid #ccc; padding: 5px;">
           {{#jsonWire}}
-            JsonWireProtocol<br>
             {{method}} <a href="{{url}}">{{path}}</a><br>
             {{desc}}
           {{/jsonWire}}
           {{#asserter}}
-            Asserter
+            asserter
           {{/asserter}}
           {{#wd}}
-            Wd
+            wd
           {{/wd}}
           {{#extra}}
-            Extra
+            extra
           {{/extra}}
           {{#missing}}
             MISSING: {{key}}
