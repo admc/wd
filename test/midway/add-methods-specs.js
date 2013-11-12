@@ -80,7 +80,6 @@ describe('add-methods ' + env.ENV_DESC, function() {
 
   before(function() {
     express.start();
-    wd.configureHttp(env.HTTP_CONFIG);
   });
 
   beforeEach(function() {

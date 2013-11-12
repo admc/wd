@@ -306,24 +306,6 @@ describe('api-various ' + env.ENV_DESC, function() {
          .setHttpTimeout(env.HTTP_TIMEOUT).should.be.fulfilled;
    });
 
-  it('browser.configureHttp', function() {
-    var current = browser._httpConfig;
-    current.should.exist;
-    var wdCurrent = wd.httpConfig;
-    var newConfig = {
-        timeout: env.HTTP_TIMEOUT || 60000,
-        retries: env.HTTP_RETRIES || 10,
-        retryDelay: env.HTTP_RETRY_DELAY || 50
-    };
-    if(newConfig.retryDelay = wdCurrent.retryDelay) { newConfig.retryDelay++; }
-    return browser
-      .configureHttp( newConfig).then(function() {
-        browser._httpConfig.should.deep.equal(newConfig);
-        wd.httpConfig.should.deep.equal(wdCurrent);
-      })
-      .configureHttp(current).should.be.fulfilled;
-  });
-
   it('err.inspect', function() {
     return browser
       .safeExecute("invalid-code> here").then(

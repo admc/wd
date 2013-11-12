@@ -10,7 +10,6 @@ describe('async' + env.ENV_DESC, function() {
 
   before(function(done) {
     browser = wd.remote(env.REMOTE_CONFIG);
-    browser.configureHttp(env.HTTP_CONFIG);
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['e2e']

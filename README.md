@@ -362,9 +362,9 @@ The external promise will be automatically wrapped within a Q promise using `new
 
 See example [here](https://github.com/admc/wd/blob/master/examples/promise/external-promise.js).
 
-### Http configuration
+### Http configuration / base url
 
-Http behaviour may be configured via the `configureHttp` method as 
+Http behaviour and base url may be configured via the `configureHttp` method as 
 in the code below:
 
 ```js
@@ -372,13 +372,15 @@ in the code below:
 wd.configureHttp({
   timeout: 60000,
   retries: 3,
-  retryDelay: 100
+  retryDelay: 100,
+  baseUrl = 'http://example.com/'
 });
 // per browser config
 browser.configureHttp({
   timeout: 60000,
   retries: 3,
-  retryDelay: 100
+  retryDelay: 100,
+  baseUrl = 'http://example.com/'
 });
 ``` 
 
@@ -387,6 +389,8 @@ browser.configureHttp({
 - retries: Number of reconnection attempts in case the connection is dropped. 
   Default is `3`. Pass `0` or `always` to keep trying. Pass `-1` or `never` to disable.
 - retryDelay: the number of ms to wait before reconnecting. Default is `15`.
+- baseUrl: the base url use by the `get` method. The destination url is computed using
+`url.resolve`. Default is empty.
 - If a field is not specified, the current configuration for this field is
   unchanged.
 

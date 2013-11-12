@@ -13,7 +13,6 @@ module.exports = function(that) {
   before(function() {
     express.start();
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
-    browser.configureHttp(env.HTTP_CONFIG);
     deferred.resolve(browser);
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),

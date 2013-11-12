@@ -72,3 +72,5 @@ GLOBAL.expect = chai.expect;
 GLOBAL.should = chai.should();
 
 GLOBAL.Express = require("./express-helper").Express;
+
+wd.configureHttp(env.HTTP_CONFIG);

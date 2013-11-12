@@ -28,10 +28,10 @@ Incompatibilities:
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
 
 ### 0.2.3 (In progress) 
-  - http configuration enhancements, see doc [here](https://github.com/admc/wd#http-configuration).
+  - http configuration enhancements + base url, see doc [here](https://github.com/admc/wd#http-configuration).
   - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
   - addPromiseChainMethod/addPromiseMethod/addAsyncMethod/removeMethod replacing monkey patching.
   Please refer to the add method section in README.
   - Support for external promise libraries.
   - New saveScreenshot method.
-  - rootUrl functionality (todo)
+ 
