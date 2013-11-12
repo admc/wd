@@ -1390,14 +1390,6 @@ element.noop(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-extra
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-jshint evil: true<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
 asserter
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
