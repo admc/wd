@@ -1,6 +1,9 @@
 require('../helpers/setup');
 
 var imageinfo = require('imageinfo');
+var os = require('os');
+var path = require('path');
+var fs = require('fs');
 
 describe('api-various ' + env.ENV_DESC, function() {
 
@@ -104,6 +107,31 @@ describe('api-various ' + env.ENV_DESC, function() {
         img.width.should.not.equal(0);
         img.height.should.not.equal(0);
       });
+  });
+
+  it('browser.saveScreenshot', function() {
+    var tmp = path.dirname(os.tmpdir());
+    var mydir = tmp + '/myscreenshot';
+    try { fs.mkdirSync(mydir); } catch(ign) {}
+
+    return browser
+      .saveScreenshot( mydir + '/abc.png')
+      .should.become( mydir + '/abc.png')
+      .then(function() {
+        var res = fs.readFileSync(mydir + '/abc.png');
+        var data = new Buffer(res, 'base64');
+        var img = imageinfo(data);
+        img.should.not.be.false;
+        img.format.should.equal('PNG');
+        img.width.should.not.equal(0);
+        img.height.should.not.equal(0);
+      })
+      .saveScreenshot( mydir + '/aaa')
+      .should.become( mydir + '/aaa.png')
+      .saveScreenshot(mydir + '/')
+        .should.eventually.match(/\/myscreenshot\/screenshot-\w+\.png$/)
+      .saveScreenshot()
+        .should.eventually.match(/\/screenshot-\w+\.png$/);
   });
 
   it('browser.<cookie methods>', function() {
