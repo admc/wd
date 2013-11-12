@@ -97,7 +97,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .dismissAlert();
   });
 
-  it('browser.takeScreenshot', function() {
+  it.only('browser.takeScreenshot', function() {
     return browser
       .takeScreenshot().then(function(res) {
         var data = new Buffer(res, 'base64');

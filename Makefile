@@ -62,17 +62,18 @@ test_android:
 	BROWSER=android make test_e2e_sauce
 
 test_travis:
-ifneq ($(TRAVIS_PULL_REQUEST),false)
-	@echo 'Skipping Sauce Labs tests as this is a pull request'
-else
-ifeq ($(BROWSER),multi)
-	make test_unit
-	make test_midway_sauce_connect
-else
-	make test_midway_sauce_connect
-	make test_e2e_sauce
-endif
-endif
+	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` mocha test/midway/api-various-specs.js
+# ifneq ($(TRAVIS_PULL_REQUEST),false)
+# 	@echo 'Skipping Sauce Labs tests as this is a pull request'
+# else
+# ifeq ($(BROWSER),multi)
+# 	make test_unit
+# 	make test_midway_sauce_connect
+# else
+# 	make test_midway_sauce_connect
+# 	make test_e2e_sauce
+# endif
+# endif
 
 test_coverage:
 	rm -rf coverage
