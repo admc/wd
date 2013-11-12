@@ -111,14 +111,6 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
   it.only('browser.saveScreenshot', function() {
-    //var tmp ;
-    // console.log("env.TRAVIS --> ", env.TRAVIS);
-    // if(env.TRAVIS) { 
-    //   tmp = '/tmp'; 
-    // } else { 
-    //   console.log("not travis");
-    //   tmp = path.dirname(os.tmpdir()); 
-    // }
     var mydir = path.join(tmp.tmpdir , '/myscreenshot');
     console.log("mydir --> ", mydir);
     try { fs.mkdirSync(mydir); } catch(ign) {}
@@ -139,8 +131,8 @@ describe('api-various ' + env.ENV_DESC, function() {
       .should.become( mydir + '/aaa.png')
       .saveScreenshot(mydir + '/')
         .should.eventually.match(/\/myscreenshot\/screenshot-\w+\.png$/)
-      .saveScreenshot()
-        .should.eventually.match(/\/screenshot-\w+\.png$/);
+      // .saveScreenshot()
+      //   .should.eventually.match(/\/screenshot-\w+\.png$/);
   });
 
   it('browser.<cookie methods>', function() {
