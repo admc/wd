@@ -10,7 +10,9 @@ var jsonWireFull = JSON.parse(fs.readFileSync('doc/jsonwire-full.json').toString
 
 var jsonDocs = [
   JSON.parse(fs.readFileSync('tmp/webdriver-dox.json').toString()),
-  JSON.parse(fs.readFileSync('tmp/element-dox.json').toString())
+  JSON.parse(fs.readFileSync('tmp/element-dox.json').toString()),
+  JSON.parse(fs.readFileSync('tmp/main-dox.json').toString()),
+  JSON.parse(fs.readFileSync('tmp/asserters-dox.json').toString())
 ];
 
 var resMapping = [];
@@ -71,7 +73,9 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
 _(jsonDocs).each(function (jsonDoc) {
   _(jsonDoc).each(function (wd_v) {
     if(_(wd_v.tags).filter(function (t) {
-       return t.type === 'jsonWire';
+       return t.type === 'jsonWire' ||
+              t.type === 'asserter' ||
+              t.type === 'wd';
     }).size() === 0){
       var current = {
         extra: true,
@@ -93,6 +97,57 @@ _(jsonDocs).each(function (jsonDoc) {
   });
 });
 
+// asserter section
+_(jsonDocs).each(function (jsonDoc) {
+  _(jsonDoc).each(function (wd_v) {
+    if(_(wd_v.tags).filter(function (t) {
+       return t.type === 'asserter';
+    }).size() > 0){
+      var current = {
+        asserter: true,
+        wd_doc: []
+      };
+      var desc = _(wd_v.description.full.split('\n')).filter(function (l) {
+        return  l !== '';
+      }).map(function (l) {
+        return {line: l};
+      }).value();
+      current.wd_doc.push({ 'desc': desc });
+      current.wd_doc1 = current.wd_doc;
+
+      if( (mappingType === 'full') ||
+          (mappingType === 'supported') ) {
+        resMapping.push(current);
+      }
+    }
+  });
+});
+
+// wd section
+_(jsonDocs).each(function (jsonDoc) {
+  _(jsonDoc).each(function (wd_v) {
+    if(_(wd_v.tags).filter(function (t) {
+       return t.type === 'wd';
+    }).size() > 0){
+      var current = {
+        wd: true,
+        wd_doc: []
+      };
+      var desc = _(wd_v.description.full.split('\n')).filter(function (l) {
+        return  l !== '';
+      }).map(function (l) {
+        return {line: l};
+      }).value();
+      current.wd_doc.push({ 'desc': desc });
+      current.wd_doc1 = current.wd_doc;
+
+      if( (mappingType === 'full') ||
+          (mappingType === 'supported') ) {
+        resMapping.push(current);
+      }
+    }
+  });
+});
 // missing section, looking for errors
 _(jsonDocs).each(function (jsonDoc) {
   _(jsonDoc).each(function (wd_v) {

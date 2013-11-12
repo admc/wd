@@ -82,6 +82,8 @@ _dox:
 	@mkdir -p tmp
 	@./node_modules/.bin/dox -r < lib/webdriver.js > tmp/webdriver-dox.json
 	@./node_modules/.bin/dox -r < lib/element.js > tmp/element-dox.json
+	@./node_modules/.bin/dox -r < lib/main.js > tmp/main-dox.json
+	@./node_modules/.bin/dox -r < lib/asserters.js > tmp/asserters-dox.json
 
 # build the mapping (implemented only)
 mapping: _dox

@@ -1161,7 +1161,7 @@ NA
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Retrieves the current session id.<br>
@@ -1171,7 +1171,7 @@ getSessionId()<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Opens a new window (using Javascript window.open):<br>
@@ -1184,7 +1184,7 @@ or by getting the last handle returned by the windowHandles method.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 windowName(cb) -&gt; cb(err, name)<br>
@@ -1192,10 +1192,9 @@ windowName(cb) -&gt; cb(err, name)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-configureHttp(opts, cb) --&gt; cb(err);<br>
 configureHttp(opts)<br>
 opts example:<br>
 {timeout:60000, retries: 3, 'retryDelay': 15, baseUrl='http://example.com/'}<br>
@@ -1204,7 +1203,7 @@ more info in README.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 waitFor(asserter, timeout, pollFreq, cb) -&gt; cb(err, return_value)<br>
@@ -1216,7 +1215,7 @@ asserter like: function(browser , cb) -&gt; cb(err, satisfied, return_value)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 waitForElement(using, value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
@@ -1229,12 +1228,9 @@ asserter like: function(element , cb) -&gt; cb(err, satisfied)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-Calls the official jsonWire API for 'takeScreenshot', which<br>
-returns base64 data, and saves it to a real image on the<br>
-local filesystem, using the specified file name.<br>
 saveScreenshot(path, cb) -&gt; cb(err, filePath)<br>
 path maybe a full file path, a directory path (finishing with /), the screenshot <br>
 name, or left blank (will create a file in the system temp dir).<br>
@@ -1242,7 +1238,7 @@ name, or left blank (will create a file in the system temp dir).<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
@@ -1260,7 +1256,7 @@ as in waitForElement.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 waitForVisibleByClassName(value, timeout, cb) -&gt; cb(err)<br>
@@ -1276,7 +1272,7 @@ waitForVisibleByCss(value, timeout, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(element , cb) -&gt; cb(err, boolean)<br>
@@ -1285,7 +1281,7 @@ isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Retrieves the pageIndex element (added for Appium):<br>
@@ -1294,7 +1290,7 @@ getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Uploads a local file using undocumented<br>
@@ -1304,7 +1300,7 @@ uploadFile(filepath, cb) -&gt; cb(err, filepath)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (polling within wd client):<br>
@@ -1316,7 +1312,7 @@ return true if condition satisfied, error otherwise.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (async script polling within browser):<br>
@@ -1328,43 +1324,43 @@ return true if condition satisfied, error otherwise.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-# Updates saucelabs job:<br>
+Updates saucelabs job:<br>
 sauceJobUpdate(jsonData, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-# Set saucelabs job status:<br>
+Set saucelabs job status:<br>
 sauceJobStatus(hasPassed, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-# Helper sleep method:<br>
+Helper sleep method:<br>
 sleep(ms, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-# Helper noop method:<br>
+Helper noop method:<br>
 noop(cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Equivalent to the python sendKeys binding. Upload file if<br>
@@ -1374,7 +1370,7 @@ element.sendKeys(keys, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
@@ -1382,20 +1378,120 @@ isVisible(cb) -&gt; cb(err, boolean)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-# Helper sleep method:<br>
+Helper sleep method:<br>
 element.sleep(ms, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-# Helper noop method:<br>
+Helper noop method:<br>
 element.noop(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+jshint evil: true<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.nonEmptyText<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.textInclude(content) -&gt; Asserter<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.isVisible<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.isHidden<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.jsCondition(jsConditionExpr) -&gt; Asserter<br>
+jsConditionExpr: js script expression, should evaluate as boolean.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.configureHttp(opts)<br>
+opts example:<br>
+{timeout:60000, retries: 3, 'retryDelay': 15, baseUrl='http://example.com/'}<br>
+more info in README.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.showHideDeprecation(boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addAsyncMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addPromiseMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addPromiseChainMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.removeMethod(name, func)<br>
 </td>
 </tr>
 </tbody>

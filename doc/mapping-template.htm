@@ -15,8 +15,14 @@
             {{method}} <a href="{{url}}">{{path}}</a><br>
             {{desc}}
           {{/jsonWire}}
+          {{#asserter}}
+            asserter
+          {{/asserter}}
+          {{#wd}}
+            wd
+          {{/wd}}
           {{#extra}}
-            EXTRA
+            extra
           {{/extra}}
           {{#missing}}
             MISSING: {{key}}
