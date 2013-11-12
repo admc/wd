@@ -1,7 +1,6 @@
 require('../helpers/setup');
 
 var imageinfo = require('imageinfo');
-var os = require('os');
 var path = require('path');
 var fs = require('fs');
 var tmp = require('tmp');
@@ -111,7 +110,7 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
   it.only('browser.saveScreenshot', function() {
-    var mydir = path.join(tmp.tmpdir , '/myscreenshot');
+    var mydir = path.join(tmp.tmpdir , 'myscreenshot');
     console.log("mydir --> ", mydir);
     try { fs.mkdirSync(mydir); } catch(ign) {}
 
@@ -131,8 +130,8 @@ describe('api-various ' + env.ENV_DESC, function() {
       .should.become( mydir + '/aaa.png')
       .saveScreenshot(mydir + '/')
         .should.eventually.match(/\/myscreenshot\/screenshot-\w+\.png$/)
-      // .saveScreenshot()
-      //   .should.eventually.match(/\/screenshot-\w+\.png$/);
+      .saveScreenshot()
+        .should.eventually.match(/\/screenshot-\w+\.png$/);
   });
 
   it('browser.<cookie methods>', function() {
