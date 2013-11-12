@@ -41,6 +41,11 @@ npm install wd
 Many changes have been introduced in 0.2.x versions, please check 
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
 
+### 0.2.3 caveat 
+  - Most wait method have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters.
+  - Direct monkey patch is not recommended anymore, there were some side uses case which were not easy to cover this way.
+  There are new addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods to be used instead. See doc below.
+
 ## Usage
 
 ### Q promises + chaining
@@ -171,9 +176,9 @@ describe("using mocha-as-promised and chai-as-promised", function() {
 
 ### Api
 
-[supported](https://github.com/admc/wd/blob/master/doc/jsonwire-mapping.md)
+[jsonwire mapping + api doc](https://github.com/admc/wd/blob/master/doc/api.md)
 
-[full json wire mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
+[åfull jsonwire mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
 
 ### JsonWireProtocol
 
