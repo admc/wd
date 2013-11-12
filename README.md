@@ -41,10 +41,10 @@ npm install wd
 Many changes have been introduced in 0.2.x versions, please check 
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
 
-### 0.2.3 caveat 
-  - Most wait method have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters.
-  - Direct monkey patch is not recommended anymore, there were some side uses case which were not easy to cover this way.
-  There are new addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods to be used instead. See doc below.
+### 0.2.3 caveats
+  - Most wait methods have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters if you feel it is useful for others.
+  - Direct monkey patch is not recommended anymore, there were some side use cases which were not easy to cover.
+  Use addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods instead. See doc below.
 
 ## Usage
 
@@ -314,7 +314,8 @@ var promiseAsserter = new Asserter(
 
 Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for.js).
 
-Library of commonly used asserters [here](https://github.com/admc/wd/blob/master/lib/asserters.js).
+There are ready to use asserters [here](https://github.com/admc/wd/blob/master/lib/asserters.js),
+See also the asserter category in the api doc [here](https://github.com/admc/wd/blob/master/doc/api.md).
 
 ### Adding custom methods
 

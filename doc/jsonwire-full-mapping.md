@@ -2,7 +2,7 @@
 <tbody>
 <tr>
 <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
-<strong>Category/JsonWireProtocol method</strong>
+<strong>category / JsonWireProtocol method</strong>
 </td>
 <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
 <strong>wd methods</strong>
@@ -1232,8 +1232,8 @@ extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 saveScreenshot(path, cb) -&gt; cb(err, filePath)<br>
-path maybe a full file path, a directory path (finishing with /), the screenshot <br>
-name, or left blank (will create a file in the system temp dir).<br>
+path maybe a full file path, a directory path (finishing with /),<br>
+the screenshot name, or left blank (will create a file in the system temp dir).<br>
 </td>
 </tr>
 <tr>
