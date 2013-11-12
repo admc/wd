@@ -63,6 +63,7 @@ test_android:
 
 test_travis:
 	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` mocha test/midway/api-various-specs.js
+	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` mocha test/midway/suffixes/api-el-by-name-specs.js
 # ifneq ($(TRAVIS_PULL_REQUEST),false)
 # 	@echo 'Skipping Sauce Labs tests as this is a pull request'
 # else

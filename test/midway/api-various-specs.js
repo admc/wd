@@ -97,7 +97,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .dismissAlert();
   });
 
-  it.only('browser.takeScreenshot', function() {
+  it('browser.takeScreenshot', function() {
     return browser
       .takeScreenshot().then(function(res) {
         var data = new Buffer(res, 'base64');
@@ -109,8 +109,12 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  it('browser.saveScreenshot', function() {
-    var tmp = path.dirname(os.tmpdir());
+  it.only('browser.saveScreenshot', function() {
+    var tmp ;
+    if(env.TRAVIS) 
+      { tmp = '/tmp'; }
+    else
+      { tmp = path.dirname(os.tmpdir()); }
     var mydir = path.join(tmp , '/myscreenshot');
     try { fs.mkdirSync(mydir); } catch(ign) {}
 
