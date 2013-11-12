@@ -111,11 +111,15 @@ describe('api-various ' + env.ENV_DESC, function() {
 
   it.only('browser.saveScreenshot', function() {
     var tmp ;
-    if(env.TRAVIS) 
-      { tmp = '/tmp'; }
-    else
-      { tmp = path.dirname(os.tmpdir()); }
+    console.log("env.TRAVIS --> ", env.TRAVIS);
+    if(env.TRAVIS) { 
+      tmp = '/tmp'; 
+    } else { 
+      console.log("not travis");
+      tmp = path.dirname(os.tmpdir()); 
+    }
     var mydir = path.join(tmp , '/myscreenshot');
+    console.log("mydir --> ", mydir);
     try { fs.mkdirSync(mydir); } catch(ign) {}
 
     return browser
