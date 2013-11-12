@@ -1,7 +1,6 @@
 require('../helpers/setup');
 
 var imageinfo = require('imageinfo');
-var os = require('os');
 var path = require('path');
 var fs = require('fs');
 var tmp = require('tmp');
@@ -131,8 +130,9 @@ describe('api-various ' + env.ENV_DESC, function() {
       .should.become( mydir + '/aaa.png')
       .saveScreenshot(mydir + '/')
         .should.eventually.match(/\/myscreenshot\/screenshot-\w+\.png$/)
-      // .saveScreenshot()
-      //   .should.eventually.match(/\/screenshot-\w+\.png$/);
+      .saveScreenshot()
+      .then(function(screenshotPath) {console.log("screenshotPath -->", screenshotPath);})
+        .should.eventually.match(/\/screenshot-\w+\.png$/);
   });
 
   it('browser.<cookie methods>', function() {
