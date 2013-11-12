@@ -118,7 +118,13 @@ describe('api-various ' + env.ENV_DESC, function() {
       .saveScreenshot( mydir + '/abc.png')
       .should.become( mydir + '/abc.png')
       .then(function() {
-        var res = fs.readFileSync(mydir + '/abc.png', {encoding: 'base64'});
+        var res;
+        try{
+          res = fs.readFileSync(mydir + '/abc.png', {encoding: 'base64'});  
+        }catch(err){
+          // for 0.8
+          res = fs.readFileSync(mydir + '/abc.png');
+        }
         var data = new Buffer(res, 'base64');
         var img = imageinfo(data);
         img.should.not.be.false;
