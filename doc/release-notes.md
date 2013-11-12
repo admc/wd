@@ -33,5 +33,5 @@ Incompatibilities:
   - addPromiseChainMethod/addPromiseMethod/addAsyncMethod/removeMethod replacing monkey patching.
   Please refer to the add method section in README.
   - Support for external promise libraries.
-  - New saveScreenshot method (todo)
+  - New saveScreenshot method.
   - rootUrl functionality (todo)

@@ -337,7 +337,9 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/helpe
 
 ### Starting the promise chain
 
-The `browser` and `element` object are not themselves promises (cause that would lead to chaos). If you need to start the chain straight from the browser, you may use:
+The `browser` and `element` object are not themselves promises (cause that would lead to chaos), so you 
+cannot call Q core methods on them. However you may call one of the method below to initiate the promise 
+chain:
 
 - `browser.chain()`
 - `browser.noop()`
