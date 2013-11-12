@@ -118,6 +118,8 @@ describe('api-various ' + env.ENV_DESC, function() {
       .saveScreenshot( mydir + '/abc.png')
       .should.become( mydir + '/abc.png')
       .then(function() {
+        // imageinfo bug in unstable node
+        if(process.version.match(/v0\.11\./)) { return; }
         var res = fs.readFileSync(mydir + '/abc.png');
         var data = new Buffer(res, 'base64');
         var img = imageinfo(data);
