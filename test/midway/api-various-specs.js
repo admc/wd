@@ -111,7 +111,7 @@ describe('api-various ' + env.ENV_DESC, function() {
 
   it('browser.saveScreenshot', function() {
     var tmp = path.dirname(os.tmpdir());
-    var mydir = tmp + '/myscreenshot';
+    var mydir = path.join(tmp , '/myscreenshot');
     try { fs.mkdirSync(mydir); } catch(ign) {}
 
     return browser

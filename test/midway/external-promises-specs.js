@@ -3,7 +3,7 @@
 require('../helpers/setup');
 var PromiseSimple = require('promise-simple');
 
-describe('external-promises ' + env.ENV_DESC, function() {
+describe('ext-promises ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var extraMethods = {
@@ -70,7 +70,7 @@ describe('external-promises ' + env.ENV_DESC, function() {
 
   function initAndGet(that, desc) {
     var sauceExtra = {
-      name: sauceJobTitle(that.runnable().parent.parent.title + ' ' + desc),
+      name: sauceJobTitle(that.runnable().parent.title + ' ' + desc),
       tags: ['midway']
     };
     return browser
@@ -98,7 +98,7 @@ describe('external-promises ' + env.ENV_DESC, function() {
     });
     
     browser = newPromiseChainRemote();
-    return initAndGet(this, 'ap/1').then(function() {
+    return initAndGet(this, '#1').then(function() {
       return browser
         .altSleep(100)
           .should.be.fulfilled
@@ -115,7 +115,7 @@ describe('external-promises ' + env.ENV_DESC, function() {
     });
     
     browser = newPromiseChainRemote();
-    return initAndGet(this, 'ap/1').then(function() {
+    return initAndGet(this, '#2').then(function() {
       return browser
         .altSleepAndElementById(100, 'theDiv')
           .should.be.fulfilled
@@ -132,7 +132,7 @@ describe('external-promises ' + env.ENV_DESC, function() {
     '<div id="theDiv">Hello World!</div>';
   it('browser.resolve (alt promise)', function() {
     browser = newPromiseChainRemote();
-    return initAndGet(this, 'ap/1').then(function() {
+    return initAndGet(this, '#3').then(function() {
       return browser
         .resolve(extraMethods.altSleepAndOk())
         .should.become('OK')
