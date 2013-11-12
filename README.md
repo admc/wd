@@ -43,7 +43,7 @@ Many changes have been introduced in 0.2.x versions, please check
 
 ### 0.2.3 caveats
   - Most wait methods have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters if you feel it is useful for others.
-  - Direct monkey patch is not recommended anymore, there were some side use cases which were not easy to cover.
+  - Manual monkey patching is not recommended anymore, there were some side use cases which were not easy to cover.
   Use addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods instead. See doc below.
 
 ## Usage
