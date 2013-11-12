@@ -109,7 +109,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  it.only('browser.saveScreenshot', function() {
+  it('browser.saveScreenshot', function() {
     var mydir = path.join(tmp.tmpdir , 'myscreenshot');
     console.log("mydir --> ", mydir);
     try { fs.mkdirSync(mydir); } catch(ign) {}
