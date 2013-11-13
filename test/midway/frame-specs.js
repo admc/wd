@@ -1,7 +1,7 @@
 
 require('../helpers/setup');
 
-describe('frame ' + env.ENV_DESC + ' @skip-android @skip-ios', function() {
+describe('frame ' + env.ENV_DESC, function() {
 
   var ctx = require('./midway-base')(this),
       browser;

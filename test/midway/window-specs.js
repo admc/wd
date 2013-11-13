@@ -1,6 +1,6 @@
 require('../helpers/setup');
 
-describe('window ' + env.ENV_DESC + ' @skip-android @skip-ios', function() {
+describe('window ' + env.ENV_DESC, function() {
 
   var browser;
 
