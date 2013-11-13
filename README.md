@@ -323,9 +323,9 @@ See also the asserter category in the api doc [here](https://github.com/admc/wd/
 - `wd.addPromiseMethod(name, method)`: This is for promise returning methods NOT USING CHAIN internally. This will not only add the method to the promise browser prototype, but also wrap the method and add it to the promiseChain prototype (but not to the async prototype).
 - `wd.addPromiseChainMethod(name, method)`: This is for promise returning methods USING CHAIN internally. This will only add the method to the promiseChain browser prototype (but neither to async nor to promise browser prototypes).
 
-If you are only using the promise chain api, you should probably stick with `wd.addPromiseChainMethod(name, method)`.
+If you are only using the promise chain api, you should probably stick with `wd.addPromiseChainMethod`.
 
-You may remove a custom method with `wd.removeMethod(name)`. Not sure why you would want to do that, but that will remove the method from the 3 prototypes.
+Custom methods may be removed with `wd.removeMethod(name)`. That will remove the method from the 3 prototypes.
 
 Please refer to the following examples:
 
