@@ -19,6 +19,7 @@ try {
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('mocha spec examples', function() {
+  this.timeout(10000);
 
   // using mocha-as-promised and chai-as-promised is the best way
   describe("using mocha-as-promised and chai-as-promised", function() {
