@@ -1,7 +1,6 @@
 require('../helpers/setup');
 
 describe('wait-for ' + env.ENV_DESC, function() {
-  var asserters = wd.asserters;
   var Asserter = wd.Asserter;
   var page = '<div id="theDiv"></div>';
 
@@ -12,19 +11,6 @@ describe('wait-for ' + env.ENV_DESC, function() {
 
   var removeChildren =
     '$("#theDiv").empty();\n';
-
-  var appendChildAndHide =
-    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
-    'setTimeout(function() {\n' +
-    ' $("#theDiv .child").hide();\n' +
-    '}, arguments[0]);\n';
-
-  var appendChildHideAndShow =
-    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
-    '$("#theDiv .child").hide();\n' +
-    'setTimeout(function() {\n' +
-    ' $("#theDiv .child").show();\n' +
-    '}, arguments[0]);\n';
 
   // util function used tag chai assertion errors
   var tagChaiAssertionError = function(err) {
@@ -130,7 +116,17 @@ describe('wait-for ' + env.ENV_DESC, function() {
 
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
-      .waitForElement("css selector", "#theDiv .child", elAsserter, 2 * env.BASE_TIME_UNIT, 100)
+      .waitForElement("css selector", "#theDiv .child", {
+        timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 100 })
+      .text().should.become('a waitFor child');
+  }); 
+
+  express.partials['browser.waitForElement - asserter'] = page;
+  it('browser.waitForElement - asserter', function() {
+    return browser
+      .execute( removeChildren )
+      .execute( appendChild, [env.BASE_TIME_UNIT] )
+      .waitForElement("css selector", "#theDiv .child", elAsserter, 2 * env.BASE_TIME_UNIT, 200)
       .text().should.become('a waitFor child')
       .waitForElement("css selector", "#theDiv .child", elAsserter, 2 * env.BASE_TIME_UNIT)
       .text().should.become('a waitFor child')
@@ -140,33 +136,31 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
       .waitForElement("css selector", "#theDiv .child", { asserter: elAsserter,
-        timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 100 })
-      .text().should.become('a waitFor child')
-      .waitForElement("css selector", "#theDiv .child", {
-        timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 100 })
+        timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 200 })
       .text().should.become('a waitFor child')
 
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
       .waitForElement("css selector", "#theDiv .child", promisedElAsserter,
-         2 * env.BASE_TIME_UNIT, 100)
-      .text().should.become('a waitFor child')
+         2 * env.BASE_TIME_UNIT, 200)
+      .text().should.become('a waitFor child');
+  }); 
 
-      .execute( removeChildren )
-      .execute( appendChild, [env.BASE_TIME_UNIT] )
-
+  express.partials['browser.waitForElement - rejected'] = page;
+  it('browser.waitForElement', function() {
+    return browser.chain()
       .then(function() {
         return browser
           .waitForElement("css selector", "#theDiv .child", elAsserterFalse,
-            0.1 * env.BASE_TIME_UNIT, 100)
+            0.1 * env.BASE_TIME_UNIT, 200)
           .should.be.rejectedWith(/Element condition wasn't satisfied/);
       })
 
       .then(function() {
         return browser
           .waitForElement("css selector", "#theDiv .child", { asserter: elAsserterFalse,
-            timeout: 0.1 * env.BASE_TIME_UNIT, pollFreq: 100 })
+            timeout: 0.1 * env.BASE_TIME_UNIT, pollFreq: 200 })
           .should.be.rejectedWith(/Element condition wasn't satisfied/);
       })
 
@@ -183,77 +177,17 @@ describe('wait-for ' + env.ENV_DESC, function() {
 
       .execute( appendChild, [env.BASE_TIME_UNIT] )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitForElementByCss("#theDiv .child", 2 * env.BASE_TIME_UNIT, 100)
+      .waitForElementByCss("#theDiv .child", 2 * env.BASE_TIME_UNIT, 200)
       .text().should.become('a waitFor child')
 
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", elAsserter, 2 * env.BASE_TIME_UNIT, 100)
+      .waitForElementByCss("#theDiv .child", elAsserter, 2 * env.BASE_TIME_UNIT, 200)
       .text().should.become('a waitFor child')
 
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
       .waitForElementByCss("#theDiv .child", { asserter: elAsserter,
-        timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 100 });
-  });
-
-  express.partials['asserters.nonEmptyText'] = page;
-  it('asserters.nonEmptyText', function() {
-    return browser
-      .execute( appendChild, [env.BASE_TIME_UNIT] )
-      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitForElementByCss("#theDiv .child", asserters.nonEmptyText ,2 * env.BASE_TIME_UNIT)
-      .text().should.become('a waitFor child');
-  });
-
-  express.partials['asserters.textInclude'] = page;
-  it('asserters.textInclude', function() {
-    return browser
-      .execute( appendChild, [env.BASE_TIME_UNIT] )
-      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitForElementByCss("#theDiv .child", asserters.textInclude('a waitFor child') ,2 * env.BASE_TIME_UNIT)
-      .text().should.become('a waitFor child');
-  });
-
-  express.partials['asserters.isVisible'] = page;
-  it('asserters.isVisible', function() {
-    return browser
-      .execute( appendChildHideAndShow, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT)
-      .text().should.become('a waitFor child');
-  });
-
-  express.partials['asserters.isHidden'] = page;
-  it('asserters.isHidden', function() {
-    return browser
-      .execute( appendChildAndHide, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
-      .text().should.become('');
-  });
-
-  express.partials['asserters.jsCondition'] =
-    '<div id="theDiv"></div>\n';
-  it('asserters.jsCondition', function() {
-    var exprCond = "$('#theDiv .child').length > 0";
-    return browser
-      .executeAsync(
-        'var args = Array.prototype.slice.call( arguments, 0 );\n' +
-        'var done = args[args.length -1];\n' +
-        ' setTimeout(function() {\n' +
-        ' $("#theDiv").html("<div class=\\"child\\">a waitForCondition child</div>");\n' +
-        ' }, arguments[0]);\n' +
-        'done();\n',
-        [env.BASE_TIME_UNIT]
-      )
-      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitFor(asserters.jsCondition(exprCond) , 2 * env.BASE_TIME_UNIT, 200)
-        .should.eventually.be.ok
-      .waitFor(asserters.jsCondition(exprCond, true) , 2 * env.BASE_TIME_UNIT, 200)
-        .should.eventually.be.ok
-      .then(function() {
-        // unsafe mode might hangs selenium
-        return browser.waitFor(asserters.jsCondition('$wrong expr!!!', true))
-          .should.be.rejectedWith(/status: 13/);
-      });
+        timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 200 });
   });
 });
