@@ -22,16 +22,17 @@ which may affect external wrappers. External wrappers should now subclass those 
 
 Incompatibilities: 
 
-  - There is a new method to call, `wd.rewrap()`, to propagate async monkey 
-  patching to promise. (see [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35) and the monkey patch section below)
+  - There is a new method to call, `wd.rewrap()`, to propagate async monkey patching to promise. 
+  (see [here](https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35)
+  and the monkey patch section in README) [Note: monkey patching and `rewrap` note recommended from 0.2.3]. 
   - The chai-as-promised setup has changed in v4, look out for the `transferPromiseness` (Requires chai-as-promised 4.1.0 or greater)
-  line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15))
+  line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15)).
 
 ### 0.2.3 (In progress) 
-  - http configuration enhancements + base url, see doc [here](https://github.com/admc/wd#http-configuration--base-url).
+  - Http configuration enhancements + base url, see doc [here](https://github.com/admc/wd#http-configuration--base-url).
   - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
-  - addPromiseChainMethod/addPromiseMethod/addAsyncMethod/removeMethod replacing monkey patching.
-  Please refer to the add method section in README.
+  - `addPromiseChainMethod`/`addPromiseMethod`/`addAsyncMethod`/`removeMethod` replacing monkey patching
+  (Please refer to the add method section in README).
   - Support for external promise libraries.
   - New saveScreenshot method.
  
