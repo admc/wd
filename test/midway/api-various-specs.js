@@ -3,7 +3,7 @@ require('../helpers/setup');
 var imageinfo = require('imageinfo');
 var path = require('path');
 var fs = require('fs');
-var tmp = require('tmp');
+// var tmp = require('tmp');
 
 describe('api-various ' + env.ENV_DESC, function() {
 
@@ -109,7 +109,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  it('browser.saveScreenshot', function() {
+  it.skip('browser.saveScreenshot', function() {
     var mydir = path.join(tmp.tmpdir , 'myscreenshot');
     try { fs.mkdirSync(mydir); } catch(ign) {}
 
