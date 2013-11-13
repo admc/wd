@@ -7,7 +7,7 @@
     "browser",
     "javascript"
   ],
-  "version": "0.1.0",
+  "version": "0.2.3",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -27,6 +27,12 @@
     "type": "git",
     "url": "https://github.com/admc/wd.git"
   },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/admc/wd/issues"
   },
@@ -41,27 +47,33 @@
     "lib": "./lib"
   },
   "dependencies": {
-    "async": "0.2.x",
-    "underscore": "1.4.x",
+    "async": "~0.2.9",
     "vargs": "~0.1.0",
-    "q": "0.9.x",
+    "q": "~0.9.7",
     "request": "~2.21.0",
-    "archiver": "~0.4.6"
+    "archiver": "~0.4.10",
+    "lodash": "~1.3.1",
+    "tmp": "0.0.21",
+    "string": "~1.6.1"
   },
   "devDependencies": {
-    "mocha": "1.9.x",
-    "should": "1.2.x",
-    "nock": "~0.17.5",
-    "coffee-script": "1.6.x",
-    "express": "3.x",
-    "imageinfo": "1.0.x",
-    "covershot": "0.1.x",
-    "dox": "0.4.x",
-    "mu2": "0.5.x",
-    "sv-selenium": "0.1.x",
-    "colors": "~0.6.0-1"
+    "mocha": "~1.13.0",
+    "nock": "~0.22.1",
+    "express": "~3.4.3",
+    "imageinfo": "~1.0.4",
+    "dox": "~0.4.4",
+    "mu2": "~0.5.19",
+    "sv-selenium": "~0.2.2",
+    "colors": "~0.6.2",
+    "chai-as-promised": "~4.1.0",
+    "chai": "~1.8.1",
+    "mocha-as-promised": "~1.4.0",
+    "hbs": "~2.4.0",
+    "istanbul": "~0.1.44",
+    "promise-simple": "~0.1.0"
   },
   "scripts": {
-    "test": "make test_saucelabs"
+    "test": "make test",
+    "test_sauce": "make test_e2e_sauce"
   }
 }

@@ -1,64 +1,93 @@
 TEST_DIR = test/common test/unit test/local test/saucelabs test/ghostdriver
+ifndef BROWSER
+BROWSER := chrome
+endif
 
 DEFAULT:
 	@echo
-	@echo '  make test -> run the unit and  local tests (start selenium with chromedriver first).'
+	@echo '  make test -> run all local tests (start selenium with chromedriver first).'
+	@echo '  make test_sauce -> run all sauce tests (start sauce connect first).'
 	@echo '  make test_unit -> run the unit tests'
-	@echo '  make test_local -> run the local tests (start selenium with chromedriver first).'
-	@echo '  make test_saucelabs -> run the saucelabs tests (configure username/access_key first).'
-	@echo '  make test_ghostdriver -> run the ghostdriver tests (start ghostdriver first).'
-	@echo '  make test_coverage -> generate test coverage (install jscoverage first).'
-	@echo '  mapping -> build the mapping (implemented only).'  
-	@echo '  full_mapping -> build the mapping (full).'  
-	@echo '  unsupported_mapping -> build the mapping (unsupported).'  
-	@echo
+	@echo '  make test_midway -> run the midway tests (start selenium with chromedriver first).'
+	@echo '  make test_e2e -> run the e2e tests (start selenium with chromedriver first).'
+	@echo '  make test_midway_sauce_connect -> run the midway tests using sauce connect.'
+	@echo '  make test_e2e_sauce -> run the e2e tests on sauce.'
+	@echo '  mapping -> build the mapping (implemented only).'
+	@echo '  full_mapping -> build the mapping (full).'
+	@echo '  unsupported_mapping -> build the mapping (unsupported).'
+	@echo ''
+	@echo 'Notes:'
+	@echo '  - For midway and e2e test, BROWSER=[chrome|firefox|explorer|ios|android|multi].'
+	@echo '  - To test on sauce, set SAUCE_USERNAME/SAUCE_ACCESS_KEY first'
 
-# run unit and local tests, start selenium server first
 test:
-	./node_modules/.bin/mocha --bail \
-	test/unit/*-test.js \
-	test/local/*-test.js
+	BROWSER=multi make test_unit test_midway
+	BROWSER=chrome make test_midway test_e2e
+	BROWSER=firefox make test_midway test_e2e
 
-# run unit tests
+test_sauce:
+	BROWSER=multi make test_unit test_midway_sauce_connect
+	BROWSER=chrome make test_midway_sauce_connect test_e2e_sauce
+	BROWSER=firefox make test_midway_sauce_connect test_e2e_sauce
+
 test_unit:
-	./node_modules/.bin/mocha --bail test/unit/*-test.js
+	SAUCE_USERNAME= SAUCE_ACCESS_KEY= ./node_modules/.bin/mocha test/specs/*-specs.js
 
-# run local tests, start selenium server first
-test_local:
-	./node_modules/.bin/mocha --bail test/local/*-test.js
+test_midway:
+ifeq ($(BROWSER),multi)
+	./node_modules/.bin/mocha test/midway/*-specs.js -g '@multi'
+else
+	./node_modules/.bin/mocha \
+		test/midway/*-specs.js -g \
+		test/midway/suffixes/*-specs.js \
+		-g "@skip-${BROWSER}|@multi" -i
+endif
+
+test_e2e:
+	./node_modules/.bin/mocha test/e2e/*-specs.js -g "@skip-${BROWSER}|@multi" -i
+
+test_midway_sauce_connect:
+	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_midway
 
 # run saucelabs test, configure username/key first
-test_saucelabs:
-ifdef TRAVIS
-	# secure env variables are not available for pull reuqests
-	# so you won't be able to run test against Sauce on these
+test_e2e_sauce:
+	SAUCE=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_e2e
+
+test_mobile:
+	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` mocha \
+		test/midway/api-exec-specs.js \
+		test/midway/mobile-specs.js \
+		-g "@skip-${BROWSER}" -i
+
+test_android:
+	BROWSER=android make test_mobile
+
+test_ios:
+	BROWSER=ios make test_mobile
+
+test_travis:
 ifneq ($(TRAVIS_PULL_REQUEST),false)
 	@echo 'Skipping Sauce Labs tests as this is a pull request'
 else
-	./node_modules/.bin/mocha --bail test/saucelabs/*-test.js
-endif
+ifeq ($(BROWSER),multi)
+	make test_unit
+	make test_midway_sauce_connect
 else
-	./node_modules/.bin/mocha --bail test/saucelabs/*-test.js
+	make test_midway_sauce_connect
+	make test_e2e_sauce
+endif
 endif
 
-# run ghostdriver test, start ghostdriver first
-test_ghostdriver:
-	./node_modules/.bin/mocha --bail test/ghostdriver/*-test.js
-
-# run test coverage, install jscoverage first
 test_coverage:
-	rm -rf lib-cov
-	jscoverage --no-highlight lib lib-cov --exclude=bin.js
-	WD_COV=1 ./node_modules/.bin/mocha --bail --reporter html-cov \
-	test/unit/*-test.js \
-	test/local/*-test.js \
-	test/saucelabs/*-test.js \
-  > coverage.html
+	rm -rf coverage
+	./node_modules/.bin/istanbul cover test/coverage/run_tests.js --
 
 _dox:
 	@mkdir -p tmp
 	@./node_modules/.bin/dox -r < lib/webdriver.js > tmp/webdriver-dox.json
 	@./node_modules/.bin/dox -r < lib/element.js > tmp/element-dox.json
+	@./node_modules/.bin/dox -r < lib/main.js > tmp/main-dox.json
+	@./node_modules/.bin/dox -r < lib/asserters.js > tmp/asserters-dox.json
 
 # build the mapping (implemented only)
 mapping: _dox
@@ -73,13 +102,19 @@ unsupported_mapping: _dox
 	@node doc/mapping-builder.js unsupported
 
 .PHONY: \
-	test \
 	DEFAULT \
+	test \
+	test_sauce \
 	test_unit \
-	test_local \
-	test_saucelabs \
+	test_midway \
+	test_e2e \
+	test_midway_sauce_connect \
+	test_e2e_sauce \
+	test_ios \
+	test_android \
+	test_travis \
 	test_coverage \
-	test_ghostdriver \
-	build_mapping \
-	build_full_mapping \
+	mapping \
+	full_mapping \
+	unsupported_mapping \
 	_dox

@@ -2,10 +2,10 @@
 <tbody>
 <tr>
 <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
-<strong>JsonWireProtocol</strong>
+<strong>category / JsonWireProtocol method</strong>
 </td>
 <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
-<strong>wd</strong>
+<strong>wd methods</strong>
 </td>
 </tr>
 <tr>
@@ -23,8 +23,9 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Create a new session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-init(desired, cb) -&gt; cb(err, sessionID)<br>
-Initialize the browser.<br>
+init(desired, cb) -&gt; cb(err, sessionID, capabilities)<br>
+Initialize the browser. capabilities return may be<br>
+absent, depending on driver.<br>
 </td>
 </tr>
 <tr>
@@ -617,6 +618,9 @@ special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
 <p>
 element.type(keys, cb) -&gt; cb(err)<br>
 </p>
+<p>
+element.keys(keys, cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -852,8 +856,15 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Move the mouse by an offset of the specificed element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 moveTo(element, xoffset, yoffset, cb) -&gt; cb(err)<br>
-Move to element, xoffset and y offset are optional.<br>
+Move to element, element may be null, xoffset and y offset<br>
+are optional.<br>
+</p>
+<p>
+element.moveTo(xoffset, yoffset, cb) -&gt; cb(err)<br>
+xoffset and y offset are optional.<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -873,7 +884,10 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Click and hold the left mouse button (at the coordinates set by the last moveto command).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonDown(cb) -&gt; cb(err)<br>
+buttonDown(button ,cb) -&gt; cb(err)<br>
+button is optional.<br>
+{LEFT = 0, MIDDLE = 1 , RIGHT = 2}.<br>
+LEFT if not specified.<br>
 </td>
 </tr>
 <tr>
@@ -882,7 +896,10 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Releases the mouse button previously held (where the mouse is currently at).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonUp(cb) -&gt; cb(err)<br>
+buttonUp(button, cb) -&gt; cb(err)<br>
+button is optional.<br>
+{LEFT = 0, MIDDLE = 1 , RIGHT = 2}.<br>
+LEFT if not specified.<br>
 </td>
 </tr>
 <tr>
@@ -905,7 +922,13 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Single tap on the touch enabled device.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+<p>
+tap(element) -&gt; cb(err)<br>
+Taps element<br>
+</p>
+<p>
+element.tap(cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1111,7 +1134,44 @@ NA
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/log">/session/:sessionId/log</a><br>
+Get the log for a given log type.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+log(logType, cb) -&gt; cb(err, arrayOfLogs)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/log/types">/session/:sessionId/log/types</a><br>
+Get available log types.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+logTypes(cb) -&gt; cb(err, arrayOfLogTypes)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/application_cache/status">/session/:sessionId/application_cache/status</a><br>
+Get the status of the html5 application cache.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+NA
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+Retrieves the current session id.<br>
+getSessionId(cb) -&gt; cb(err, sessionId)<br>
+getSessionId()<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Opens a new window (using Javascript window.open):<br>
@@ -1124,7 +1184,7 @@ or by getting the last handle returned by the windowHandles method.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 windowName(cb) -&gt; cb(err, name)<br>
@@ -1132,64 +1192,71 @@ windowName(cb) -&gt; cb(err, name)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-setHTTPInactivityTimeout(ms)<br>
-ms: how many milliseconds to wait for any communication with the WebDriver server (i.e. any command to complete) before the connection is considered lost<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-waitForElement(using, value, timeout, cb) -&gt; cb(err)<br>
+configureHttp(opts)<br>
+opts example:<br>
+{timeout:60000, retries: 3, 'retryDelay': 15, baseUrl='http://example.com/'}<br>
+more info in README.<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForVisible(using, value, timeout, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-waitForElementByClassName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementById(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByTagName(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByXPath(value, timeout, cb) -&gt; cb(err)<br>
-waitForElementByCss(value, timeout, cb) -&gt; cb(err)<br>
+waitFor(asserter, timeout, pollFreq, cb) -&gt; cb(err, return_value)<br>
+timeout and pollFreq are optional (default 1000ms/200ms)<br>
+waitFor(opts, cb) -&gt; cb(err)<br>
+opts with the following fields: timeout, pollFreq, asserter.<br>
+asserter like: function(browser , cb) -&gt; cb(err, satisfied, return_value)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForVisibleByClassName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleById(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByTagName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByXPath(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByCss(value, timeout, cb) -&gt; cb(err)<br>
+waitForElement(using, value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElement(using, value, timeout, pollFreq, cb) -&gt; cb(err)<br>
+timeout and pollFreq are optional (default 1000ms/200ms)<br>
+waitForElement(using, value, opts, cb) -&gt; cb(err)<br>
+opts with the following fields: timeout, pollFreq, asserter.<br>
+asserter like: function(element , cb) -&gt; cb(err, satisfied)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+saveScreenshot(path, cb) -&gt; cb(err, filePath)<br>
+path maybe a full file path, a directory path (finishing with /),<br>
+the screenshot name, or left blank (will create a file in the system temp dir).<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByCssSelector(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementById(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByPartialLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
+as in waitForElement.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(element , cb) -&gt; cb(err, boolean)<br>
@@ -1198,7 +1265,7 @@ isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Retrieves the pageIndex element (added for Appium):<br>
@@ -1207,7 +1274,7 @@ getPageIndex(element, cb) -&gt; cb(err, pageIndex)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Uploads a local file using undocumented<br>
@@ -1217,50 +1284,172 @@ uploadFile(filepath, cb) -&gt; cb(err, filepath)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-Waits for JavaScript condition to be true (polling within wd client):<br>
-waitForCondition(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-waitForCondition(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
-waitForCondition(conditionExpr, cb) -&gt; cb(err, boolean)<br>
-conditionExpr: condition expression, should return a boolean<br>
-timeout: timeout (optional, default: 1000)<br>
-pollFreq: pooling frequency (optional, default: 100)<br>
-return true if condition satisfied, error otherwise.<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (async script polling within browser):<br>
-waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-waitForConditionInBrowser(conditionExpr, timeout, cb) -&gt; cb(err, boolean)<br>
-waitForConditionInBrowser(conditionExpr, cb) -&gt; cb(err, boolean)<br>
+waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean) <br>
 conditionExpr: condition expression, should return a boolean<br>
-timeout: timeout (optional, default: 1000)<br>
-pollFreq: pooling frequency (optional, default: 100)<br>
+timeout and  pollFreq are optional, default: 1000/100.<br>
 return true if condition satisfied, error otherwise.<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-Equivalent to the python sendKeys binding. Upload file if <br>
+sauceJobUpdate(jsonData, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+sauceJobStatus(hasPassed, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+sleep(ms, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+noop(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+Equivalent to the python sendKeys binding. Upload file if<br>
 a local file is detected, otherwise behaves like type.<br>
 element.sendKeys(keys, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-EXTRA
+extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(cb) -&gt; cb(err, boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+element.sleep(ms, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+element.noop(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.nonEmptyText<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.textInclude(content) -&gt; Asserter<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.isVisible<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.isHidden<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserter
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+asserters.jsCondition(jsConditionExpr) -&gt; Asserter<br>
+jsConditionExpr: js script expression, should evaluate as boolean.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.configureHttp(opts)<br>
+opts example:<br>
+{timeout:60000, retries: 3, 'retryDelay': 15, baseUrl='http://example.com/'}<br>
+more info in README.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.showHideDeprecation(boolean)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addAsyncMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addPromiseMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addPromiseChainMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.removeMethod(name, func)<br>
 </td>
 </tr>
 </tbody>

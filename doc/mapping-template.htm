@@ -2,10 +2,10 @@
   <tbody>
     <tr>
       <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
-        <strong>JsonWireProtocol</strong>
+        <strong>category / JsonWireProtocol method</strong>
       </td>
       <td width="50%" style="border: 1px solid #ccc; padding: 5px;">
-        <strong>wd</strong>
+        <strong>wd methods</strong>
       </td>
     </tr>
     {{#mapping}}
@@ -15,8 +15,14 @@
             {{method}} <a href="{{url}}">{{path}}</a><br>
             {{desc}}
           {{/jsonWire}}
+          {{#asserter}}
+            asserter
+          {{/asserter}}
+          {{#wd}}
+            wd
+          {{/wd}}
           {{#extra}}
-            EXTRA
+            extra
           {{/extra}}
           {{#missing}}
             MISSING: {{key}}

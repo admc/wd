@@ -3,11 +3,21 @@
   "curly": true,
   "eqeqeq": true,
   "expr": true,
-  "globals": { 
+  "globals": {
     "describe": false,
     "it": false,
     "before": false,
-    "after": false    
+    "after": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "AssertionError": false,
+    "should": false,
+    "assert": false,
+    "wd": false,
+    "_": false,
+    "Q": false,
+    "env": false,
+    "prepareJs": false
   },
   "immed": true,
   "latedef": true,
