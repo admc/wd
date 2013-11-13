@@ -20,7 +20,7 @@
     <header>
       <div class="inner">
         <h1>WD.js</h1>
-        <h2>node.js Webdriver/Selenium 2 client</h2>
+        <h2>node.js webdriver/selenium 2 client</h2>
         <a href="https://github.com/admc/wd" class="button"><small>View project on</small>GitHub</a>
       </div>
     </header>
@@ -54,7 +54,7 @@
 <li>Adam Christian (<a href="http://github.com/admc">admc</a>)</li>
 <li>Ruben Daniels (<a href="https://github.com/javruben">javruben</a>)</li>
 <li>Peter Braden (<a href="https://github.com/peterbraden">peterbraden</a>)</li>
-<li>Seb Vincent (<a href="https://github.com/admc">sebv</a>)</li>
+<li>Seb Vincent (<a href="https://github.com/sebv">sebv</a>)</li>
 <li>Peter 'Pita' Martischka (<a href="https://github.com/Pita">pita</a>)</li>
 <li>Jonathan Lipps (<a href="https://github.com/jlipps">jlipps</a>)</li>
 <li>Phil Sarin (<a href="https://github.com/pdsarin">pdsarin</a>)</li>
@@ -71,37 +71,18 @@
 <li>License - Apache 2: <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
 </li>
 </ul><h2>
-<a name="02x-release" class="anchor" href="#02x-release"><span class="octicon octicon-link"></span></a>0.2.x Release</h2>
+<a name="release-notes" class="anchor" href="#release-notes"><span class="octicon octicon-link"></span></a>Release notes</h2>
+
+<p>Many changes have been introduced in 0.2.x versions, please check 
+<a href="https://github.com/admc/wd/blob/master/doc/release-notes.md">here</a> for more details.</p>
 
 <h3>
-<a name="020" class="anchor" href="#020"><span class="octicon octicon-link"></span></a>0.2.0</h3>
+<a name="023-caveats" class="anchor" href="#023-caveats"><span class="octicon octicon-link"></span></a>0.2.3 caveats</h3>
 
 <ul>
-<li>New wrapper: promise chain.</li>
-<li>Old chain api is deprecated (It is still available, but you will see a depreciation message).</li>
-<li>There are some changes in the way the element and webdriver classes are passed around
-which may affect external wrappers. External wrappers should now subclass those 2 classes. </li>
-</ul><h3>
-<a name="021" class="anchor" href="#021"><span class="octicon octicon-link"></span></a>0.2.1</h3>
-
-<ul>
-<li>New test suite using the promise chain api.</li>
-<li>
-<code>browser.Q</code> was moved to <code>wd.Q</code>.</li>
-</ul><h3>
-<a name="022" class="anchor" href="#022"><span class="octicon octicon-link"></span></a>0.2.2</h3>
-
-<ul>
-<li>chai-as-promised v4 compatible.</li>
-<li>Promise wrappers can now be monkey patched directly.</li>
-<li>New saucelabs helpers.</li>
-</ul><p>Incompatibilities: </p>
-
-<ul>
-<li>There is a new method to call, <code>wd.rewrap()</code>, to propagate async monkey
-patching to promise. (see <a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js#L35">here</a> and the monkey patch section below)</li>
-<li>The chai-as-promised setup has changed in V4, look out for the <code>transferPromiseness</code>
-line in the examples. (see <a href="https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15">here</a>)</li>
+<li>Most wait methods have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters if you feel it is useful for others.</li>
+<li>Manual monkey patching is not recommended anymore, there were some side use cases which were not easy to cover.
+Use addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods instead. See doc below.</li>
 </ul><h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
@@ -159,7 +140,7 @@ line in the examples. (see <a href="https://github.com/admc/wd/blob/master/examp
 <p>See example <a href="https://github.com/admc/wd/blob/master/examples/promise/no-chain.js">here</a>.</p>
 
 <h2>
-<a name="generators-api" class="anchor" href="#generators-api"><span class="octicon octicon-link"></span></a>Generators Api</h2>
+<a name="generators-api" class="anchor" href="#generators-api"><span class="octicon octicon-link"></span></a>Generators api</h2>
 
 <h3>
 <a name="yiewd" class="anchor" href="#yiewd"><span class="octicon octicon-link"></span></a>Yiewd</h3>
@@ -236,9 +217,9 @@ generators in order to avoid nested callbacks, like so:</p>
 <h3>
 <a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>Api</h3>
 
-<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-mapping.md">supported</a></p>
+<p><a href="https://github.com/admc/wd/blob/master/doc/api.md">jsonwire mapping + api doc</a></p>
 
-<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md">full json wire mapping</a></p>
+<p><a href="https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md">åfull jsonwire mapping</a></p>
 
 <h3>
 <a name="jsonwireprotocol" class="anchor" href="#jsonwireprotocol"><span class="octicon octicon-link"></span></a>JsonWireProtocol</h3>
@@ -304,8 +285,7 @@ generators in order to avoid nested callbacks, like so:</p>
 </pre></div>
 
 <h4>
-<a name="url-object-created-via-urlparse" class="anchor" href="#url-object-created-via-urlparse"><span class="octicon octicon-link"></span></a>Url object created via <code>url.parse</code>
-</h4>
+<a name="url-object-created-via-urlparse" class="anchor" href="#url-object-created-via-urlparse"><span class="octicon octicon-link"></span></a>Url object created via url.parse</h4>
 
 <p><a href="http://nodejs.org/docs/v0.10.0/api/url.html#url_url">URL module documentation</a></p>
 
@@ -329,9 +309,9 @@ generators in order to avoid nested callbacks, like so:</p>
 <h3>
 <a name="element-function-chaining-using-promise-chains" class="anchor" href="#element-function-chaining-using-promise-chains"><span class="octicon octicon-link"></span></a>Element function chaining (using promise chains)</h3>
 
-<p>With the promise chain api the method from the <code>browser</code> prototype and the
+<p>With the promise chain api the method from the <code>browser</code> prototype and the 
 <code>element</code> prototype are all available within the <code>browser</code> instance, so it might
-be confusing at first. However we tried to keep the logic as simple as possible
+be confusing at first. However we tried to keep the logic as simple as possible 
 using the principles below: </p>
 
 <ul>
@@ -341,38 +321,148 @@ using the principles below: </p>
 <li>If the method returns something (text, getAttribute...), the element scope is lost.</li>
 <li>You may use "&lt;" as the first parameter to get out of the element scope.</li>
 <li>You may use "&gt;" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).</li>
-</ul><p>If you need to do something more complicated, like reusing an element for 2 calls, then
+</ul><p>If you need to do something more complicated, like reusing an element for 2 calls, then 
 can either Q promise functionnality (like then, Q.all or Q sequences), or retrieve your
 element twice (since the promise chain api is very terse, this is usually acceptable).</p>
 
 <p>Element function chaining example <a href="https://github.com/admc/wd/blob/master/examples/promise/chained-el-func-call.js">here</a></p>
 
 <h3>
-<a name="monkey-patching" class="anchor" href="#monkey-patching"><span class="octicon octicon-link"></span></a>Monkey patching</h3>
+<a name="waiting-for-something" class="anchor" href="#waiting-for-something"><span class="octicon octicon-link"></span></a>Waiting for something</h3>
 
-<p>You may want to monkey patch the webdriver class in order to add custom functionalities.
-Please refer to the following examples:</p>
+<p>Below are the methods to use to wait for a condition:</p>
 
 <ul>
 <li>
-<a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch.js">pure promise</a>.</li>
+<code>browser.waitFor(asserter, timeout, pollFreq, cb) -&gt; cb(err, value)</code>: generic wait method, the return value is provided by the asserter when the condition is satisfied.</li>
 <li>
-<a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-with-async.js">async patch used by promise</a>.</li>
+<code>browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb) -&gt; cb(err, el)</code>: waits for a element then a 
+condition, then returns the element.</li>
 <li>
-<a href="https://github.com/admc/wd/blob/master/examples/promise/monkey.patch-no-chain.js">promise no-chain</a>.</li>
+<code>browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)</code>: waits for a js condition within a browser, then returns a boolean.</li>
+</ul><p>Asserters should be written using either models below . <code>target</code> may be <code>browser</code> and/or <code>element</code> depending on the context.</p>
+
+<div class="highlight highlight-js"><pre><span class="c1">// async</span>
+<span class="kd">var</span> <span class="nx">asyncAsserter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asserter</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="nx">cb</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">satisfied</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="c1">// promise</span>
+<span class="kd">var</span> <span class="nx">promiseAsserter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asserter</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">return</span> <span class="nx">promise</span><span class="p">;</span> <span class="c1">// promise resolved with the wait_for return value.</span>
+
+    <span class="c1">// Promise asserter should throw errors marked with `err.retriable=true` </span>
+    <span class="c1">// when the condition is not satisfied.    </span>
+  <span class="p">}</span>
+<span class="p">);</span>
+
+</pre></div>
+
+<p>Example <a href="https://github.com/admc/wd/blob/master/examples/promise/wait-for.js">here</a>.</p>
+
+<p>There are ready to use asserters <a href="https://github.com/admc/wd/blob/master/lib/asserters.js">here</a>,
+See also the asserter category in the api doc <a href="https://github.com/admc/wd/blob/master/doc/api.md">here</a>.</p>
+
+<h3>
+<a name="adding-custom-methods" class="anchor" href="#adding-custom-methods"><span class="octicon octicon-link"></span></a>Adding custom methods</h3>
+
+<ul>
 <li>
-<a href="https://github.com/admc/wd/blob/master/examples/async/monkey.patch.js">full async</a>.</li>
-</ul><p>Caveat: You now need to call <code>wd.rewrap()</code> to propagate async monkey patching to the
-promise wrapper. This will ovewrite the promise wrapper prototype, so you need to do
-your monkey patching in order, async first, call <code>wd.rewrap()</code> , and only then promise.</p>
+<code>wd.addAsyncMethod(name, method)</code>: This is for regular async methods with callback as the last argument. This will not only add the method to the async browser prototype, but also wrap the method and add it to the promise and promiseChain prototypes.</li>
+<li>
+<code>wd.addPromiseMethod(name, method)</code>: This is for promise returning methods NOT USING CHAIN internally. This will not only add the method to the promise browser prototype, but also wrap the method and add it to the promiseChain prototype (but not to the async prototype).</li>
+<li>
+<code>wd.addPromiseChainMethod(name, method)</code>: This is for promise returning methods USING CHAIN internally. This will only add the method to the promiseChain browser prototype (but neither to async nor to promise browser prototypes).</li>
+</ul><p>If you are only using the promise chain api, you should probably stick with <code>wd.addPromiseChainMethod(name, method)</code>.</p>
+
+<p>You may remove a custom method with <code>wd.removeMethod(name)</code>. Not sure why you would want to do that, but that will remove the method from the 3 prototypes.</p>
+
+<p>Please refer to the following examples:</p>
+
+<ul>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/promise/add-method.js">promise chain</a>.</li>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/promise/add-method-async.js">async method used by promise chain</a>.</li>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/promise/add-method-no-chain.js">promise no-chain</a>.</li>
+<li>
+<a href="https://github.com/admc/wd/blob/master/examples/async/add-method.js">async</a>.</li>
+</ul><p>Note: No need to call rewrap anymore.</p>
 
 <h3>
 <a name="promise-helpers" class="anchor" href="#promise-helpers"><span class="octicon octicon-link"></span></a>Promise helpers</h3>
 
-<p>This is a clean alternative to monkey patching.
+<p>This is an alternative to adding custom methods.
 See example <a href="https://github.com/admc/wd/blob/master/examples/promise/helper.js">here</a>.</p>
 
 <h3>
+<a name="starting-the-promise-chain" class="anchor" href="#starting-the-promise-chain"><span class="octicon octicon-link"></span></a>Starting the promise chain</h3>
+
+<p>The <code>browser</code> and <code>element</code> object are not themselves promises (cause that would lead to chaos), so you 
+cannot call Q core methods on them. However you may call one of the method below to initiate the promise 
+chain:</p>
+
+<ul>
+<li><code>browser.chain()</code></li>
+<li><code>browser.noop()</code></li>
+<li><code>browser.resolve(promise)</code></li>
+<li><code>element.chain()</code></li>
+<li><code>element.noop()</code></li>
+<li><code>element.resolve(promise)</code></li>
+</ul><p>The <code>resolve</code> methods work like <code>Q</code> <code>thenResolve</code>.</p>
+
+<h3>
+<a name="working-with-external-promise-libraries" class="anchor" href="#working-with-external-promise-libraries"><span class="octicon octicon-link"></span></a>Working with external promise libraries</h3>
+
+<p><code>wd</code> uses <code>Q</code> internally, but you may use promises from other libraries with the following methods:</p>
+
+<ul>
+<li><code>browser.resolve(externalPromise)</code></li>
+<li><code>wd.addPromiseChainMethod(name, externalPromise)</code></li>
+<li><code>wd.addPromiseMethod(name, externalPromise)</code></li>
+</ul><p>The external promise will be automatically wrapped within a Q promise using <code>new Q(externalPromise)</code>.</p>
+
+<p>See example <a href="https://github.com/admc/wd/blob/master/examples/promise/external-promise.js">here</a>.</p>
+
+<h3>
+<a name="http-configuration--base-url" class="anchor" href="#http-configuration--base-url"><span class="octicon octicon-link"></span></a>Http configuration / base url</h3>
+
+<p>Http behaviour and base url may be configured via the <code>configureHttp</code> method as 
+in the code below:</p>
+
+<div class="highlight highlight-js"><pre><span class="c1">// global config</span>
+<span class="nx">wd</span><span class="p">.</span><span class="nx">configureHttp</span><span class="p">({</span>
+  <span class="nx">timeout</span><span class="o">:</span> <span class="mi">60000</span><span class="p">,</span>
+  <span class="nx">retries</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nx">retryDelay</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="nx">baseUrl</span> <span class="o">=</span> <span class="s1">'http://example.com/'</span>
+<span class="p">});</span>
+<span class="c1">// per browser config</span>
+<span class="nx">browser</span><span class="p">.</span><span class="nx">configureHttp</span><span class="p">({</span>
+  <span class="nx">timeout</span><span class="o">:</span> <span class="mi">60000</span><span class="p">,</span>
+  <span class="nx">retries</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nx">retryDelay</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="nx">baseUrl</span> <span class="o">=</span> <span class="s1">'http://example.com/'</span>
+<span class="p">});</span>
+</pre></div>
+
+<ul>
+<li>timeout: http timeout in ms, default is <code>undefined</code> (uses the server timeout, 
+usually 60 seconds). Use <code>'default'</code> or <code>undefined</code> for server default.</li>
+<li>retries: Number of reconnection attempts in case the connection is dropped. 
+Default is <code>3</code>. Pass <code>0</code> or <code>always</code> to keep trying. Pass <code>-1</code> or <code>never</code> to disable.</li>
+<li>retryDelay: the number of ms to wait before reconnecting. Default is <code>15</code>.</li>
+<li>baseUrl: the base url use by the <code>get</code> method. The destination url is computed using
+<code>url.resolve</code>. Default is empty.</li>
+<li>If a field is not specified, the current configuration for this field is
+unchanged.</li>
+</ul><h3>
 <a name="environment-variables-for-saucelabs" class="anchor" href="#environment-variables-for-saucelabs"><span class="octicon octicon-link"></span></a>Environment variables for Saucelabs</h3>
 
 <p>When connecting to Saucelabs, the <code>user</code> and <code>pwd</code> fields can also be set through the <code>SAUCE_USERNAME</code> and <code>SAUCE_ACCESS_KEY</code> environment variables.</p>
@@ -418,7 +508,7 @@ make test
 <pre><code># Install Sauce Connect
 node_modules/.bin/install_sauce_connect
 
-# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY
+# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY 
 
 # Start Sauce Sonnect:
 node_modules/.bin/start_sauce_connect
@@ -448,7 +538,7 @@ comments using <a href="https://github.com/visionmedia/dox">dox</a>.</p>
 
 <p>To update the mappings run the following commands:</p>
 
-<pre><code>make mapping &gt; doc/jsonwire-mapping.md
+<pre><code>make mapping &gt; doc/api.md
 make full_mapping &gt; doc/jsonwire-full-mapping.md
 make unsupported_mapping &gt; doc/jsonwire-unsupported-mapping.md
 </code></pre>
@@ -457,7 +547,7 @@ make unsupported_mapping &gt; doc/jsonwire-unsupported-mapping.md
 <a name="publishing" class="anchor" href="#publishing"><span class="octicon octicon-link"></span></a>Publishing</h2>
 
 <pre><code>npm version [patch|minor|major]
-git push --tags
+git push --tags origin master
 npm publish
 </code></pre>
 
@@ -484,6 +574,6 @@ npm publish
       </div>
     </div>
 
-
+  
   </body>
 </html>
