@@ -1,7 +1,3 @@
-//
-// It is now possible to monkey patch using promise returning functions instead.
-//
-
 require('colors');
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
@@ -18,7 +14,6 @@ try {
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-// Monkey patching need to be implemented before creating the browser.
 wd.addAsyncMethod( 
   'elementByCssSelectorWhenReady',
   function(selector, timeout/*, cb*/) {

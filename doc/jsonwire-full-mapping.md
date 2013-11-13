@@ -1259,22 +1259,6 @@ as in waitForElement.<br>
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForVisibleByClassName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByCssSelector(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleById(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByPartialLinkText(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByTagName(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByXPath(value, timeout, cb) -&gt; cb(err)<br>
-waitForVisibleByCss(value, timeout, cb) -&gt; cb(err)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-extra
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
 isVisible(element , cb) -&gt; cb(err, boolean)<br>
 isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
 </td>
@@ -1296,18 +1280,6 @@ extra
 Uploads a local file using undocumented<br>
 POST /session/:sessionId/file<br>
 uploadFile(filepath, cb) -&gt; cb(err, filepath)<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-extra
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-Waits for JavaScript condition to be true (polling within wd client):<br>
-waitForJsCondition(jsConditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
-timeout and pollFreq optional, default are 1000/200<br>
-jsConditionExpr: condition expression, should return a boolean<br>
-return true if condition satisfied, error otherwise.<br>
 </td>
 </tr>
 <tr>

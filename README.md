@@ -477,7 +477,6 @@ To update the mappings run the following commands:
 make mapping > doc/api.md
 make full_mapping > doc/jsonwire-full-mapping.md
 make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
-
 ```
 
 ## Publishing

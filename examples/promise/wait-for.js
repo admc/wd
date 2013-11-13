@@ -72,7 +72,7 @@ var textInclude = function(text) {
   );
 };
 
-// optional monkey patching
+// optional add custom method
 wd.PromiseChainWebdriver.prototype.waitForElementWithTextByCss = function(selector, timeout, pollFreq) {
   return this
     .waitForElementByCss(selector, textNonEmpty , timeout, pollFreq);
@@ -123,7 +123,7 @@ browser
   .waitFor(asserters.jsCondition('$("#i_am_an_id .child")? true: false') , 2000)
   .should.eventually.be.ok
 
-  // monkey patched method
+  // custom method
   .execute(removeChildren)
   .execute( appendChild, [500] )
   .waitForElementWithTextByCss("#i_am_an_id .child", 2000)
