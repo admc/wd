@@ -178,7 +178,7 @@ describe("using mocha-as-promised and chai-as-promised", function() {
 
 [jsonwire mapping + api doc](https://github.com/admc/wd/blob/master/doc/api.md)
 
-[åfull jsonwire mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
+[full jsonwire mapping](https://github.com/admc/wd/blob/master/doc/jsonwire-full-mapping.md)
 
 ### JsonWireProtocol
 
