@@ -53,13 +53,16 @@ test_midway_sauce_connect:
 test_e2e_sauce:
 	SAUCE=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` make test_e2e
 
-test_ios:
-	BROWSER=ios make test_midway_sauce_connect
-	BROWSER=ios make test_e2e_sauce
+test_mobile:
+	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` mocha \
+		test/midway/api-exec.js \
+		-g "@skip-${BROWSER}" -i
 
 test_android:
-	BROWSER=android make test_midway_sauce_connect
-	BROWSER=android make test_e2e_sauce
+	BROWSER=android make test_mobile
+
+test_ios:
+	BROWSER=ios make test_mobile
 
 test_travis:
 ifneq ($(TRAVIS_PULL_REQUEST),false)

@@ -12,8 +12,6 @@ describe('api-nav ' + env.ENV_DESC, function() {
       var defaultTimeout = (env.DESIRED.browserName === 'firefox')? -1 : env.BASE_TIME_UNIT;
       return browser
         .setPageLoadTimeout(env.BASE_TIME_UNIT / 2)
-        .setPageLoadTimeout(env.BASE_TIME_UNIT / 2)
-        .get( env.MIDWAY_ROOT_URL + '/test-page')
         .setPageLoadTimeout(defaultTimeout);
     });
   }

@@ -16,7 +16,8 @@
     "wd": false,
     "_": false,
     "Q": false,
-    "env": false
+    "env": false,
+    "prepareJs": false
   },
   "immed": true,
   "latedef": true,

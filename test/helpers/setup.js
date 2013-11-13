@@ -3,10 +3,11 @@ require('./env');
 GLOBAL._ = require('lodash');
 
 GLOBAL.wd = require('../../lib/main');
+var utils = require('../../lib/utils');
 
 // monkey patching
 wd.addAsyncMethod(
-  'configureLogging', 
+  'configureLogging',
   function (done){
   if(env.VERBOSE) {
     //this._debugPromise();
@@ -28,7 +29,7 @@ wd.addAsyncMethod(
 );
 
 GLOBAL.midwayUrl = function(testSuite, cat, title){
-  if(!title) { 
+  if(!title) {
     title = cat;
     cat = undefined;
   }
@@ -58,6 +59,13 @@ GLOBAL.sauceJobTitle = function(title) {
       .replace(/\(.*\)/g,'')
       .replace(/\@[\w\-]+/g,'')
       .trim();
+};
+
+GLOBAL.prepareJs = function(script) {
+  if(env.ANDROID){
+    script = utils.inlineJs(script);
+  }
+  return script;
 };
 
 GLOBAL.Q = GLOBAL.wd.Q;
