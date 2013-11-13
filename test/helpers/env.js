@@ -75,7 +75,6 @@ env.EXPRESS_PORT = S(process.env.EXPRESS_PORT || 3000).toInt();
 env.MIDWAY_ROOT_HOST = '127.0.0.1';
 
 if(env.ANDROID){
-  env.MIDWAY_ROOT_HOST = '10.0.2.2';
   env.TIMEOUT = 300000;
 }
 
