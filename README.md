@@ -354,7 +354,7 @@ chain:
 - `element.noop()`
 - `element.resolve(promise)`
 
-The `resolve` methods works like `Q` `thenResolve`.
+The `resolve` methods work like `Q` `thenResolve`.
 
 ### Working with external promise libraries
 
