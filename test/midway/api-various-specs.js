@@ -120,7 +120,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .then(function() {
         var res;
         try{
-          res = fs.readFileSync(mydir + '/abc.png', {encoding: 'base64'});  
+          res = fs.readFileSync(mydir + '/abc.png', {encoding: 'base64'});
         }catch(err){
           // for 0.8
           res = fs.readFileSync(mydir + '/abc.png');
@@ -290,7 +290,7 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
   it('browser.resolve', function() {
-    var deferred = Q.defer();    
+    var deferred = Q.defer();
     setTimeout(function() {
       deferred.resolve('123');
     }, 250);
@@ -310,7 +310,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .setHttpTimeout(env.HTTP_TIMEOUT || 60000).should.be.fulfilled
          .setHTTPInactivityTimeout(env.HTTP_TIMEOUT || 60000).should.be.fulfilled
          .setHttpTimeout(env.HTTP_TIMEOUT).should.be.fulfilled;
-   });
+  });
 
   it('err.inspect', function() {
     return browser

@@ -55,7 +55,8 @@ test_e2e_sauce:
 
 test_mobile:
 	SAUCE_CONNECT=1 SAUCE_JOB_ID=`git rev-parse --short HEAD` mocha \
-		test/midway/api-exec.js \
+		test/midway/api-exec-specs.js \
+		test/midway/mobile-specs.js \
 		-g "@skip-${BROWSER}" -i
 
 test_android:
