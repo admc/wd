@@ -27,12 +27,15 @@ env.BROWSER_SKIP = env.BROWSER;
 env.MULTI = false;
 
 if(env.BROWSER === 'multi') {
-    env.BROWSER = 'chrome';
     env.MULTI = true;
 }
 
 env.DESIRED = process.env.DESIRED ? JSON.parse(process.env.DESIRED) :
   {browserName: env.BROWSER};
+
+if(env.BROWSER === 'multi') {
+  env.DESIRED = {browserName: 'chrome'};
+}
 
 if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
   env.BROWSER_SKIP = 'android';
