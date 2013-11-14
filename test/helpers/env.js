@@ -100,10 +100,6 @@ env.TRAVIS_BUILD_NUMBER = process.env.TRAVIS_BUILD_NUMBER;
 
 if( env.TRAVIS_JOB_ID ){
   env.TRAVIS = true;
-  console.log("Travis environment detected.");
-  console.log("TRAVIS_BUILD_NUMBER --> ", env.TRAVIS_BUILD_NUMBER);
-  console.log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
-  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
 }
 
 if(env.SAUCE){
