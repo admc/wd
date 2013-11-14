@@ -42,15 +42,15 @@ describe('api-el ' + env.ENV_DESC, function() {
 
   express.partials['browser.waitForElement'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForElement', function() {
+  it('browser.waitForElement @skip-ios @skip-android', function() {
     return browser
-      .executeAsync(
+      .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +
         'var done = args[args.length -1];\n' +
         'setTimeout(function() {\n' +
         ' $("#theDiv").append("<div class=\\"child\\">a waitForElement child</div>");\n' +
         '}, arguments[0]);\n' +
-        'done();\n',
+        'done();\n' ),
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
@@ -65,9 +65,9 @@ describe('api-el ' + env.ENV_DESC, function() {
 
   express.partials['browser.waitForVisible'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForVisible', function() {
+  it('browser.waitForVisible @skip-ios @skip-android', function() {
     return browser
-      .executeAsync(
+      .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +
         'var done = args[args.length -1];\n' +
         '$("#theDiv").append("<div class=\\"child\\">a waitForVisible child</div>");\n' +
@@ -75,7 +75,7 @@ describe('api-el ' + env.ENV_DESC, function() {
         'setTimeout(function() {\n' +
         ' $("#theDiv .child").show();\n' +
         '}, arguments[0]);\n' +
-        'done();\n',
+        'done();\n' ),
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.eventually.exist
@@ -119,9 +119,9 @@ describe('api-el ' + env.ENV_DESC, function() {
   it('browser.getTagName', function() {
     return browser
       .elementByCss('#theDiv input').then(function(el) {
-        return browser.getTagName(el).should.become("input");
+        return browser.getTagName(el).should.eventually.match(/^input$/i);
       })
-      .elementByCss('#theDiv a').getTagName().should.become("a");
+      .elementByCss('#theDiv a').getTagName().should.eventually.match(/^a$/i);
   });
 
   express.partials['browser.getValue'] =
@@ -151,7 +151,7 @@ describe('api-el ' + env.ENV_DESC, function() {
         return browser
           .getComputedCss(el, 'color').should.eventually.match(/rgb/);
       }).elementByCss('#theDiv  a').getComputedCss('color')
-        .should.eventually.match(/rgba/);
+        .should.eventually.match(/rgb/);
   });
 
 

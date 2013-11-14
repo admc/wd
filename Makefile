@@ -53,6 +53,8 @@ endif
 
 test_midway_mobile:
 	./node_modules/.bin/mocha \
+		test/midway/api-nav-specs.js \
+		test/midway/api-el-specs.js \
 		test/midway/api-exec-specs.js \
 		test/midway/mobile-specs.js \
 		-g "@skip-${BROWSER_SKIP}" -i
