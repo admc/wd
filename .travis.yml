@@ -13,21 +13,21 @@ env:
     - HTTP_RETRIES=10
     - HTTP_RETRY_DELAY=10000
     - DEBUG_CONNECTION=1
-  matrix:
-    - BROWSER=multi
-    - BROWSER=explorer
-    - BROWSER=chrome
-    - BROWSER=firefox
-    - BROWSER=iphone
-    - BROWSER=ipad
-    - BROWSER=android_phone
-    - BROWSER=android_tablet
+  # matrix:
+  #   - BROWSER=multi
+  #   - BROWSER=explorer
+  #   - BROWSER=chrome
+  #   - BROWSER=firefox
+  #   - BROWSER=iphone
+  #   - BROWSER=ipad
 matrix:
   include:
-    - node_js: "0.11"
-      env: BROWSER=chrome
-    - node_js: "0.8"
-      env: BROWSER=chrome
+    # - node_js: "0.11"
+    #   env: BROWSER=chrome
+    # - node_js: "0.8"
+    #   env: BROWSER=chrome
+    - node_js: "0.10"
+      env: BROWSER=all_androids
 before_script:
   - ./node_modules/.bin/install_sauce_connect
   - ./node_modules/.bin/travis_start_sauce_connect

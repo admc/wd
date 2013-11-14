@@ -80,6 +80,9 @@ test_travis:
 ifeq ($(MULTI),true)
 	make test_unit
 	make test_midway_sauce_connect
+else ifeq ($(BROWSER),all_androids)
+	BROWSER=android_tablet make test_midway_mobile_sauce_connect
+	BROWSER=android_phone make test_midway_mobile_sauce_connect
 else ifeq ($(MOBILE),true)
 	make test_midway_mobile_sauce_connect
 else
