@@ -15,6 +15,7 @@
     "assert": false,
     "wd": false,
     "_": false,
+    "S": false,
     "Q": false,
     "env": false,
     "prepareJs": false

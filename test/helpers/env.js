@@ -1,7 +1,5 @@
 var env = GLOBAL.env = {};
 
-var S = require('string');
-
 var toBoolean = function(str) {
   return S(str).toBoolean() || S(S(str).toInt()).toBoolean();
 };
@@ -37,52 +35,7 @@ if(env.BROWSER === 'multi') {
   env.DESIRED = {browserName: 'chrome'};
 }
 
-if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
-  env.BROWSER_SKIP = 'android';
-  env.ANDROID = true;
-  env.DESIRED = {
-    'browserName': 'android',
-    'version': '4.0',
-    'platform': 'Linux',
-    'device-type': 'tablet',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
-
-if(env.BROWSER === 'android_phone'){
-  env.BROWSER_SKIP = 'android';
-  env.ANDROID = true;
-  env.DESIRED = {
-    'browserName': 'android',
-    'version': '4.0',
-    'platform': 'Linux',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
-
-if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
-  env.BROWSER_SKIP = 'ios';
-  env.IOS = true;
-  env.DESIRED = {
-    'browserName': 'ipad',
-    'version': '6.1',
-    'platform': 'OS X 10.8',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
-
-if(env.BROWSER === 'iphone'){
-  env.BROWSER_SKIP = 'ios';
-  env.IOS = true;
-  env.DESIRED = {
-    'browserName': 'iphone',
-    'version': '6.1',
-    'platform': 'OS X 10.8',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
-
-env.MOBILE = env.IOS || env.ANDROID || false;
+require('./mobile_env');
 
 env.EXPRESS_PORT = S(process.env.EXPRESS_PORT || 3000).toInt();
 

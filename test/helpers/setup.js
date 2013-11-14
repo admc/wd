@@ -1,6 +1,7 @@
-require('./env');
-
 GLOBAL._ = require('lodash');
+GLOBAL.S = require('string');
+
+require('./env');
 
 GLOBAL.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
