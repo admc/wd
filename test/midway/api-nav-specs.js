@@ -85,42 +85,52 @@ describe('api-nav ' + env.ENV_DESC, function() {
 
   express.partials['browser.moveTo'] =
     '<div id="theDiv">\n' +
-    '  <a class="a1" href="#">a1</a><br>\n' +
-    '  <a class="a2" href="#">a2</a><br>\n' +
+    '  <div class="div1" href="#">div 1</div>\n' +
+    '  <div class="div2" href="#">div 1</div>\n' +
     '  <div class="current"></div>\n' +
     '</div>\n';
   it('browser.moveTo', function() {
-    return browser
-      .execute(
-        'jQuery( function() {\n' +
-        ' a1 = $(\'#theDiv .a1\');\n' +
-        ' a2 = $(\'#theDiv .a2\');\n' +
-        ' current = $(\'#theDiv .current\');\n' +
-        ' a1.hover(function() {\n' +
-        '   current.html(\'a1\');\n' +
-        ' });\n' +
-        ' a2.hover(function() {\n' +
-        '   current.html(\'a2\');\n' +
-        ' });\n' +
-        '});\n'
-      )
-      .elementByCss('#theDiv .current').text().should.become('')
-      .elementByCss('#theDiv .a1').then(function(a1) {
-        return browser
-          .moveTo(a1)
-          .elementByCss('#theDiv .current').text().should.become('a1');
-      })
-      .elementByCss('#theDiv .a2').then(function(a2) {
-        return browser
-          .moveTo(a2)
-          .elementByCss('#theDiv .current').text().should.become('a2');
-      })
-       .elementByCss('#theDiv .a1').then(function(a1) {
-        return browser
-          .moveTo(a1)
-          .elementByCss('#theDiv .current').text().should.become('a1');
-      });
-     // todo: add moveTo to element
+    if(env.BROWSER === 'explorer') {
+      // cannot get hover to work in explorer
+      return browser
+        .elementByCss('#theDiv .div1').then(function(div1) {
+          return browser
+            .moveTo(div1).should.be.fulfilled;
+        })
+        .elementByCss('#theDiv .div1')
+        .moveTo().should.be.fulfilled;
+    } else {
+      return browser
+        .execute(
+          'jQuery( function() {\n' +
+          ' var div1 = $(\'#theDiv .div1\');\n' +
+          ' var div2 = $(\'#theDiv .div2\');\n' +
+          ' var current = $(\'#theDiv .current\');\n' +
+          ' div1.hover(function() {\n' +
+          '   current.html(\'div 1\');\n' +
+          ' });\n' +
+          ' div2.hover(function() {\n' +
+          '   current.html(\'div 2\');\n' +
+          ' });\n' +
+          '});\n'
+        )
+        .elementByCss('#theDiv .current').text().should.become('')
+        .elementByCss('#theDiv .div1').then(function(div1) {
+          return browser
+            .moveTo(div1)
+            .elementByCss('#theDiv .current').text().should.become('div 1');
+        })
+        .elementByCss('#theDiv .div2').then(function(div2) {
+          return browser
+            .moveTo(div2)
+            .elementByCss('#theDiv .current').text().should.become('div 2');
+        })
+         .elementByCss('#theDiv .div1').then(function(div1) {
+          return browser
+            .moveTo(div1)
+            .elementByCss('#theDiv .current').text().should.become('div 1');
+        });
+    }
   });
 
   express.partials['browser.buttonDown/browser.buttonUp'] =
