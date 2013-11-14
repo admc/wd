@@ -1,3 +1,6 @@
+GLOBAL._ = require('lodash');
+GLOBAL.S = require('string');
+
 var env = GLOBAL.env = {};
 
 var toBoolean = function(str) {

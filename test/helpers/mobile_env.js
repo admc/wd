@@ -72,5 +72,3 @@ if(device){
   env.MOBILE = true;
   env.DESIRED = env.APPIUM? desireds.appium[device] : desireds.selenium[device];
 }
-
-console.log('-->', env.DESIRED);
