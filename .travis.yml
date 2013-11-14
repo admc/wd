@@ -14,12 +14,14 @@ env:
     - HTTP_RETRY_DELAY=1000
     - DEBUG_CONNECTION=1
   matrix:
-    # - BROWSER=multi
-    # - BROWSER=chrome
-    # - BROWSER=firefox
-    - BROWSER=explorer
-    # - BROWSER=ios
-    # - BROWSER=android
+#     - BROWSER=explorer
+#     - BROWSER=multi
+#     - BROWSER=chrome
+#     - BROWSER=firefox
+    - BROWSER=iphone
+    - BROWSER=ipad
+    - BROWSER=android_phone
+    - BROWSER=android_tablet
 # matrix:
 #   include:
 #     - node_js: "0.11"
