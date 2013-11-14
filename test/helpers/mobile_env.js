@@ -68,7 +68,7 @@ _(devices).each(function(_devices, _cat) {
 
 if(device){
   env.BROWSER_SKIP = cat;
-  env[cat.toUpperCase] = true;
+  env[cat.toUpperCase()] = true;
   env.MOBILE = true;
   env.DESIRED = env.APPIUM? desireds.appium[device] : desireds.selenium[device];
 }
