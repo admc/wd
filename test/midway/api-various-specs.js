@@ -139,7 +139,8 @@ describe('api-various ' + env.ENV_DESC, function() {
         .should.eventually.match(/\/screenshot-\w+\.png$/);
   });
 
-  it('browser.<cookie methods>', function() {
+  // cookie don't seem to work in explorer
+  it('browser.<cookie methods> @skip-explorer', function() {
     return browser
       .deleteAllCookies()
       .allCookies().should.eventually.deep.equal([])
