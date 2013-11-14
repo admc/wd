@@ -22,14 +22,20 @@ env.DEBUG_CONNECTION = process.env.DEBUG_CONNECTION;
 
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 env.BROWSER = process.env.BROWSER || 'chrome';
+env.BROWSER_SKIP = env.BROWSER;
+
+env.MULTI = false;
+
 if(env.BROWSER === 'multi') {
     env.BROWSER = 'chrome';
     env.MULTI = true;
 }
+
 env.DESIRED = process.env.DESIRED ? JSON.parse(process.env.DESIRED) :
   {browserName: env.BROWSER};
 
 if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
+  env.BROWSER_SKIP = 'android';
   env.ANDROID = true;
   env.DESIRED = {
     'browserName': 'android',
@@ -41,6 +47,7 @@ if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
 }
 
 if(env.BROWSER === 'android_phone'){
+  env.BROWSER_SKIP = 'android';
   env.ANDROID = true;
   env.DESIRED = {
     'browserName': 'android',
@@ -51,6 +58,7 @@ if(env.BROWSER === 'android_phone'){
 }
 
 if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
+  env.BROWSER_SKIP = 'ios';
   env.IOS = true;
   env.DESIRED = {
     'browserName': 'ipad',
@@ -61,6 +69,7 @@ if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
 }
 
 if(env.BROWSER === 'iphone'){
+  env.BROWSER_SKIP = 'ios';
   env.IOS = true;
   env.DESIRED = {
     'browserName': 'iphone',
@@ -69,6 +78,8 @@ if(env.BROWSER === 'iphone'){
     'device-orientation': 'portrait', // 'landscape'
   };
 }
+
+env.MOBILE = env.IOS || env.ANDROID || false;
 
 env.EXPRESS_PORT = S(process.env.EXPRESS_PORT || 3000).toInt();
 

@@ -1,3 +1,6 @@
+branches:
+  only:
+    - master
 language: node_js
 node_js:
   - "0.10"
@@ -21,6 +24,10 @@ matrix:
       env: BROWSER=chrome
     - node_js: "0.8"
       env: BROWSER=chrome
+    - node_js: "0.10"
+      env: BROWSER=ios
+    - node_js: "0.10"
+      env: BROWSER=android
 before_script:
   - ./node_modules/.bin/install_sauce_connect
   - ./node_modules/.bin/travis_start_sauce_connect
