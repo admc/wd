@@ -20,7 +20,15 @@ module.exports = function(that) {
     };
     return browser
       .configureLogging()
-      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
+      .then(function() {
+        return browser
+          .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ))
+          .catch(function() {
+            // trying one more time
+            return browser
+              .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
+          });
+      });
   });
 
   beforeEach(function() {

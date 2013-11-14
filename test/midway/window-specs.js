@@ -1,6 +1,7 @@
 require('../helpers/setup');
 
-describe('window ' + env.ENV_DESC, function() {
+// disabling because of random errors on sauce
+describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
 
   var browser;
 
