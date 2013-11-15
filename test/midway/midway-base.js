@@ -11,6 +11,7 @@ module.exports = function(that, partials) {
   var express;
 
   before(function() {
+    console.log('partials -->', partials);
     express = new Express( __dirname + '/assets', partials );
     express.start();
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);

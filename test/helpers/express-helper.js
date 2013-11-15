@@ -15,7 +15,7 @@ Express.prototype.start = function() {
     var content = '';
     if(req.query.p){
       content = _this.partials[req.query.p];
-      //console.log('got page', req.query.p, '-->', content );
+      console.log('got page', req.query.p, '-->', content );
     }
     res.render('test-page', {
       testSuite: req.query.ts? req.query.ts.replace(/\@[\w\-]+/g,'') : '',

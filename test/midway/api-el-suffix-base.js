@@ -3,9 +3,9 @@
 //   ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText',
 //   'ByPartialLinkText', 'ByTagName', 'ByXPath', 'ByCss'];
 
-exports.test = function function_name (suffix, extraDesc, suffixPartials, criterias) {
+require('../helpers/setup');
 
-  require('../helpers/setup');
+exports.test = function function_name (suffix, extraDesc, suffixPartials, criterias) {
 
   describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, function() {
     var partials = {};
