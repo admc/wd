@@ -40,4 +40,4 @@ Incompatibilities:
   - bugfix: android safeExecute.
   - bugfix: passing argument to execute.
   - bugfix: setOrientation.
-  - migrating from string.js to underscore.string (todo).
+  - migrating from string.js to underscore.string.
