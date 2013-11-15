@@ -1,13 +1,12 @@
 require('../helpers/setup');
 
 describe('api-exec ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
-  express.partials['browser.eval'] =
+  partials['browser.eval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';
   it('browser.eval', function() {
     /* jshint evil: true */
@@ -18,7 +17,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .eval('$("#eval li").length').should.become(2);
   });
 
-  express.partials['browser.safeEval'] =
+  partials['browser.safeEval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';
   it('browser.safeEval', function() {
     /* jshint evil: true */
@@ -49,7 +48,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .eval('window.wd_sync_execute_test').should.become('It worked! 10');
   });
 
-  express.partials['browser.execute - el arg'] =
+  partials['browser.execute - el arg'] =
     '<div id="theDiv">It worked!</div>';
   it('browser.execute - el arg', function() {
     var jsScript = prepareJs(
@@ -64,7 +63,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.execute - els arg'] =
+  partials['browser.execute - els arg'] =
     '<div id="theDiv">\n' +
     '  <div class="line">line 1</div>\n' +
     '  <div class="line">line 2</div>\n' +
@@ -83,7 +82,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.execute - el return'] =
+  partials['browser.execute - el return'] =
     '<div id="theDiv"></div>';
   it('browser.execute - el return', function() {
     var jsScript = prepareJs(
@@ -97,7 +96,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.execute - els return'] =
+  partials['browser.execute - els return'] =
     '<div id="theDiv">\n' +
     '  <div class="line">line 1</div>\n' +
     '  <div class="line">line 2</div>\n' +
@@ -197,7 +196,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
   });
 
 
-  express.partials['browser.waitForCondition'] =
+  partials['browser.waitForCondition'] =
     '<div id="theDiv"></div>\n';
   it('browser.waitForCondition  @skip-android @skip-ios', function() {
     var exprCond = "$('#theDiv .child').length > 0";
@@ -220,7 +219,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.waitForConditionInBrowser'] =
+  partials['browser.waitForConditionInBrowser'] =
     '<div id="theDiv"></div>\n';
   it('browser.waitForConditionInBrowser  @skip-android @skip-ios', function() {
     var exprCond = "$('#theDiv .child').length > 0";

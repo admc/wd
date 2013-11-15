@@ -39,7 +39,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
       return this
         .sleep(200)
         .text(el);
-    } 
+    }
   };
 
   var extraPromiseNoChainMethods = {
@@ -48,22 +48,22 @@ describe('add-methods ' + env.ENV_DESC, function() {
       return this
         .sleep(200)
         .then(function() {
-          return _this.elementById(id);  
+          return _this.elementById(id);
         });
-        
+
     } ,
     sleepAndText: function(el) {
       var _this = this;
       return this
         .sleep(200)
         .then(function() {
-          return _this.text(el);  
+          return _this.text(el);
         });
-    } 
+    }
   };
 
   var allExtraMethodNames = _.union(
-    _(extraAsyncMethods).keys().value(), 
+    _(extraAsyncMethods).keys().value(),
     _(extraPromiseChainMethods).keys().value(),
     _(extraPromiseNoChainMethods).keys().value()
   );
@@ -76,20 +76,22 @@ describe('add-methods ' + env.ENV_DESC, function() {
     });
   };
 
-  var express = new Express( __dirname + '/assets' );
+  var partials = {};
+  var express;
 
   before(function() {
+    express = new Express( __dirname + '/assets' , partials);
     express.start();
   });
 
   beforeEach(function() {
     noExtraMethodCheck();
   });
-  
+
   afterEach(function() {
     _(allExtraMethodNames).each(function(name) {
-      wd.removeMethod(name);  
-    });    
+      wd.removeMethod(name);
+    });
     noExtraMethodCheck();
   });
 
@@ -128,13 +130,13 @@ describe('add-methods ' + env.ENV_DESC, function() {
         });
     });
 
-    express.partials['wd.addPromisedMethod (chain)'] =
+    partials['wd.addPromisedMethod (chain)'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod (chain)', function() {
       _(extraPromiseChainMethods).each(function(method, name) {
         wd.addPromiseChainMethod(name, method);
       });
-      
+
       browser = newPromiseChainRemote();
       return initAndGet(this, 'pc/1').then(function() {
         return browser
@@ -147,13 +149,13 @@ describe('add-methods ' + env.ENV_DESC, function() {
       });
     });
 
-    express.partials['wd.addPromisedMethod (no-chain)'] =
+    partials['wd.addPromisedMethod (no-chain)'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod (no-chain)', function() {
       _(extraPromiseNoChainMethods).each(function(method, name) {
         wd.addPromiseMethod(name, method);
       });
-      
+
       browser = newPromiseChainRemote();
       return initAndGet(this, 'pc/2').then(function() {
         return browser
@@ -166,7 +168,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
       });
     });
 
-    express.partials['wd.addAsyncMethod'] =
+    partials['wd.addAsyncMethod'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addAsyncMethod', function() {
       _(extraAsyncMethods).each(function(method, name) {
@@ -203,14 +205,14 @@ describe('add-methods ' + env.ENV_DESC, function() {
       };
       return browser
         .configureLogging()
-        .then(function() { 
-          return browser.init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null )); 
+        .then(function() {
+          return browser.init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
         }).then(function() {
           return browser.get( midwayUrl(
             that.runnable().parent.parent.title,
             that.runnable().parent.title,
             that.runnable().title)
-          );          
+          );
         });
     }
 
@@ -222,13 +224,13 @@ describe('add-methods ' + env.ENV_DESC, function() {
         });
     });
 
-    express.partials['wd.addPromisedMethod'] =
+    partials['wd.addPromisedMethod'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod', function() {
       _(extraPromiseNoChainMethods).each(function(method, name) {
         wd.addPromiseMethod(name, method);
       });
-      
+
       browser = newPromiseRemote();
       return initAndGet(this, 'pnc/1').then(function() {
         return browser
@@ -238,12 +240,12 @@ describe('add-methods ' + env.ENV_DESC, function() {
           }).then(function() {
             return browser.sleepAndElementById('theDiv');
           }).then(function(el){
-            return browser.sleepAndText(el).should.become("Hello World!");  
+            return browser.sleepAndText(el).should.become("Hello World!");
           });
       });
     });
 
-    express.partials['wd.addAsyncMethod'] =
+    partials['wd.addAsyncMethod'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addAsyncMethod', function() {
       _(extraAsyncMethods).each(function(method, name) {
@@ -258,7 +260,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
           }).then(function() {
             return browser.sleepAndElementById('theDiv');
           }).then(function(el){
-            return browser.sleepAndText(el).should.become("Hello World!");  
+            return browser.sleepAndText(el).should.become("Hello World!");
           });
       });
     });
@@ -282,7 +284,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
         if(err) { return cb(err); }
         browser.init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null) , function(err) {
           if(err) { return cb(err); }
-          browser.get( 
+          browser.get(
             midwayUrl(
               that.runnable().parent.parent.title,
               that.runnable().parent.title,
@@ -290,7 +292,7 @@ describe('add-methods ' + env.ENV_DESC, function() {
             ),
             cb
           );
-        });        
+        });
       });
     }
 
@@ -298,14 +300,14 @@ describe('add-methods ' + env.ENV_DESC, function() {
       var _this = this;
       browser.quit(function(err) {
         if(err) { return done(err); }
-        if(env.SAUCE) 
+        if(env.SAUCE)
           { browser.sauceJobStatus(_this.currentTest.state === 'passed', done); }
         else
-          { done(); } 
+          { done(); }
       });
     });
 
-    express.partials['wd.addAsyncMethod'] =
+    partials['wd.addAsyncMethod'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addAsyncMethod', function(done) {
       _(extraAsyncMethods).each(function(method, name) {

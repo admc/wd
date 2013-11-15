@@ -1,6 +1,6 @@
 /* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-module.exports = function(that) {
+module.exports = function(that, partials) {
 
   that.timeout(env.TIMEOUT);
 
@@ -8,9 +8,10 @@ module.exports = function(that) {
 
   var browser;
   var allPassed = true;
-  var express = new Express( __dirname + '/assets' );
+  var express;
 
   before(function() {
+    express = new Express( __dirname + '/assets', partials );
     express.start();
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
     deferred.resolve(browser);
@@ -59,8 +60,5 @@ module.exports = function(that) {
       });
   });
 
-  return {
-    express: express,
-    browser: deferred.promise
-  };
+  return deferred.promise;
 };

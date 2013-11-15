@@ -1,11 +1,10 @@
 require('../helpers/setup');
 
 describe('api-nav ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
   if(!env.SAUCE){ // page timeout seems to be disabled in sauce
     it('browser.setPageLoadTimeout', function() {
@@ -16,7 +15,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     });
   }
 
-  express.partials['browser.get'] =
+  partials['browser.get'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.get', function() {
     return browser.text().
@@ -45,7 +44,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['browser.setImplicitWaitTimeout'] =
+  partials['browser.setImplicitWaitTimeout'] =
     '<div id="setWaitTimeout"></div>';
   it('browser.setImplicitWaitTimeout', function() {
     return browser
@@ -61,7 +60,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       .setImplicitWaitTimeout(0);
   });
 
-  express.partials['browser.clickElement'] =
+  partials['browser.clickElement'] =
     '<div id="theDiv"><a href="#">not clicked</a></div>\n';
   it('browser.clickElement', function() {
     return browser
@@ -83,7 +82,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.moveTo'] =
+  partials['browser.moveTo'] =
     '<div id="theDiv">\n' +
     '  <div class="div1" href="#">div 1</div>\n' +
     '  <div class="div2" href="#">div 1</div>\n' +
@@ -133,7 +132,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     }
   });
 
-  express.partials['browser.buttonDown/browser.buttonUp'] =
+  partials['browser.buttonDown/browser.buttonUp'] =
     '<div id="theDiv"><a>hold me</a><div class="res"></div></div>\n';
   it('browser.buttonDown/browser.buttonUp @skip-ios @skip-android', function() {
     return browser
@@ -166,7 +165,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.click'] =
+  partials['browser.click'] =
     '<div id="theDiv">\n' +
     '  <div class="numOfClicks">not clicked</div>\n' +
     '  <div class="buttonNumber">not clicked</div>\n' +
@@ -212,7 +211,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.doubleclick'] =
+  partials['browser.doubleclick'] =
     '<div id="theDiv">\n' +
     '  <div>not clicked</div>\n' +
     '</div>\n';
@@ -235,7 +234,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.clear'] =
+  partials['browser.clear'] =
     '<div id="theDiv">\n' +
     '  <input type="text" value="not cleared">\n' +
     '</div>\n';
@@ -256,7 +255,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     return browser.title().should.eventually.include("WD Tests");
   });
 
-  express.partials['browser.acceptAlert'] =
+  partials['browser.acceptAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
   it('browser.acceptAlert @skip-ios @skip-android', function() {
     return browser
@@ -273,7 +272,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       .acceptAlert();
   });
 
-  express.partials['browser.dismissAlert'] =
+  partials['browser.dismissAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
   it('browser.dismissAlert @skip-chrome @skip-ios @skip-android', function() {
     return browser

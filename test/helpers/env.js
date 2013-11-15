@@ -9,6 +9,7 @@ var toBoolean = function(str) {
 env.VERBOSE = toBoolean(process.env.VERBOSE);
 env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 500).toNumber().value();
 env.TIMEOUT = _(process.env.TIMEOUT || 60000).toNumber().value();
+env.SHORT = toBoolean(process.env.SHORT);
 
 env.HTTP_CONFIG = {};
 if(process.env.HTTP_TIMEOUT)

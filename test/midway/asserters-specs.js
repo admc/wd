@@ -22,12 +22,12 @@ describe('asserters ' + env.ENV_DESC, function() {
     ' $("#theDiv .child").show();\n' +
     '}, arguments[0]);\n';
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var partials = {};
 
-  express.partials['asserters.nonEmptyText'] = page;
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
+
+  partials['asserters.nonEmptyText'] = page;
   it('asserters.nonEmptyText', function() {
     return browser
       .execute( appendChild, [env.BASE_TIME_UNIT] )
@@ -36,7 +36,7 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
-  express.partials['asserters.textInclude'] = page;
+  partials['asserters.textInclude'] = page;
   it('asserters.textInclude', function() {
     return browser
       .execute( appendChild, [env.BASE_TIME_UNIT] )
@@ -45,7 +45,7 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
-  express.partials['asserters.isVisible'] = page;
+  partials['asserters.isVisible'] = page;
   it('asserters.isVisible', function() {
     return browser
       .execute( appendChildHideAndShow, [env.BASE_TIME_UNIT] )
@@ -53,7 +53,7 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
-  express.partials['asserters.isHidden'] = page;
+  partials['asserters.isHidden'] = page;
   it('asserters.isHidden', function() {
     return browser
       .execute( appendChildAndHide, [env.BASE_TIME_UNIT] )
@@ -61,7 +61,7 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('');
   });
 
-  express.partials['asserters.jsCondition'] =
+  partials['asserters.jsCondition'] =
     '<div id="theDiv"></div>\n';
   it('asserters.jsCondition', function() {
     var exprCond = "$('#theDiv .child').length > 0";

@@ -3,6 +3,7 @@ BROWSER = $(shell node test/helpers/make-tool env BROWSER)
 BROWSER_SKIP = $(shell node test/helpers/make-tool env BROWSER_SKIP)
 MULTI = $(shell node test/helpers/make-tool env MULTI)
 MOBILE = $(shell node test/helpers/make-tool env MOBILE)
+SHORT = $(shell node test/helpers/make-tool env SHORT)
 
 DEFAULT:
 	@echo
@@ -44,6 +45,12 @@ test_unit:
 test_midway:
 ifeq ($(MULTI),true)
 	./node_modules/.bin/mocha test/midway/*-specs.js -g '@multi'
+else ifeq ($(SHORT),true)
+	./node_modules/.bin/mocha \
+		test/midway/api-*-specs.js \
+		test/midway/element-specs.js \
+		test/midway/asserters-specs.js \
+		-g "@skip-${BROWSER_SKIP}|@multi" -i
 else
 	./node_modules/.bin/mocha \
 		test/midway/*-specs.js -g \

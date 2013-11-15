@@ -3,15 +3,13 @@ require('../helpers/setup');
 // disabling because of random errors on sauce
 describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
 
-  var browser;
-
   beforeEach(function() {
     return browser.windowHandles().should.eventually.have.length.below(2);
   });
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var partials = {};
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
   afterEach(function() {
     return browser
@@ -29,21 +27,21 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
       });
   });
 
-  express.partials['browser.windowName'] = "";
+  partials['browser.windowName'] = "";
   it('browser.windowName', function() {
     return browser
       .execute('window.name="window-1"')
       .windowName().should.become('window-1');
   });
 
-  express.partials['browser.windowHandle'] = "";
+  partials['browser.windowHandle'] = "";
   it('browser.windowHandle', function() {
     return browser
       .windowHandle()
       .should.eventually.have.length.above(0);
   });
 
-  express.partials['browser.newWindow'] = "";
+  partials['browser.newWindow'] = "";
   it('browser.newWindow', function() {
     return browser.url(function(url) {
       return browser
@@ -51,7 +49,7 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
     });
   });
 
-  express.partials['browser.window'] = "";
+  partials['browser.window'] = "";
   it('browser.window', function() {
     return Q.all([
         browser.url(),
@@ -68,7 +66,7 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
     });
   });
 
-  express.partials['browser.windowHandles'] = "";
+  partials['browser.windowHandles'] = "";
   it('browser.windowHandles', function() {
     return browser
       .url()
@@ -82,7 +80,7 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
       });
   });
 
-  express.partials['browser.getWindowSize'] = "";
+  partials['browser.getWindowSize'] = "";
   it('browser.getWindowSize', function() {
     return browser
       .getWindowSize().then(function(size) {
@@ -98,7 +96,7 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
       });
   });
 
-  express.partials['browser.setWindowSize'] = "";
+  partials['browser.setWindowSize'] = "";
   it('browser.setWindowSize', function() {
     return browser
       .getWindowSize().then(function(size) {
@@ -119,7 +117,7 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
       });
   });
 
-  express.partials['browser.getWindowPosition'] = "";
+  partials['browser.getWindowPosition'] = "";
   it('browser.getWindowPosition', function() {
     return browser
       .getWindowPosition().then(function(pos) {
@@ -135,7 +133,7 @@ describe('window ' + env.ENV_DESC + ' @skip-explorer', function() {
       });
   });
 
-  express.partials['browser.setWindowPosition'] = "";
+  partials['browser.setWindowPosition'] = "";
   it('browser.setWindowPosition', function() {
     return browser
       .getWindowPosition().then(function(pos) {

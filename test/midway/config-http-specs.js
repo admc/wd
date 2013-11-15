@@ -1,4 +1,4 @@
-/* global sauceJobTitle, mergeDesired */
+/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
 require('../helpers/setup');
 
@@ -17,7 +17,8 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
   this.timeout(env.TIMEOUT);
 
   var browser;
-  var express = new Express( __dirname + '/assets' );
+  var partials = {};
+  var express;
   var currentHttpConfig;
 
   function promiseChainRemote() {
@@ -27,15 +28,16 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
   }
 
   before(function() {
+    express = new Express( __dirname + '/assets', partials);
     express.start();
   });
 
   beforeEach(function() {
     currentHttpConfig = wd.getHttpConfig();
   });
-  
+
   afterEach(function() {
-    var _this = this;   
+    var _this = this;
     wd.configureHttp(currentHttpConfig);
     wd.getHttpConfig().should.deep.equal(currentHttpConfig);
     if(browser && browser.sessionID){
@@ -51,48 +53,48 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
   });
 
   it("wd.configureHttp", function() {
-    
+
     var newConfig = {
       timeout: env.HTTP_TIMEOUT || 60000,
       retries: env.HTTP_RETRIES || 10,
       retryDelay: env.HTTP_RETRY_DELAY || 50,
-      baseUrl: 'http://example.com'  
+      baseUrl: 'http://example.com'
     };
 
     var newConfig2 = _(newConfig).clone();
     newConfig2.baseUrl = 'http://example2.com';
 
     wd.configureHttp(newConfig);
-    
+
     wd.getHttpConfig().should.deep.equal(newConfig);
     wd.configureHttp( {baseUrl: 'http://example2.com' } );
     wd.getHttpConfig().should.deep.equal(newConfig2);
 
     promiseChainRemote();
 
-    browser._httpConfig.should.deep.equal(newConfig2);    
+    browser._httpConfig.should.deep.equal(newConfig2);
 
   });
 
   it("browser.configureHttp", function() {
 
     var wdCurrent = wd.getHttpConfig();
- 
+
     promiseChainRemote();
 
-    browser._httpConfig.should.deep.equal(wdCurrent);    
+    browser._httpConfig.should.deep.equal(wdCurrent);
 
     var newConfig = {
       timeout: env.HTTP_TIMEOUT || 60000,
       retries: env.HTTP_RETRIES || 10,
       retryDelay: env.HTTP_RETRY_DELAY || 50,
-      baseUrl: 'http://example3.com'  
+      baseUrl: 'http://example3.com'
     };
 
     var newConfig2 = _(newConfig).clone();
     newConfig2.baseUrl = 'http://example4.com';
 
-    browser.configureHttp(newConfig); 
+    browser.configureHttp(newConfig);
 
     browser._httpConfig.should.deep.equal(newConfig);
     wd.getHttpConfig().should.deep.equal(wdCurrent);
@@ -127,7 +129,7 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
     var url =  midwayUrl( this.runnable().parent.title, this.runnable().title);
     var matcher = url.match(/(http:\/\/[\d\.]+:\d+\/)(.*)/);
     var baseUrl = matcher[1];
-    should.exist(baseUrl);    
+    should.exist(baseUrl);
     var relUrl = matcher[2];
     should.exist(relUrl);
     wd.configureHttp({baseUrl: baseUrl});
@@ -144,12 +146,12 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
     var url =  midwayUrl( this.runnable().parent.title, this.runnable().title);
     var matcher = url.match(/(http:\/\/[\d\.]+:\d+\/)(.*)/);
     var baseUrl = matcher[1];
-    should.exist(baseUrl);    
+    should.exist(baseUrl);
     var relUrl = matcher[2];
     should.exist(relUrl);
 
     promiseChainRemote();
-    should.not.exist(browser._httpConfig.baseUrl);    
+    should.not.exist(browser._httpConfig.baseUrl);
     return browser
       .init(buildDesired( this.runnable().parent.title + " #2"))
       .then(function() {
@@ -166,7 +168,7 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
     var url =  midwayUrl( this.runnable().parent.title, this.runnable().title);
     var matcher = url.match(/(http:\/\/[\d\.]+:\d+\/)(.*)/);
     var baseUrl = matcher[1];
-    should.exist(baseUrl);    
+    should.exist(baseUrl);
     var relUrl = matcher[2];
     should.exist(relUrl);
 

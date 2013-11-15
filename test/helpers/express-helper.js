@@ -1,8 +1,8 @@
 var express = require('express');
 
-function Express(rootDir) {
+function Express(rootDir, partials) {
   this.rootDir = rootDir;
-  this.partials = {};
+  this.partials = partials;
 }
 
 Express.prototype.start = function() {
@@ -15,7 +15,7 @@ Express.prototype.start = function() {
     var content = '';
     if(req.query.p){
       content = _this.partials[req.query.p];
-      console.log('got page', req.query.p, '-->', content );
+      //console.log('got page', req.query.p, '-->', content );
     }
     res.render('test-page', {
       testSuite: req.query.ts? req.query.ts.replace(/\@[\w\-]+/g,'') : '',
@@ -30,11 +30,6 @@ Express.prototype.start = function() {
 
 Express.prototype.stop = function() {
   return this.server.close();
-};
-
-Express.prototype.addPartial = function(pageKey, page){
-  console.log('adding for', pageKey, ' -->', page );
-  this.partials[pageKey] = page;
 };
 
 module.exports = {
