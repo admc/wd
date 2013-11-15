@@ -1,7 +1,5 @@
 require('./env');
 
-GLOBAL._ = require('lodash');
-
 var args = process.argv.splice(2);
 var result;
 

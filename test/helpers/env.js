@@ -1,23 +1,22 @@
-GLOBAL._ = require('lodash');
-GLOBAL.S = require('string');
+GLOBAL._ = require('../../lib/lodash');
 
 var env = GLOBAL.env = {};
 
 var toBoolean = function(str) {
-  return S(str).toBoolean() || S(S(str).toInt()).toBoolean();
+  return _(str).toBoolean().value();
 };
 
 env.VERBOSE = toBoolean(process.env.VERBOSE);
-env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 500).toInt();
-env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
+env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 500).toNumber().value();
+env.TIMEOUT = _(process.env.TIMEOUT || 60000).toNumber().value();
 
 env.HTTP_CONFIG = {};
 if(process.env.HTTP_TIMEOUT)
-  { env.HTTP_CONFIG.timeout = S(process.env.HTTP_TIMEOUT).toInt(); }
+  { env.HTTP_CONFIG.timeout = _(process.env.HTTP_TIMEOUT).toNumber().value(); }
 if(process.env.HTTP_RETRIES)
-  { env.HTTP_CONFIG.retries = S(process.env.HTTP_RETRIES).toInt(); }
+  { env.HTTP_CONFIG.retries = _(process.env.HTTP_RETRIES).toNumber().value(); }
 if(process.env.HTTP_RETRY_DELAY)
-  { env.HTTP_CONFIG.retryDelay = S(process.env.HTTP_RETRY_DELAY).toInt(); }
+  { env.HTTP_CONFIG.retryDelay = _(process.env.HTTP_RETRY_DELAY).toNumber().value(); }
 
 env.DEBUG_CONNECTION = process.env.DEBUG_CONNECTION;
 
@@ -40,7 +39,7 @@ if(env.BROWSER === 'multi') {
 
 require('./mobile_env');
 
-env.EXPRESS_PORT = S(process.env.EXPRESS_PORT || 3000).toInt();
+env.EXPRESS_PORT = _(process.env.EXPRESS_PORT || 3000).toNumber().value();
 
 env.MIDWAY_ROOT_HOST = '127.0.0.1';
 
@@ -62,8 +61,8 @@ if( env.TRAVIS_JOB_ID ){
 }
 
 if(env.SAUCE){
-  env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 3000).toInt();
-  env.TIMEOUT = S(process.env.TIMEOUT || 600000).toInt();
+  env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 3000).toNumber().value();
+  env.TIMEOUT = _(process.env.TIMEOUT || 600000).toNumber().value();
 
   env.SAUCE_JOB_ID =
     env.TRAVIS_BUILD_NUMBER ||
