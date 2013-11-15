@@ -51,6 +51,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     express.partials['browser.' + waitForElementFuncName] =
       '<div id="theDiv"></div>';
     it('browser.' + waitForElementFuncName, function() {
+      var startMs = Date.now();
       return browser
         .executeAsync(
           'var args = Array.prototype.slice.call( arguments, 0 );\n' +
@@ -61,7 +62,13 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
           'done();\n',
           [partials.child, env.BASE_TIME_UNIT]
         )
-        [elementFuncName](criterias.child).should.be.rejectedWith(/status: 7/)
+        .then(function() {
+          // if selenium was too slow skip the test.
+          if(Date.now() - startMs < env.BASE_TIME_UNIT){
+            return browser[elementFuncName](criterias.child)
+              .should.be.rejectedWith(/status: 7/);
+          }
+        })
         [waitForElementFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
         .should.be.fulfilled
         .then(function() {
