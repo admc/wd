@@ -49,6 +49,71 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .eval('window.wd_sync_execute_test').should.become('It worked! 10');
   });
 
+  express.partials['browser.execute - el arg'] =
+    '<div id="theDiv">It worked!</div>';
+  it('browser.execute - el arg', function() {
+    var jsScript = prepareJs(
+      'var el = arguments[0];\n' +
+      'return $(el).text();\n'
+    );
+    return browser
+      .elementByCss('#theDiv').then(function(el) {
+        return browser
+          .execute(jsScript, [el])
+          .should.become('It worked!');
+      });
+  });
+
+  express.partials['browser.execute - els arg'] =
+    '<div id="theDiv">\n' +
+    '  <div class="line">line 1</div>\n' +
+    '  <div class="line">line 2</div>\n' +
+    '  <div class="line">line 3</div>\n' +
+    '</div>\n';
+  it('browser.execute - els arg', function() {
+    var jsScript = prepareJs(
+      'var els = arguments[0];\n' +
+      'return $(els[1]).text();\n'
+    );
+    return browser
+      .elementsByCss('#theDiv .line').then(function(els) {
+        return browser
+          .execute(jsScript, [els])
+          .should.become('line 2');
+      });
+  });
+
+  express.partials['browser.execute - el return'] =
+    '<div id="theDiv"></div>';
+  it('browser.execute - el return', function() {
+    var jsScript = prepareJs(
+      'return $("#theDiv").get()[0];\n'
+    );
+    return browser
+      .elementByCss('#theDiv').then(function() {
+        return browser
+          .execute(jsScript)
+          .getTagName().should.eventually.match(/^div$/i);
+      });
+  });
+
+  express.partials['browser.execute - els return'] =
+    '<div id="theDiv">\n' +
+    '  <div class="line">line 1</div>\n' +
+    '  <div class="line">line 2</div>\n' +
+    '  <div class="line">line 3</div>\n' +
+    '</div>\n';
+  it('browser.execute - els return', function() {
+    var jsScript = prepareJs(
+      'return $("#theDiv .line").get();\n'
+    );
+    return browser
+      .execute(jsScript)
+      .then(function(els) {
+        return els[1].text().should.become('line 2');
+      });
+  });
+
   it('browser.safeExecute - noargs', function() {
     /* jshint evil: true */
     return browser
