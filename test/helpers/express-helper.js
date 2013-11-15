@@ -1,6 +1,7 @@
 var express = require('express');
 
 function Express(rootDir, partials) {
+  console.log('Express constructor', 'partials -->', partials );
   this.rootDir = rootDir;
   this.partials = partials;
 }
@@ -15,6 +16,7 @@ Express.prototype.start = function() {
     var content = '';
     if(req.query.p){
       content = _this.partials[req.query.p];
+      console.log('Express get test-page', 'partials -->', _this.partials );
       console.log('got page', req.query.p, '-->', content );
     }
     res.render('test-page', {
