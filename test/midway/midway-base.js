@@ -10,7 +10,6 @@ module.exports = function(that, partials) {
   var allPassed = true;
   var express;
   before(function(done) {
-    console.log('partials -->', partials);
     express = new Express( __dirname + '/assets', partials );
     express.start(done);
   });
