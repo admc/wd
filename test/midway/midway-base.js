@@ -18,23 +18,33 @@ module.exports = function(that) {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['midway']
     };
+    var desired = mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null );
     return browser
       .configureLogging()
       .then(function() {
         return browser
-          .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ))
+          .init(desired)
           .catch(function() {
             // trying one more time
-            return browser
-              .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
+            return browser.init(desired);
           });
       });
   });
 
   beforeEach(function() {
-    return browser.get( midwayUrl(
+    var url = midwayUrl(
       this.currentTest.parent.title,
-      this.currentTest.title));
+      this.currentTest.title
+    );
+    return browser
+    .get(url)
+    .title().should.eventually.include("WD Tests")
+    .catch(function() {
+      // trying one more time
+      return browser
+        .get(url)
+        .title().should.eventually.include("WD Tests");
+    });
   });
 
   afterEach(function() {
