@@ -36,7 +36,7 @@ Incompatibilities:
   - Support for external promise libraries.
   - New saveScreenshot method.
 
-### 0.2.4 (in progress)
+### 0.2.4
   - bugfix: android safeExecute.
   - bugfix: passing argument to execute.
   - bugfix: setOrientation.
