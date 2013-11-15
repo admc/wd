@@ -44,9 +44,9 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   var partials = {};
   var express;
 
-  before(function() {
+  before(function(done) {
     express = new Express( __dirname + '/assets', partials);
-    express.start();
+    express.start(done);
   });
 
   beforeEach(function() {
@@ -60,8 +60,8 @@ describe('ext-promises ' + env.ENV_DESC, function() {
     noExtraMethodCheck();
   });
 
-  after(function() {
-    express.stop();
+  after(function(done) {
+    express.stop(done);
   });
 
   var browser;

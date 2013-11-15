@@ -9,11 +9,13 @@ module.exports = function(that, partials) {
   var browser;
   var allPassed = true;
   var express;
-
-  before(function() {
+  before(function(done) {
     console.log('partials -->', partials);
     express = new Express( __dirname + '/assets', partials );
-    express.start();
+    express.start(done);
+  });
+
+  before(function() {
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
     deferred.resolve(browser);
     var sauceExtra = {
@@ -54,11 +56,14 @@ module.exports = function(that, partials) {
   });
 
   after(function() {
-    express.stop();
     return browser
       .quit().then(function() {
         if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
       });
+  });
+
+  after(function(done) {
+    express.stop(done);
   });
 
   return deferred.promise;

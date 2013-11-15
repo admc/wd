@@ -27,9 +27,9 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
     return browser;
   }
 
-  before(function() {
+  before(function(done) {
     express = new Express( __dirname + '/assets', partials);
-    express.start();
+    express.start(done);
   });
 
   beforeEach(function() {
@@ -48,8 +48,8 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
     }
   });
 
-  after(function() {
-    express.stop();
+  after(function(done) {
+    express.stop(done);
   });
 
   it("wd.configureHttp", function() {

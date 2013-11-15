@@ -1,4 +1,5 @@
 var express = require('express');
+var http = require('http');
 
 function Express(rootDir, partials) {
   console.log('Express constructor', 'partials -->', partials );
@@ -6,7 +7,7 @@ function Express(rootDir, partials) {
   this.partials = partials;
 }
 
-Express.prototype.start = function() {
+Express.prototype.start = function(done) {
   var _this = this;
   this.app = express();
   this.app.set('view engine', 'hbs');
@@ -27,11 +28,20 @@ Express.prototype.start = function() {
   });
 
   this.app.use(express["static"](this.rootDir + '/public'));
-  this.server = this.app.listen(env.EXPRESS_PORT);
+  this.server = http.createServer(this.app);
+  this.server.listen(env.EXPRESS_PORT, function(err) {
+    if(err) { return done(err); }
+    console.log('http server was started');
+    done();
+  });
 };
 
-Express.prototype.stop = function() {
-  return this.server.close();
+Express.prototype.stop = function(done) {
+  this.server.close(function(err) {
+    if(err) { return done(err); }
+    console.log('http server was stopped');
+    done();
+  });
 };
 
 module.exports = {

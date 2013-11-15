@@ -79,9 +79,9 @@ describe('add-methods ' + env.ENV_DESC, function() {
   var partials = {};
   var express;
 
-  before(function() {
+  before(function(done) {
     express = new Express( __dirname + '/assets' , partials);
-    express.start();
+    express.start(done);
   });
 
   beforeEach(function() {
@@ -95,8 +95,8 @@ describe('add-methods ' + env.ENV_DESC, function() {
     noExtraMethodCheck();
   });
 
-  after(function() {
-    express.stop();
+  after(function(done) {
+    express.stop(done);
   });
 
   describe('promise chain', function() {
