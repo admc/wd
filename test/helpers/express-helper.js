@@ -6,15 +6,16 @@ function Express(rootDir) {
 }
 
 Express.prototype.start = function() {
+  var _this = this;
   this.app = express();
   this.app.set('view engine', 'hbs');
   this.app.set('views', this.rootDir + '/views');
 
-  var partials = this.partials;
   this.app.get('/test-page', function(req, res) {
     var content = '';
     if(req.query.p){
-      content = partials[req.query.p];
+      content = _this.partials[req.query.p];
+      console.log('got page', req.query.p, '-->', content );
     }
     res.render('test-page', {
       testSuite: req.query.ts? req.query.ts.replace(/\@[\w\-]+/g,'') : '',
@@ -29,6 +30,11 @@ Express.prototype.start = function() {
 
 Express.prototype.stop = function() {
   return this.server.close();
+};
+
+Express.prototype.addPartial = function(pageKey, page){
+  console.log('adding for', pageKey, ' -->', page );
+  this.partials[pageKey] = page;
 };
 
 module.exports = {
