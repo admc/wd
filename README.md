@@ -425,7 +425,7 @@ browser.safeExecute("wrong!!!", function(err, res) { //returns
 ## Working with mobile device emulators
 
 It is possible to use `wd` to test mobile devices using either Selenium or Appium. However
-in both case, the full JsonWire protocol is not supported (or is buggy).
+in either case the full JsonWire protocol is not supported (or is buggy).
 
 Examples [here](https://github.com/admc/wd/tree/master/examples/mobile).
 
