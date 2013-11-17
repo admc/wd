@@ -42,6 +42,6 @@ Incompatibilities:
   - bugfix: setOrientation.
   - migrating from string.js to underscore.string.
 
-### 0.2.5 (in progress)
+### 0.2.5
   - Webdriver and Element refactoring
-
+  - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
