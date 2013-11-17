@@ -41,3 +41,7 @@ Incompatibilities:
   - bugfix: passing argument to execute.
   - bugfix: setOrientation.
   - migrating from string.js to underscore.string.
+
+### 0.2.5 (in progress)
+  - Webdriver and Element refactoring
+
