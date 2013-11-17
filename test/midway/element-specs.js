@@ -181,7 +181,10 @@ describe('element ' + env.ENV_DESC, function() {
     return browser
       .elementByCss("#theDiv input").getValue().should.become("")
       .elementByCss("#theDiv input").then(function(el) {
-        return el.type('hello').getValue().should.become("hello");
+        return el
+          .type('hello')
+          .getValue()
+          .should.become("hello");
       });
   });
 
