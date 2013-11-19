@@ -45,3 +45,7 @@ Incompatibilities:
 ### 0.2.5
   - Webdriver and Element refactoring
   - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
+
+### 0.2.6 (in progress)
+  - bugfix: Removed the tmp dependencies.
+
