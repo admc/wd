@@ -1,6 +1,6 @@
 require('../helpers/setup');
 
-describe('api-nav ' + env.ENV_DESC, function() {
+describe('chaining ' + env.ENV_DESC, function() {
   var partials = {};
 
   var browser;
