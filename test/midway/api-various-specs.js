@@ -3,7 +3,7 @@ require('../helpers/setup');
 var imageinfo = require('imageinfo');
 var path = require('path');
 var fs = require('fs');
-var tmp = require('tmp');
+var tmp = require('../../lib/tmp-light');
 
 describe('api-various ' + env.ENV_DESC, function() {
   var partials = {};
