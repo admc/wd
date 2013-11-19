@@ -261,6 +261,10 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 }
 ```
 
+### Capabilities
+
+[doc here](https://code.google.com/p/selenium/wiki/DesiredCapabilities).
+
 ### Element function chaining (using promise chains)
 
 With the promise chain api the method from the `browser` prototype and the
