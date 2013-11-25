@@ -48,4 +48,6 @@ Incompatibilities:
 
 ### 0.2.6 (in progress)
   - bugfix: Removed the tmp dependencies.
+  - isVisible fix depreciation (todo)
+  - jQuery addOn + asserters (including jquery visible/hidden) (todo)
 
