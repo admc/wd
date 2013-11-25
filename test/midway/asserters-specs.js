@@ -22,6 +22,19 @@ describe('asserters ' + env.ENV_DESC, function() {
     ' $("#theDiv .child").show();\n' +
     '}, arguments[0]);\n';
 
+  var appendChildHideAndShowTheDiv =
+    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
+    '$("#theDiv").hide();\n' +
+    'setTimeout(function() {\n' +
+    ' $("#theDiv").show();\n' +
+    '}, arguments[0]);\n';
+
+  var appendChildAndHideTheDiv =
+    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
+    'setTimeout(function() {\n' +
+    ' $("#theDiv").hide();\n' +
+    '}, arguments[0]);\n';
+
   var partials = {};
 
   var browser;
@@ -53,10 +66,26 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
+  partials['asserters.isVisible when parentNode is hide and show'] = page;
+  it('asserters.isVisible when parentNode is hide and show', function() {
+    return browser
+      .execute( appendChildHideAndShowTheDiv, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('a waitFor child');
+  });
+
   partials['asserters.isHidden'] = page;
   it('asserters.isHidden', function() {
     return browser
       .execute( appendChildAndHide, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('');
+  });
+
+  partials['asserters.isHidden when parentNode is hide'] = page;
+  it('asserters.isHidden when parentNode is hide', function() {
+    return browser
+      .execute( appendChildAndHideTheDiv, [env.BASE_TIME_UNIT] )
       .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
       .text().should.become('');
   });
