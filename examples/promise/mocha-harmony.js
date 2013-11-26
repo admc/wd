@@ -55,12 +55,5 @@ describe("mocha with generators", function() {
     location.should.include("&submit");
   }));
 
-  it("submit element should be clicked ", Q.async(function *() {
-    var submitEl = yield browser.elementById("submit");
-    yield submitEl.click();
-    var location = yield browser.eval("window.location.href");
-    location.should.include("&submit");
-  }));
-
 });
 
