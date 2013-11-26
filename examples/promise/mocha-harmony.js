@@ -4,6 +4,8 @@
 /* global describe, it, before , beforeEach, after*/
 /* jshint moz: true, evil: true */
 
+require("mocha-as-promised")();
+
 require('colors');
 var chai = require("chai");
 chai.should();
@@ -17,17 +19,11 @@ try {
 
 var Q = wd.Q;
 
-var run = function(generatorFunc) {
-  return function(done) {
-    return Q.async(generatorFunc)().nodeify(done);
-  };
-};
-
 describe("mocha with generators", function() {
   this.timeout(10000);
   var browser;
 
-  before(run(function *() {
+  before(Q.async(function *() {
     browser = wd.promiseChainRemote();
     //browser._debugPromise();
     browser.on('status', function(info) {
@@ -39,27 +35,27 @@ describe("mocha with generators", function() {
     yield browser.init({browserName:'chrome'});
   }));
 
-  beforeEach(run(function*() {
+  beforeEach(Q.async(function*() {
     yield browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
   }));
 
-  after(run(function*() {
+  after(Q.async(function*() {
     yield browser.quit();
   }));
 
-  it("should retrieve the page title", run(function *() {
+  it("should retrieve the page title", Q.async(function *() {
     var title = yield browser.title();
     title.should.equal("WD Tests");
   }));
 
-  it("submit element should be clicked", run(function *() {
+  it("submit element should be clicked", Q.async(function *() {
     var submitEl = yield browser.elementById("submit");
     yield submitEl.click();
     var location = yield browser.eval("window.location.href");
     location.should.include("&submit");
   }));
 
-  it("submit element should be clicked ", run(function *() {
+  it("submit element should be clicked ", Q.async(function *() {
     var submitEl = yield browser.elementById("submit");
     yield submitEl.click();
     var location = yield browser.eval("window.location.href");
