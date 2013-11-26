@@ -42,6 +42,7 @@ describe('api-el ' + env.ENV_DESC, function() {
   partials['browser.waitForElement'] =
     '<div id="theDiv"></div>';
   it('browser.waitForElement @skip-ios @skip-android', function() {
+    var startMs = Date.now();
     return browser
       .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +
@@ -52,7 +53,13 @@ describe('api-el ' + env.ENV_DESC, function() {
         'done();\n' ),
         [env.BASE_TIME_UNIT]
       )
-      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
+      .then(function() {
+        // if selenium was too slow skip the test.
+        if(Date.now() - startMs < env.BASE_TIME_UNIT){
+          return browser.elementByCss("#theDiv .child")
+            .should.be.rejectedWith(/status: 7/);
+        }
+      })
       .waitForElement("css selector", "#theDiv .child", 2 * env.BASE_TIME_UNIT)
       .should.be.fulfilled
       .then(function() {
