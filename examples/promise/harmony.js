@@ -3,6 +3,8 @@
 //
 // This demos how to mix promise chain and generators
 
+/* jshint moz: true, evil: true */
+
 require('colors');
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
@@ -41,14 +43,13 @@ Q.spawn(function *() {
     title.should.equal('WD Tests');
     var linkEl = yield  browser.elementById('i am a link');
     yield linkEl.click();
-    /* jshint evil: true */
     var href = yield browser.eval("window.location.href");
     href.should.include('guinea-pig2');
     yield browser.back();
     var commentsEl = yield browser.elementByCss('#comments');
     yield commentsEl.type('Bonjour!');
     var comments = yield commentsEl.getValue();
-    comments.should.equal('Bonjour!')
+    comments.should.equal('Bonjour!');
   } finally {
     yield browser.quit();
   }
@@ -64,7 +65,6 @@ Q.spawn(function *() {
       .elementById('i am a link')
       .click();
 
-    /* jshint evil: true */
     yield browser
       .eval("window.location.href")
       .should.eventually.include('guinea-pig2');
