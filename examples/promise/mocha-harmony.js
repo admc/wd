@@ -17,13 +17,13 @@ try {
   wd = require('../../lib/main');
 }
 
-var Q = wd.Q;
+var wrap = wd.Q.async;
 
 describe("mocha with generators", function() {
   this.timeout(10000);
   var browser;
 
-  before(Q.async(function *() {
+  before(wrap(function *() {
     browser = wd.promiseChainRemote();
     //browser._debugPromise();
     browser.on('status', function(info) {
@@ -35,20 +35,20 @@ describe("mocha with generators", function() {
     yield browser.init({browserName:'chrome'});
   }));
 
-  beforeEach(Q.async(function*() {
+  beforeEach(wrap(function*() {
     yield browser.get("http://admc.io/wd/test-pages/guinea-pig.html");
   }));
 
-  after(Q.async(function*() {
+  after(wrap(function*() {
     yield browser.quit();
   }));
 
-  it("should retrieve the page title", Q.async(function *() {
+  it("should retrieve the page title", wrap(function *() {
     var title = yield browser.title();
     title.should.equal("WD Tests");
   }));
 
-  it("submit element should be clicked", Q.async(function *() {
+  it("submit element should be clicked", wrap(function *() {
     var submitEl = yield browser.elementById("submit");
     yield submitEl.click();
     var location = yield browser.eval("window.location.href");
