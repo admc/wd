@@ -29,6 +29,7 @@ Incompatibilities:
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15)).
 
 ### 0.2.3
+
   - Http configuration enhancements + base url, see doc [here](https://github.com/admc/wd#http-configuration--base-url).
   - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
   - `addPromiseChainMethod`/`addPromiseMethod`/`addAsyncMethod`/`removeMethod` replacing monkey patching
@@ -37,17 +38,24 @@ Incompatibilities:
   - New saveScreenshot method.
 
 ### 0.2.4
+
   - bugfix: android safeExecute.
   - bugfix: passing argument to execute.
   - bugfix: setOrientation.
   - migrating from string.js to underscore.string.
 
-### 0.2.5
+### 0.2.5 (latest)
+
   - Webdriver and Element refactoring
   - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
 
-### 0.2.6 (in progress)
-  - bugfix: Removed the tmp dependencies.
-  - isVisible fix depreciation (todo)
-  - jQuery addOn + asserters (including jquery visible/hidden) (todo)
+### 0.2.6 (future)
 
+  - bugfix: Removed the tmp dependencies.
+  - isDisplayed/isNotDisplayed asserters
+  - isVisible depreciation
+  - bugfix: Removed the tmp dependencies.
+  - bugfix: Value not defaulted when inititializing with `url.parse`.
+
+### 0.3 (future)
+  - jQuery addOn + asserters (including jquery visible/hidden) (todo)
