@@ -14,6 +14,16 @@ describe("wd remote tests", function() {
     });
   });
   describe("url string", function() {
+    it("browser should be initialized with: http default", function(done) {
+      var browser;
+      browser = wd.remote('http://localhost');
+      browser.configUrl.protocol.should.equal('http:');
+      browser.configUrl.hostname.should.equal('localhost');
+      should.not.exist(browser.configUrl.port);
+      browser.configUrl.pathname.should.equal('/');
+      should.not.exist(browser.configUrl.auth);
+      done(null);
+    });
     it("browser should be initialized with: http url", function(done) {
       var browser;
       browser = wd.remote('http://localhost:8888/wd/hub');
@@ -45,6 +55,16 @@ describe("wd remote tests", function() {
     });
   });
   describe("url object", function() {
+    it("browser should be initialized with: http default", function(done) {
+      var browser;
+      browser = wd.remote(url.parse('http://localhost'));
+      browser.configUrl.protocol.should.equal('http:');
+      browser.configUrl.hostname.should.equal('localhost');
+      should.not.exist(browser.configUrl.port);
+      browser.configUrl.pathname.should.equal('/');
+      should.not.exist(browser.configUrl.auth);
+      done(null);
+    });
     it("browser should be initialized with: http url", function(done) {
       var browser;
       browser = wd.remote(url.parse('http://localhost:8888/wd/hub'));
