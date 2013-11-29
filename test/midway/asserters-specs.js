@@ -22,14 +22,14 @@ describe('asserters ' + env.ENV_DESC, function() {
     ' $("#theDiv .child").show();\n' +
     '}, arguments[0]);\n';
 
-  var appendChildHideAndShowTheDiv =
+  var appendChildHideAndShowParentDiv =
     '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
     '$("#theDiv").hide();\n' +
     'setTimeout(function() {\n' +
     ' $("#theDiv").show();\n' +
     '}, arguments[0]);\n';
 
-  var appendChildAndHideTheDiv =
+  var appendChildAndHideParentDiv =
     '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
     'setTimeout(function() {\n' +
     ' $("#theDiv").hide();\n' +
@@ -58,35 +58,37 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
-  partials['asserters.isVisible'] = page;
-  it('asserters.isVisible', function() {
+  partials['asserters.isDisplayed'] = page;
+  it('asserters.isDisplayed', function() {
     return browser
       .execute( appendChildHideAndShow, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isDisplayed ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT) // deprecated
       .text().should.become('a waitFor child');
   });
 
-  partials['asserters.isVisible when parentNode is hide and show'] = page;
-  it('asserters.isVisible when parentNode is hide and show', function() {
+  partials['asserters.isDisplayed (hide and show parent)'] = page;
+  it('asserters.isDisplayed (hide and show parent)', function() {
     return browser
-      .execute( appendChildHideAndShowTheDiv, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT)
+      .execute( appendChildHideAndShowParentDiv, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isDisplayed ,2 * env.BASE_TIME_UNIT)
       .text().should.become('a waitFor child');
   });
 
-  partials['asserters.isHidden'] = page;
-  it('asserters.isHidden', function() {
+  partials['asserters.isNotDisplayed'] = page;
+  it('asserters.isNotDisplayed', function() {
     return browser
       .execute( appendChildAndHide, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isNotDisplayed ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT) // deprecated
       .text().should.become('');
   });
 
-  partials['asserters.isHidden when parentNode is hide'] = page;
-  it('asserters.isHidden when parentNode is hide', function() {
+  partials['asserters.isNotDisplayed (hide parent)'] = page;
+  it('asserters.isNotDisplayed (hide parent)', function() {
     return browser
-      .execute( appendChildAndHideTheDiv, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
+      .execute( appendChildAndHideParentDiv, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isNotDisplayed ,2 * env.BASE_TIME_UNIT)
       .text().should.become('');
   });
 
