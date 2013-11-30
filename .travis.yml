@@ -34,3 +34,4 @@ before_script:
   - ./node_modules/.bin/travis_start_sauce_connect
 script:
   - "make test_travis"
+
