@@ -56,6 +56,7 @@ Incompatibilities:
   - isVisible depreciation
   - bugfix: Removed the tmp dependencies.
   - bugfix: Value not defaulted when inititializing with `url.parse`.
+  - bugfix: url relative now use `url.resolve`.
 
 ### 0.3 (future)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
