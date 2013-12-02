@@ -1,13 +1,12 @@
 require('../helpers/setup');
 
 describe('api-el ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
-  express.partials['browser.element'] =
+  partials['browser.element'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.element', function() {
     return Q.all([
@@ -16,7 +15,7 @@ describe('api-el ' + env.ENV_DESC, function() {
     ]);
   });
 
-  express.partials['browser.elementOrNull'] =
+  partials['browser.elementOrNull'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.elementOrNull', function() {
     return browser
@@ -24,7 +23,7 @@ describe('api-el ' + env.ENV_DESC, function() {
       .elementOrNull("name", "theDiv2").should.eventually.be.a('null');
   });
 
-  express.partials['browser.elementIfExists'] =
+  partials['browser.elementIfExists'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.elementIfExists', function() {
     return browser
@@ -32,7 +31,7 @@ describe('api-el ' + env.ENV_DESC, function() {
       .elementIfExists("name", "theDiv2").should.eventually.be.a('undefined');
   });
 
-  express.partials['browser.hasElement'] =
+  partials['browser.hasElement'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.hasElement', function() {
     return browser
@@ -40,20 +39,27 @@ describe('api-el ' + env.ENV_DESC, function() {
       .hasElement("name", "theDiv2").should.eventually.not.be.ok;
   });
 
-  express.partials['browser.waitForElement'] =
+  partials['browser.waitForElement'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForElement', function() {
+  it('browser.waitForElement @skip-ios @skip-android', function() {
+    var startMs = Date.now();
     return browser
-      .executeAsync(
+      .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +
         'var done = args[args.length -1];\n' +
         'setTimeout(function() {\n' +
         ' $("#theDiv").append("<div class=\\"child\\">a waitForElement child</div>");\n' +
         '}, arguments[0]);\n' +
-        'done();\n',
+        'done();\n' ),
         [env.BASE_TIME_UNIT]
       )
-      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
+      .then(function() {
+        // if selenium was too slow skip the test.
+        if(Date.now() - startMs < env.BASE_TIME_UNIT){
+          return browser.elementByCss("#theDiv .child")
+            .should.be.rejectedWith(/status: 7/);
+        }
+      })
       .waitForElement("css selector", "#theDiv .child", 2 * env.BASE_TIME_UNIT)
       .should.be.fulfilled
       .then(function() {
@@ -63,11 +69,11 @@ describe('api-el ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.waitForVisible'] =
+  partials['browser.waitForVisible'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForVisible', function() {
+  it('browser.waitForVisible @skip-ios @skip-android', function() {
     return browser
-      .executeAsync(
+      .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +
         'var done = args[args.length -1];\n' +
         '$("#theDiv").append("<div class=\\"child\\">a waitForVisible child</div>");\n' +
@@ -75,7 +81,7 @@ describe('api-el ' + env.ENV_DESC, function() {
         'setTimeout(function() {\n' +
         ' $("#theDiv .child").show();\n' +
         '}, arguments[0]);\n' +
-        'done();\n',
+        'done();\n' ),
         [env.BASE_TIME_UNIT]
       )
       .elementByCss("#theDiv .child").should.eventually.exist
@@ -89,7 +95,7 @@ describe('api-el ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.elements'] =
+  partials['browser.elements'] =
     '<div>\n' +
     '  <div name="elementsByName">Hello World!</div>\n' +
     '  <div name="elementsByName">Hello World!</div>\n' +
@@ -102,7 +108,7 @@ describe('api-el ' + env.ENV_DESC, function() {
   });
 
 
-  express.partials['browser.getAttribute'] =
+  partials['browser.getAttribute'] =
     '<div id="weatherDiv" weather="sunny">Hi</div>';
   it('browser.getAttribute', function() {
     return browser
@@ -114,17 +120,17 @@ describe('api-el ' + env.ENV_DESC, function() {
       .elementById('weatherDiv').getAttribute('weather').should.become("sunny");
   });
 
-  express.partials['browser.getTagName'] =
+  partials['browser.getTagName'] =
     '<div id="theDiv"><input type="text"><a href="#">a1</a></div>';
   it('browser.getTagName', function() {
     return browser
       .elementByCss('#theDiv input').then(function(el) {
-        return browser.getTagName(el).should.become("input");
+        return browser.getTagName(el).should.eventually.match(/^input$/i);
       })
-      .elementByCss('#theDiv a').getTagName().should.become("a");
+      .elementByCss('#theDiv a').getTagName().should.eventually.match(/^a$/i);
   });
 
-  express.partials['browser.getValue'] =
+  partials['browser.getValue'] =
     '<div id="theDiv">\n' +
     '  <input class="input-text" type="text" value="Hello getValueTest!">\n'  +
     '  <textarea>Hello getValueTest2!</textarea>\n' +
@@ -141,7 +147,7 @@ describe('api-el ' + env.ENV_DESC, function() {
       .elementByCss('#theDiv textarea').getValue().should.become('Hello getValueTest2!');
   });
 
-  express.partials['browser.getComputedCss'] =
+  partials['browser.getComputedCss'] =
     '<div id="theDiv">\n' +
     '  <a href="#">a1</a>\n' +
     '</div>\n';
@@ -151,11 +157,11 @@ describe('api-el ' + env.ENV_DESC, function() {
         return browser
           .getComputedCss(el, 'color').should.eventually.match(/rgb/);
       }).elementByCss('#theDiv  a').getComputedCss('color')
-        .should.eventually.match(/rgba/);
+        .should.eventually.match(/rgb/);
   });
 
 
-  express.partials['browser.text'] =
+  partials['browser.text'] =
     '<div id="theDiv"><div>text content</div></div>\n';
   it('browser.text', function() {
     return browser
@@ -183,7 +189,7 @@ describe('api-el ' + env.ENV_DESC, function() {
       .text().should.eventually.include("text content");
   });
 
-  express.partials['browser.textPresent'] =
+  partials['browser.textPresent'] =
     '<div id="theDiv">weather is sunny</div>\n';
   it('browser.textPresent', function() {
     return browser

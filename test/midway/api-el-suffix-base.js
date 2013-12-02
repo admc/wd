@@ -3,19 +3,18 @@
 //   ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText',
 //   'ByPartialLinkText', 'ByTagName', 'ByXPath', 'ByCss'];
 
-exports.test = function function_name (suffix, extraDesc, partials, criterias) {
+require('../helpers/setup');
 
-  require('../helpers/setup');
+exports.test = function function_name (suffix, extraDesc, suffixPartials, criterias) {
 
   describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, function() {
+    var partials = {};
 
-    var ctx = require('./midway-base')(this),
-        express = ctx.express,
-        browser;
-    ctx.browser.then(function(_browser) { browser = _browser; });
+    var browser;
+    require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
     var elementFuncName = 'element' + suffix;
-    express.partials['browser.' + elementFuncName] = partials.one;
+    partials['browser.' + elementFuncName]  = suffixPartials.one;
     it('browser.' + elementFuncName, function() {
       return Q.all([
         browser[elementFuncName](criterias.valid).should.eventually.exist,
@@ -24,7 +23,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     });
 
     var elementFuncNameOrNull = 'element' + suffix + 'OrNull';
-    express.partials['browser.' + elementFuncNameOrNull] = partials.one;
+    partials['browser.' + elementFuncNameOrNull]  = suffixPartials.one;
     it('browser.' + elementFuncNameOrNull, function() {
       return browser
         [elementFuncNameOrNull](criterias.valid).should.eventually.exist
@@ -32,7 +31,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     });
 
     var elementFuncNameIfExists = 'element' + suffix + 'IfExists';
-    express.partials['browser.' + elementFuncNameIfExists] = partials.one;
+    partials['browser.' + elementFuncNameIfExists]  = suffixPartials.one;
     it('browser.' + elementFuncNameIfExists, function() {
       return browser
         [elementFuncNameIfExists](criterias.valid).should.eventually.exist
@@ -40,7 +39,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     });
 
     var hasElementFuncName = 'hasElement' + suffix;
-    express.partials['browser.' + hasElementFuncName] = partials.one;
+    partials['browser.' + hasElementFuncName]  = suffixPartials.one;
     it('browser.' + hasElementFuncName, function() {
       return browser
         [hasElementFuncName](criterias.valid).should.eventually.be.ok
@@ -48,9 +47,9 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     });
 
     var waitForElementFuncName = 'waitForElement' + suffix;
-    express.partials['browser.' + waitForElementFuncName] =
-      '<div id="theDiv"></div>';
+    partials['browser.' + waitForElementFuncName]  = '<div id="theDiv"></div>';
     it('browser.' + waitForElementFuncName, function() {
+      var startMs = Date.now();
       return browser
         .executeAsync(
           'var args = Array.prototype.slice.call( arguments, 0 );\n' +
@@ -59,9 +58,15 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
           ' $("#theDiv").append(args[0]);\n' +
           '}, args[1]);\n' +
           'done();\n',
-          [partials.child, env.BASE_TIME_UNIT]
+          [suffixPartials.child, env.BASE_TIME_UNIT]
         )
-        [elementFuncName](criterias.child).should.be.rejectedWith(/status: 7/)
+        .then(function() {
+          // if selenium was too slow skip the test.
+          if(Date.now() - startMs < env.BASE_TIME_UNIT){
+            return browser[elementFuncName](criterias.child)
+              .should.be.rejectedWith(/status: 7/);
+          }
+        })
         [waitForElementFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
         .should.be.fulfilled
         .then(function() {
@@ -72,8 +77,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     });
 
     var waitForVisibleFuncName = 'waitForVisible' + suffix;
-    express.partials['browser.' + waitForVisibleFuncName] =
-      '<div id="theDiv"></div>';
+    partials['browser.' + waitForVisibleFuncName]  = '<div id="theDiv"></div>';
     it('browser.' + waitForVisibleFuncName, function() {
       return browser
         .executeAsync(
@@ -85,7 +89,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
           ' $("#theDiv .child").show();\n' +
           '}, args[1]);\n' +
           'done();\n',
-          [partials.child, env.BASE_TIME_UNIT]
+          [suffixPartials.child, env.BASE_TIME_UNIT]
         )
         [elementFuncName](criterias.child).should.eventually.exist
         [waitForVisibleFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
@@ -98,7 +102,7 @@ exports.test = function function_name (suffix, extraDesc, partials, criterias) {
     });
 
     var elementsFuncName = 'elements' + suffix;
-    express.partials['browser.' + elementsFuncName] = partials.several;
+    partials['browser.' + elementsFuncName]  = suffixPartials.several;
     it('browser.' + elementsFuncName, function() {
       return browser
         [elementsFuncName](criterias.valid).then(function(res) {

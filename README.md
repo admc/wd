@@ -38,10 +38,12 @@ npm install wd
 
 ## Release notes
 
-Many changes have been introduced in 0.2.x versions, please check 
+Latest version is `0.2.5`.
+
+Many changes have been introduced in 0.2.x versions, please check
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
 
-### 0.2.3 caveats
+### caveats when upgrading to 0.2.3
   - Most wait methods have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters if you feel it is useful for others.
   - Manual monkey patching is not recommended anymore, there were some side use cases which were not easy to cover.
   Use addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods instead. See doc below.
@@ -259,12 +261,16 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 }
 ```
 
+### Capabilities
+
+[doc here](https://code.google.com/p/selenium/wiki/DesiredCapabilities).
+
 ### Element function chaining (using promise chains)
 
-With the promise chain api the method from the `browser` prototype and the 
+With the promise chain api the method from the `browser` prototype and the
 `element` prototype are all available within the `browser` instance, so it might
-be confusing at first. However we tried to keep the logic as simple as possible 
-using the principles below: 
+be confusing at first. However we tried to keep the logic as simple as possible
+using the principles below:
 
 - There is no state passed between calls, except for what the method returns.
 - If the method returns an element the element scope is propagated.
@@ -273,7 +279,7 @@ using the principles below:
 - You may use "<" as the first parameter to get out of the element scope.
 - You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
 
-If you need to do something more complicated, like reusing an element for 2 calls, then 
+If you need to do something more complicated, like reusing an element for 2 calls, then
 can either Q promise functionnality (like then, Q.all or Q sequences), or retrieve your
 element twice (since the promise chain api is very terse, this is usually acceptable).
 
@@ -284,7 +290,7 @@ Element function chaining example [here](https://github.com/admc/wd/blob/master/
 Below are the methods to use to wait for a condition:
 
 - `browser.waitFor(asserter, timeout, pollFreq, cb) -> cb(err, value)`: generic wait method, the return value is provided by the asserter when the condition is satisfied.
-- `browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb) -> cb(err, el)`: waits for a element then a 
+- `browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb) -> cb(err, el)`: waits for a element then a
 condition, then returns the element.
 - `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser, then returns a boolean.
 
@@ -304,9 +310,9 @@ var promiseAsserter = new Asserter(
   function(target) {
     ...
     return promise; // promise resolved with the wait_for return value.
-    
-    // Promise asserter should throw errors marked with `err.retriable=true` 
-    // when the condition is not satisfied.    
+
+    // Promise asserter should throw errors marked with `err.retriable=true`
+    // when the condition is not satisfied.
   }
 );
 
@@ -343,8 +349,8 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/helpe
 
 ### Starting the promise chain
 
-The `browser` and `element` object are not themselves promises (cause that would lead to chaos), so you 
-cannot call Q core methods on them. However you may call one of the method below to initiate the promise 
+The `browser` and `element` object are not themselves promises (cause that would lead to chaos), so you
+cannot call Q core methods on them. However you may call one of the method below to initiate the promise
 chain:
 
 - `browser.chain()`
@@ -370,7 +376,7 @@ See example [here](https://github.com/admc/wd/blob/master/examples/promise/exter
 
 ### Http configuration / base url
 
-Http behaviour and base url may be configured via the `configureHttp` method as 
+Http behaviour and base url may be configured via the `configureHttp` method as
 in the code below:
 
 ```js
@@ -388,11 +394,11 @@ browser.configureHttp({
   retryDelay: 100,
   baseUrl = 'http://example.com/'
 });
-``` 
+```
 
-- timeout: http timeout in ms, default is `undefined` (uses the server timeout, 
+- timeout: http timeout in ms, default is `undefined` (uses the server timeout,
   usually 60 seconds). Use `'default'` or `undefined` for server default.
-- retries: Number of reconnection attempts in case the connection is dropped. 
+- retries: Number of reconnection attempts in case the connection is dropped.
   Default is `3`. Pass `0` or `always` to keep trying. Pass `-1` or `never` to disable.
 - retryDelay: the number of ms to wait before reconnecting. Default is `15`.
 - baseUrl: the base url use by the `get` method. The destination url is computed using
@@ -422,6 +428,25 @@ browser.execute("wrong!!!", function(err, res) { //hangs
 browser.safeExecute("wrong!!!", function(err, res) { //returns
 ```
 
+## Working with mobile device emulators
+
+It is possible to use `wd` to test mobile devices using either Selenium or Appium. However
+in either case the full JsonWire protocol is not supported (or is buggy).
+
+Examples [here](https://github.com/admc/wd/tree/master/examples/mobile).
+
+### Selenium
+
+Both Android (using AndroidDriver) and ios (using ios-driver) are supported, locally or using
+Sauce Labs cloud.
+
+### Appium
+
+Android is only supported locally.
+
+ios6 is supported locally or using Sauce Labs cloud. There is an issue with ios7, the Appium
+team is working to solve it.
+
 ## Run the tests!
 
 ```
@@ -445,7 +470,7 @@ make test
 # Install Sauce Connect
 node_modules/.bin/install_sauce_connect
 
-# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY 
+# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY
 
 # Start Sauce Sonnect:
 node_modules/.bin/start_sauce_connect
@@ -490,4 +515,5 @@ npm publish
 ## Test Coverage
 
 [test coverage](http://admc.io/wd/istanbul/coverage/lcov-report/lib/index.html)
- 
+
+

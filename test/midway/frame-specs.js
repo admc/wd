@@ -2,10 +2,10 @@
 require('../helpers/setup');
 
 describe('frame ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
   it('browser.frame', function() {
     return browser

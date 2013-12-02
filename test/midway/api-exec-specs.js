@@ -1,13 +1,12 @@
 require('../helpers/setup');
 
 describe('api-exec ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
-  express.partials['browser.eval'] =
+  partials['browser.eval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';
   it('browser.eval', function() {
     /* jshint evil: true */
@@ -18,7 +17,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .eval('$("#eval li").length').should.become(2);
   });
 
-  express.partials['browser.safeEval'] =
+  partials['browser.safeEval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';
   it('browser.safeEval', function() {
     /* jshint evil: true */
@@ -47,6 +46,71 @@ describe('api-exec ' + env.ENV_DESC, function() {
       // with args
       .execute(jsScript, [6, 4])
       .eval('window.wd_sync_execute_test').should.become('It worked! 10');
+  });
+
+  partials['browser.execute - el arg'] =
+    '<div id="theDiv">It worked!</div>';
+  it('browser.execute - el arg', function() {
+    var jsScript = prepareJs(
+      'var el = arguments[0];\n' +
+      'return $(el).text();\n'
+    );
+    return browser
+      .elementByCss('#theDiv').then(function(el) {
+        return browser
+          .execute(jsScript, [el])
+          .should.become('It worked!');
+      });
+  });
+
+  partials['browser.execute - els arg'] =
+    '<div id="theDiv">\n' +
+    '  <div class="line">line 1</div>\n' +
+    '  <div class="line">line 2</div>\n' +
+    '  <div class="line">line 3</div>\n' +
+    '</div>\n';
+  it('browser.execute - els arg', function() {
+    var jsScript = prepareJs(
+      'var els = arguments[0];\n' +
+      'return $(els[1]).text();\n'
+    );
+    return browser
+      .elementsByCss('#theDiv .line').then(function(els) {
+        return browser
+          .execute(jsScript, [els])
+          .should.become('line 2');
+      });
+  });
+
+  partials['browser.execute - el return'] =
+    '<div id="theDiv"></div>';
+  it('browser.execute - el return', function() {
+    var jsScript = prepareJs(
+      'return $("#theDiv").get()[0];\n'
+    );
+    return browser
+      .elementByCss('#theDiv').then(function() {
+        return browser
+          .execute(jsScript)
+          .getTagName().should.eventually.match(/^div$/i);
+      });
+  });
+
+  partials['browser.execute - els return'] =
+    '<div id="theDiv">\n' +
+    '  <div class="line">line 1</div>\n' +
+    '  <div class="line">line 2</div>\n' +
+    '  <div class="line">line 3</div>\n' +
+    '</div>\n';
+  it('browser.execute - els return', function() {
+    var jsScript = prepareJs(
+      'return $("#theDiv .line").get();\n'
+    );
+    return browser
+      .execute(jsScript)
+      .then(function(els) {
+        return els[1].text().should.become('line 2');
+      });
   });
 
   it('browser.safeExecute - noargs', function() {
@@ -132,7 +196,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
   });
 
 
-  express.partials['browser.waitForCondition'] =
+  partials['browser.waitForCondition'] =
     '<div id="theDiv"></div>\n';
   it('browser.waitForCondition  @skip-android @skip-ios', function() {
     var exprCond = "$('#theDiv .child').length > 0";
@@ -155,7 +219,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.waitForConditionInBrowser'] =
+  partials['browser.waitForConditionInBrowser'] =
     '<div id="theDiv"></div>\n';
   it('browser.waitForConditionInBrowser  @skip-android @skip-ios', function() {
     var exprCond = "$('#theDiv .child').length > 0";

@@ -3,13 +3,12 @@ require('../helpers/setup');
 var path = require('path');
 
 describe('element ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
-  express.partials['element.text'] =
+  partials['element.text'] =
     '<div id="theDiv">I am some text</div>';
   it('element.text', function() {
     return browser.elementById("theDiv").then(function(el) {
@@ -17,7 +16,7 @@ describe('element ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['element.textPresent'] =
+  partials['element.textPresent'] =
     '<div id="theDiv">I am some text</div>';
   it('element.textPresent', function() {
     return browser.elementById("theDiv").then(function(el) {
@@ -28,7 +27,7 @@ describe('element ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['element.click'] =
+  partials['element.click'] =
     '<div id="theDiv"><a href="#">not clicked</a></div>';
   it('element.click', function() {
     return browser
@@ -48,7 +47,7 @@ describe('element ' + env.ENV_DESC, function() {
       .elementByCss('#theDiv a').text().should.become('clicked');
   });
 
-  express.partials['element.doubleClick'] =
+  partials['element.doubleClick'] =
     '<div id="theDiv"><a href="#">not clicked</a></div>';
   it('element.doubleClick', function() {
     return browser
@@ -68,7 +67,7 @@ describe('element ' + env.ENV_DESC, function() {
       .elementByCss('#theDiv a').text().should.become('doubleclicked');
   });
 
-  express.partials['element.moveTo'] =
+  partials['element.moveTo'] =
     '<div id="theDiv"><a href="#">not clicked</a></div>';
   it('element.moveTo', function() {
     return browser
@@ -81,7 +80,7 @@ describe('element ' + env.ENV_DESC, function() {
       // todo: write better tests using hover
   });
 
-  express.partials['element.getTagName'] =
+  partials['element.getTagName'] =
     '<div id="theDiv">\n' +
     '  <input type="text">\n' +
     '  <a href="#">a1</a>\n' +
@@ -96,7 +95,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.isDisplayed'] =
+  partials['element.isDisplayed'] =
     '<div id="theDiv">\n' +
     '  <input class="displayed" type="text" value="Hello">\n' +
     '  <input class="hidden" type="hidden" value="Hello">\n' +
@@ -114,7 +113,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.isEnabled'] =
+  partials['element.isEnabled'] =
     '<div id="theDiv">\n' +
     '  <input class="enabled" type="text" value="Hello">\n' +
     '  <input class="disabled" type="text" value="Hello" disabled>\n' +
@@ -132,7 +131,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.getComputedCss'] =
+  partials['element.getComputedCss'] =
     '<div id="theDiv">\n' +
     '  <a href="#">a1</a>\n' +
     '</div>\n';
@@ -158,7 +157,7 @@ describe('element ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['element.getAttribute'] =
+  partials['element.getAttribute'] =
     '<div id="theDiv" att="42">Attribute</div>\n';
   it('element.getAttribute', function() {
     return browser
@@ -167,7 +166,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.getValue'] =
+  partials['element.getValue'] =
     '<div id="theDiv" value="qwerty">Value</div>\n';
   it('element.getValue', function() {
     return browser
@@ -176,17 +175,20 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.type'] =
+  partials['element.type'] =
     '<div id="theDiv"><input></input></div>\n';
   it('element.type', function() {
     return browser
       .elementByCss("#theDiv input").getValue().should.become("")
       .elementByCss("#theDiv input").then(function(el) {
-        return el.type('hello').getValue().should.become("hello");
+        return el
+          .type('hello')
+          .getValue()
+          .should.become("hello");
       });
   });
 
-  express.partials['element.keys'] =
+  partials['element.keys'] =
     '<div id="theDiv"><input></input></div>\n';
   it('element.keys', function() {
     return browser
@@ -196,7 +198,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.sendKeys'] =
+  partials['element.sendKeys'] =
     '<div id="theDiv">\n' +
     '  <textarea></textarea>\n' +
     '  <input></input>\n' +
@@ -221,7 +223,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.clear'] =
+  partials['element.clear'] =
     '<div id="theDiv"><textarea>Not clear</textarea></div>\n';
   it('element.clear', function() {
     return browser
@@ -234,7 +236,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.elementByTagName'] =
+  partials['element.elementByTagName'] =
     '<div id="theDiv"><a href="#">a link</a></div>\n' +
     '<div id="theDiv2"><textarea></textarea></div>\n';
   it('element.elementByTagName', function() {
@@ -249,7 +251,7 @@ describe('element ' + env.ENV_DESC, function() {
       ;
   });
 
-  express.partials['element.elementsByTagName'] =
+  partials['element.elementsByTagName'] =
     '<div id="theDiv">\n' +
     '  <a href="#">a link 1</a>\n' +
     '  <a href="#">a link 2</a>\n' +
@@ -267,7 +269,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.sleep'] =
+  partials['element.sleep'] =
     '<div id="theDiv"></div>\n' +
   it('element.sleep', function() {
     return browser
@@ -279,7 +281,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.noop'] =
+  partials['element.noop'] =
     '<div id="theDiv"></div>\n' +
   it('element.noop', function() {
     return browser
@@ -292,7 +294,7 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.chain (promise)'] =
+  partials['element.chain (promise)'] =
     '<div id="theDiv"></div>\n' +
   it('element.chain (promise)', function() {
     return browser
@@ -305,10 +307,10 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['element.resolve'] =
+  partials['element.resolve'] =
     '<div id="theDiv"></div>\n' +
   it('element.resolve', function() {
-    var deferred = Q.defer();    
+    var deferred = Q.defer();
     setTimeout(function() {
       deferred.resolve('123');
     }, 250);

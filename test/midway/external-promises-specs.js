@@ -41,25 +41,27 @@ describe('ext-promises ' + env.ENV_DESC, function() {
     });
   };
 
-  var express = new Express( __dirname + '/assets' );
+  var partials = {};
+  var express;
 
-  before(function() {
-    express.start();
+  before(function(done) {
+    express = new Express( __dirname + '/assets', partials);
+    express.start(done);
   });
 
   beforeEach(function() {
     noExtraMethodCheck();
   });
-  
+
   afterEach(function() {
     _(extraMethods).keys().each(function(name) {
-      wd.removeMethod(name);  
-    });    
+      wd.removeMethod(name);
+    });
     noExtraMethodCheck();
   });
 
-  after(function() {
-    express.stop();
+  after(function(done) {
+    express.stop(done);
   });
 
   var browser;
@@ -90,13 +92,13 @@ describe('ext-promises ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['addPromisedMethod (alt promise)'] =
+  partials['addPromisedMethod (alt promise)'] =
     '<div id="theDiv">Hello World!</div>';
   it('addPromisedMethod (alt promise)', function() {
     _(extraMethods).each(function(method, name) {
       wd.addPromiseChainMethod(name, method);
     });
-    
+
     browser = newPromiseChainRemote();
     return initAndGet(this, '#1').then(function() {
       return browser
@@ -107,13 +109,13 @@ describe('ext-promises ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['addPromisedMethod (mixed promise)'] =
+  partials['addPromisedMethod (mixed promise)'] =
     '<div id="theDiv">Hello World!</div>';
   it('addPromisedMethod (mixed promise)', function() {
     _(extraMethods).each(function(method, name) {
       wd.addPromiseChainMethod(name, method);
     });
-    
+
     browser = newPromiseChainRemote();
     return initAndGet(this, '#2').then(function() {
       return browser
@@ -128,7 +130,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['browser.resolve (alt promise)'] =
+  partials['browser.resolve (alt promise)'] =
     '<div id="theDiv">Hello World!</div>';
   it('browser.resolve (alt promise)', function() {
     browser = newPromiseChainRemote();

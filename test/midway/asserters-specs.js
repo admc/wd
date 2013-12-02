@@ -22,12 +22,25 @@ describe('asserters ' + env.ENV_DESC, function() {
     ' $("#theDiv .child").show();\n' +
     '}, arguments[0]);\n';
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var appendChildHideAndShowParentDiv =
+    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
+    '$("#theDiv").hide();\n' +
+    'setTimeout(function() {\n' +
+    ' $("#theDiv").show();\n' +
+    '}, arguments[0]);\n';
 
-  express.partials['asserters.nonEmptyText'] = page;
+  var appendChildAndHideParentDiv =
+    '$("#theDiv").append("<div class=\\"child\\">a waitFor child</div>");\n' +
+    'setTimeout(function() {\n' +
+    ' $("#theDiv").hide();\n' +
+    '}, arguments[0]);\n';
+
+  var partials = {};
+
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
+
+  partials['asserters.nonEmptyText'] = page;
   it('asserters.nonEmptyText', function() {
     return browser
       .execute( appendChild, [env.BASE_TIME_UNIT] )
@@ -36,7 +49,7 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
-  express.partials['asserters.textInclude'] = page;
+  partials['asserters.textInclude'] = page;
   it('asserters.textInclude', function() {
     return browser
       .execute( appendChild, [env.BASE_TIME_UNIT] )
@@ -45,23 +58,41 @@ describe('asserters ' + env.ENV_DESC, function() {
       .text().should.become('a waitFor child');
   });
 
-  express.partials['asserters.isVisible'] = page;
-  it('asserters.isVisible', function() {
+  partials['asserters.isDisplayed'] = page;
+  it('asserters.isDisplayed', function() {
     return browser
       .execute( appendChildHideAndShow, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isDisplayed ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isVisible ,2 * env.BASE_TIME_UNIT) // deprecated
       .text().should.become('a waitFor child');
   });
 
-  express.partials['asserters.isHidden'] = page;
-  it('asserters.isHidden', function() {
+  partials['asserters.isDisplayed (hide and show parent)'] = page;
+  it('asserters.isDisplayed (hide and show parent)', function() {
+    return browser
+      .execute( appendChildHideAndShowParentDiv, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isDisplayed ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('a waitFor child');
+  });
+
+  partials['asserters.isNotDisplayed'] = page;
+  it('asserters.isNotDisplayed', function() {
     return browser
       .execute( appendChildAndHide, [env.BASE_TIME_UNIT] )
-      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isNotDisplayed ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.isHidden ,2 * env.BASE_TIME_UNIT) // deprecated
       .text().should.become('');
   });
 
-  express.partials['asserters.jsCondition'] =
+  partials['asserters.isNotDisplayed (hide parent)'] = page;
+  it('asserters.isNotDisplayed (hide parent)', function() {
+    return browser
+      .execute( appendChildAndHideParentDiv, [env.BASE_TIME_UNIT] )
+      .waitForElementByCss("#theDiv .child", asserters.isNotDisplayed ,2 * env.BASE_TIME_UNIT)
+      .text().should.become('');
+  });
+
+  partials['asserters.jsCondition'] =
     '<div id="theDiv"></div>\n';
   it('asserters.jsCondition', function() {
     var exprCond = "$('#theDiv .child').length > 0";

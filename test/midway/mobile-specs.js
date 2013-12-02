@@ -1,11 +1,10 @@
 require('../helpers/setup');
 
-describe('api-various ' + env.ENV_DESC + ' @skip-chrome @skip-firefox @skip-explorer' , function() {
+describe('mobile ' + env.ENV_DESC + ' @skip-chrome @skip-firefox @skip-explorer' , function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      // express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
   it('browser.setOrientation @skip-ios', function() {
     return browser

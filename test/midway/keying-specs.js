@@ -1,11 +1,10 @@
 require('../helpers/setup');
 
 describe('keying ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
   var altKey = wd.SPECIAL_KEYS.Alt;
   var nullKey = wd.SPECIAL_KEYS.NULL;
@@ -18,21 +17,21 @@ describe('keying ' + env.ENV_DESC, function() {
     '<textarea></textarea>\n' +
     '</div>\n';
 
-  express.partials['keying nothing'] = keyingPartial;
+  partials['keying nothing'] = keyingPartial;
   it('keying nothing', function() {
     return browser
       .elementByCss("#theDiv input").type("").getValue().should.become("")
       .elementByCss("#theDiv textarea").type("").getValue().should.become("");
   });
 
-  express.partials['keying []'] = keyingPartial;
+  partials['keying []'] = keyingPartial;
   it('keying []', function() {
     return browser
       .elementByCss("#theDiv input").type([]).getValue().should.become("")
       .elementByCss("#theDiv textarea").type([]).getValue().should.become("");
   });
 
-  express.partials['keying \'Hello\''] = keyingPartial;
+  partials['keying \'Hello\''] = keyingPartial;
   it('keying \'Hello\'', function() {
     return browser
       .elementByCss("#theDiv input").type('Hello')
@@ -41,14 +40,14 @@ describe('keying ' + env.ENV_DESC, function() {
         .getValue().should.become('Hello');
   });
 
-  express.partials['keying [\'Hello\']'] = keyingPartial;
+  partials['keying [\'Hello\']'] = keyingPartial;
   it('keying [\'Hello\']', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello']).getValue().should.become('Hello')
       .elementByCss("#theDiv textarea").type(['Hello']).getValue().should.become('Hello');
   });
 
-  express.partials['keying [\'Hello\',\' \',\'World\',\'!\']'] = keyingPartial;
+  partials['keying [\'Hello\',\' \',\'World\',\'!\']'] = keyingPartial;
   it('keying [\'Hello\',\' \',\'World\',\'!\']', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello', ' ', 'World', '!'])
@@ -57,7 +56,7 @@ describe('keying ' + env.ENV_DESC, function() {
         .getValue().should.become('Hello World!');
   });
 
-  express.partials['keying \'Hello\\n\''] = keyingPartial;
+  partials['keying \'Hello\\n\''] = keyingPartial;
   it('keying \'Hello\\n\'', function() {
     return browser
       .elementByCss("#theDiv input").type('Hello\n')
@@ -66,7 +65,7 @@ describe('keying ' + env.ENV_DESC, function() {
         .getValue().should.become('Hello\n');
   });
 
-  express.partials['keying \'\\r\''] = keyingPartial;
+  partials['keying \'\\r\''] = keyingPartial;
   it('keying \'\\r\'', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello','\r'])
@@ -76,7 +75,7 @@ describe('keying ' + env.ENV_DESC, function() {
           'Hello\n': 'Hello');
   });
 
-  express.partials['keying [returnKey]'] = keyingPartial;
+  partials['keying [returnKey]'] = keyingPartial;
   it('keying [returnKey]', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello', returnKey])
@@ -85,7 +84,7 @@ describe('keying ' + env.ENV_DESC, function() {
         .getValue().should.become('Hello\n');
   });
 
-  express.partials['keying [enterKey]'] = keyingPartial;
+  partials['keying [enterKey]'] = keyingPartial;
   it('keying [enterKey]', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello', enterKey])
@@ -94,7 +93,7 @@ describe('keying ' + env.ENV_DESC, function() {
         .getValue().should.become('Hello\n');
   });
 
-  express.partials['keying [nullKey]'] = keyingPartial;
+  partials['keying [nullKey]'] = keyingPartial;
   it('keying [nullKey]', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello', nullKey])
@@ -105,7 +104,7 @@ describe('keying ' + env.ENV_DESC, function() {
 
 
   if(!env.SAUCE) { // alt key seems to have no effect
-    express.partials['keying [altKey]'] = keyingPartial;
+    partials['keying [altKey]'] = keyingPartial;
     it('keying [altKey]', function() {
       return browser
         .elementByCss("#theDiv input").type([altKey, 'Hello', altKey])

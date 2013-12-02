@@ -1,11 +1,10 @@
 require('../helpers/setup');
 
 describe('api-nav ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
   if(!env.SAUCE){ // page timeout seems to be disabled in sauce
     it('browser.setPageLoadTimeout', function() {
@@ -16,7 +15,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     });
   }
 
-  express.partials['browser.get'] =
+  partials['browser.get'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.get', function() {
     return browser.text().
@@ -45,34 +44,34 @@ describe('api-nav ' + env.ENV_DESC, function() {
     });
   });
 
-  express.partials['browser.setImplicitWaitTimeout'] =
+  partials['browser.setImplicitWaitTimeout'] =
     '<div id="setWaitTimeout"></div>';
   it('browser.setImplicitWaitTimeout', function() {
     return browser
       // return error 7 when timeout set to 0
       .setImplicitWaitTimeout(0)
-      .execute(
+      .execute( prepareJs(
         'setTimeout(function() {\n' +
         '$("#setWaitTimeout").html("<div class=\\"child\\">a child</div>");\n' +
-        '}, arguments[0]);', [env.BASE_TIME_UNIT])
+        '}, arguments[0]);' ), [env.BASE_TIME_UNIT])
       .elementByCss('#setWaitTimeout .child').should.be.rejectedWith(/status\: 7/)
       .setImplicitWaitTimeout(2 * env.BASE_TIME_UNIT)
       .elementByCss('#setWaitTimeout .child')
       .setImplicitWaitTimeout(0);
   });
 
-  express.partials['browser.clickElement'] =
+  partials['browser.clickElement'] =
     '<div id="theDiv"><a href="#">not clicked</a></div>\n';
   it('browser.clickElement', function() {
     return browser
-      .execute(
+      .execute( prepareJs(
         'jQuery( function() {\n' +
         ' a = $(\'#theDiv a\');\n' +
         ' a.click(function() {\n' +
         '   a.html(\'clicked\');\n' +
         '   return false;\n' +
         ' });\n' +
-        '});\n'
+        '});\n')
       )
       .elementByCss("#theDiv a").then(function(el) {
         return browser
@@ -83,51 +82,61 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.moveTo'] =
+  partials['browser.moveTo'] =
     '<div id="theDiv">\n' +
-    '  <a class="a1" href="#">a1</a><br>\n' +
-    '  <a class="a2" href="#">a2</a><br>\n' +
+    '  <div class="div1" href="#">div 1</div>\n' +
+    '  <div class="div2" href="#">div 1</div>\n' +
     '  <div class="current"></div>\n' +
     '</div>\n';
-  it('browser.moveTo', function() {
-    return browser
-      .execute(
-        'jQuery( function() {\n' +
-        ' a1 = $(\'#theDiv .a1\');\n' +
-        ' a2 = $(\'#theDiv .a2\');\n' +
-        ' current = $(\'#theDiv .current\');\n' +
-        ' a1.hover(function() {\n' +
-        '   current.html(\'a1\');\n' +
-        ' });\n' +
-        ' a2.hover(function() {\n' +
-        '   current.html(\'a2\');\n' +
-        ' });\n' +
-        '});\n'
-      )
-      .elementByCss('#theDiv .current').text().should.become('')
-      .elementByCss('#theDiv .a1').then(function(a1) {
-        return browser
-          .moveTo(a1)
-          .elementByCss('#theDiv .current').text().should.become('a1');
-      })
-      .elementByCss('#theDiv .a2').then(function(a2) {
-        return browser
-          .moveTo(a2)
-          .elementByCss('#theDiv .current').text().should.become('a2');
-      })
-       .elementByCss('#theDiv .a1').then(function(a1) {
-        return browser
-          .moveTo(a1)
-          .elementByCss('#theDiv .current').text().should.become('a1');
-      });
-     // todo: add moveTo to element
+  it('browser.moveTo @skip-ios @skip-android', function() {
+    if(true || env.BROWSER === 'explorer') {
+      // cannot get hover to work in explorer
+      return browser
+        .elementByCss('#theDiv .div1').then(function(div1) {
+          return browser
+            .moveTo(div1).should.be.fulfilled;
+        })
+        .elementByCss('#theDiv .div1')
+        .moveTo().should.be.fulfilled;
+    } else {
+      return browser
+        .execute( prepareJs(
+          'jQuery( function() {\n' +
+          ' var div1 = $(\'#theDiv .div1\');\n' +
+          ' var div2 = $(\'#theDiv .div2\');\n' +
+          ' var current = $(\'#theDiv .current\');\n' +
+          ' div1.hover(function() {\n' +
+          '   current.html(\'div 1\');\n' +
+          ' });\n' +
+          ' div2.hover(function() {\n' +
+          '   current.html(\'div 2\');\n' +
+          ' });\n' +
+          '});\n')
+        )
+        .elementByCss('#theDiv .current').text().should.become('')
+        .elementByCss('#theDiv .div1').then(function(div1) {
+          return browser
+            .moveTo(div1)
+            .elementByCss('#theDiv .current').text().should.become('div 1');
+        })
+        .elementByCss('#theDiv .div2').then(function(div2) {
+          return browser
+            .moveTo(div2)
+            .elementByCss('#theDiv .current').text().should.become('div 2');
+        })
+         .elementByCss('#theDiv .div1').then(function(div1) {
+          return browser
+            .moveTo(div1)
+            .elementByCss('#theDiv .current').text().should.become('div 1');
+        });
+    }
   });
 
-  express.partials['browser.buttonDown/browser.buttonUp'] =
+  partials['browser.buttonDown/browser.buttonUp'] =
     '<div id="theDiv"><a>hold me</a><div class="res"></div></div>\n';
-  it('browser.buttonDown/browser.buttonUp', function() {
+  it('browser.buttonDown/browser.buttonUp @skip-ios @skip-android', function() {
     return browser
-      .execute(
+      .execute( prepareJs(
         'jQuery( function() {\n' +
         ' a = $(\'#theDiv a\');\n' +
         ' res = $(\'#theDiv .res\');\n' +
@@ -138,7 +147,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
         ' a.mouseup(function() {\n' +
         '   res.html(\'button up\');\n' +
         ' });\n' +
-        '});\n'
+        '});\n')
       )
       .elementByCss('#theDiv .res').text().should.become('')
       .elementByCss('#theDiv a').then(function(el) {
@@ -156,14 +165,14 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.click'] =
+  partials['browser.click'] =
     '<div id="theDiv">\n' +
     '  <div class="numOfClicks">not clicked</div>\n' +
     '  <div class="buttonNumber">not clicked</div>\n' +
     '</div>\n';
-  it('browser.click', function() {
+  it('browser.click @skip-ios @skip-android', function() {
     return browser
-      .execute(
+      .execute( prepareJs(
         'jQuery( function() {\n' +
         ' var numOfClick = 0;\n' +
         ' numOfClicksDiv = $(\'#theDiv .numOfClicks\');\n' +
@@ -177,7 +186,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
         '   buttonNumberDiv.html(button);\n' +
         '   return false;\n' +
         ' });\n' +
-        '});\n'
+        '});\n')
       )
       .elementByCss('#theDiv .numOfClicks').text().should.become('not clicked')
       .elementByCss('#theDiv .buttonNumber').text().should.become('not clicked')
@@ -202,19 +211,19 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.doubleclick'] =
+  partials['browser.doubleclick'] =
     '<div id="theDiv">\n' +
     '  <div>not clicked</div>\n' +
     '</div>\n';
-  it('browser.doubleclick', function() {
+  it('browser.doubleclick @skip-ios @skip-android', function() {
     return browser
-      .execute(
+      .execute( prepareJs(
         'jQuery( function() {\n' +
         ' div = $(\'#theDiv div\');\n' +
         ' div.dblclick(function() {\n' +
         '   div.html("doubleclicked");\n' +
         ' });\n' +
-        '});\n'
+        '});\n')
       )
       .elementByCss('#theDiv div').text().should.become('not clicked')
       .elementByCss('#theDiv div').then(function(div) {
@@ -225,7 +234,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.clear'] =
+  partials['browser.clear'] =
     '<div id="theDiv">\n' +
     '  <input type="text" value="not cleared">\n' +
     '</div>\n';
@@ -246,35 +255,35 @@ describe('api-nav ' + env.ENV_DESC, function() {
     return browser.title().should.eventually.include("WD Tests");
   });
 
-  express.partials['browser.acceptAlert'] =
+  partials['browser.acceptAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.acceptAlert', function() {
+  it('browser.acceptAlert @skip-ios @skip-android', function() {
     return browser
-      .execute(
+      .execute( prepareJs(
         'jQuery( function() {\n' +
         ' a = $(\'#theDiv a\');\n' +
         ' a.click(function() {\n' +
         '   alert("coffee is running out");\n' +
         '   return false;\n' +
         ' });\n' +
-        '});\n'
+        '});\n')
       )
       .elementByCss("#theDiv a").click()
       .acceptAlert();
   });
 
-  express.partials['browser.dismissAlert'] =
+  partials['browser.dismissAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.dismissAlert @skip-chrome', function() {
+  it('browser.dismissAlert @skip-chrome @skip-ios @skip-android', function() {
     return browser
-      .execute(
+      .execute( prepareJs(
         'jQuery( function() {\n' +
         ' a = $(\'#theDiv a\');\n' +
         ' a.click(function() {\n' +
         '   alert("coffee is running out");\n' +
         '   return false;\n' +
         ' });\n' +
-        '});\n'
+        '});\n')
       )
       .elementByCss("#theDiv a").click()
       .dismissAlert();

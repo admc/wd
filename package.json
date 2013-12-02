@@ -7,7 +7,7 @@
     "browser",
     "javascript"
   ],
-  "version": "0.2.3",
+  "version": "0.2.5",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -53,22 +53,22 @@
     "request": "~2.21.0",
     "archiver": "~0.4.10",
     "lodash": "~1.3.1",
-    "string": "~1.6.1"
+    "underscore.string": "~2.3.3"
   },
   "devDependencies": {
-    "mocha": "~1.13.0",
-    "nock": "~0.22.1",
-    "express": "~3.4.3",
+    "mocha": "~1.14.0",
+    "nock": "~0.23.0",
+    "express": "~3.4.5",
     "imageinfo": "~1.0.4",
     "dox": "~0.4.4",
-    "mu2": "~0.5.19",
+    "mu2": "~0.5.20",
     "sv-selenium": "~0.2.2",
     "colors": "~0.6.2",
     "chai-as-promised": "~4.1.0",
     "chai": "~1.8.1",
-    "mocha-as-promised": "~1.4.0",
+    "mocha-as-promised": "~1.4.1",
     "hbs": "~2.4.0",
-    "istanbul": "~0.1.44",
+    "istanbul": "~0.1.45",
     "promise-simple": "~0.1.0"
   },
   "scripts": {

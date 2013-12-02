@@ -1,6 +1,6 @@
 /* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-module.exports = function(that) {
+module.exports = function(that, partials) {
 
   that.timeout(env.TIMEOUT);
 
@@ -8,25 +8,46 @@ module.exports = function(that) {
 
   var browser;
   var allPassed = true;
-  var express = new Express( __dirname + '/assets' );
+  var express;
+  before(function(done) {
+    express = new Express( __dirname + '/assets', partials );
+    express.start(done);
+  });
 
   before(function() {
-    express.start();
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
     deferred.resolve(browser);
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['midway']
     };
+    var desired = mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null );
     return browser
       .configureLogging()
-      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
+      .then(function() {
+        return browser
+          .init(desired)
+          .catch(function() {
+            // trying one more time
+            return browser.init(desired);
+          });
+      });
   });
 
   beforeEach(function() {
-    return browser.get( midwayUrl(
+    var url = midwayUrl(
       this.currentTest.parent.title,
-      this.currentTest.title));
+      this.currentTest.title
+    );
+    return browser
+    .get(url)
+    .title().should.eventually.include("WD Tests")
+    .catch(function() {
+      // trying one more time
+      return browser
+        .get(url)
+        .title().should.eventually.include("WD Tests");
+    });
   });
 
   afterEach(function() {
@@ -34,15 +55,15 @@ module.exports = function(that) {
   });
 
   after(function() {
-    express.stop();
     return browser
       .quit().then(function() {
         if(env.SAUCE) { return(browser.sauceJobStatus(allPassed)); }
       });
   });
 
-  return {
-    express: express,
-    browser: deferred.promise
-  };
+  after(function(done) {
+    express.stop(done);
+  });
+
+  return deferred.promise;
 };

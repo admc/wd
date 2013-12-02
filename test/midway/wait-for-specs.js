@@ -19,7 +19,7 @@ describe('wait-for ' + env.ENV_DESC, function() {
     throw err;
   };
 
-  var asserter = new Asserter( 
+  var asserter = new Asserter(
     function(browser, cb) {
       browser.text(function(err, text) {
         if(err) { return cb(err); }
@@ -63,18 +63,18 @@ describe('wait-for ' + env.ENV_DESC, function() {
     }
   );
 
-  var elAsserterFalse = new Asserter( 
+  var elAsserterFalse = new Asserter(
     function(el, cb) {
       cb( null, false);
     }
   );
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var partials = {};
 
-  express.partials['browser.waitFor'] = page;
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
+
+  partials['browser.waitFor'] = page;
   it('browser.waitFor', function() {
     return browser
 
@@ -101,7 +101,7 @@ describe('wait-for ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.waitForElement'] = page;
+  partials['browser.waitForElement'] = page;
   it('browser.waitForElement', function() {
     return browser
 
@@ -119,9 +119,9 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .waitForElement("css selector", "#theDiv .child", {
         timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 100 })
       .text().should.become('a waitFor child');
-  }); 
+  });
 
-  express.partials['browser.waitForElement - asserter'] = page;
+  partials['browser.waitForElement - asserter'] = page;
   it('browser.waitForElement - asserter', function() {
     return browser
       .execute( removeChildren )
@@ -145,9 +145,9 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .waitForElement("css selector", "#theDiv .child", promisedElAsserter,
          2 * env.BASE_TIME_UNIT, 200)
       .text().should.become('a waitFor child');
-  }); 
+  });
 
-  express.partials['browser.waitForElement - rejected'] = page;
+  partials['browser.waitForElement - rejected'] = page;
   it('browser.waitForElement', function() {
     return browser.chain()
       .then(function() {
@@ -171,7 +171,7 @@ describe('wait-for ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.waitForElementByCss'] = page;
+  partials['browser.waitForElementByCss'] = page;
   it('browser.waitForElementByCss', function() {
     return browser
 

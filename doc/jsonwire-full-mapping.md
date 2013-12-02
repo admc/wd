@@ -1288,7 +1288,7 @@ extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (async script polling within browser):<br>
-waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean) <br>
+waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -&gt; cb(err, boolean)<br>
 conditionExpr: condition expression, should return a boolean<br>
 timeout and  pollFreq are optional, default: 1000/100.<br>
 return true if condition satisfied, error otherwise.<br>

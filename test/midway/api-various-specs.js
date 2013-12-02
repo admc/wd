@@ -3,16 +3,15 @@ require('../helpers/setup');
 var imageinfo = require('imageinfo');
 var path = require('path');
 var fs = require('fs');
-// var tmp = require('tmp');
+var tmp = require('../../lib/tmp');
 
 describe('api-various ' + env.ENV_DESC, function() {
+  var partials = {};
 
-  var ctx = require('./midway-base')(this),
-      express = ctx.express,
-      browser;
-  ctx.browser.then(function(_browser) { browser = _browser; });
+  var browser;
+  require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
-  express.partials['browser.getLocation'] =
+  partials['browser.getLocation'] =
     '<div id="theDiv">I\'ve got a location</div>\n';
   it('browser.getLocation', function() {
     return browser
@@ -29,7 +28,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.getLocationInView'] =
+  partials['browser.getLocationInView'] =
     '<div id="theDiv">I\'ve got a location</div>\n';
   it('browser.getLocationInView', function() {
     return browser
@@ -46,7 +45,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.getSize'] =
+  partials['browser.getSize'] =
     '<div id="theDiv">I\'ve got a good size!</div>\n';
   it('browser.getSize', function() {
     return browser
@@ -63,7 +62,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  express.partials['browser.acceptAlert'] =
+  partials['browser.acceptAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
   it('browser.acceptAlert', function() {
     return browser
@@ -80,7 +79,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .acceptAlert();
   });
 
-  express.partials['browser.dismissAlert'] =
+  partials['browser.dismissAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
   it('browser.dismissAlert @skip-chrome', function() {
     return browser
@@ -139,7 +138,8 @@ describe('api-various ' + env.ENV_DESC, function() {
         .should.eventually.match(/\/screenshot-\w+\.png$/);
   });
 
-  it('browser.<cookie methods>', function() {
+  // cookie don't seem to work in explorer
+  it('browser.<cookie methods> @skip-explorer', function() {
     return browser
       .deleteAllCookies()
       .allCookies().should.eventually.deep.equal([])
@@ -205,7 +205,7 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
 
-  express.partials['browser.active'] =
+  partials['browser.active'] =
     '<div id="theDiv">\n' +
     '  <input class="i1" type="text" value="input 1">\n' +
     '  <input class="i2" type="text" value="input 2">\n' +
@@ -218,7 +218,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .active().getValue().should.become("input 2");
   });
 
-  express.partials['browser.isVisible'] =
+  partials['browser.isVisible'] =
     '<div id="theDiv">\n' +
     '  <a href="#">a1</a>\n' +
     '</div>\n';
@@ -235,7 +235,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .isVisible("css selector", "#theDiv a").should.eventually.not.be.ok;
   });
 
-  express.partials['browser.isDisplayed'] =
+  partials['browser.isDisplayed'] =
     '<div id="theDiv">\n' +
     '  <input class="displayed" type="text" value="Hello">\n' +
     '  <input class="hidden" type="hidden" value="Hello">\n' +
@@ -252,7 +252,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       .elementByCss('#theDiv .hidden').isDisplayed().should.eventually.not.be.ok;
   });
 
-  express.partials['browser.isEnabled'] =
+  partials['browser.isEnabled'] =
     '<div id="theDiv">\n' +
     '  <input class="enabled" type="text" value="Hello">\n' +
     '  <input class="disabled" type="text" value="Hello" disabled>\n' +

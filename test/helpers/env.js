@@ -1,76 +1,46 @@
+GLOBAL._ = require('../../lib/lodash');
+
 var env = GLOBAL.env = {};
 
-var S = require('string');
-
 var toBoolean = function(str) {
-  return S(str).toBoolean() || S(S(str).toInt()).toBoolean();
+  return _(str).toBoolean().value();
 };
 
 env.VERBOSE = toBoolean(process.env.VERBOSE);
-env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 500).toInt();
-env.TIMEOUT = S(process.env.TIMEOUT || 60000).toInt();
+env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 500).toNumber().value();
+env.TIMEOUT = _(process.env.TIMEOUT || 60000).toNumber().value();
+env.SHORT = toBoolean(process.env.SHORT);
 
 env.HTTP_CONFIG = {};
 if(process.env.HTTP_TIMEOUT)
-  { env.HTTP_CONFIG.timeout = S(process.env.HTTP_TIMEOUT).toInt(); }
+  { env.HTTP_CONFIG.timeout = _(process.env.HTTP_TIMEOUT).toNumber().value(); }
 if(process.env.HTTP_RETRIES)
-  { env.HTTP_CONFIG.retries = S(process.env.HTTP_RETRIES).toInt(); }
+  { env.HTTP_CONFIG.retries = _(process.env.HTTP_RETRIES).toNumber().value(); }
 if(process.env.HTTP_RETRY_DELAY)
-  { env.HTTP_CONFIG.retryDelay = S(process.env.HTTP_RETRY_DELAY).toInt(); }
+  { env.HTTP_CONFIG.retryDelay = _(process.env.HTTP_RETRY_DELAY).toNumber().value(); }
 
 env.DEBUG_CONNECTION = process.env.DEBUG_CONNECTION;
 
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 env.BROWSER = process.env.BROWSER || 'chrome';
+env.BROWSER_SKIP = env.BROWSER;
+
+env.MULTI = false;
+
 if(env.BROWSER === 'multi') {
-    env.BROWSER = 'chrome';
     env.MULTI = true;
 }
+
 env.DESIRED = process.env.DESIRED ? JSON.parse(process.env.DESIRED) :
   {browserName: env.BROWSER};
 
-if(env.BROWSER === 'android' || env.BROWSER === 'android_tablet'){
-  env.ANDROID = true;
-  env.DESIRED = {
-    'browserName': 'android',
-    'version': '4.0',
-    'platform': 'Linux',
-    'device-type': 'tablet',
-    'device-orientation': 'portrait', // 'landscape'
-  };
+if(env.BROWSER === 'multi') {
+  env.DESIRED = {browserName: 'chrome'};
 }
 
-if(env.BROWSER === 'android_phone'){
-  env.ANDROID = true;
-  env.DESIRED = {
-    'browserName': 'android',
-    'version': '4.0',
-    'platform': 'Linux',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
+require('./mobile_env');
 
-if(env.BROWSER === 'ios' || env.BROWSER === 'ipad'){
-  env.IOS = true;
-  env.DESIRED = {
-    'browserName': 'ipad',
-    'version': '6.1',
-    'platform': 'OS X 10.8',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
-
-if(env.BROWSER === 'iphone'){
-  env.IOS = true;
-  env.DESIRED = {
-    'browserName': 'iphone',
-    'version': '6.1',
-    'platform': 'OS X 10.8',
-    'device-orientation': 'portrait', // 'landscape'
-  };
-}
-
-env.EXPRESS_PORT = S(process.env.EXPRESS_PORT || 3000).toInt();
+env.EXPRESS_PORT = _(process.env.EXPRESS_PORT || 3000).toNumber().value();
 
 env.MIDWAY_ROOT_HOST = '127.0.0.1';
 
@@ -89,15 +59,11 @@ env.TRAVIS_BUILD_NUMBER = process.env.TRAVIS_BUILD_NUMBER;
 
 if( env.TRAVIS_JOB_ID ){
   env.TRAVIS = true;
-  console.log("Travis environment detected.");
-  console.log("TRAVIS_BUILD_NUMBER --> ", env.TRAVIS_BUILD_NUMBER);
-  console.log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
-  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
 }
 
 if(env.SAUCE){
-  env.BASE_TIME_UNIT = S(process.env.BASE_TIME_UNIT || 3000).toInt();
-  env.TIMEOUT = S(process.env.TIMEOUT || 600000).toInt();
+  env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 3000).toNumber().value();
+  env.TIMEOUT = _(process.env.TIMEOUT || 600000).toNumber().value();
 
   env.SAUCE_JOB_ID =
     env.TRAVIS_BUILD_NUMBER ||

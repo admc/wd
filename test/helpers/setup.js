@@ -1,9 +1,14 @@
 require('./env');
 
-GLOBAL._ = require('lodash');
-
 GLOBAL.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
+
+if( env.TRAVIS ){
+  console.log("Travis environment detected.");
+  console.log("TRAVIS_BUILD_NUMBER --> ", env.TRAVIS_BUILD_NUMBER);
+  console.log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
+  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
+}
 
 // monkey patching
 wd.addAsyncMethod(
