@@ -61,7 +61,7 @@ describe("wd remote tests", function() {
       browser.configUrl.protocol.should.equal('http:');
       browser.configUrl.hostname.should.equal('localhost');
       should.not.exist(browser.configUrl.port);
-      browser.configUrl.pathname.should.equal('/');
+      browser.configUrl.pathname.should.match(/^\/?$/);
       should.not.exist(browser.configUrl.auth);
       done(null);
     });
