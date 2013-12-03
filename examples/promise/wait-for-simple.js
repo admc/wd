@@ -51,6 +51,8 @@ browser
   .text().should.become('a waitFor child')
 
   // isDisplayed asserter
+  .execute(removeChildren)
+  .execute( appendChild, [500] )
   .waitForElementByCss("#i_am_an_id .child", asserters.isDisplayed , 2000)
   .text().should.become('a waitFor child')
 
