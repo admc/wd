@@ -12,7 +12,6 @@ try {
 }
 
 var Asserter = wd.Asserter; // asserter base class
-var asserters = wd.asserters; // commonly used asserters
 
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
@@ -36,7 +35,7 @@ var tagChaiAssertionError = function(err) {
 // simple asserter, just making sure that the element (or browser)
 // text is non-empty and returning the text.
 // It will be called until the promise is resolved with a defined value.
-var textNonEmpty = new Asserter( 
+var customTextNonEmpty = new Asserter(
   function(target) { // browser or el
     return target
       .text().then(function(text) {
@@ -50,16 +49,16 @@ var textNonEmpty = new Asserter(
 );
 
 // another simple element asserter
-var isVisible = new Asserter(
+var customIsDisplayed = new Asserter(
   function(el) {
     return el
-      .isVisible().should.eventually.be.ok
+      .isDisplayed().should.eventually.be.ok
       .catch(tagChaiAssertionError);
   }
 );
 
 // asserter generator
-var textInclude = function(text) {
+var customTextInclude = function(text) {
   return new Asserter(
     function(target) { // browser or el
       return target
@@ -75,7 +74,7 @@ var textInclude = function(text) {
 // optional add custom method
 wd.PromiseChainWebdriver.prototype.waitForElementWithTextByCss = function(selector, timeout, pollFreq) {
   return this
-    .waitForElementByCss(selector, textNonEmpty , timeout, pollFreq);
+    .waitForElementByCss(selector, customTextNonEmpty , timeout, pollFreq);
 };
 
 var browser = wd.promiseChainRemote();
@@ -88,40 +87,17 @@ browser
   // generic waitFor, asserter compulsary
   .execute(removeChildren)
   .execute( appendChild, [500] )
-  .waitFor(textInclude('a waitFor child') , 2000)
+  .waitFor(customTextInclude('a waitFor child') , 2000)
   .should.eventually.include('a waitFor child')
-  // using prebuilt asserter
-  .execute(removeChildren)
-  .execute( appendChild, [500] )
-  .waitFor(asserters.textInclude('a waitFor child') , 2000)
-  .should.eventually.include('a waitFor child')
-
-  // waitForElement without asserter
-  .execute(removeChildren)
-  .execute( appendChild, [500] )
-  .waitForElementByCss("#i_am_an_id .child" , 2000)
-  .text().should.become('a waitFor child')
 
   // waitForElement with element asserter
   .execute(removeChildren)
   .execute( appendChild, [500] )
-  .waitForElementByCss("#i_am_an_id .child", textNonEmpty , 2000)
-  // using prebuilt asserter
-  .execute(removeChildren)
-  .execute( appendChild, [500] )
-  .waitForElementByCss("#i_am_an_id .child", asserters.textNonEmpty , 2000)
-  .text().should.become('a waitFor child')
+  .waitForElementByCss("#i_am_an_id .child", customTextNonEmpty , 2000)
 
   // trying isVisible asserter
-  .waitForElementByCss("#i_am_an_id .child", isVisible , 2000)
+  .waitForElementByCss("#i_am_an_id .child", customIsDisplayed , 2000)
   .text().should.become('a waitFor child')
-  // using prebuilt asserter
-  .waitForElementByCss("#i_am_an_id .child", asserters.isVisible , 2000)
-  .text().should.become('a waitFor child')
-
-  // prebuild jsCondition asserter
-  .waitFor(asserters.jsCondition('$("#i_am_an_id .child")? true: false') , 2000)
-  .should.eventually.be.ok
 
   // custom method
   .execute(removeChildren)
