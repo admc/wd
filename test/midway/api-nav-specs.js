@@ -47,6 +47,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
   partials['browser.setImplicitWaitTimeout'] =
     '<div id="setWaitTimeout"></div>';
   it('browser.setImplicitWaitTimeout', function() {
+    var startMs = Date.now();
     return browser
       // return error 7 when timeout set to 0
       .setImplicitWaitTimeout(0)
@@ -54,7 +55,14 @@ describe('api-nav ' + env.ENV_DESC, function() {
         'setTimeout(function() {\n' +
         '$("#setWaitTimeout").html("<div class=\\"child\\">a child</div>");\n' +
         '}, arguments[0]);' ), [env.BASE_TIME_UNIT])
-      .elementByCss('#setWaitTimeout .child').should.be.rejectedWith(/status\: 7/)
+      .then(function() {
+        // if selenium was too slow skip the test.
+        if(Date.now() - startMs < env.BASE_TIME_UNIT){
+          return browser
+            .elementByCss('#setWaitTimeout .child')
+            .should.be.rejectedWith(/status\: 7/);
+        }
+      })
       .setImplicitWaitTimeout(2 * env.BASE_TIME_UNIT)
       .elementByCss('#setWaitTimeout .child')
       .setImplicitWaitTimeout(0);
