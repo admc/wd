@@ -24,8 +24,9 @@ env:
     - BROWSER=ipad
 matrix:
   include:
-    - node_js: "0.11"
-      env: BROWSER=chrome
+    # temporalily disbled because of npm instability
+    # - node_js: "0.11"
+    #   env: BROWSER=chrome
     - node_js: "0.8"
       env: BROWSER=chrome
     # moving android in one job at the end cause it is superslow
