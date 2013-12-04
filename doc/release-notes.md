@@ -44,12 +44,12 @@ Incompatibilities:
   - bugfix: setOrientation.
   - migrating from string.js to underscore.string.
 
-### 0.2.5 (latest)
+### 0.2.5 
 
   - Webdriver and Element refactoring
   - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
 
-### 0.2.6 (future)
+### 0.2.6 (latest)
 
   - bugfix: Removed the tmp dependencies.
   - isDisplayed/isNotDisplayed asserters
