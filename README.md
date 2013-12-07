@@ -265,6 +265,26 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 
 [doc here](https://code.google.com/p/selenium/wiki/DesiredCapabilities).
 
+### Resuing an existing session
+
+Access current WebDriver sessions by using the session ID of an active session
+in the Desired Capabilities:
+
+```js
+browser.init({ sessionID:"8a638506-a1da-4d71-bb59-5f84debed912" },
+  function(err, sessionID, caps) {
+    ...
+  }
+);
+```
+
+Accessing the session ID to use here depends on the on the WebDriver client you're
+using.  Regardless of which client started the session it can be accessed from
+any other client - for instance a Java client on one host can start the WebDriver
+session, and then further manipulated by this library on another host, and then
+accessed again from some other client elsewhere.  Of course each client must be
+hitting the same WebDriver server!
+
 ### Element function chaining (using promise chains)
 
 With the promise chain api the method from the `browser` prototype and the
