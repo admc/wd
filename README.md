@@ -261,6 +261,23 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 }
 ```
 
+#### Connect to an already-existing session
+
+Instead of calling 'init' use 'attach' using the WebDriver session ID:
+
+```js
+var browser = wd.remote('http://localhost:4444/wd/hub');
+browser.attach('df606fdd-f4b7-4651-aaba-fe37a39c86e3', function(err, capabilities) {
+  // The 'capabilities' object as returned by sessionCapabilities
+  if (err) { /* that session doesn't exist */ }
+  else {
+    browser.elementByCss("button.groovy-button", function(err, el) {
+      ...
+    });
+  }
+});
+```
+
 ### Capabilities
 
 [doc here](https://code.google.com/p/selenium/wiki/DesiredCapabilities).
