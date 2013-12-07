@@ -58,5 +58,10 @@ Incompatibilities:
   - bugfix: Value not defaulted when inititializing with `url.parse`.
   - bugfix: url relative now use `url.resolve`.
 
+### 0.2.7 (future)
+  - `attach`/`detach` session (todo).
+  - add `asyncRemote` and make `remote` generic.
+
+
 ### 0.3 (future)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
