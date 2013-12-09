@@ -38,7 +38,7 @@ npm install wd
 
 ## Release notes
 
-Latest version is `0.2.5`.
+Latest version is `0.2.6`.
 
 Many changes have been introduced in 0.2.x versions, please check
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
