@@ -108,7 +108,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       });
   });
 
-  it.skip('browser.saveScreenshot', function() {
+  it('browser.saveScreenshot', function() {
     var mydir = path.join(tmp.tmpdir , 'myscreenshot');
     try { fs.mkdirSync(mydir); } catch(ign) {}
 
