@@ -30,8 +30,7 @@ browser.on('command', function(meth, path, data) {
 
 var desired = {
   browserName: '',
-  platform: 'OS X 10.8',
-  version: '6',
+  version: '6.1',
   'device-orientation': 'portrait',
   app: 'safari',
   device: 'iPhone Simulator'
