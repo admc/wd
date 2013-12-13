@@ -61,7 +61,7 @@ Incompatibilities:
 ### 0.2.7 (future)
   - `attach`/`detach` session (todo).
   - add `asyncRemote` and make `remote` generic.
-
+  - server config override in init (in particular sauce username/key)
 
 ### 0.3 (future)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
