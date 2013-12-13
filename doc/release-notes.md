@@ -62,6 +62,7 @@ Incompatibilities:
   - `attach`/`detach` session (todo).
   - add `asyncRemote` and make `remote` generic.
   - server config override in init (in particular sauce username/key)
-
+  - add a utils with most commonly used desired config (selenium+appium)
+  
 ### 0.3 (future)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
