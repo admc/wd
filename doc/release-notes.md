@@ -44,12 +44,12 @@ Incompatibilities:
   - bugfix: setOrientation.
   - migrating from string.js to underscore.string.
 
-### 0.2.5 (latest)
+### 0.2.5 
 
   - Webdriver and Element refactoring
   - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
 
-### 0.2.6 (future)
+### 0.2.6 (latest)
 
   - bugfix: Removed the tmp dependencies.
   - isDisplayed/isNotDisplayed asserters
@@ -57,6 +57,11 @@ Incompatibilities:
   - bugfix: Removed the tmp dependencies.
   - bugfix: Value not defaulted when inititializing with `url.parse`.
   - bugfix: url relative now use `url.resolve`.
+
+### 0.2.7 (future)
+  - `attach`/`detach` session (todo).
+  - add `asyncRemote` and make `remote` generic.
+  - server config override in init (in particular sauce username/key)
 
 ### 0.3 (future)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)

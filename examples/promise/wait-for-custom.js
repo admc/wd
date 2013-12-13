@@ -95,7 +95,7 @@ browser
   .execute( appendChild, [500] )
   .waitForElementByCss("#i_am_an_id .child", customTextNonEmpty , 2000)
 
-  // trying isVisible asserter
+  // another asserter
   .waitForElementByCss("#i_am_an_id .child", customIsDisplayed , 2000)
   .text().should.become('a waitFor child')
 
