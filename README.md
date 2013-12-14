@@ -250,6 +250,31 @@ var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
 var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 ```
 
+### Promise Drivers
+
+Promise-based versions of the Webdriver may now be optionally created directly from the `wd.remote()` function by passing a `driverType` string as the last parameter. Use either 'promise' or 'promiseChain' to declare your driver type; defaults to the normal async Webdriver.
+
+```js
+var browser = wd.remote('promiseChain')
+// or
+var browser = wd.remote('localhost', 8888, 'promise');
+// or
+var browser = wd.remote('localhost', 'promiseChain');
+// or
+var browser = wd.remote({
+  hostname: '127.0.0.1',
+  port: 4444,
+  user: 'username',
+  pwd: 'password',
+}, 'promise');
+// or
+var browser = wd.remote({
+  hostname: '127.0.0.1',
+  port: 4444,
+  auth: 'username:password',
+}, 'promiseChain');
+```
+
 #### Defaults
 
 ```js
