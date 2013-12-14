@@ -957,6 +957,24 @@ logTypes(cb) -&gt; cb(err, arrayOfLogTypes)<br>
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+attach(sessionID, cb) -&gt; cb(err)<br>
+Connect to an already-active session.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+detach(cb) -&gt; cb(err)<br>
+Detach from the current session.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Retrieves the current session id.<br>
 getSessionId(cb) -&gt; cb(err, sessionId)<br>
 getSessionId()<br>
@@ -1045,15 +1063,6 @@ waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
 waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
 as in waitForElement.<br>
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-extra
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-isVisible(element , cb) -&gt; cb(err, boolean)<br>
-isVisible(queryType, querySelector, cb) -&gt; cb(err, boolean)<br>
 </td>
 </tr>
 <tr>
