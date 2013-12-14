@@ -59,10 +59,10 @@ Incompatibilities:
   - bugfix: url relative now use `url.resolve`.
 
 ### 0.2.7 (future)
-  - `attach`/`detach` session (todo).
+  - `attach`/`detach` session.
   - add `asyncRemote` and make `remote` generic.
   - server config override in init (in particular sauce username/key)
-  - add a util with most commonly used desired config (selenium+appium)
   
 ### 0.3 (future)
+  - add a util with most commonly used desired config (selenium+appium)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)

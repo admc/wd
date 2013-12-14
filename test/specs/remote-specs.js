@@ -329,6 +329,26 @@ describe("driver type", function() {
     done();
   });
 });
+describe("other remote methods", function() {
+  it("asyncRemote", function(done) {
+    var browser;
+    browser = wd.asyncRemote();
+    (browser instanceof wd.Webdriver).should.be.true;
+    done();
+  });
+  it("promiseRemote", function(done) {
+    var browser;
+    browser = wd.promiseRemote();
+    (browser instanceof wd.PromiseWebdriver).should.be.true;
+    done();
+  });
+  it("promiseChainRemote", function(done) {
+    var browser;
+    browser = wd.promiseChainRemote();
+    (browser instanceof wd.PromiseChainWebdriver).should.be.true;
+    done();
+  });
+});
 describe("backward compatibility", function() {
   it("browser should be initialized with: host, port", function(done) {
     var browser;
