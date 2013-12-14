@@ -250,9 +250,21 @@ var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
 var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 ```
 
-### Promise Drivers
+#### Defaults
 
-Promise-based versions of the Webdriver may now be optionally created directly from the `wd.remote()` function by passing a `driverType` string as the last parameter. Use either 'promise' or 'promiseChain' to declare your driver type; defaults to the normal async Webdriver.
+```js
+{
+    protocol: 'http:'
+    hostname: '127.0.0.1',
+    port: '4444'
+    path: '/wd/hub'
+}
+```
+
+#### Specifying driver type in remote
+
+You may pass `async`,`promise` or `promiseChain` to `remote` to specify the driver type instead of
+calling the driver specific method.
 
 ```js
 var browser = wd.remote('promiseChain')
@@ -275,20 +287,10 @@ var browser = wd.remote({
 }, 'promiseChain');
 ```
 
-#### Defaults
+#### Attach to an already-existing session
 
-```js
-{
-    protocol: 'http:'
-    hostname: '127.0.0.1',
-    port: '4444'
-    path: '/wd/hub'
-}
-```
-
-#### Connect to an already-existing session
-
-Instead of calling 'init' use 'attach' using the WebDriver session ID:
+Instead of calling 'init' use 'attach' using the WebDriver session ID. Use `detach`
+to detach from the session (callbacks are optional).
 
 ```js
 var browser = wd.remote('http://localhost:4444/wd/hub');
@@ -301,6 +303,9 @@ browser.attach('df606fdd-f4b7-4651-aaba-fe37a39c86e3', function(err, capabilitie
     });
   }
 });
+...
+browser.detach();
+
 ```
 
 ### Capabilities

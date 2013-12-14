@@ -49,7 +49,7 @@ Incompatibilities:
   - Webdriver and Element refactoring
   - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
 
-### 0.2.6 (latest)
+### 0.2.6
 
   - bugfix: Removed the tmp dependencies.
   - isDisplayed/isNotDisplayed asserters
@@ -58,11 +58,11 @@ Incompatibilities:
   - bugfix: Value not defaulted when inititializing with `url.parse`.
   - bugfix: url relative now use `url.resolve`.
 
-### 0.2.7 (future)
+### 0.2.7 (latest)
   - `attach`/`detach` session.
   - add `asyncRemote` and make `remote` generic.
-  - server config override in init (in particular sauce username/key)
   
-### 0.3 (future)
+### Future
   - add a util with most commonly used desired config (selenium+appium)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
+  - better remote/init process
