@@ -279,6 +279,56 @@ describe("automatic Saucelabs config", function() {
     done();
   });
 });
+describe("driver type", function() {
+  it("default", function(done) {
+    var browser;
+    browser = wd.remote();
+    (browser instanceof wd.Webdriver).should.be.true;
+    done();
+  });
+  it("remote", function(done) {
+    var browser;
+    browser = wd.remote('remote');
+    (browser instanceof wd.Webdriver).should.be.true;
+    done();
+  });
+  it("promise", function(done) {
+    var browser;
+    browser = wd.remote('promise');
+    (browser instanceof wd.PromiseWebdriver).should.be.true;
+    done();
+  });
+  it("promiseChain", function(done) {
+    var browser;
+    browser = wd.remote('promiseChain');
+    (browser instanceof wd.PromiseChainWebdriver).should.be.true;
+    done();
+  });
+  it("object + promise", function(done) {
+    var browser;
+    browser = wd.remote({}, 'promise');
+    (browser instanceof wd.PromiseWebdriver).should.be.true;
+    done();
+  });
+  it("url + promiseChain", function(done) {
+    var browser;
+    browser = wd.remote('http://example.com/wd', 'promiseChain');
+    (browser instanceof wd.PromiseChainWebdriver).should.be.true;
+    done();
+  });
+  it("host + port + promise", function(done) {
+    var browser;
+    browser = wd.remote('example.com',4444, 'promise');
+    (browser instanceof wd.PromiseWebdriver).should.be.true;
+    done();
+  });
+  it("host + port + username + password + promiseChain", function(done) {
+    var browser;
+    browser = wd.remote('example.com',4444, 'me', 'secret', 'promiseChain');
+    (browser instanceof wd.PromiseChainWebdriver).should.be.true;
+    done();
+  });
+});
 describe("backward compatibility", function() {
   it("browser should be initialized with: host, port", function(done) {
     var browser;
