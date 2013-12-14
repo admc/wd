@@ -288,7 +288,7 @@ describe("driver type", function() {
   });
   it("remote", function(done) {
     var browser;
-    browser = wd.remote('remote');
+    browser = wd.remote('async');
     (browser instanceof wd.Webdriver).should.be.true;
     done();
   });
