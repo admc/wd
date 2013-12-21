@@ -562,4 +562,3 @@ npm publish
 ## Test Coverage
 
 [test coverage](http://admc.io/wd/istanbul/coverage/lcov-report/lib/index.html)
-
