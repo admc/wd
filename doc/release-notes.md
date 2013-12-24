@@ -61,7 +61,10 @@ Incompatibilities:
 ### 0.2.7 (latest)
   - `attach`/`detach` session.
   - add `asyncRemote` and make `remote` generic.
-  
+
+### 0.2.8 (latest)
+  - added nodeify to transferPromiseness.
+
 ### Future
   - add a util with most commonly used desired config (selenium+appium)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
