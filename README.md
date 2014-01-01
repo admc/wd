@@ -432,14 +432,14 @@ wd.configureHttp({
   timeout: 60000,
   retries: 3,
   retryDelay: 100,
-  baseUrl = 'http://example.com/'
+  baseUrl: 'http://example.com/'
 });
 // per browser config
 browser.configureHttp({
   timeout: 60000,
   retries: 3,
   retryDelay: 100,
-  baseUrl = 'http://example.com/'
+  baseUrl: 'http://example.com/'
 });
 ```
 
