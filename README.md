@@ -365,7 +365,7 @@ var promiseAsserter = new Asserter(
 
 ```
 
-Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for.js).
+Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for-custom.js).
 
 There are ready to use asserters [here](https://github.com/admc/wd/blob/master/lib/asserters.js),
 See also the asserter category in the api doc [here](https://github.com/admc/wd/blob/master/doc/api.md).
