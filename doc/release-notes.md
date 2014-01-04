@@ -58,14 +58,21 @@ Incompatibilities:
   - bugfix: Value not defaulted when inititializing with `url.parse`.
   - bugfix: url relative now use `url.resolve`.
 
-### 0.2.7 (latest)
+### 0.2.7
   - `attach`/`detach` session.
   - add `asyncRemote` and make `remote` generic.
 
 ### 0.2.8 (latest)
   - added nodeify to transferPromiseness.
 
-### Future
+### TODO
+  - Fix http emit (todo).
+  - Add wait for elements
+  - Integrate with node-saucelabs
+  - Appium mobile method
+  - Implement all the missing method
+
+### LONG TERM
   - add a util with most commonly used desired config (selenium+appium)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
   - better remote/init process
