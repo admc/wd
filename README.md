@@ -341,7 +341,12 @@ Below are the methods to use to wait for a condition:
 condition, then returns the element.
 - `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser, then returns a boolean.
 
-Asserters should be written using either models below . `target` may be `browser` and/or `element` depending on the context.
+You should be able to use [ready to use asserters](https://github.com/admc/wd/blob/master/lib/asserters.js),
+in most cases. [Here](https://github.com/admc/wd/blob/master/examples/promise/wait-for-simple.js) is a simple 
+example. 
+Please refer to the asserter category in the api doc [here](https://github.com/admc/wd/blob/master/doc/api.md).
+
+Custom asserters should be written using either models below . `target` may be `browser` and/or `element` depending on the context.
 
 ```js
 // async
@@ -365,10 +370,7 @@ var promiseAsserter = new Asserter(
 
 ```
 
-Example [here](https://github.com/admc/wd/blob/master/examples/promise/wait-for-custom.js).
-
-There are ready to use asserters [here](https://github.com/admc/wd/blob/master/lib/asserters.js),
-See also the asserter category in the api doc [here](https://github.com/admc/wd/blob/master/doc/api.md).
+[Here](https://github.com/admc/wd/blob/master/examples/promise/wait-for-custom.js) is a custom asserter example.
 
 ### Adding custom methods
 
