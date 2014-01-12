@@ -69,8 +69,9 @@ Incompatibilities:
   - Fix http emit (todo).
   - Add wait for elements
   - Integrate with node-saucelabs
-  - Appium mobile method
-  - Implement all the missing method
+  - Appium mobile methods
+  - Implement all the missing methods
+  - helper to access first, second, nth el in promised collection
 
 ### LONG TERM
   - add a util with most commonly used desired config (selenium+appium)
