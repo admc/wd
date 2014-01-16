@@ -564,3 +564,7 @@ npm publish
 ## Test Coverage
 
 [test coverage](http://admc.io/wd/istanbul/coverage/lcov-report/lib/index.html)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/admc/wd/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
