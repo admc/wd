@@ -62,19 +62,17 @@ Incompatibilities:
   - `attach`/`detach` session.
   - add `asyncRemote` and make `remote` generic.
 
-### 0.2.8 (latest)
+### 0.2.8
   - added nodeify to transferPromiseness.
 
-### TODO
+### 0.2.9 (latest)
   - http emit fix.
-  - add console.log/print method
-
-  - helper to access first, second, nth el in promised collection
+  - added print method
+  - added at, nth, first, second, third, last to promise api
 
 ### LONG TERM
   - Integrate with node-saucelabs + make the sauce rest url configurable
   - Add wait for elements
-
   - Implement all the missing methods
   - Appium mobile methods
   - add a util with most commonly used desired config (selenium+appium)
