@@ -66,15 +66,17 @@ Incompatibilities:
   - added nodeify to transferPromiseness.
 
 ### TODO
-  - Fix http emit.
-  - Add wait for elements
-  - Integrate with node-saucelabs + make the sauce rest url configurable
-  - Appium mobile methods
-  - Implement all the missing methods
-  - helper to access first, second, nth el in promised collection
+  - http emit fix.
   - add console.log/print method
 
+  - helper to access first, second, nth el in promised collection
+
 ### LONG TERM
+  - Integrate with node-saucelabs + make the sauce rest url configurable
+  - Add wait for elements
+
+  - Implement all the missing methods
+  - Appium mobile methods
   - add a util with most commonly used desired config (selenium+appium)
   - jQuery addOn + asserters (including jquery visible/hidden) (todo)
   - better remote/init process

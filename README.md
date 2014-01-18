@@ -411,6 +411,17 @@ chain:
 
 The `resolve` methods work like `Q` `thenResolve`.
 
+### Extra promise methods:
+
+at(i): get element from list (starting at 0).
+nth(i): get element from list (starting at 1).
+first(): get the first element.
+second(): get the second element.
+third(): get the third element.
+last(): get the last element.
+printError(prepend): print the previous error, prepend optional
+print(prepend): print the previous promise result, prepend optional 
+
 ### Working with external promise libraries
 
 `wd` uses `Q` internally, but you may use promises from other libraries with the following methods:

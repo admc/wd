@@ -311,6 +311,75 @@ describe('api-various ' + env.ENV_DESC, function() {
          .setHttpTimeout(env.HTTP_TIMEOUT).should.be.fulfilled;
   });
 
+  // get item from array, starting at 0
+  partials['at'] =
+    '<div id="theDiv">\n' +
+    '<div class=\'inside\'>first</div>\n' +
+    '<div class=\'inside\'>second</div>\n' +
+    '<div class=\'inside\'>third</div>\n' +
+    '</div>';
+  it('at', function() {
+    return browser
+      .elementsByCss('.inside').at(0).text()
+        .should.become('first')
+      .elementsByCss('.inside').at(1).text()
+        .should.become('second')
+      .elementsByCss('.inside').at(2).text()
+        .should.become('third');
+  });
+
+  // get item from array, starting at 0
+  partials['nth'] =
+    '<div id="theDiv">\n' +
+    '<div class=\'inside\'>first</div>\n' +
+    '<div class=\'inside\'>second</div>\n' +
+    '<div class=\'inside\'>third</div>\n' +
+    '</div>';
+  it('nth', function() {
+    return browser
+      .elementsByCss('.inside').nth(1).text()
+        .should.become('first')
+      .elementsByCss('.inside').nth(2).text()
+        .should.become('second')
+      .elementsByCss('.inside').nth(3).text()
+        .should.become('third');
+  });
+
+  // get item from array, starting at 0
+  partials['first/second/third/last'] =
+    '<div id="theDiv">\n' +
+    '<div class=\'inside\'>first</div>\n' +
+    '<div class=\'inside\'>second</div>\n' +
+    '<div class=\'inside\'>third</div>\n' +
+    '</div>';
+  it('first/second/third/last', function() {
+    return browser
+      .elementsByCss('.inside').first().text()
+        .should.become('first')
+      .elementsByCss('.inside').second().text()
+        .should.become('second')
+      .elementsByCss('.inside').third().text()
+        .should.become('third')
+      .elementsByCss('.inside').last().text()
+        .should.become('third');
+  });
+
+  // print
+  partials['print'] =
+    '<div id="theDiv">Some text.</div>\n';
+  it('print', function() {
+    return browser
+      .elementById('theDiv').text().print()
+      .elementById('theDiv').text().print("prepend: ");
+  });
+
+  // print error
+  it('printError', function() {
+    return browser
+      .elementById('unknown').printError().
+        should.be.rejected;
+  });
+
   it('err.inspect', function() {
     return browser
       .safeExecute("invalid-code> here").then(
