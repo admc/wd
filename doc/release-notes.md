@@ -65,12 +65,16 @@ Incompatibilities:
 ### 0.2.8
   - added nodeify to transferPromiseness.
 
-### 0.2.9 (latest)
+### 0.2.9
   - http emit fix.
   - added print method
   - added at, nth, first, second, third, last to promise api
 
+### 0.2.10 (latest)
+  - packages upgrade to latest.
+
 ### LONG TERM
+  - Better error report using domain
   - Integrate with node-saucelabs + make the sauce rest url configurable
   - Add wait for elements
   - Implement all the missing methods
