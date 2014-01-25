@@ -74,7 +74,8 @@ Incompatibilities:
   - packages upgrade to latest.
 
 ### LONG TERM
-  - Better error report using domain
+  - Modify doc generator to cope with commands.js
+  - Better logging/error handling (+ tests). 
   - Integrate with node-saucelabs + make the sauce rest url configurable
   - Add wait for elements
   - Implement all the missing methods
