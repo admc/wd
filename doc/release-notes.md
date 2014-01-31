@@ -73,7 +73,8 @@ Incompatibilities:
 ### 0.2.10 (latest)
   - packages upgrade to latest.
 
-### LONG TERM
+### TODO
+  - write tests for sauceJobUpdate/sauceJobStatus
   - Modify doc generator to cope with commands.js
   - Better logging/error handling (+ tests). 
   - Integrate with node-saucelabs + make the sauce rest url configurable
