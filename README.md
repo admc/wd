@@ -327,7 +327,7 @@ using the principles below:
 - You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
 
 If you need to do something more complicated, like reusing an element for 2 calls, then
-can either Q promise functionnality (like then, Q.all or Q sequences), or retrieve your
+can either Q promise functionality (like then, Q.all or Q sequences), or retrieve your
 element twice (since the promise chain api is very terse, this is usually acceptable).
 
 Element function chaining example [here](https://github.com/admc/wd/blob/master/examples/promise/chained-el-func-call.js)
@@ -502,10 +502,7 @@ Sauce Labs cloud.
 
 ### Appium
 
-Android is only supported locally.
-
-ios6 is supported locally or using Sauce Labs cloud. There is an issue with ios7, the Appium
-team is working to solve it.
+Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms/appium).
 
 ## Run the tests!
 
