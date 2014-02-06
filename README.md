@@ -344,8 +344,12 @@ condition, then returns the element.
 **NOTE:** When using `waitForConditionInBrowser` you must first set the async script timeout using `setAsyncScriptTimeout()`.  For instance:
 
 ```js
-return browser
-  .setAsyncScriptTimeout(10000)
+// init phase
+browser
+  .init()
+  .setAsyncScriptTimeout(10000);
+// test  
+browser
   .waitForConditionInBrowser("document.querySelectorAll('.foo').length > 0", 10000);
 ```
 
@@ -431,19 +435,6 @@ The `resolve` methods work like `Q` `thenResolve`.
 - `print(prepend)`: print the previous promise result, prepend optional 
 
 **NOTE:** When using functions such as `nth()`, `first()`, `second()` you must use the "plural" versions of the `get` functions.
-
-For instance, this does not work:
-
-```js
-browser.elementByCss(".foo").first()
-```
-
-...but this does work:
-
-```js
-browser.elementsByCss(".foo").first()
-```
-
 
 ### Working with external promise libraries
 
