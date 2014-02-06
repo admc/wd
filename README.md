@@ -347,7 +347,7 @@ condition, then returns the element.
 // init phase
 browser
   .init()
-  .setAsyncScriptTimeout(10000);
+  .setAsyncScriptTimeout(30000);
 // test  
 browser
   .waitForConditionInBrowser("document.querySelectorAll('.foo').length > 0", 10000);
