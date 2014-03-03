@@ -339,7 +339,7 @@ Below are the methods to use to wait for a condition:
 - `browser.waitFor(asserter, timeout, pollFreq, cb) -> cb(err, value)`: generic wait method, the return value is provided by the asserter when the condition is satisfied.
 - `browser.waitForElementBy???(value ,asserter, timeout, pollFreq, cb) -> cb(err, el)`: waits for a element then a
 condition, then returns the element.
-- `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser, then returns a boolean.  
+- `browser.waitForConditionInBrowser(conditionExpr, timeout, pollFreq, cb) -> cb(err, boolean)`: waits for a js condition within a browser, then returns a boolean.
 
 **NOTE:** When using `waitForConditionInBrowser` you must first set the async script timeout using `setAsyncScriptTimeout()`.  For instance:
 
@@ -348,14 +348,14 @@ condition, then returns the element.
 browser
   .init()
   .setAsyncScriptTimeout(30000);
-// test  
+// test
 browser
   .waitForConditionInBrowser("document.querySelectorAll('.foo').length > 0", 10000);
 ```
 
 You should be able to use [ready to use asserters](https://github.com/admc/wd/blob/master/lib/asserters.js),
-in most cases. [Here](https://github.com/admc/wd/blob/master/examples/promise/wait-for-simple.js) is a simple 
-example. 
+in most cases. [Here](https://github.com/admc/wd/blob/master/examples/promise/wait-for-simple.js) is a simple
+example.
 Please refer to the asserter category in the api doc [here](https://github.com/admc/wd/blob/master/doc/api.md).
 
 Custom asserters should be written using either models below . `target` may be `browser` and/or `element` depending on the context.
@@ -432,7 +432,7 @@ The `resolve` methods work like `Q` `thenResolve`.
 - `third()`: get the third element.
 - `last()`: get the last element.
 - `printError(prepend)`: print the previous error, prepend optional
-- `print(prepend)`: print the previous promise result, prepend optional 
+- `print(prepend)`: print the previous promise result, prepend optional
 
 **NOTE:** When using functions such as `nth()`, `first()`, `second()` you must use the "plural" versions of the `get` functions.
 

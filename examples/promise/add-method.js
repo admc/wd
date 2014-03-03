@@ -15,7 +15,7 @@ try {
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 // adding custom promise chain method
-wd.addPromiseChainMethod( 
+wd.addPromiseChainMethod(
   'elementByCssSelectorWhenReady',
   function(selector, timeout) {
     return this

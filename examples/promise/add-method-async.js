@@ -14,7 +14,7 @@ try {
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-wd.addAsyncMethod( 
+wd.addAsyncMethod(
   'elementByCssSelectorWhenReady',
   function(selector, timeout/*, cb*/) {
     // 'wd.findCallback' is a small helper which looks for the callback in a safe way, and avoids
