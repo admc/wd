@@ -1,4 +1,5 @@
 require('./env');
+require('colors');
 
 GLOBAL.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
@@ -15,12 +16,17 @@ wd.addAsyncMethod(
   'configureLogging',
   function (done){
   if(env.VERBOSE) {
-    //this._debugPromise();
     this.on('status', function(info) {
-      console.log(info);
+      console.log(info.cyan);
     });
-    this.on('command', function(meth, path, data) {
-      console.log(' > ' + meth, path, data || '');
+    this.on('command', function(eventType, command, response) {
+      console.log(' > ' + eventType.cyan, command, (response || '').grey);
+    });
+    this.on('http', function(meth, path, data) {
+      console.log(' > ' + meth.magenta, path, (data || '').grey);
+    });
+    this.on('connection', function(errorCode, summary, mess) {
+      console.log(' !!! ' + errorCode.red, summary, (mess || '').grey);
     });
   }
   if(env.DEBUG_CONNECTION) {
