@@ -25,12 +25,15 @@ describe("mocha with generators", function() {
 
   before(wrap(function *() {
     browser = wd.promiseChainRemote();
-    //browser._debugPromise();
+    // optional extra logging
     browser.on('status', function(info) {
-      console.log(info);
+      console.log(info.cyan);
     });
-    browser.on('command', function(meth, path, data) {
-      console.log(' > ' + meth, path, data || '');
+    browser.on('command', function(eventType, command, response) {
+      console.log(' > ' + eventType.cyan, command, (response || '').grey);
+    });
+    browser.on('http', function(meth, path, data) {
+      console.log(' > ' + meth.magenta, path, (data || '').grey);
     });
     yield browser.init({browserName:'chrome'});
   }));

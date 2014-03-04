@@ -20,12 +20,14 @@ chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 var browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, username, accessKey);
 
 // optional extra logging
-//browser._debugPromise();
 browser.on('status', function(info) {
   console.log(info.cyan);
 });
-browser.on('command', function(meth, path, data) {
-  console.log(' > ' + meth.yellow, path.grey, data || '');
+browser.on('command', function(eventType, command, response) {
+  console.log(' > ' + eventType.cyan, command, (response || '').grey);
+});
+browser.on('http', function(meth, path, data) {
+  console.log(' > ' + meth.magenta, path, (data || '').grey);
 });
 
 var desired = {

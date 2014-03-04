@@ -15,11 +15,14 @@ try {
 var browser = wd.remote("ondemand.saucelabs.com", 80, username, accessKey);
 
 // optional extra logging
-browser.on('status', function(info){
-  console.log('\x1b[36m%s\x1b[0m', info);
+browser.on('status', function(info) {
+  console.log(info.cyan);
 });
-browser.on('command', function(meth, path, data){
-  console.log(' > \x1b[33m%s\x1b[0m: %s', meth, path, data || '');
+browser.on('command', function(eventType, command, response) {
+  console.log(' > ' + eventType.cyan, command, (response || '').grey);
+});
+browser.on('http', function(meth, path, data) {
+  console.log(' > ' + meth.magenta, path, (data || '').grey);
 });
 
 var desired = {
