@@ -44,7 +44,7 @@ Incompatibilities:
   - bugfix: setOrientation.
   - migrating from string.js to underscore.string.
 
-### 0.2.5 
+### 0.2.5
 
   - Webdriver and Element refactoring
   - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
@@ -76,7 +76,7 @@ Incompatibilities:
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
   - Modify doc generator to cope with commands.js
-  - Better logging/error handling (+ tests). 
+  - Better logging/error handling (+ tests).
   - Integrate with node-saucelabs + make the sauce rest url configurable
   - Add wait for elements
   - Implement all the missing methods

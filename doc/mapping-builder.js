@@ -12,7 +12,7 @@ var jsonDocs = [
   JSON.parse(fs.readFileSync('tmp/webdriver-dox.json').toString()),
   JSON.parse(fs.readFileSync('tmp/element-dox.json').toString()),
   JSON.parse(fs.readFileSync('tmp/commands-dox.json').toString()),
-  JSON.parse(fs.readFileSync('tmp/element-commands-dox.json').toString()),  
+  JSON.parse(fs.readFileSync('tmp/element-commands-dox.json').toString()),
   JSON.parse(fs.readFileSync('tmp/main-dox.json').toString()),
   JSON.parse(fs.readFileSync('tmp/asserters-dox.json').toString())
 ];

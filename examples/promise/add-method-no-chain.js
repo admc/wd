@@ -15,7 +15,7 @@ try {
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 // add promise method
-wd.addPromiseMethod( 
+wd.addPromiseMethod(
   'elementByCssSelectorWhenReady',
   function(selector, timeout) {
   var browser = this;
