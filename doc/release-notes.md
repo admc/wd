@@ -70,13 +70,16 @@ Incompatibilities:
   - added print method
   - added at, nth, first, second, third, last to promise api
 
-### 0.2.10 (latest)
+### 0.2.10
   - packages upgrade to latest.
+
+### 0.2.11 (latest)
+  - better logging
+  - better error handling
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
   - Modify doc generator to cope with commands.js
-  - Better logging/error handling (+ tests).
   - Integrate with node-saucelabs + make the sauce rest url configurable
   - Add wait for elements
   - Implement all the missing methods

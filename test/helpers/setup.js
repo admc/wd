@@ -25,13 +25,10 @@ wd.addAsyncMethod(
     this.on('http', function(meth, path, data) {
       console.log(' > ' + meth.magenta, path, (data || '').grey);
     });
-    this.on('connection', function(errorCode, summary, mess) {
-      console.log(' !!! ' + errorCode.red, summary, (mess || '').grey);
-    });
   }
   if(env.DEBUG_CONNECTION) {
-    this.on('http', function(message) {
-      console.log('http > ' + message );
+    this.on('connection', function(message) {
+      console.log('connection > ' + message );
     });
   }
 
