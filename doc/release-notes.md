@@ -73,9 +73,12 @@ Incompatibilities:
 ### 0.2.10
   - packages upgrade to latest.
 
-### 0.2.11 (latest)
+### 0.2.11
   - better logging
   - better error handling
+
+### 0.2.12 (latest)
+  - minor bugfix
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
