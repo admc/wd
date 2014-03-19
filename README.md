@@ -160,10 +160,18 @@ describe("using mocha-as-promised and chai-as-promised", function() {
 
 ## Repl
 
+
+If wd was installed via npm run:
 ```
 ./node_modules/.bin/wd shell
 ```
 
+Or for local install run:
+```
+node lib/bin.js shell
+```
+
+Then within the shell:
 ```
 ): wd shell
 > x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
