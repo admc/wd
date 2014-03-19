@@ -551,7 +551,7 @@ node_modules/.bin/install_sauce_connect
 
 # Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY
 
-# Start Sauce Sonnect:
+# Start Sauce Connect:
 node_modules/.bin/start_sauce_connect
 
 cd wd
