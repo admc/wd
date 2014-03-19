@@ -2,6 +2,7 @@ require('../helpers/setup');
 
 describe('wait-for ' + env.ENV_DESC, function() {
   var Asserter = wd.Asserter;
+  var asserters = wd.asserters;
   var page = '<div id="theDiv"></div>';
 
   var appendChild =
@@ -148,7 +149,7 @@ describe('wait-for ' + env.ENV_DESC, function() {
   });
 
   partials['browser.waitForElement - rejected'] = page;
-  it('browser.waitForElement', function() {
+  it('browser.waitForElement - rejected', function() {
     return browser.chain()
       .then(function() {
         return browser
@@ -190,4 +191,20 @@ describe('wait-for ' + env.ENV_DESC, function() {
       .waitForElementByCss("#theDiv .child", { asserter: elAsserter,
         timeout: 2 * env.BASE_TIME_UNIT, pollFreq: 200 });
   });
+
+  partials['browser.waitForElement - asserter - matching element not the first element'] = page;
+  it('browser.waitForElement - asserter - matching element not the first element', function() {
+      var appendChild =
+        'setTimeout(function() {\n' +
+        ' $("#theDiv").append(' + 
+            '"<div class=\\"child\\" style=\\"display:none;\\">a waitFor child 1</div>' + 
+            '<div class=\\"child\\">a waitFor child 2</div>");\n' +
+        '}, arguments[0]);\n';
+    return browser
+      .execute( appendChild, [env.BASE_TIME_UNIT] )
+      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
+      .waitForElement("css selector", "#theDiv .child", asserters.isDisplayed, 2 * env.BASE_TIME_UNIT, 100)
+      .text().should.become('a waitFor child 2');
+  });
+
 });
