@@ -1,3 +1,4 @@
 --ui bdd
 --reporter spec
 -t 60000
+-r ./test/helpers/quit-gracefully
