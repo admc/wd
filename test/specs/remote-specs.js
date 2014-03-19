@@ -260,6 +260,28 @@ describe("automatic Saucelabs config", function() {
     browser.configUrl.auth.should.equal('zorro:1234-5678');
     done();
   });
+  it("browser should be initialized with indexed parameters username and accessKey", function(done) {
+    var browser;
+    browser = wd.remote('ondemand.saucelabs.com', 80, 'not_zorro', '8765-4321');
+    browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
+    browser.configUrl.port.should.equal('80');
+    browser.configUrl.pathname.should.equal('/wd/hub');
+    browser.configUrl.auth.should.equal('not_zorro:8765-4321');
+    done();
+  });
+  it("browser should be initialized with named parameters username and accessKey", function(done) {
+    var browser;
+    browser = wd.remote({
+      hostname: 'ondemand.saucelabs.com',
+      port:80,
+      username: 'not_zorro',
+      accessKey: '8765-4321' });
+    browser.configUrl.hostname.should.equal('ondemand.saucelabs.com');
+    browser.configUrl.port.should.equal('80');
+    browser.configUrl.pathname.should.equal('/wd/hub');
+    browser.configUrl.auth.should.equal('not_zorro:8765-4321');
+    done();
+  });
   it("browser should be initialized with url string", function(done) {
     var browser;
     browser = wd.remote('http://ondemand.saucelabs.com/wd/hub');
