@@ -77,9 +77,15 @@ Incompatibilities:
   - better logging
   - better error handling
 
-### 0.2.12 (latest)
+### 0.2.12
   - minor bugfix
 
+### 0.2.13 (latest)
+  - waitForElement fix
+  - added waitForElements method
+  - auth fix
+  - new context methods
+    
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
   - Modify doc generator to cope with commands.js
