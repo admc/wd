@@ -195,6 +195,11 @@ Then within the shell:
 WD is simply implementing the Selenium JsonWireProtocol, for more details see the official docs:
  - <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">http://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
 
+WD is incrementally implementing the Mobile JsonWireProtocol draft, see proposal docs:
+ - <a href="https://code.google.com/p/selenium/source/browse/spec-draft.md?repo=mobile">https://code.google.com/p/selenium/source/browse/spec-draft.md?repo=mobile</a>
+
+Check which Mobile JsonWire Protocol methods are supported in [/doc/jsonwire-mobile.md](https://github.com/admc/wd/blob/master/doc/jsonwire-mobile.md)
+
 ### Browser initialization
 
 #### Indexed parameters
