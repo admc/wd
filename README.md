@@ -333,7 +333,7 @@ using the principles below:
 - If the method returns something (text, getAttribute...), the element scope is lost.
 - You may use "<" as the first parameter to get out of the element scope.
 - You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
-- By default Element(s) methods are always executed in the global context, because this is the most common use case.
+- By default element(s) methods are always executed in the global context, because this is the most common use case.
 Use ">" to retrieve subelements. 
 
 If you need to do something more complicated, like reusing an element for 2 calls, then
