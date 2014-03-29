@@ -35,13 +35,13 @@ var caps;
 // go there https://saucelabs.com/platforms/appium
 // and cut/paste the caps if it doesn't work out 
 caps = {browserName: ''};
-caps.platform = 'OS X 10.8';
-caps.version = '6';
+caps.platform = 'OS X 10.9';
+caps.version = '7.1';
 caps['device-orientation'] = 'portrait';
 caps.app = 'safari';
 caps.device = 'iPhone Simulator';
 
-caps.name = 'Sauce Ios6 Appium Example';
+caps.name = 'Sauce Ios7 Appium Example';
 
 browser.init(caps).then(function() {
   return browser

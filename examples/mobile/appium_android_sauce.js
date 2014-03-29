@@ -14,6 +14,8 @@ try {
   wd = require('../../lib/main');
 }
 
+var Q = wd.Q;
+
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
@@ -35,29 +37,33 @@ var caps;
 // go there https://saucelabs.com/platforms/appium
 // and cut/paste the caps if it doesn't work out 
 caps = {browserName: ''};
-caps.platform = 'OS X 10.8';
-caps.version = '6';
+caps.platform = 'Linux';
+caps.version = '4.3';
 caps['device-orientation'] = 'portrait';
-caps.app = 'safari';
-caps.device = 'iPhone Simulator';
+caps.device = 'Android';
+ 
+caps.app = 'http://appium.s3.amazonaws.com/NotesList.apk';
+caps['app-activity'] = '.NotesList';
+caps['app-package'] = 'com.example.android.notepad';
 
-caps.name = 'Sauce Ios6 Appium Example';
+caps.name = 'Sauce Android Appium Example';
 
 browser.init(caps).then(function() {
   return browser
-    .sauceJobUpdate({tags:['example']})
-    .get("http://admc.io/wd/mobile-test-pages/index.html")
-
-    .title()
-      .should.become('WD Tests - Mobile')
-    .elementById('theDiv').text()
-      .should.eventually.include('bonjour')
-    .elementsByCss('#theDiv .hello')
-     .should.eventually.have.length(3)
-
-    .sauceJobStatus(true)
+    .elementByName("New note")
+      .click()
+    .elementByTagName("textfield")
+      .sendKeys("This is a new note!")
+    .elementByName("Save")
+      .click()
+    .elementsByTagName("text")
+      .then(function(els) {
+        return Q.all([
+          els[2].text().should.become("This is a new note!"),
+          els[2].click()
+        ])
+    }).sauceJobStatus(true)
     .catch(function(err) {
       return browser.sauceJobStatus(false).thenReject(err);
-    })
-    .fin(function() { return browser.quit(); });
+    }).fin(function() { return browser.quit(); });
 }).done();

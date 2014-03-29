@@ -30,14 +30,19 @@ browser.on('http', function(meth, path, data) {
   console.log(' > ' + meth.magenta, path, (data || '').grey);
 });
 
-var desired = {
-  'browserName': 'android',
-  'version': '4.0',
-  'platform': 'Linux',
-  'device-orientation': 'portrait'
-};
 
-browser.init(desired).then(function() {
+var caps;
+
+// go there https://saucelabs.com/platforms/webdriver
+// and cut/paste the caps if it doesn't work out
+caps = {browserName: 'android'};
+caps.platform = 'Linux';
+caps.version = '4.3';
+caps['device-orientation'] = 'portrait';
+
+caps.name = 'Sauce Android Webdriver Example';
+
+browser.init(caps).then(function() {
   return browser
     .sauceJobUpdate({tags:['example']})
     .get("http://admc.io/wd/mobile-test-pages/index.html")

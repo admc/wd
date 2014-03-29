@@ -30,14 +30,19 @@ browser.on('http', function(meth, path, data) {
   console.log(' > ' + meth.magenta, path, (data || '').grey);
 });
 
-var desired = {
-  'browserName': 'iphone',
-  'version': '6.1',
-  'platform': 'OS X 10.8',
-  'device-orientation': 'portrait'
-};
 
-browser.init(desired).then(function() {
+var caps;
+
+// go there https://saucelabs.com/platforms/webdriver
+// and cut/paste the caps if it doesn't work out
+caps = {browserName: 'iphone'};
+caps.platform = 'OS X 10.9';
+caps.version = '7.1';
+caps['device-orientation'] = 'portrait';
+
+caps.name = 'Sauce Ios Webdriver Example';
+
+browser.init(caps).then(function() {
   return browser
     .sauceJobUpdate({tags:['example']})
     .get("http://admc.io/wd/mobile-test-pages/index.html")
