@@ -29,4 +29,28 @@ describe("init tests", function() {
       });
     });
   });
+
+  describe("appium default", function() {
+
+    var server, browser;
+
+    it("should not have selenium defaults", function(done) {
+      server = nock('http://localhost:4444')
+      server.log(console.log);
+      server
+        //.filteringRequestBody(/.*/, '*')
+        .filteringRequestBody(function(requestBody) {
+          requestBody = JSON.parse(requestBody);
+          console.log(typeof requestBody);
+          console.log(requestBody);          
+          should.not.exist(requestBody.desiredCapabilities.javascriptEnabled);          
+          done();
+          return "*";
+        })
+        .post('/session', '*')
+        .reply(303, "OK", { 'Location': '/session/1234' });
+      browser = wd.remote('http://localhost:4444');
+      browser.init({device: 'iPhone'}, function(err) {});      
+    });
+  });
 });
