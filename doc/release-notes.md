@@ -80,11 +80,15 @@ Incompatibilities:
 ### 0.2.12
   - minor bugfix
 
-### 0.2.13 (latest)
+### 0.2.13
   - waitForElement fix
   - added waitForElements method
   - auth fix
   - new context methods
+
+### 0.2.14 (latest)
+  - no defaults for appium
+  - better mobile examples
     
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
