@@ -594,7 +594,8 @@ make unsupported_mapping > doc/jsonwire-unsupported-mapping.md
 
 ```
 npm version [patch|minor|major]
-git push --tags origin master
+git push origin master
+git push --tags
 npm publish
 ```
 
