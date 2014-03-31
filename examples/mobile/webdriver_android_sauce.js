@@ -1,3 +1,5 @@
+var host = process.env.APPIUM_HOST || "ondemand.saucelabs.com";
+var port = parseInt(process.env.APPIUM_PORT, 10) || 80;
 var username = process.env.SAUCE_USERNAME;
 var accessKey = process.env.SAUCE_ACCESS_KEY;
 
@@ -17,7 +19,7 @@ try {
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-var browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, username, accessKey);
+var browser = wd.promiseChainRemote(host, port, username, accessKey);
 
 // optional extra logging
 browser.on('status', function(info) {
