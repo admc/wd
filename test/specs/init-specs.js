@@ -38,7 +38,6 @@ describe("init tests", function() {
       server = nock('http://localhost:4444')
       server.log(console.log);
       server
-        //.filteringRequestBody(/.*/, '*')
         .filteringRequestBody(function(requestBody) {
           requestBody = JSON.parse(requestBody);
           console.log(typeof requestBody);
