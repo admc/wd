@@ -1,5 +1,4 @@
-var nock = require('nock'),
-    _ = require('lodash');
+var nock = require('nock');
 require('../helpers/setup');
 
 
@@ -35,7 +34,7 @@ describe("mjson tests", function() {
           requestBody = JSON.parse(requestBody);
           if(requestFilter) { requestFilter(requestBody); }
           return "*";
-        })        
+        });
       })
       .nodeify(done);
   });    
@@ -46,7 +45,7 @@ describe("mjson tests", function() {
       requestFilter = function(requestBody) {
         requestBody.using.should.equal('-ios uiautomation');
       };
-    })
+    });
     after(function() {
       requestFilter = null;
     });
@@ -94,7 +93,7 @@ describe("mjson tests", function() {
       requestFilter = function(requestBody) {
         requestBody.using.should.equal('-android uiautomator');
       };
-    })
+    });
     after(function() {
       requestFilter = null;
     });
@@ -130,6 +129,54 @@ describe("mjson tests", function() {
         .waitForElementByAndroidUIAutomator('random stuff')
           .should.eventually.exist
         .waitForElementsByAndroidUIAutomator('random stuff')
+          .should.eventually.exist
+        .nodeify(done);
+    });
+
+  });
+
+  describe("by accessibility id", function() {
+
+    before(function() {
+      requestFilter = function(requestBody) {
+        requestBody.using.should.equal('accessibility id');
+      };
+    });
+    after(function() {
+      requestFilter = null;
+    });
+
+    it("element methods should work", function(done) {      
+      browser
+        .element('accessibility id', 'random stuff')
+          .should.eventually.exist
+        .elementByAccessibilityId('random stuff')
+          .should.eventually.exist
+        .elementByAccessibilityIdOrNull('random stuff')
+          .should.eventually.exist
+        .elementByAccessibilityIdIfExists('random stuff')
+          .should.eventually.exist
+        .hasElementByAccessibilityId('random stuff')
+          .should.eventually.be.ok
+        .nodeify(done);
+    });
+
+    it("elements methods should work", function(done) {
+      browser
+        .elements('accessibility id', 'random stuff')
+          .should.eventually.exist
+        .elementsByAccessibilityId('random stuff')
+          .should.eventually.exist
+        .nodeify(done);
+    });
+
+    it("wait methods should work", function(done) {
+      browser
+        .waitForElement('accessibility id', 'random stuff')
+          .should.eventually.exist
+        .waitForElementByAccessibilityId('random stuff')
+          .should.eventually.exist
+        .waitForElementsByAccessibilityId('random stuff')
           .should.eventually.exist
         .nodeify(done);
     });
