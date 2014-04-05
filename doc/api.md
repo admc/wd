@@ -375,6 +375,9 @@ elementByPartialLinkText(value, cb) -&gt; cb(err, element)<br>
 elementByTagName(value, cb) -&gt; cb(err, element)<br>
 elementByXPath(value, cb) -&gt; cb(err, element)<br>
 elementByCss(value, cb) -&gt; cb(err, element)<br>
+elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
+elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
 </td>
 </tr>
@@ -397,6 +400,9 @@ elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)<br>
 elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 elementsByCss(value, cb) -&gt; cb(err, elements)<br>
+elementsByIosUIAutomation(value, cb) -&gt; cb(err, elements)<br>
+elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
+elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
 <p>
 Retrieve an element avoiding not found exception and returning null instead:<br>
@@ -412,6 +418,9 @@ elementByPartialLinkTextOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByTagNameOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByIosUIAutomationOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByAndroidUIAutomatorOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByAccessibilityIdOrNull(value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
 Retrieve an element avoiding not found exception and returning undefined instead:<br>
@@ -427,6 +436,9 @@ elementByPartialLinkTextIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByTagNameIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByIosUIAutomationIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByAndroidUIAutomatorIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByAccessibilityIdIfExists(value, cb) -&gt; cb(err, element)<br>
 </p>
 <p>
 Check if element exists:<br>
@@ -442,6 +454,9 @@ hasElementByPartialLinkText(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByTagName(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByCss(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByIosUIAutomation(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByAndroidUIAutomator(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByAccessibilityId(value, cb) -&gt; cb(err, boolean)<br>
 </p>
 </td>
 </tr>
@@ -473,6 +488,9 @@ element.elementByPartialLinkText(value, cb) -&gt; cb(err, element)<br>
 element.elementByTagName(value, cb) -&gt; cb(err, element)<br>
 element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
 element.elementByCss(value, cb) -&gt; cb(err, element)<br>
+element.elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+element.elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
+element.elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
 </td>
 </tr>
@@ -495,6 +513,9 @@ element.elementsByPartialLinkText(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByIosUIAUtomation(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
 </td>
 </tr>
@@ -954,6 +975,51 @@ logTypes(cb) -&gt; cb(err, arrayOfLogTypes)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/context">/session/:sessionId/context</a><br>
+Get the current context.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+currentContext(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/context">/session/:sessionId/context</a><br>
+Set the current context.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+context(contextRef, cb) -&gt; cb(err, context)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/contexts">/session/:sessionId/contexts</a><br>
+Get a list of the available contexts.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+contexts(cb) -&gt; cb(err, handle)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/perform">/session/:sessionId/touch/perform</a><br>
+Perform touch action.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+sendTouchCommands(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/multi/perform">/session/:sessionId/touch/multi/perform</a><br>
+Perform multitouch action.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+sendMultiActionCommands(element, actions) -&gt; cb(err, touchStateObjects)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -968,6 +1034,13 @@ extra
 <td style="border: 1px solid #ccc; padding: 5px;">
 detach(cb) -&gt; cb(err)<br>
 Detach from the current session.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 </td>
 </tr>
 <tr>
@@ -1029,12 +1102,25 @@ asserter like: function(browser , cb) -&gt; cb(err, satisfied, return_value)<br>
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForElement(using, value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElement(using, value, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElement(using, value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElement(using, value, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 timeout and pollFreq are optional (default 1000ms/200ms)<br>
-waitForElement(using, value, opts, cb) -&gt; cb(err)<br>
+waitForElement(using, value, opts, cb) -&gt; cb(err, el)<br>
 opts with the following fields: timeout, pollFreq, asserter.<br>
-asserter like: function(element , cb) -&gt; cb(err, satisfied)<br>
+asserter like: function(element , cb) -&gt; cb(err, satisfied, el)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+waitForElements(using, value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElements(using, value, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+timeout and pollFreq are optional (default 1000ms/200ms)<br>
+waitForElements(using, value, opts, cb) -&gt; cb(err, els)<br>
+opts with the following fields: timeout, pollFreq, asserter.<br>
+asserter like: function(element , cb) -&gt; cb(err, satisfied, el)<br>
 </td>
 </tr>
 <tr>
@@ -1052,17 +1138,41 @@ the screenshot name, or left blank (will create a file in the system temp dir).<
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByCssSelector(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementById(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByPartialLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
-waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err)<br>
+waitForElementByClassName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByCssSelector(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementById(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByPartialLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
 as in waitForElement.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+extra
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+waitForElementsByClassName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByCssSelector(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsById(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByPartialLinkText(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
+waitForElementsByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementsByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementsByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
+as in waitForElements.<br>
 </td>
 </tr>
 <tr>
