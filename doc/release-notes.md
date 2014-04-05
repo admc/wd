@@ -86,10 +86,14 @@ Incompatibilities:
   - auth fix
   - new context methods
 
-### 0.2.14 (latest)
+### 0.2.14 
   - no defaults for appium
   - better mobile examples
-    
+
+### 0.2.15 (latest)
+  - Extra mobile/appium method
+  - Command arguments bugfix 
+
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
   - Modify doc generator to cope with commands.js
