@@ -1304,7 +1304,7 @@ Return a single element or an elements array depending on <br>
 selector<br>
 </p>
 <p>
-findInApp(selector) -&gt; cb(element(s))<br>
+complexFind(selector) -&gt; cb(element(s))<br>
 Return a single element or an elements array depending on <br>
 selector<br>
 </p>

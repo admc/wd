@@ -766,7 +766,7 @@ describe("mjson tests", function() {
               .then(function(el) {
                 el.value.should.equal('0');
               })
-            .findInApp(selector)          
+            .complexFind(selector)          
               .then(function(el) {
                 el.value.should.equal('0');
               }).nodeify(done);
@@ -787,7 +787,7 @@ describe("mjson tests", function() {
               .then(function(els) {
                 els[0].value.should.equal('0');
               })
-            .findInApp(selector)          
+            .complexFind(selector)          
               .then(function(els) {
                 els[0].value.should.equal('0');
               }).nodeify(done);
