@@ -1,5 +1,6 @@
 GLOBAL._ = require('../../lib/lodash');
 
+/*global env:true */ 
 var env = GLOBAL.env = {};
 
 var toBoolean = function(str) {

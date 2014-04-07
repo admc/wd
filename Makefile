@@ -7,6 +7,7 @@ SHORT = $(shell node test/helpers/make-tool env SHORT)
 
 DEFAULT:
 	@echo
+	@echo '  make jshint -> jshint code.'
 	@echo '  make test -> run all local tests (start selenium with chromedriver first).'
 	@echo '  make test_sauce -> run sauce tests (start sauce connect first).'
 	@echo '  make test_mobile_sauce -> run mobile sauce tests (start sauce connect first).'
@@ -29,7 +30,11 @@ DEFAULT:
 	@echo '  test_ios test_iphone test_ipad'
 	@echo '  test_android test_android_phone test_android_tablet'
 
+jshint: 
+	jshint lib test browser-scripts
+
 test:
+	make jshint
 	BROWSER=multi make test_unit test_midway
 	BROWSER=chrome make test_midway test_e2e
 	BROWSER=firefox make test_midway test_e2e
@@ -85,6 +90,7 @@ test_mobile_sauce:
 
 test_travis:
 ifeq ($(MULTI),true)
+	make jshint
 	make test_unit
 	make test_midway_sauce_connect
 else ifeq ($(BROWSER),all_androids)
@@ -128,6 +134,7 @@ unsupported_mapping: _dox
 
 .PHONY: \
 	DEFAULT \
+	jshint \
 	test \
 	test_sauce \
 	test_unit \
