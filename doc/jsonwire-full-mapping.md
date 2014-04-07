@@ -1217,14 +1217,12 @@ performTouch(touchGestures) -&gt; cb(err, touchStateObjects)<br>
 <p>
 performTouchAction(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
 performTouchAction(touchGestures) -&gt; cb(err, touchStateObjects)<br>
-alias for performTouch.<br>
 </p>
 <p>
 element.performTouch(touchGestures) -&gt; cb(err, touchStateObjects)<br>
 </p>
 <p>
 element.performTouchAction(touchGestures) -&gt; cb(err, touchStateObjects)<br>
-alias for element.performTouch.<br>
 </p>
 </td>
 </tr>
@@ -1241,14 +1239,12 @@ performMultiTouch(actions) -&gt; cb(err, touchStateObjects)<br>
 <p>
 performMultiTouchAction(element, actions) -&gt; cb(err, touchStateObjects)<br>
 performMultiTouchAction(actions) -&gt; cb(err, touchStateObjects)<br>
-alias for performMultiTouch.<br>
 </p>
 <p>
 element.performMultiTouch(actions) -&gt; cb(err, touchStateObjects)<br>
 </p>
 <p>
 element.performMultiTouchAction(actions) -&gt; cb(err, touchStateObjects)<br>
-alias for performMultiTouch.<br>
 </p>
 </td>
 </tr>
@@ -1263,7 +1259,6 @@ shakeDevice(cb) -&gt; cb(err)<br>
 </p>
 <p>
 shake(cb) -&gt; cb(err)<br>
-alias for shakeDevice. <br>
 </p>
 </td>
 </tr>
@@ -1278,7 +1273,6 @@ lockDevice(seconds, cb) -&gt; cb(err)<br>
 </p>
 <p>
 lock(seconds, cb) -&gt; cb(err)<br>
-alias for lockDevice.<br>
 </p>
 </td>
 </tr>
@@ -1294,7 +1288,6 @@ metastate is optional<br>
 </p>
 <p>
 pressDeviceKey(keycode, metastate, cb) -&gt; cb(err)<br>
-alias for deviceKeyEvent.<br>
 metastate is optional<br>
 </p>
 </td>
@@ -1314,7 +1307,6 @@ opts is like the following:<br>
 <p>
 rotate(element, opts, cb) -&gt; cb(err)<br>
 rotate(opts, cb) -&gt; cb(err)<br>
-alias for rotateDevice.<br>
 opts is like the following:<br>
 {x: 114, y: 198, duration: 5, radius: 3, rotation: 220, touchCount: 2}<br>
 </p>
@@ -1336,7 +1328,6 @@ getCurrentDeviceActivity(cb) -&gt; cb(err)<br>
 </p>
 <p>
 getCurrentActivity(cb) -&gt; cb(err)<br>
-alias for getCurrentDeviceActivity.<br>
 </p>
 </td>
 </tr>
@@ -1351,7 +1342,6 @@ installAppOnDevice(appPath, cb) -&gt; cb(err)<br>
 </p>
 <p>
 installApp(appPath, cb) -&gt; cb(err)<br>
-alias for installAppOnDevice.<br>
 </p>
 </td>
 </tr>
@@ -1366,7 +1356,6 @@ removeAppFromDevice(appId, cb) -&gt; cb(err)<br>
 </p>
 <p>
 removeApp(appId, cb) -&gt; cb(err)<br>
-alias for removeAppFromDevice.<br>
 </p>
 </td>
 </tr>
@@ -1381,7 +1370,6 @@ isAppInstalledOnDevice(bundleId, cb) -&gt; cb(isInstalled, err)<br>
 </p>
 <p>
 isAppInstalled(bundleId, cb) -&gt; cb(isInstalled, err)<br>
-alias for isAppInstalledOnDevice.<br>
 </p>
 </td>
 </tr>
@@ -1396,7 +1384,6 @@ pushFileToDevice(pathOnDevice, base64Data, cb) -&gt; cb(isInstalled, err)<br>
 </p>
 <p>
 pushFile(pathOnDevice, base64Data, cb) -&gt; cb(isInstalled, err)<br>
-alias for pushFileToDevice.<br>
 </p>
 </td>
 </tr>
@@ -1411,7 +1398,6 @@ pullFileFromDevice(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
 </p>
 <p>
 pullFile(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
-alias for pullFileFromDevice.<br>
 </p>
 </td>
 </tr>
@@ -1426,11 +1412,9 @@ toggleAirplaneModeOnDevice(cb) -&gt; cb(err)<br>
 </p>
 <p>
 toggleAirplaneMode(cb) -&gt; cb(err)<br>
-alias for toggleAirplaneModeOnDevice.<br>
 </p>
 <p>
 toggleFlightMode(cb) -&gt; cb(err)<br>
-alias for toggleAirplaneModeOnDevice.<br>
 </p>
 </td>
 </tr>
@@ -1445,7 +1429,6 @@ toggleWiFiOnDevice(cb) -&gt; cb(err)<br>
 </p>
 <p>
 toggleWiFi(cb) -&gt; cb(err)<br>
-alias for toggleWiFiOnDevice.<br>
 </p>
 </td>
 </tr>
@@ -1460,7 +1443,6 @@ toggleLocationServicesOnDevice(cb) -&gt; cb(err)<br>
 </p>
 <p>
 toggleLocationServices(cb) -&gt; cb(err)<br>
-alias for toggleLocationServicesOnDevice.<br>
 </p>
 </td>
 </tr>
@@ -1511,11 +1493,9 @@ endTestCoverageForApp(intentToBroadcast, pathOnDevice) -&gt; cb(base64Data,err)<
 </p>
 <p>
 endTestCoverage(intentToBroadcast, pathOnDevice) -&gt; cb(base64Data,err)<br>
-alias for endTestCoverageForApp.<br>
 </p>
 <p>
 endCoverage(intentToBroadcast, pathOnDevice) -&gt; cb(base64Data,err)<br>
-alias for endTestCoverageForApp.<br>
 </p>
 </td>
 </tr>
@@ -1532,7 +1512,6 @@ selector<br>
 </p>
 <p>
 findInApp(selector) -&gt; cb(element(s))<br>
-alias for complexFindInApp.<br>
 Return a single element or an elements array depending on <br>
 selector<br>
 </p>
@@ -1558,14 +1537,12 @@ setValueInApp(element, value, cb) -&gt; cb(err)<br>
 </p>
 <p>
 setValue(element, value, cb) -&gt; cb(err)<br>
-alias for setValueInApp<br>
 </p>
 <p>
 element.setValueInApp(value, cb) -&gt; cb(err)<br>
 </p>
 <p>
 element.setValue(value, cb) -&gt; cb(err)<br>
-alias for element.setValueInApp, mjsonWire only<br>
 </p>
 </td>
 </tr>
