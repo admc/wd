@@ -807,7 +807,7 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
-      it("setValueInApp", function(done) {      
+      it("setImmediateValueInApp", function(done) {      
         nock.cleanAll();
         server
           .post('/session/1234/element', {"using":"id","value":"random"})
@@ -826,12 +826,12 @@ describe("mjson tests", function() {
           .elementById("random")
           .then(function(el) {
             return browser
-              .setValueInApp(el, "12345")
-              .setValue(el, "12345")
+              .setImmediateValueInApp(el, "12345")
+              .setImmediateValue(el, "12345")
               .then(function() {
                 return el
-                  .setValueInApp("12345")
-                  .setValue("12345");
+                  .setImmediateValueInApp("12345")
+                  .setImmediateValue("12345");
               });
           })
           .nodeify(done);

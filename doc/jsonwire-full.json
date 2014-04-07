@@ -119,5 +119,5 @@
   "POST /session/:sessionId/appium/app/end_test_coverage": "End test coverage (mjsonWire).",
   "POST /session/:sessionId/appium/app/complex_find": "Find within app (mjsonWire).",
   "POST /session/:sessionId/appium/app/strings": "Retrieve app strings (mjsonWire).",
-  "POST /appium/element/:elementId?/value": "Set app element value (mjsonWire)."
+  "POST /appium/element/:elementId?/value": "Set element immediate value (mjsonWire)."
 }

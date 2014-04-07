@@ -1322,20 +1322,20 @@ getAppStrings(cb) -&gt; cb(err)<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/appium/element/:elementId?/value">/appium/element/:elementId?/value</a><br>
-Set app element value (mjsonWire).
+Set element immediate value (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-setValueInApp(element, value, cb) -&gt; cb(err)<br>
+setImmediateValueInApp(element, value, cb) -&gt; cb(err)<br>
 </p>
 <p>
-setValue(element, value, cb) -&gt; cb(err)<br>
+setImmediateValue(element, value, cb) -&gt; cb(err)<br>
 </p>
 <p>
-element.setValueInApp(value, cb) -&gt; cb(err)<br>
+element.setImmediateValueInApp(value, cb) -&gt; cb(err)<br>
 </p>
 <p>
-element.setValue(value, cb) -&gt; cb(err)<br>
+element.setImmediateValue(value, cb) -&gt; cb(err)<br>
 </p>
 </td>
 </tr>
