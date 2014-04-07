@@ -758,9 +758,6 @@ getComputedCss(element, cssProperty , cb) -&gt; cb(err, value)<br>
 <p>
 element.getComputedCss(cssProperty , cb) -&gt; cb(err, value)<br>
 </p>
-<p>
-element.getComputedCss(cssProperty , cb) -&gt; cb(err, value)<br>
-</p>
 </td>
 </tr>
 <tr>
@@ -976,7 +973,7 @@ logTypes(cb) -&gt; cb(err, arrayOfLogTypes)<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/context">/session/:sessionId/context</a><br>
-Get the current context.
+Get the current context (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 currentContext(cb) -&gt; cb(err)<br>
@@ -985,7 +982,7 @@ currentContext(cb) -&gt; cb(err)<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/context">/session/:sessionId/context</a><br>
-Set the current context.
+Set the current context (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 context(contextRef, cb) -&gt; cb(err, context)<br>
@@ -994,7 +991,7 @@ context(contextRef, cb) -&gt; cb(err, context)<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/contexts">/session/:sessionId/contexts</a><br>
-Get a list of the available contexts.
+Get a list of the available contexts (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 contexts(cb) -&gt; cb(err, handle)<br>
@@ -1003,19 +1000,366 @@ contexts(cb) -&gt; cb(err, handle)<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/perform">/session/:sessionId/touch/perform</a><br>
-Perform touch action.
+Perform touch action (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-sendTouchCommands(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
+<p>
+performTouch(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
+performTouch(touchGestures) -&gt; cb(err, touchStateObjects)<br>
+</p>
+<p>
+performTouchAction(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
+performTouchAction(touchGestures) -&gt; cb(err, touchStateObjects)<br>
+alias for performTouch.<br>
+</p>
+<p>
+element.performTouch(touchGestures) -&gt; cb(err, touchStateObjects)<br>
+</p>
+<p>
+element.performTouchAction(touchGestures) -&gt; cb(err, touchStateObjects)<br>
+alias for element.performTouch.<br>
+</p>
 </td>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/multi/perform">/session/:sessionId/touch/multi/perform</a><br>
-Perform multitouch action.
+Perform multitouch action (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-sendMultiActionCommands(element, actions) -&gt; cb(err, touchStateObjects)<br>
+<p>
+performMultiTouch(element, actions) -&gt; cb(err, touchStateObjects)<br>
+performMultiTouch(actions) -&gt; cb(err, touchStateObjects)<br>
+</p>
+<p>
+performMultiTouchAction(element, actions) -&gt; cb(err, touchStateObjects)<br>
+performMultiTouchAction(actions) -&gt; cb(err, touchStateObjects)<br>
+alias for performMultiTouch.<br>
+</p>
+<p>
+element.performMultiTouch(actions) -&gt; cb(err, touchStateObjects)<br>
+</p>
+<p>
+element.performMultiTouchAction(actions) -&gt; cb(err, touchStateObjects)<br>
+alias for performMultiTouch.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/shake">/session/:sessionId/appium/device/shake</a><br>
+Shake device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+shakeDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+shake(cb) -&gt; cb(err)<br>
+alias for shakeDevice. <br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/lock">/session/:sessionId/appium/device/lock</a><br>
+Lock device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+lockDevice(seconds, cb) -&gt; cb(err)<br>
+</p>
+<p>
+lock(seconds, cb) -&gt; cb(err)<br>
+alias for lockDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/keyevent">/session/:sessionId/appium/device/keyevent</a><br>
+Send key event to device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+deviceKeyEvent(keycode, metastate, cb) -&gt; cb(err)<br>
+metastate is optional<br>
+</p>
+<p>
+pressDeviceKey(keycode, metastate, cb) -&gt; cb(err)<br>
+alias for deviceKeyEvent.<br>
+metastate is optional<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/rotate">/session/:sessionId/appium/device/rotate</a><br>
+Rotate device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+rotateDevice(element, opts, cb) -&gt; cb(err)<br>
+rotateDevice(opts, cb) -&gt; cb(err)<br>
+opts is like the following:<br>
+{x: 114, y: 198, duration: 5, radius: 3, rotation: 220, touchCount: 2}<br>
+</p>
+<p>
+rotate(element, opts, cb) -&gt; cb(err)<br>
+rotate(opts, cb) -&gt; cb(err)<br>
+alias for rotateDevice.<br>
+opts is like the following:<br>
+{x: 114, y: 198, duration: 5, radius: 3, rotation: 220, touchCount: 2}<br>
+</p>
+<p>
+element.rotate(opts, cb) -&gt; cb(err)<br>
+opts is like the following:<br>
+{x: 114, y: 198, duration: 5, radius: 3, rotation: 220, touchCount: 2}<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/appium/device/current_activity">/session/:sessionId/appium/device/current_activity</a><br>
+Get current activity (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+getCurrentDeviceActivity(cb) -&gt; cb(err)<br>
+</p>
+<p>
+getCurrentActivity(cb) -&gt; cb(err)<br>
+alias for getCurrentDeviceActivity.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/install_app">/session/:sessionId/appium/device/install_app</a><br>
+Install app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+installAppOnDevice(appPath, cb) -&gt; cb(err)<br>
+</p>
+<p>
+installApp(appPath, cb) -&gt; cb(err)<br>
+alias for installAppOnDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/remove_app">/session/:sessionId/appium/device/remove_app</a><br>
+Remove app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+removeAppFromDevice(appId, cb) -&gt; cb(err)<br>
+</p>
+<p>
+removeApp(appId, cb) -&gt; cb(err)<br>
+alias for removeAppFromDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/app_installed">/session/:sessionId/appium/device/app_installed</a><br>
+Check if the app is installed (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+isAppInstalledOnDevice(bundleId, cb) -&gt; cb(isInstalled, err)<br>
+</p>
+<p>
+isAppInstalled(bundleId, cb) -&gt; cb(isInstalled, err)<br>
+alias for isAppInstalledOnDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/push_file">/session/:sessionId/appium/device/push_file</a><br>
+Push file to device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+pushFileToDevice(pathOnDevice, base64Data, cb) -&gt; cb(isInstalled, err)<br>
+</p>
+<p>
+pushFile(pathOnDevice, base64Data, cb) -&gt; cb(isInstalled, err)<br>
+alias for pushFileToDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/pull_file">/session/:sessionId/appium/device/pull_file</a><br>
+Pull file from device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+pullFileFromDevice(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
+</p>
+<p>
+pullFile(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
+alias for pullFileFromDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/toggle_airplane_mode">/session/:sessionId/appium/device/toggle_airplane_mode</a><br>
+Toggle airplane mode (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+toggleAirplaneModeOnDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+toggleAirplaneMode(cb) -&gt; cb(err)<br>
+alias for toggleAirplaneModeOnDevice.<br>
+</p>
+<p>
+toggleFlightMode(cb) -&gt; cb(err)<br>
+alias for toggleAirplaneModeOnDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/toggle_wifi">/session/:sessionId/appium/device/toggle_wifi</a><br>
+Toggle wifi (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+toggleWiFiOnDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+toggleWiFi(cb) -&gt; cb(err)<br>
+alias for toggleWiFiOnDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/toggle_location_services">/session/:sessionId/appium/device/toggle_location_services</a><br>
+Toggle location services (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+toggleLocationServicesOnDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+toggleLocationServices(cb) -&gt; cb(err)<br>
+alias for toggleLocationServicesOnDevice.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/launch">/session/:sessionId/appium/app/launch</a><br>
+Launch app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+launchApp(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/close">/session/:sessionId/appium/app/close</a><br>
+Close app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+closeApp(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/reset">/session/:sessionId/appium/app/reset</a><br>
+Reset app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+resetApp(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/background">/session/:sessionId/appium/app/background</a><br>
+Background app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+backgroundApp(seconds, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/end_test_coverage">/session/:sessionId/appium/app/end_test_coverage</a><br>
+End test coverage (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+endTestCoverageForApp(intentToBroadcast, pathOnDevice) -&gt; cb(base64Data,err)<br>
+</p>
+<p>
+endTestCoverage(intentToBroadcast, pathOnDevice) -&gt; cb(base64Data,err)<br>
+alias for endTestCoverageForApp.<br>
+</p>
+<p>
+endCoverage(intentToBroadcast, pathOnDevice) -&gt; cb(base64Data,err)<br>
+alias for endTestCoverageForApp.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/complex_find">/session/:sessionId/appium/app/complex_find</a><br>
+Find within app (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+complexFindInApp(selector) -&gt; cb(element(s))<br>
+Return a single element or an elements array depending on <br>
+selector<br>
+</p>
+<p>
+findInApp(selector) -&gt; cb(element(s))<br>
+alias for complexFindInApp.<br>
+Return a single element or an elements array depending on <br>
+selector<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/strings">/session/:sessionId/appium/app/strings</a><br>
+Retrieve app strings (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getAppStrings(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/appium/element/:elementId?/value">/appium/element/:elementId?/value</a><br>
+Set app element value (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+setValueInApp(element, value, cb) -&gt; cb(err)<br>
+</p>
+<p>
+setValue(element, value, cb) -&gt; cb(err)<br>
+alias for setValueInApp<br>
+</p>
+<p>
+element.setValueInApp(value, cb) -&gt; cb(err)<br>
+</p>
+<p>
+element.setValue(value, cb) -&gt; cb(err)<br>
+alias for element.setValueInApp, mjsonWire only<br>
+</p>
 </td>
 </tr>
 <tr>
