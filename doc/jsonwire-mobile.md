@@ -2,6 +2,7 @@
 
 Wd.js is incrementally implementing the Mobile JsonWire Protocol Spec
  - read the [draft](https://code.google.com/p/selenium/source/browse/spec-draft.md?repo=mobile)
+ - Look for `mjsonWire` in the [api doc](https://github.com/admc/wd/blob/master/doc/api.md).
 
 #### -ios uiautomation Locator Strategy ####
 
