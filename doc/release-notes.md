@@ -90,9 +90,17 @@ Incompatibilities:
   - no defaults for appium
   - better mobile examples
 
-### 0.2.15 (latest)
-  - Extra mobile/appium method
-  - Command arguments bugfix 
+### 0.2.15
+  - extra mobile/appium method
+  - command arguments bugfix 
+
+### 0.2.16
+  - more mjson/appium methods
+  - command argument bugfix
+
+### 0.2.17 (latest)
+  - bugfix: TouchAction.moveTo
+  - stricter jshint
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
