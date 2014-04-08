@@ -69,7 +69,8 @@
     "mocha-as-promised": "~2.0.0",
     "hbs": "~2.4.0",
     "istanbul": "~0.2.4",
-    "promise-simple": "~0.1.0"
+    "promise-simple": "~0.1.0",
+    "jshint": "^2.5.0"
   },
   "scripts": {
     "test": "make test",

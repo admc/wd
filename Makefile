@@ -31,7 +31,7 @@ DEFAULT:
 	@echo '  test_android test_android_phone test_android_tablet'
 
 jshint: 
-	jshint lib test browser-scripts
+	./node_modules/.bin/jshint lib test browser-scripts
 
 test:
 	make jshint
