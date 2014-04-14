@@ -697,6 +697,21 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("toggleDataOnDevice", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/appium/device/toggle_data', {})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .toggleDataOnDevice()
+          .toggleData()
+          .nodeify(done);
+      });
+
       it("launchApp", function(done) {
         nock.cleanAll();
         server
