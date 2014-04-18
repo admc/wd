@@ -126,7 +126,7 @@ wd.remote(function*() {
 ```js
 ...
 
-describe("using mocha-as-promised and chai-as-promised", function() {
+describe("using promises and chai-as-promised", function() {
   var browser;
 
   before(function() {
