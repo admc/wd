@@ -78,7 +78,6 @@ GLOBAL.prepareJs = function(script) {
 
 GLOBAL.Q = GLOBAL.wd.Q;
 
-require("mocha-as-promised")();
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);

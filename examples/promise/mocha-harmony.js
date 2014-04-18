@@ -4,8 +4,6 @@
 /* global describe, it, before , beforeEach, after*/
 /* jshint moz: true, evil: true */
 
-require("mocha-as-promised")();
-
 require('colors');
 var chai = require("chai");
 chai.should();
