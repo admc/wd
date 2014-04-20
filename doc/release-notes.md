@@ -98,9 +98,15 @@ Incompatibilities:
   - more mjson/appium methods
   - command argument bugfix
 
-### 0.2.17 (latest)
+### 0.2.17
   - bugfix: TouchAction.moveTo
   - stricter jshint
+
+### 0.2.18
+  - bugfixes: getAppString + element unique arguments
+  - extra Appium method
+### 0.2.19
+  - packages upgrade
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
