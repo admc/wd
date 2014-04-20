@@ -36,18 +36,6 @@ npm install wd
 
   * License - Apache 2: http://www.apache.org/licenses/LICENSE-2.0
 
-## Release notes
-
-Latest version is `0.2.17`.
-
-Many changes have been introduced in 0.2.x versions, please check
-[here](https://github.com/admc/wd/blob/master/doc/release-notes.md) for more details.
-
-### caveats when upgrading to 0.2.3
-  - Most wait methods have been deprecated replaced by waitFor/waitForElement + asserters. See doc below, don't hesitate to add more asserters if you feel it is useful for others.
-  - Manual monkey patching is not recommended anymore, there were some side use cases which were not easy to cover.
-  Use addAsyncMethod/addPromiseMethod/addPromiseChainMethod methods instead. See doc below.
-
 ## Usage
 
 ### Q promises + chaining
