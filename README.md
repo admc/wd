@@ -1,4 +1,4 @@
-# WD.js
+# WD.js [![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd)
 
 **node.js Webdriver/Selenium 2 client**
 
@@ -605,4 +605,3 @@ npm publish
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/admc/wd/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
