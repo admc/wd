@@ -107,6 +107,8 @@ Incompatibilities:
   - extra Appium method
 ### 0.2.19
   - packages upgrade
+### 0.2.20
+  - configurable sauce rest root
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
