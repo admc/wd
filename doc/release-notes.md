@@ -109,6 +109,8 @@ Incompatibilities:
   - packages upgrade
 ### 0.2.20
   - configurable sauce rest root
+### 0.2.21
+  - better sauce job update logic 
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
