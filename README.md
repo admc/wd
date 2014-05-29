@@ -1,4 +1,6 @@
-# WD.js [![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd) [![Downloads](http://img.shields.io/npm/dm/wd.svg)](https://npmjs.org/package/wd)
+# WD.js 
+[![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd) [![Downloads](http://img.shields.io/npm/dm/wd.svg)](https://npmjs.org/package/wd)
+[![Dependency Status](https://gemnasium.com/admc/wd.png)](https://gemnasium.com/admc/wd)
 
 **node.js Webdriver/Selenium 2 client**
 
