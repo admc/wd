@@ -4,9 +4,9 @@
 [![Downloads](http://img.shields.io/npm/dm/wd.svg)](https://npmjs.org/package/wd)
 [![Dependency Status](https://david-dm.org/admc/wd.svg)](https://david-dm.org/admc/wd)
 [![devDependency Status](https://david-dm.org/admc/wd/dev-status.svg)](https://david-dm.org/admc/wd#info=devDependencies)
-
 [![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
 [![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com/u/wdjs)
+
 [![Selenium Test Status](https://saucelabs.com/browser-matrix/wdjs.svg)](https://saucelabs.com/u/wdjs)
 
 **node.js Webdriver/Selenium 2 client**
