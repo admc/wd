@@ -79,7 +79,6 @@ GLOBAL.prepareJs = function(script) {
 GLOBAL.Q = GLOBAL.wd.Q;
 
 var chai = require("chai");
-var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 GLOBAL.AssertionError = chai.AssertionError;
