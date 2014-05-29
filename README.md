@@ -326,8 +326,7 @@ using the principles below:
 - If the method returns something (text, getAttribute...), the element scope is lost.
 - You may use "<" as the first parameter to get out of the element scope.
 - You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
-- By default element(s) methods are always executed in the global context, because this is the most common use case. If you want to change the default use `browser.defaultChainingScope = 'element';`.
-Use ">" to retrieve subelements. 
+- By default element(s) methods are always executed in the global context, because this is the most common use case, but you may use ">" to retrieve subelements. If you want to change the default use `browser.defaultChainingScope = 'element';`.
 
 If you need to do something more complicated, like reusing an element for 2 calls, then
 can either Q promise functionality (like then, Q.all or Q sequences), or retrieve your
