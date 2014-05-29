@@ -25,14 +25,17 @@ env:
 matrix:
   include:
     - node_js: "0.11"
-      env: BROWSER=chrome CAN_FAIL=true
+      env: BROWSER=chrome
     - node_js: "0.8"
-      env: BROWSER=chrome CAN_FAIL=true
+      env: BROWSER=chrome
     # moving android in one job at the end cause it is superslow
     - node_js: "0.10"
       env: BROWSER=all_androids
   allow_failures:
-    - env: CAN_FAIL=true
+    - node_js: "0.11"
+      env: BROWSER=chrome
+    - node_js: "0.8"
+      env: BROWSER=chrome
 before_script:
   - ./node_modules/.bin/install_sauce_connect
   - ./node_modules/.bin/travis_start_sauce_connect
