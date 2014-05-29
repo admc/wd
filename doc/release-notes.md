@@ -2,17 +2,98 @@
 
 ## 0.2.x Release
 
-### 0.2.0
+### 0.2.22
+  - packages upgrade
+  - http proxy options
+  - configurable default chaining scope
 
-- New wrapper: promise chain.
-- Old chain api is deprecated (It is still available, but you will see a depreciation message).
-- There are some changes in the way the element and webdriver classes are passed around
-which may affect external wrappers. External wrappers should now subclass those 2 classes.
+### 0.2.21
+  - better sauce job update logic 
 
-### 0.2.1
+### 0.2.20
+  - configurable sauce rest root
 
-- New test suite using the promise chain api.
-- `browser.Q` was moved to `wd.Q`.
+### 0.2.19
+  - packages upgrade
+
+### 0.2.18
+  - bugfixes: getAppString + element unique arguments
+  - extra Appium method
+
+### 0.2.17
+  - bugfix: TouchAction.moveTo
+  - stricter jshint
+
+### 0.2.16
+  - more mjson/appium methods
+  - command argument bugfix
+
+### 0.2.15
+  - extra mobile/appium method
+  - command arguments bugfix 
+
+### 0.2.14 
+  - no defaults for appium
+  - better mobile examples
+
+### 0.2.13
+  - waitForElement fix
+  - added waitForElements method
+  - auth fix
+  - new context methods
+
+### 0.2.12
+  - minor bugfix
+
+### 0.2.11
+  - better logging
+  - better error handling
+
+### 0.2.10
+  - packages upgrade to latest.
+
+### 0.2.9
+  - http emit fix.
+  - added print method
+  - added at, nth, first, second, third, last to promise api
+
+### 0.2.8
+  - added nodeify to transferPromiseness.
+
+
+### 0.2.7
+  - `attach`/`detach` session.
+  - add `asyncRemote` and make `remote` generic.
+
+### 0.2.6
+
+  - bugfix: Removed the tmp dependencies.
+  - isDisplayed/isNotDisplayed asserters
+  - isVisible depreciation
+  - bugfix: Removed the tmp dependencies.
+  - bugfix: Value not defaulted when inititializing with `url.parse`.
+  - bugfix: url relative now use `url.resolve`.
+
+### 0.2.5
+
+  - Webdriver and Element refactoring
+  - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
+
+### 0.2.4
+
+  - bugfix: android safeExecute.
+  - bugfix: passing argument to execute.
+  - bugfix: setOrientation.
+  - migrating from string.js to underscore.string.
+
+### 0.2.3
+
+  - Http configuration enhancements + base url, see doc [here](https://github.com/admc/wd#http-configuration--base-url).
+  - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
+  - `addPromiseChainMethod`/`addPromiseMethod`/`addAsyncMethod`/`removeMethod` replacing monkey patching
+  (Please refer to the add method section in README).
+  - Support for external promise libraries.
+  - New saveScreenshot method.
 
 ### 0.2.2
 
@@ -28,97 +109,18 @@ Incompatibilities:
   - The chai-as-promised setup has changed in v4, look out for the `transferPromiseness` (Requires chai-as-promised 4.1.0 or greater)
   line in the examples. (see [here](https://github.com/admc/wd/blob/master/examples/promise/chrome.js#L15)).
 
-### 0.2.3
+### 0.2.1
 
-  - Http configuration enhancements + base url, see doc [here](https://github.com/admc/wd#http-configuration--base-url).
-  - `waitFor`, `waitForElement` and asserters replacing existing wait methods.
-  - `addPromiseChainMethod`/`addPromiseMethod`/`addAsyncMethod`/`removeMethod` replacing monkey patching
-  (Please refer to the add method section in README).
-  - Support for external promise libraries.
-  - New saveScreenshot method.
+- New test suite using the promise chain api.
+- `browser.Q` was moved to `wd.Q`.
 
-### 0.2.4
+### 0.2.0
 
-  - bugfix: android safeExecute.
-  - bugfix: passing argument to execute.
-  - bugfix: setOrientation.
-  - migrating from string.js to underscore.string.
+- New wrapper: promise chain.
+- Old chain api is deprecated (It is still available, but you will see a depreciation message).
+- There are some changes in the way the element and webdriver classes are passed around
+which may affect external wrappers. External wrappers should now subclass those 2 classes.
 
-### 0.2.5
-
-  - Webdriver and Element refactoring
-  - Easier wd customization via `wd.setBaseClasses(Webdriver, Element)`
-
-### 0.2.6
-
-  - bugfix: Removed the tmp dependencies.
-  - isDisplayed/isNotDisplayed asserters
-  - isVisible depreciation
-  - bugfix: Removed the tmp dependencies.
-  - bugfix: Value not defaulted when inititializing with `url.parse`.
-  - bugfix: url relative now use `url.resolve`.
-
-### 0.2.7
-  - `attach`/`detach` session.
-  - add `asyncRemote` and make `remote` generic.
-
-### 0.2.8
-  - added nodeify to transferPromiseness.
-
-### 0.2.9
-  - http emit fix.
-  - added print method
-  - added at, nth, first, second, third, last to promise api
-
-### 0.2.10
-  - packages upgrade to latest.
-
-### 0.2.11
-  - better logging
-  - better error handling
-
-### 0.2.12
-  - minor bugfix
-
-### 0.2.13
-  - waitForElement fix
-  - added waitForElements method
-  - auth fix
-  - new context methods
-
-### 0.2.14 
-  - no defaults for appium
-  - better mobile examples
-
-### 0.2.15
-  - extra mobile/appium method
-  - command arguments bugfix 
-
-### 0.2.16
-  - more mjson/appium methods
-  - command argument bugfix
-
-### 0.2.17
-  - bugfix: TouchAction.moveTo
-  - stricter jshint
-
-### 0.2.18
-  - bugfixes: getAppString + element unique arguments
-  - extra Appium method
-
-### 0.2.19
-  - packages upgrade
-
-### 0.2.20
-  - configurable sauce rest root
-
-### 0.2.21
-  - better sauce job update logic 
-
-### 0.2.21
-  - packages upgrade
-  - http proxy options
-  - configurable default chaining scope
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
