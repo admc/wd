@@ -105,12 +105,20 @@ Incompatibilities:
 ### 0.2.18
   - bugfixes: getAppString + element unique arguments
   - extra Appium method
+
 ### 0.2.19
   - packages upgrade
+
 ### 0.2.20
   - configurable sauce rest root
+
 ### 0.2.21
   - better sauce job update logic 
+
+### 0.2.21
+  - packages upgrade
+  - http proxy options
+  - configurable default chaining scope
 
 ### TODO
   - write tests for sauceJobUpdate/sauceJobStatus
