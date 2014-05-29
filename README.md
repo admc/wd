@@ -1,6 +1,5 @@
 # WD.js 
 [![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd) [![Downloads](http://img.shields.io/npm/dm/wd.svg)](https://npmjs.org/package/wd)
-[![Dependency Status](https://gemnasium.com/admc/wd.png)](https://gemnasium.com/admc/wd)
 [![Build Status](https://secure.travis-ci.org/admc/wd.png?branch=master)](http://travis-ci.org/admc/wd)
 [![Selenium Test Status](https://saucelabs.com/buildstatus/wdjs)](https://saucelabs.com/u/wdjs)
 
