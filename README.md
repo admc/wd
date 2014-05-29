@@ -326,7 +326,7 @@ using the principles below:
 - If the method returns something (text, getAttribute...), the element scope is lost.
 - You may use "<" as the first parameter to get out of the element scope.
 - You may use ">" as the first parameter to force the call to be done within the current context (mainly used to retrieve subelements).
-- By default element(s) methods are always executed in the global context, because this is the most common use case.
+- By default element(s) methods are always executed in the global context, because this is the most common use case. If you want to change the default use `browser.defaultChainingScope = 'element';`.
 Use ">" to retrieve subelements. 
 
 If you need to do something more complicated, like reusing an element for 2 calls, then
@@ -480,6 +480,7 @@ browser.configureHttp({
 - retryDelay: the number of ms to wait before reconnecting. Default is `15`.
 - baseUrl: the base url use by the `get` method. The destination url is computed using
 `url.resolve`. Default is empty.
+- proxy: proxy configuration, as used in [request](https://github.com/mikeal/request). Default is empty.
 - If a field is not specified, the current configuration for this field is
   unchanged.
 
