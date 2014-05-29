@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "chai": "~1.9.1",
+    "chai-as-promised": "~4.1.1",
     "colors": "~0.6.2",
     "dox": "~0.4.4",
     "express": "~4.3.1",

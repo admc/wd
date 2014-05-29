@@ -2,7 +2,6 @@ var nock = require('nock'),
     async = require('async');
 require('../helpers/setup');
 
-
 describe("mjson tests", function() {
 
   var server;
