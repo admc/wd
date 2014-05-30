@@ -2,6 +2,9 @@
 
 ## 0.2.x Release
 
+### 0.2.23
+  - add custom methods to element prototypes.
+
 ### 0.2.22
   - packages upgrade
   - http proxy options
