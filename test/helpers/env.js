@@ -63,7 +63,7 @@ if( env.TRAVIS_JOB_ID ){
 }
 
 if(env.SAUCE){
-  env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 3000).toNumber().value();
+  env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 4000).toNumber().value();
   env.TIMEOUT = _(process.env.TIMEOUT || 600000).toNumber().value();
 
   env.SAUCE_JOB_ID =
