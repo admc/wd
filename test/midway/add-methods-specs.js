@@ -29,6 +29,22 @@ describe('add-methods ' + env.ENV_DESC, function() {
     }
   };
 
+  var extraElementAsyncMethods = {
+    textTwice: function(cb) {
+      var _this = this;
+      var result = '';
+      _this.text(function(err, text) {
+        if(err) { return cb(err); }
+        result += text;
+        _this.text(function(err, text) {
+          if(err) { return cb(err); }
+          result += text;
+          cb(null, result);
+        });
+      });
+    },
+  };
+
   var extraPromiseChainMethods = {
     sleepAndElementById: function(id) {
       return this
@@ -39,6 +55,21 @@ describe('add-methods ' + env.ENV_DESC, function() {
       return this
         .sleep(200)
         .text(el);
+    }
+  };
+
+  var extraElementPromiseChainMethods = {
+    textTwice: function() {
+      var _this = this;
+      var result = '';
+      return _this
+        .text().then(function(text) {
+          result += text;
+          return _this;
+        }).text().then(function(text) {
+          result += text;
+          return result;
+        });
     }
   };
 
@@ -58,6 +89,22 @@ describe('add-methods ' + env.ENV_DESC, function() {
         .sleep(200)
         .then(function() {
           return _this.text(el);
+        });
+    }
+  };
+
+  var extraElementPromiseNoChainMethods = {
+    textTwice: function() {
+      var _this = this;
+      var result = '';
+      return _this.text()
+        .then(function(text) {
+          result += text;
+        }).then(function() {
+          return _this.text();
+        }).then(function(text) {
+          result += text;
+          return result;          
         });
     }
   };
@@ -149,6 +196,32 @@ describe('add-methods ' + env.ENV_DESC, function() {
       });
     });
 
+    partials['wd.addElementPromisedMethod (chain)'] =
+      '<div id="theDiv">\n' +
+      '  <div id="div1">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '  </div>\n' +
+      '  <div id="div2">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '    <span>three</span>\n' +
+      '  </div>\n' +
+      '</div>\n';
+    it('wd.addElementPromisedMethod (chain)', function() {
+      _(extraElementPromiseChainMethods).each(function(method, name) {
+        wd.addElementPromiseChainMethod(name, method);
+      });
+
+      browser = newPromiseChainRemote();
+      return initAndGet(this, 'pc/1').then(function() {
+        return browser
+          .elementById('div1')
+          .textTwice()
+          .should.become('one twoone two');
+      });
+    });
+
     partials['wd.addPromisedMethod (no-chain)'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addPromisedMethod (no-chain)', function() {
@@ -165,6 +238,32 @@ describe('add-methods ' + env.ENV_DESC, function() {
           .should.be.fulfilled
           .sleepAndElementById('theDiv')
           .sleepAndText().should.eventually.include("Hello World!");
+      });
+    });
+
+    partials['wd.addElementPromisedMethod (no-chain)'] =
+      '<div id="theDiv">\n' +
+      '  <div id="div1">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '  </div>\n' +
+      '  <div id="div2">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '    <span>three</span>\n' +
+      '  </div>\n' +
+      '</div>\n';
+    it('wd.addElementPromisedMethod (no-chain)', function() {
+      _(extraElementPromiseNoChainMethods).each(function(method, name) {
+        wd.addElementPromiseMethod(name, method);
+      });
+
+      browser = newPromiseChainRemote();
+      return initAndGet(this, 'pc/2').then(function() {
+        return browser
+          .elementById('div1')
+          .textTwice()
+          .should.become('one twoone two');
       });
     });
 
@@ -185,6 +284,31 @@ describe('add-methods ' + env.ENV_DESC, function() {
           // .sleepAndText().should.eventually.include("Hello World!")
           .elementByCssWhenReady('#theDiv', 500).text()
             .should.become("Hello World!");
+      });
+    });
+
+    partials['wd.addElementAsyncMethod'] =
+      '<div id="theDiv">\n' +
+      '  <div id="div1">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '  </div>\n' +
+      '  <div id="div2">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '    <span>three</span>\n' +
+      '  </div>\n' +
+      '</div>\n';
+    it('wd.addElementAsyncMethod', function() {
+      _(extraElementAsyncMethods).each(function(method, name) {
+        wd.addElementAsyncMethod(name, method);
+      });
+      browser = newPromiseChainRemote();
+      return initAndGet(this, 'pc/3').then(function() {
+        return browser
+          .elementById('div1')
+          .textTwice()
+          .should.become('one twoone two');
       });
     });
 
@@ -245,6 +369,33 @@ describe('add-methods ' + env.ENV_DESC, function() {
       });
     });
 
+    partials['wd.addElementPromisedMethod'] =
+      '<div id="theDiv">\n' +
+      '  <div id="div1">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '  </div>\n' +
+      '  <div id="div2">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '    <span>three</span>\n' +
+      '  </div>\n' +
+      '</div>\n';
+    it('wd.addElementPromisedMethod', function() {
+      _(extraElementPromiseNoChainMethods).each(function(method, name) {
+        wd.addElementPromiseMethod(name, method);
+      });
+      browser = newPromiseRemote();
+      return initAndGet(this, 'pnc/1').then(function() {
+        return browser
+          .elementById('div1')
+          .then(function(el) { return el.textTwice(); })
+          .then(function(result ) {
+            result.should.equal('one twoone two');
+          });
+      });
+    });
+
     partials['wd.addAsyncMethod'] =
       '<div id="theDiv">Hello World!</div>';
     it('wd.addAsyncMethod', function() {
@@ -261,6 +412,33 @@ describe('add-methods ' + env.ENV_DESC, function() {
             return browser.sleepAndElementById('theDiv');
           }).then(function(el){
             return browser.sleepAndText(el).should.become("Hello World!");
+          });
+      });
+    });
+
+    partials['wd.addElementAsyncMethod'] =
+      '<div id="theDiv">\n' +
+      '  <div id="div1">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '  </div>\n' +
+      '  <div id="div2">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '    <span>three</span>\n' +
+      '  </div>\n' +
+      '</div>\n';
+    it('wd.addElementAsyncMethod', function() {
+      _(extraElementAsyncMethods).each(function(method, name) {
+        wd.addElementAsyncMethod(name, method);
+      });
+      browser = newPromiseRemote();
+      return initAndGet(this, 'pnc/2').then(function() {
+        return browser
+          .elementById('div1')
+          .then(function(el) { return el.textTwice(); })
+          .then(function(result ) {
+            result.should.equal('one twoone two');
           });
       });
     });
@@ -322,6 +500,36 @@ describe('add-methods ' + env.ENV_DESC, function() {
           browser.sleepAndText(el, function(err,text) {
             if(err) { return done(err); }
             text.should.equal('Hello World!');
+            done();
+          });
+        });
+      });
+    });
+
+    partials['wd.addElementAsyncMethod'] =
+      '<div id="theDiv">\n' +
+      '  <div id="div1">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '  </div>\n' +
+      '  <div id="div2">\n' +
+      '    <span>one</span>\n' +
+      '    <span>two</span>\n' +
+      '    <span>three</span>\n' +
+      '  </div>\n' +
+      '</div>\n';
+    it('wd.addElementAsyncMethod', function(done) {
+      _(extraElementAsyncMethods).each(function(method, name) {
+        wd.addElementAsyncMethod(name, method);
+      });
+      browser = newRemote();
+      return initAndGet(this, 'a/1', function(err) {
+        if(err) { return done(err); }
+        browser.elementById('div1', function(err, el) {
+          if(err) { return done(err); }
+          el.textTwice(function(err, result) {
+            if(err) { return done(err); }
+            result.should.equal("one twoone two");
             done();
           });
         });
