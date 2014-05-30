@@ -68,8 +68,14 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 setPageLoadTimeout(ms, cb) -&gt; cb(err)<br>
 (use setImplicitWaitTimeout and setAsyncScriptTimeout to set the other timeouts)<br>
+</p>
+<p>
+setCommandTimeout(ms, cb) -&gt; cb(err)<br>
+(this is for Appium only)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1026,7 +1032,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Get the current geo location.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+getGeoLocation(cb) -&gt; cb(err, geoLocationObj)<br>
 </td>
 </tr>
 <tr>
@@ -1035,7 +1041,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Set the current geo location.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+setGeoLocation(lat, lon, alt, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -1156,7 +1162,12 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Get the log for a given log type.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+scroll(xOffset, yOffset, cb) -&gt; cb(err)<br>
+</p>
+<p>
 log(logType, cb) -&gt; cb(err, arrayOfLogs)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1448,6 +1459,20 @@ toggleLocationServices(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/toggle_data">/session/:sessionId/appium/device/toggle_data</a><br>
+Toggle data (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+toggleDataOnDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+toggleData(cb) -&gt; cb(err)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/launch">/session/:sessionId/appium/app/launch</a><br>
 Launch app (mjsonWire).
 </td>
@@ -1507,12 +1532,12 @@ Find within app (mjsonWire).
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
 complexFindInApp(selector) -&gt; cb(element(s))<br>
-Return a single element or an elements array depending on <br>
+Return a single element or an elements array depending on<br>
 selector<br>
 </p>
 <p>
 complexFind(selector) -&gt; cb(element(s))<br>
-Return a single element or an elements array depending on <br>
+Return a single element or an elements array depending on<br>
 selector<br>
 </p>
 </td>
@@ -1528,7 +1553,7 @@ getAppStrings(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/appium/element/:elementId?/value">/appium/element/:elementId?/value</a><br>
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/element/:elementId?/value">/session/:sessionId/appium/element/:elementId?/value</a><br>
 Set element immediate value (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -1544,6 +1569,33 @@ element.setImmediateValueInApp(value, cb) -&gt; cb(err)<br>
 <p>
 element.setImmediateValue(value, cb) -&gt; cb(err)<br>
 </p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/network_connection">/session/:sessionId/network_connection</a><br>
+Get appium selendroid network connection type (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getNetworkConnection(cb) -&gt; cb(err, networkConnectionInfo)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/network_connection">/session/:sessionId/network_connection</a><br>
+Set appium selendroid network connection type (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setNetworkConnection(type, cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/hide_keyboard">/session/:sessionId/appium/device/hide_keyboard</a><br>
+Hide keyboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+hideKeyboard(keyName, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -1873,6 +1925,14 @@ wd.addAsyncMethod(name, func)<br>
 wd
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+wd.addElementAsyncMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 wd.addPromiseMethod(name, func)<br>
 </td>
 </tr>
@@ -1881,7 +1941,23 @@ wd.addPromiseMethod(name, func)<br>
 wd
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+wd.addElementPromiseMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 wd.addPromiseChainMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+wd.addElementPromiseChainMethod(name, func)<br>
 </td>
 </tr>
 <tr>

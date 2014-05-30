@@ -118,24 +118,6 @@ NA
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/location">/session/:sessionId/location</a><br>
-Get the current geo location.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/location">/session/:sessionId/location</a><br>
-Set the current geo location.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
 GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
 Get all keys of the storage.
 </td>

@@ -112,6 +112,7 @@
   "POST /session/:sessionId/appium/device/toggle_airplane_mode": "Toggle airplane mode (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_wifi": "Toggle wifi (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_location_services": "Toggle location services (mjsonWire).",
+  "POST /session/:sessionId/appium/device/toggle_data": "Toggle data (mjsonWire).",
   "POST /session/:sessionId/appium/app/launch": "Launch app (mjsonWire).",
   "POST /session/:sessionId/appium/app/close": "Close app (mjsonWire).",
   "POST /session/:sessionId/appium/app/reset": "Reset app (mjsonWire).",
@@ -119,5 +120,8 @@
   "POST /session/:sessionId/appium/app/end_test_coverage": "End test coverage (mjsonWire).",
   "POST /session/:sessionId/appium/app/complex_find": "Find within app (mjsonWire).",
   "POST /session/:sessionId/appium/app/strings": "Retrieve app strings (mjsonWire).",
-  "POST /appium/element/:elementId?/value": "Set element immediate value (mjsonWire)."
+  "POST /session/:sessionId/appium/element/:elementId?/value": "Set element immediate value (mjsonWire).",
+  "GET /session/:sessionId/network_connection": "Get appium selendroid network connection type (mjsonWire).",
+  "POST /session/:sessionId/network_connection": "Set appium selendroid network connection type (mjsonWire).",
+  "POST /session/:sessionId/appium/device/hide_keyboard": "Hide keyboard (mjsonWire)."
 }
