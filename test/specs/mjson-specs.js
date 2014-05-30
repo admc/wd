@@ -874,6 +874,35 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("setNetworkConnection", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/network_connection', {type: 5})
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: "OK" //TODO: not sure what the response looks like
+          });
+        browser
+          .setNetworkConnection(5)
+            .should.eventually.equal("OK")
+          .nodeify(done);
+      });
+
+      it("getNetworkConnection", function(done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/network_connection')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {value: 5}
+          });
+        browser
+          .getNetworkConnection()
+            .should.eventually.deep.equal({value: 5})
+          .nodeify(done);
+      });
 
     });
   });
