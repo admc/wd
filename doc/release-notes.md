@@ -2,8 +2,11 @@
 
 ## 0.2.x Release
 
-### 0.2.23
+### 0.2.24
   - add custom methods to element prototypes.
+
+### 0.2.23
+  - appium/selendroid network connection methods.
 
 ### 0.2.22
   - packages upgrade
