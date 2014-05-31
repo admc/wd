@@ -2,6 +2,9 @@
 
 ## 0.2.x Release
 
+### 0.2.25
+  - getNetworkConnection fix.
+
 ### 0.2.24
   - add custom methods to element prototypes.
 
