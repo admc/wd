@@ -877,15 +877,15 @@ describe("mjson tests", function() {
       it("setNetworkConnection", function(done) {
         nock.cleanAll();
         server
-          .post('/session/1234/network_connection', {type: 5})
+          .post('/session/1234/network_connection', {parameters: {type: 5}})
           .reply(200, {
             status: 0,
             sessionId: '1234',
-            value: "OK" //TODO: not sure what the response looks like
+            value: 5
           });
         browser
           .setNetworkConnection(5)
-            .should.eventually.equal("OK")
+            .should.eventually.equal(5)
           .nodeify(done);
       });
 
