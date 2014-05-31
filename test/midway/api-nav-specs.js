@@ -248,7 +248,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     '</div>\n';
   it('browser.clear', function() {
     return browser
-      .elementByCss("#theDiv input").then(function(el) {
+      .waitForElementByCss("#theDiv input", 5000).then(function(el) {
         return browser
           .getValue(el).should.become('not cleared')
           .clear(el)
