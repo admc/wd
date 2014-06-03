@@ -904,6 +904,18 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("openNotifications", function(done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/appium/device/open_notifications')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .openNotifications()
+          .nodeify(done);
+      });
     });
   });
 
