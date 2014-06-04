@@ -92,8 +92,16 @@ test_travis:
 ifeq ($(MULTI),true)
 	make jshint
 	make test_unit
-	make test_midway_sauce_connect
-else ifeq ($(BROWSER),all_androids)
+ifneq ($(TRAVIS_PULL_REQUEST),false)
+	@echo 'Skipping Sauce Labs tests as this is a pull request'
+else
+	@echo make test_midway_sauce_connect
+endif
+else 
+ifneq ($(TRAVIS_PULL_REQUEST),false)
+	@echo 'Skipping Sauce Labs tests as this is a pull request'
+else
+ifeq ($(BROWSER),all_androids)
 	BROWSER=android_tablet make test_midway_mobile_sauce_connect
 	BROWSER=android_phone make test_midway_mobile_sauce_connect
 else ifeq ($(MOBILE),true)
@@ -102,10 +110,9 @@ else
 	make test_midway_sauce_connect
 	make test_e2e_sauce
 endif
+endif
+endif
 
-# ifneq ($(TRAVIS_PULL_REQUEST),false)
-# 	@echo 'Skipping Sauce Labs tests as this is a pull request'
-# else
 
 test_coverage:
 	rm -rf coverage
@@ -132,6 +139,14 @@ full_mapping: _dox
 unsupported_mapping: _dox
 	@node doc/mapping-builder.js unsupported
 
+setup_sauce_connect:
+ifneq ($(TRAVIS_PULL_REQUEST),false)
+	@echo 'Skipping Sauce Connect setup as this is a pull request'
+else
+	./node_modules/.bin/install_sauce_connect
+ 	./node_modules/.bin/travis_start_sauce_connect
+endif
+
 .PHONY: \
 	DEFAULT \
 	jshint \
@@ -154,4 +169,5 @@ unsupported_mapping: _dox
 	mapping \
 	full_mapping \
 	unsupported_mapping \
-	_dox
+	_dox \
+	setup_sauce_connect

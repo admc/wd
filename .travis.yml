@@ -37,8 +37,6 @@ matrix:
     - node_js: "0.8"
       env: BROWSER=chrome
 before_script:
-  - ./node_modules/.bin/install_sauce_connect
-  - ./node_modules/.bin/travis_start_sauce_connect
+  - "make setup_sauce_connect"
 script:
   - "make test_travis"
-
