@@ -833,14 +833,14 @@ describe("mjson tests", function() {
       it("getAppStrings", function(done) {
         nock.cleanAll();
         server
-          .get('/session/1234/appium/app/strings')
+          .post('/session/1234/appium/app/strings', {language: 'en'})
           .reply(200, {
             status: 0,
             sessionId: '1234',
             value: 'abcdefghj'
           });
         browser
-          .getAppStrings()
+          .getAppStrings('en')
           .nodeify(done);
       });
 
