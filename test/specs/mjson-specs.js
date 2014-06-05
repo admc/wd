@@ -248,70 +248,41 @@ describe("mjson tests", function() {
     describe("actions", function() {
 
       it("touch actions should work", function(done) {
-        nock.cleanAll();
-        server
-          .post('/session/1234/element', {"using":"id","value":"random"})
-          .reply(200, {
-            status: 0,
-            sessionId: '1234',
-            value: {ELEMENT: '0'},
-          })
-          .post('/session/1234/touch/perform', [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}])
-          .times(7)
-          .reply(200, {
-            status: 0,
-            sessionId: '1234',
-            // TODO check what the return is like
-            value: [{'not sure': '0'}],
-          });
-        var action = new wd.TouchAction();
-        action.tap();
-        var el;
-        browser
-          .elementById('random').then(function(_el) { el=_el; })
-          .then(function() { return browser.performTouch(el, action); })
-          .then(function() {
-            return browser.performTouch(action)
-              .should.eventually.be.rejectedWith(/No element defined in gesture/);
-          })
-          .then(function() { return browser.performTouch(el, action); })
-          .then(function() { return browser.performTouchAction(action.applyToElement(el)); })
-          .then(function() { return action.applyTo(el).performOn(browser); })
-          .then(function() {
-            return browser.performTouchAction(action)
-              .should.eventually.be.rejectedWith(/No element defined in gesture/);
-          })
-          .then(function() { return el.performTouch(action); })
-          .then(function() { return el.performTouchAction(action); })
-          .then(function() {
-            var promise = action.performOn(el);
-            promise.then.should.exist;
-            return promise;
-          })
-          .then(function() {
-            return action.performOn(browser)
-              .should.eventually.be.rejectedWith(/No element defined in gesture/);
-          })
-          .then(function() {
-            // now trying with an action not requiring element
-            action = new wd.TouchAction();
-            action.release();
-            nock.cleanAll();
-            server
-              .post('/session/1234/touch/perform', [{"action":"release","options":{}}])
-              .times(4)
-              .reply(200, {
-                status: 0,
-                sessionId: '1234',
-                // TODO check what the return is like
-                value: [{'not sure': '0'}],
-              });
-          })
-          .then(function() { return browser.performTouch(action); })
-          .then(function() { return el.performTouch(action); })
-          .then(function() { return action.performOn(browser); })
-          .then(function() { return action.performOn(el); })
-          .nodeify(done);
+        browser.chain()
+        .then(function() {
+          nock.cleanAll();
+          server
+            .post('/session/1234/element', {"using":"id","value":"random"})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+              value: {ELEMENT: '0'},
+            })
+            .post('/session/1234/touch/perform', [
+              {"action":"press","options":{x: 100, y: 5}},
+              {"action":"release","options":{}}
+            ])
+            .times(2)
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+              // TODO check what the return is like
+              value: [{'not sure': '0'}],
+            });
+          var el;
+          return browser
+            .elementById('random').then(function(_el) { el=_el; })
+            .then(function() {
+              var action = new wd.TouchAction();
+              action.press({x: 100, y: 5}).release();
+              return browser
+                .performTouchAction(action);
+            }).then(function() {
+              var action = new wd.TouchAction(browser);
+              action.press({x: 100, y: 5}).release();
+              return action.perform();
+            });
+        }).nodeify(done);
       });
 
       it("multi actions should work", function(done) {
@@ -322,50 +293,58 @@ describe("mjson tests", function() {
             status: 0,
             sessionId: '1234',
             value: {ELEMENT: '0'},
-          })
-          .post('/session/1234/touch/multi/perform', {
-            "elementId":"0",
-            "actions":[
-              [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}],
-              [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}]
-            ]})
-          .times(8)
-          .reply(200, {
-            status: 0,
-            sessionId: '1234',
-            // TODO check what the return is like
-            value: [{'not sure': '0'}],
           });
         var el;
-        var a1 = new wd.TouchAction().tap();
-        var a2 = new wd.TouchAction().tap();
-        var ma = new wd.MultiAction().add(a1, a2);
         browser
           .elementById('random').then(function(_el) { el = _el; })
-          .then(function() { return browser.performMultiTouch(el, ma); })
-          .then(function() {
-            return browser.performMultiTouch(ma)
-              .should.eventually.be.rejectedWith(/No element defined in gesture/);
+          .then(function() { 
+            nock.cleanAll();
+            server
+              .post('/session/1234/touch/multi/perform', {
+                "elementId":"0",
+                "actions":[
+                  [{"action":"tap","options":{"x": 100,"y":200}}],
+                  [{"action":"tap","options":{"x":50,"y":25}}]
+                ]})
+              .times(4)
+              .reply(200, {
+                status: 0,
+                sessionId: '1234',
+                // TODO check what the return is like
+                value: [{'not sure': '0'}],
+              });
           })
-          .then(function() { return browser.performMultiTouchAction(el, ma); })
-          .then(function() { return el.performMultiTouch(ma); })
-          .then(function() { return el.performMultiTouchAction(ma); })
-          .then(function() { return ma.performOn(el); })
           .then(function() {
-            return ma.performOn(browser)
-              .should.eventually.be.rejectedWith(/No element defined in gesture/);
-           })
-          .then(function() { return browser.performMultiTouch( ma.applyTo(el) ); })
-          .then(function() { return ma.applyToElement(el).performOn(browser); })
+            var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+            var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+            var ma = new wd.MultiAction().add(a1, a2);
+            return browser.performMultiAction(el, ma); 
+          })
           .then(function() {
-            // no global setting of element
-            ma = new wd.MultiAction().add(a1.applyTo(el), a2.applyTo(el));
+            var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+            var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+            var ma = new wd.MultiAction().add(a1, a2);
+            return browser.performMultiAction(el, ma); 
+          })
+          .then(function() {
+            var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+            var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+            var ma = new wd.MultiAction().add(a1, a2);
+            return el.performMultiAction(ma);             
+          })
+          .then(function() {
+            var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+            var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+            var ma = new wd.MultiAction(el).add(a1, a2);
+            return ma.perform();             
+          })
+          .then(function() { 
             nock.cleanAll();
             server
               .post('/session/1234/touch/multi/perform', {
                 "actions":[
-                  [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}],
-                  [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}]
+                  [{"action":"tap","options":{"x": 100,"y":200}}],
+                  [{"action":"tap","options":{"x":50,"y":25}}]
                 ]})
               .times(2)
               .reply(200, {
@@ -375,30 +354,18 @@ describe("mjson tests", function() {
                 value: [{'not sure': '0'}],
               });
           })
-          .then(function() { return browser.performMultiTouch(ma); })
-          .then(function() { return ma.performOn(browser); })
           .then(function() {
-            // now trying with an action not requiring element
-            a1 = new wd.TouchAction().release();
-            a2 = new wd.TouchAction().release();
-            ma = new wd.MultiAction().add(a1, a2);
-            nock.cleanAll();
-            server
-              .post('/session/1234/touch/multi/perform', {
-                "actions":[
-                  [{"action":"release","options":{}}],
-                  [{"action":"release","options":{}}]
-                ]})
-              .times(2)
-              .reply(200, {
-                status: 0,
-                sessionId: '1234',
-                // TODO check what the return is like
-                value: [{'not sure': '0'}],
-              });
+            var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+            var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+            var ma = new wd.MultiAction().add(a1, a2);
+            return browser.performMultiAction(ma);
           })
-          .then(function() { return browser.performMultiTouch(ma); })
-          .then(function() { return ma.performOn(browser); })
+          .then(function() {
+            var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+            var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+            var ma = new wd.MultiAction(browser).add(a1, a2);
+            return ma.perform();
+          })
           .nodeify(done);
       });
     });
@@ -938,8 +905,8 @@ describe("mjson tests", function() {
           sessionId: '1234',
           value: {ELEMENT: '0'},
         })
-        .post('/session/1234/touch/perform', [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}])
-        .times(3)
+        .post('/session/1234/touch/perform', [{"action":"tap","options":{}}])
+        .times(2)
         .reply(200, {
           status: 0,
           sessionId: '1234',
@@ -947,7 +914,6 @@ describe("mjson tests", function() {
           value: [{'not sure': '0'}],
         });
       var el;
-      var action = new wd.TouchAction(el).tap();
       async.series([
         function(done) {
           browser.elementById('random', function(err, _el) {
@@ -957,26 +923,21 @@ describe("mjson tests", function() {
           });
         },
         function(done) {
-          browser.performTouch(el, action, function(err, res) {
+          var action = new wd.TouchAction().tap();
+          browser.performTouchAction(action, function(err, res) {
             should.not.exist(err);
             res.should.exist;
             done();
           });
         },
         function(done) {
-          el.performTouch(action, function(err, res) {
+          var action = new wd.TouchAction(browser).tap();
+          action.perform(function(err, res) {
             should.not.exist(err);
             res.should.exist;
             done();
           });
         },
-        function(done) {
-          action.performOn(el, function(err, res) {
-            should.not.exist(err);
-            res.should.exist;
-            done();
-          });
-        }
       ], done);
     });
 
@@ -987,24 +948,8 @@ describe("mjson tests", function() {
             status: 0,
             sessionId: '1234',
             value: {ELEMENT: '0'},
-          })
-          .post('/session/1234/touch/multi/perform', {
-            "elementId":"0",
-            "actions":[
-              [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}],
-              [{"action":"tap","options":{"element":"0","x":null,"y":null,"count":null}}]
-            ]})
-          .times(3)
-          .reply(200, {
-            status: 0,
-            sessionId: '1234',
-            // TODO check what the return is like
-            value: [{'not sure': '0'}],
           });
       var el;
-      var a1 = new wd.TouchAction(el).tap();
-      var a2 = new wd.TouchAction(el).tap();
-      var ma = new wd.MultiAction(el).add(a1, a2);
       async.series([
         function(done) {
           browser.elementById('random', function(err, _el) {
@@ -1012,23 +957,87 @@ describe("mjson tests", function() {
             el = _el;
             done();
           });
+        },        
+        function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/touch/multi/perform', {
+              "elementId":"0",
+              "actions":[
+                [{"action":"tap","options":{x: 100, y: 200}}],
+                [{"action":"tap","options":{x: 50, y: 25}}]
+              ]})
+            .times(3)
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+              // TODO check what the return is like
+              value: [{'not sure': '0'}],
+            });
+          done();
         },
         function(done) {
-          browser.performMultiTouch(el, ma, function(err, res) {
+          var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+          var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+          var ma = new wd.MultiAction().add(a1, a2);          
+          browser.performMultiAction(el, ma, function(err, res) {
             should.not.exist(err);
             res.should.exist;
             done();
           });
         },
         function(done) {
-          el.performMultiTouch(ma, function(err, res) {
+          var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+          var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+          var ma = new wd.MultiAction().add(a1, a2);          
+          el.performMultiAction(ma, function(err, res) {
             should.not.exist(err);
             res.should.exist;
             done();
           });
         },
         function(done) {
-          ma.performOn(el, function(err, res) {
+          var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+          var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+          var ma = new wd.MultiAction(el).add(a1, a2);          
+          ma.perform(function(err, res) {
+            should.not.exist(err);
+            res.should.exist;
+            done();
+          });
+        },
+        function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/touch/multi/perform', {
+              "actions":[
+                [{"action":"tap","options":{x: 100, y: 200}}],
+                [{"action":"tap","options":{x: 50, y: 25}}]
+              ]})
+            .times(2)
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+              // TODO check what the return is like
+              value: [{'not sure': '0'}],
+            });
+          done();
+        },        
+        function(done) {
+          var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+          var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+          var ma = new wd.MultiAction().add(a1, a2);          
+          browser.performMultiAction(ma, function(err, res) {
+            should.not.exist(err);
+            res.should.exist;
+            done();
+          });
+        },
+        function(done) {
+          var a1 = new wd.TouchAction().tap({x: 100, y: 200});
+          var a2 = new wd.TouchAction().tap({x: 50, y: 25});
+          var ma = new wd.MultiAction(browser).add(a1, a2);          
+          ma.perform(function(err, res) {
             should.not.exist(err);
             res.should.exist;
             done();
