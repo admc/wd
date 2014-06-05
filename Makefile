@@ -144,7 +144,7 @@ ifneq ($(TRAVIS_PULL_REQUEST),false)
 	@echo 'Skipping Sauce Connect setup as this is a pull request'
 else
 	./node_modules/.bin/install_sauce_connect
- 	./node_modules/.bin/travis_start_sauce_connect
+	./node_modules/.bin/travis_start_sauce_connect
 endif
 
 .PHONY: \
