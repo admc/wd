@@ -1600,6 +1600,15 @@ hideKeyboard(keyName, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/open_notifications">/session/:sessionId/appium/device/open_notifications</a><br>
+Open Notifications (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+openNotifications(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
