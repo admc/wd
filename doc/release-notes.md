@@ -2,6 +2,12 @@
 
 ## 0.2.x Release
 
+### 0.2.27
+  - http proxy fix.
+
+### 0.2.26
+  - openNotifications + getAppStrings fix.
+
 ### 0.2.25
   - getNetworkConnection fix.
 
