@@ -25,7 +25,7 @@ desireds.selenium.iphone = {
   app: 'safari'
 };
 
-desireds.selenium.ipad = _.merge(_.clone(desireds.selenium.iphone), {'browserName': 'iPad Simulator'});
+desireds.selenium.ipad = _.merge(_.clone(desireds.selenium.iphone), {'deviceName': 'iPad Simulator'});
 
 desireds.appium.android_phone = {
   browserName: '',
