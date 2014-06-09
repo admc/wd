@@ -17,13 +17,15 @@ desireds.selenium.android_phone = {
 desireds.selenium.android_tablet = _.merge(_.clone(desireds.selenium.android_phone), {'device-type': 'tablet'});
 
 desireds.selenium.iphone = {
-  'browserName': 'iphone',
-  'version': '6.1',
-  'platform': 'OS X 10.8',
-  'device-orientation': 'portrait', // 'landscape'
+  browserName: '',
+  'appium-version': '1.0',
+  platformName: 'iOS',
+  platformVersion: '7.1',
+  deviceName: 'iPhone Simulator',
+  app: 'safari'
 };
 
-desireds.selenium.ipad = _.merge(_.clone(desireds.selenium.iphone), {'browserName': 'ipad'});
+desireds.selenium.ipad = _.merge(_.clone(desireds.selenium.iphone), {'browserName': 'iPad Simulator'});
 
 desireds.appium.android_phone = {
   browserName: '',

@@ -69,7 +69,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
     '  <div class="line">line 2</div>\n' +
     '  <div class="line">line 3</div>\n' +
     '</div>\n';
-  it('browser.execute - els arg', function() {
+  it('browser.execute - els arg @skip-ios', function() {
     var jsScript = prepareJs(
       'var els = arguments[0];\n' +
       'return $(els[1]).text();\n'
