@@ -14,6 +14,10 @@
 - [Site](http://admc.io/wd/)
 - [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
 
+## v0.3.0
+
+Breaking changes: TouchAction/MultiAction api update. See release note.
+
 ## Install
 
 ```
