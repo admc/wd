@@ -1,5 +1,21 @@
 # Release Notes
 
+## 0.3.x Release
+
+### 0.3.0
+
+  - TouchAction/MultiAction update now works like the [W3 specs](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#multiactions-1). 
+  See the following sample: 
+
+```js
+TouchAction a1 = (new wd.TouchAction(driver)).press({el: el}).release();
+a1.perform();
+TouchAction a2 = (new wd.TouchAction()).press({el: el}).release();
+TouchAction a3 = (new wd.TouchAction()).tap({el: el, x50, y: 50}).wait({ms: 10000});
+MultiAction ma = (new wd.MultiAction(driver)).add(a2, a2);
+ma.perform();
+```
+
 ## 0.2.x Release
 
 ### 0.2.27
