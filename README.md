@@ -16,7 +16,7 @@
 
 ## v0.3.0
 
-Breaking changes: TouchAction/MultiAction api update. See release note.
+Breaking changes: TouchAction/MultiAction api update. See [release note](https://github.com/admc/wd/blob/master/doc/release-notes.md).
 
 ## Install
 
