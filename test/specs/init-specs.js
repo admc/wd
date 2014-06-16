@@ -54,8 +54,7 @@ describe("init tests", function() {
         desired[deviceKey] = 'iPhone';
         browser.init(desired, function() {});
       });
-
-    };
+    }
 
     test('device');
     test('deviceName');
