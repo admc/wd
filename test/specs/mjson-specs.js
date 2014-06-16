@@ -617,6 +617,27 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("pullFolderFromDevice", function(done) {
+        var remotePath = '/data/local/tmp/remote';
+        var stringData = "not a zip but that doesn't matter " + Math.random();
+        var base64Data = new Buffer(stringData).toString('base64');
+        nock.cleanAll();
+        server
+          .post('/session/1234/appium/device/pull_folder', {path: remotePath})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: base64Data // TODO: check function return
+          });
+        browser
+          .pullFolderFromDevice(remotePath, base64Data)
+            .should.become(base64Data)
+          .pullFolder(remotePath, base64Data)
+            .should.become(base64Data)
+          .nodeify(done);
+      });
+
       it("toggleAirplaneModeOnDevice", function(done) {
         nock.cleanAll();
         server
