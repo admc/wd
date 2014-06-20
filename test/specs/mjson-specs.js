@@ -556,7 +556,7 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
-      it("hideDeviceKeyboard", function(done) {
+      it("hideDeviceKeyboard, passing key", function(done) {
         nock.cleanAll();
         server
           .post('/session/1234/appium/device/hide_keyboard', {keyName: "Done"})
@@ -572,9 +572,25 @@ describe("mjson tests", function() {
             status: 0,
             sessionId: '1234',
           });
+        server
+          .post('/session/1234/appium/device/hide_keyboard', {strategy: 'tapOutside'})
+          .times(1)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+          });
+        server
+          .post('/session/1234/appium/device/hide_keyboard', {strategy: 'pressKey', key:'Done'})
+          .times(1)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+          });
         browser
           .hideKeyboard()
           .hideDeviceKeyboard("Done")
+          .hideDeviceKeyboard({strategy: 'tapOutside'})
+          .hideDeviceKeyboard({strategy: 'pressKey', key:'Done'})
           .nodeify(done);
       });
 
