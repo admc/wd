@@ -921,7 +921,7 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
-      if("availableIMEEngines", function (done) {
+      it("availableIMEEngines", function (done) {
         nock.cleanAll();
         server
           .get('/session/1234/ime/available_engines')
@@ -934,7 +934,7 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
-      if("activateIMEEngine", function (done) {
+      it("activateIMEEngine", function (done) {
         nock.cleanAll();
         server
           .post('/session/1234/ime/activate')
@@ -943,11 +943,11 @@ describe("mjson tests", function() {
             sessionId: '1234'
           });
         browser
-          .availableIMEEngines('some.ime')
+          .activateIMEEngine('some.ime')
           .nodeify(done);
       });
 
-      if("deactivateIMEEngine", function (done) {
+      it("deactivateIMEEngine", function (done) {
         nock.cleanAll();
         server
           .post('/session/1234/ime/deactivate')
@@ -956,11 +956,11 @@ describe("mjson tests", function() {
             sessionId: '1234'
           });
         browser
-          .availableIMEEngines()
+          .deactivateIMEEngine()
           .nodeify(done);
       });
 
-      if("isIMEActive", function (done) {
+      it("isIMEActive", function (done) {
         nock.cleanAll();
         server
           .get('/session/1234/ime/activated')
@@ -969,11 +969,11 @@ describe("mjson tests", function() {
             sessionId: '1234'
           });
         browser
-          .availableIMEEngines()
+          .isIMEActive()
           .nodeify(done);
       });
 
-      if("activeIMEEngine", function (done) {
+      it("activeIMEEngine", function (done) {
         nock.cleanAll();
         server
           .get('/session/1234/ime/active_engine')
@@ -982,7 +982,7 @@ describe("mjson tests", function() {
             sessionId: '1234'
           });
         browser
-          .availableIMEEngines()
+          .activeIMEEngine()
           .nodeify(done);
       });
     });
