@@ -920,6 +920,71 @@ describe("mjson tests", function() {
           .openNotifications()
           .nodeify(done);
       });
+
+      if("availableIMEEngines", function (done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/ime/available_engines')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .availableIMEEngines()
+          .nodeify(done);
+      });
+
+      if("activateIMEEngine", function (done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/ime/activate')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .availableIMEEngines('some.ime')
+          .nodeify(done);
+      });
+
+      if("deactivateIMEEngine", function (done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/ime/deactivate')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .availableIMEEngines()
+          .nodeify(done);
+      });
+
+      if("isIMEActive", function (done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/ime/activated')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .availableIMEEngines()
+          .nodeify(done);
+      });
+
+      if("activeIMEEngine", function (done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/ime/active_engine')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .availableIMEEngines()
+          .nodeify(done);
+      });
     });
   });
 
