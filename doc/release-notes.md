@@ -2,6 +2,19 @@
 
 ## 0.3.x Release
 
+### 0.3.3
+
+  - new IME mjson methods.
+
+### 0.3.2
+
+  - hideKeyboard method update.
+
+### 0.3.1
+
+  - new pullFolder method.
+  - Appium detection fix.
+
 ### 0.3.0
 
   - TouchAction/MultiAction update now works like the [W3 specs](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#multiactions-1). 
