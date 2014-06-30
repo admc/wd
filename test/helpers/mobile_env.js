@@ -7,48 +7,28 @@ var desireds = {
   appium: {}
 };
 
-desireds.selenium.android_phone = {
-  'browserName': 'android',
-  'version': '4.0',
-  'platform': 'Linux',
-  'device-orientation': 'portrait', // 'landscape'
+desireds.appium.android_phone = {
+  browserName: 'chrome',
+  'appium-version': '1.1',
+  platformName: 'Android',
+  platformVersion: '4.3',
+  deviceName: 'Android Emulator',
 };
 
-desireds.selenium.android_tablet = _.merge(_.clone(desireds.selenium.android_phone), {'device-type': 'tablet'});
+// TODO
+// desireds.appium.android_tablet = _.merge(_.clone(desireds.appium.android_phone), {'device-type': 'tablet'});
 
-desireds.selenium.iphone = {
+desireds.appium.iphone = {
   browserName: '',
-  'appium-version': '1.0',
+  'appium-version': '1.1',
   platformName: 'iOS',
   platformVersion: '7.1',
   deviceName: 'iPhone Simulator',
-  app: 'safari'
+  app: 'safari',
+  'device-orientation': 'portrait'
 };
 
-desireds.selenium.ipad = _.merge(_.clone(desireds.selenium.iphone), {'deviceName': 'iPad Simulator'});
-
-desireds.appium.android_phone = {
-  browserName: '',
-  platform: 'Linux',
-  version: '4.2',
-  'device-orientation': 'portrait',
-  app: 'chrome',
-  'app-package': 'com.android.chrome',
-  device: 'Android'
-};
-
-desireds.appium.android_tablet = _.merge(_.clone(desireds.appium.android_phone), {'device-type': 'tablet'});
-
-desireds.appium.iphone = {
-      browserName: '',
-      platform: 'OS X 10.8',
-      version: '6',
-      'device-orientation': 'portrait',
-      app: 'safari',
-      device: 'iPhone Simulator'
-};
-
-desireds.appium.ipad = _.merge(_.clone(desireds.appium.iphone), {device: 'iPad Simulator'});
+desireds.appium.ipad = _.merge(_.clone(desireds.appium.iphone), {deviceName: 'iPad Simulator'});
 
 env.APPIUM = process.env.APPIUM;
 
@@ -72,5 +52,5 @@ if(device){
   env.BROWSER_SKIP = cat;
   env[cat.toUpperCase()] = true;
   env.MOBILE = true;
-  env.DESIRED = env.APPIUM? desireds.appium[device] : desireds.selenium[device];
+  env.DESIRED = desireds.appium[device];
 }

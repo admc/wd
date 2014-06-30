@@ -1,8 +1,8 @@
 /* global sauceJobTitle, mergeDesired */
 
-require('../helpers/setup');
+require('../../helpers/setup');
 
-describe('status ' + env.ENV_DESC + ' @multi', function() {
+describe('status ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var browser;

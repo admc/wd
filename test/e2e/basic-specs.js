@@ -37,7 +37,7 @@ describe('basic ' + env.ENV_DESC, function() {
   it("should retrieve the page title", function() {
     return browser
       .title().should.eventually.include("WD");
-  });
+  });    
 
   it("submit element should be clicked", function() {
     /* jshint evil: true */

@@ -88,9 +88,9 @@ describe('keying ' + env.ENV_DESC, function() {
   it('keying [enterKey]', function() {
     return browser
       .elementByCss("#theDiv input").type(['Hello', enterKey])
-        .getValue().should.become('Hello')
+        .getValue().should.eventually.match(/Hello/)
       .elementByCss("#theDiv textarea").type(['Hello', enterKey])
-        .getValue().should.become('Hello\n');
+        .getValue().should.eventually.match(/Hello/);
   });
 
   partials['keying [nullKey]'] = keyingPartial;

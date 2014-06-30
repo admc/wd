@@ -58,8 +58,7 @@ exports.test = function function_name (suffix, extraDesc, suffixPartials, criter
           '}, args[1]);\n' +
           'done();\n',
           [suffixPartials.child, env.BASE_TIME_UNIT]
-        )
-        [waitForElementFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
+        )[waitForElementFuncName](criterias.child, 2 * env.BASE_TIME_UNIT, env.BASE_TIME_UNIT)
         .should.be.fulfilled
         .then(function() {
           return browser

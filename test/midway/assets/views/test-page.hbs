@@ -18,14 +18,16 @@
         <h1 class="site-title">WD Tests</h1>
         <h2 class="site-tagline">{{testSuite}}</h2>
         <h3 class="site-tagline">{{testTitle}}</h2>
+        {{#if uuid}}
+          <h3 id="{{uuid}}" class="site-tagline">{{uuid}}</h2>
+        {{/if}}     
       </header>
-
       <div id="test-container" class="unit four-of-four">
         {{{content}}}
       </div>
     </div>
   </div>
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
 </body>
 
 </html>

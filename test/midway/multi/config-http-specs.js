@@ -1,6 +1,6 @@
 /* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
-require('../helpers/setup');
+require('../../helpers/setup');
 
 function buildDesired(title) {
   var sauceExtra =  {
@@ -13,7 +13,7 @@ function buildDesired(title) {
   return desired;
 }
 
-describe('config-http ' + env.ENV_DESC + ' @multi', function() {
+describe('config-http ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var browser;
@@ -28,7 +28,7 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
   }
 
   before(function(done) {
-    express = new Express( __dirname + '/assets', partials);
+    express = new Express( __dirname + '/../assets', partials);
     express.start(done);
   });
 
@@ -58,14 +58,14 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
       timeout: env.HTTP_TIMEOUT || 60000,
       retries: env.HTTP_RETRIES || 10,
       retryDelay: env.HTTP_RETRY_DELAY || 50,
-      baseUrl: 'http://example.com'
+      baseUrl: 'http://example.com',
+      proxy: undefined
     };
 
     var newConfig2 = _(newConfig).clone();
     newConfig2.baseUrl = 'http://example2.com';
 
     wd.configureHttp(newConfig);
-
     wd.getHttpConfig().should.deep.equal(newConfig);
     wd.configureHttp( {baseUrl: 'http://example2.com' } );
     wd.getHttpConfig().should.deep.equal(newConfig2);
@@ -88,7 +88,8 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
       timeout: env.HTTP_TIMEOUT || 60000,
       retries: env.HTTP_RETRIES || 10,
       retryDelay: env.HTTP_RETRY_DELAY || 50,
-      baseUrl: 'http://example3.com'
+      baseUrl: 'http://example3.com',
+      proxy: undefined
     };
 
     var newConfig2 = _(newConfig).clone();
@@ -114,7 +115,8 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
         timeout: env.HTTP_TIMEOUT || 60000,
         retries: env.HTTP_RETRIES || 10,
         retryDelay: env.HTTP_RETRY_DELAY || 50,
-        baseUrl: 'http://example.com/'
+        baseUrl: 'http://example.com/',
+        proxy: undefined
     };
     if(newConfig.retryDelay = wdCurrent.retryDelay) { newConfig.retryDelay++; }
     return browser
@@ -127,7 +129,7 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
 
   it("setting global baseUrl", function() {
     var url =  midwayUrl( this.runnable().parent.title, this.runnable().title);
-    var matcher = url.match(/(http:\/\/[\d\.]+:\d+\/)(.*)/);
+    var matcher = url.match(/(.*\/)(test-page.*)/);
     var baseUrl = matcher[1];
     should.exist(baseUrl);
     var relUrl = matcher[2];
@@ -137,14 +139,15 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
     promiseChainRemote();
     return browser
       .init(buildDesired( this.runnable().parent.title + " #1"))
-      .get(url).title().should.eventually.include('WD Tests - config-http')
+      .get(url)
+      .title().should.eventually.include('WD Tests - config-http')
       .get(relUrl).title().should.eventually.include('WD Tests - config-http')
       ;
   });
 
   it("setting browser baseUrl", function() {
     var url =  midwayUrl( this.runnable().parent.title, this.runnable().title);
-    var matcher = url.match(/(http:\/\/[\d\.]+:\d+\/)(.*)/);
+    var matcher = url.match(/(.*\/)(test-page.*)/);
     var baseUrl = matcher[1];
     should.exist(baseUrl);
     var relUrl = matcher[2];
@@ -166,7 +169,7 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
 
   it("wd baseUrl override", function() {
     var url =  midwayUrl( this.runnable().parent.title, this.runnable().title);
-    var matcher = url.match(/(http:\/\/[\d\.]+:\d+\/)(.*)/);
+    var matcher = url.match(/(.*\/)(test-page.*)/);
     var baseUrl = matcher[1];
     should.exist(baseUrl);
     var relUrl = matcher[2];
@@ -182,7 +185,7 @@ describe('config-http ' + env.ENV_DESC + ' @multi', function() {
           .get(relUrl).should.eventually.include('WD Tests - config-http')
           .should.be.rejected;
       })
-      .configureHttp({baseUrl: baseUrl})
+      .configureHttp({baseUrl: baseUrl})      
       .get(relUrl).title().should.eventually.include('WD Tests - config-http')
       .get(url).title().should.eventually.include('WD Tests - config-http');
   });

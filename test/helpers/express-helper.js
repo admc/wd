@@ -9,6 +9,9 @@ function Express(rootDir, partials) {
 Express.prototype.start = function(done) {
   var _this = this;
   this.app = express();
+  this.app.use(function(req, res, next) {
+    next();
+  });
   this.app.set('view engine', 'hbs');
   this.app.set('views', this.rootDir + '/views');
 
@@ -20,12 +23,14 @@ Express.prototype.start = function(done) {
     res.render('test-page', {
       testSuite: req.query.ts? req.query.ts.replace(/\@[\w\-]+/g,'') : '',
       testTitle: (req.query.c? req.query.c + ' - ': '') + req.query.p,
-      content: content
+      content: content,
+      uuid: req.query.uuid
     });
   });
 
   this.app.use(express["static"](this.rootDir + '/public'));
   this.server = http.createServer(this.app);
+  console.log('server listening on', env.EXPRESS_PORT);
   this.server.listen(env.EXPRESS_PORT, done);
 };
 

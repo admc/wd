@@ -1,4 +1,4 @@
-/* global sauceJobTitle, mergeDesired, midwayUrl, Express */
+/* global sauceJobTitle, mergeDesired, midwayUrl, Express, uuidLib */
 
 module.exports = function(that, partials) {
 
@@ -35,19 +35,23 @@ module.exports = function(that, partials) {
   });
 
   beforeEach(function() {
-    var url = midwayUrl(
-      this.currentTest.parent.title,
-      this.currentTest.title
-    );
-    return browser
-    .get(url)
-    .title().should.eventually.include("WD Tests")
-    .catch(function() {
-      // trying one more time
-      return browser
-        .get(url)
-        .title().should.eventually.include("WD Tests");
+    var uuid = uuidLib.v1().substring(0,8);
+    var url = midwayUrl({
+      testSuite: this.currentTest.parent.title,
+      title: this.currentTest.title,
+      uuid: uuid  
     });
+    return browser
+      .get(url)
+      .sleep(500)
+      .waitForElementById(uuid, 10000, 500)
+      .catch(function() {
+        return browser
+          .sleep(500)
+          .get(url)
+          .sleep(500)
+          .waitForElementById(uuid, 10000, 500);
+      }).sleep(100);
   });
 
   afterEach(function() {

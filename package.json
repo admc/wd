@@ -49,6 +49,7 @@
   "dependencies": {
     "archiver": "~0.10.0",
     "async": "~0.9.0",
+    "colors": "~0.6.2",
     "lodash": "~2.4.1",
     "q": "~1.0.1",
     "request": "~2.36.0",
@@ -56,20 +57,31 @@
     "vargs": "~0.1.0"
   },
   "devDependencies": {
+    "bdd-with-opts": "~0.0.2",
     "chai": "~1.9.1",
     "chai-as-promised": "~4.1.1",
     "colors": "~0.6.2",
     "dox": "~0.4.4",
     "express": "~4.4.1",
+    "gulp": "~3.8.1",
+    "gulp-jshint": "~1.6.3",
     "hbs": "~2.7.0",
+    "http-proxy": "~1.1.4",
     "imageinfo": "~1.0.4",
     "istanbul": "~0.2.10",
     "jshint": "~2.5.1",
+    "jshint-stylish": "~0.2.0",
     "mocha": "~1.20.0",
     "mu2": "~0.5.20",
-    "nock": "~0.32.3",
+    "nock": "~0.40.0",
+    "node-uuid": "~1.4.1",
     "promise-simple": "~0.1.0",
-    "sv-selenium": "~0.2.3"
+    "run-sequence": "~0.3.6",
+    "sauce-connect-launcher": "https://github.com/sebv/sauce-connect-launcher/archive/wd.tar.gz",
+    "spawn-mocha-parallel": "0.0.1-beta2",
+    "sv-selenium": "~0.2.3",
+    "through": "^2.3.4",
+    "yargs": "~1.2.6"
   },
   "scripts": {
     "test": "make test",

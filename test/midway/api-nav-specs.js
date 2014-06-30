@@ -96,7 +96,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     '  <div class="div2" href="#">div 1</div>\n' +
     '  <div class="current"></div>\n' +
     '</div>\n';
-  it('browser.moveTo @skip-ios @skip-android', function() {
+  it('browser.moveTo', skip('ios', 'android'), function() {
     if(true || env.BROWSER === 'explorer') {
       // cannot get hover to work in explorer
       return browser
@@ -142,7 +142,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
 
   partials['browser.buttonDown/browser.buttonUp'] =
     '<div id="theDiv"><a>hold me</a><div class="res"></div></div>\n';
-  it('browser.buttonDown/browser.buttonUp @skip-ios @skip-android', function() {
+  it('browser.buttonDown/browser.buttonUp', skip('ios', 'android'), function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -178,7 +178,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     '  <div class="numOfClicks">not clicked</div>\n' +
     '  <div class="buttonNumber">not clicked</div>\n' +
     '</div>\n';
-  it('browser.click @skip-ios @skip-android', function() {
+  it('browser.click', skip('ios', 'android'), function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -223,7 +223,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     '<div id="theDiv">\n' +
     '  <div>not clicked</div>\n' +
     '</div>\n';
-  it('browser.doubleclick @skip-ios @skip-android', function() {
+  it('browser.doubleclick', skip('ios', 'android'), function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -265,7 +265,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
 
   partials['browser.acceptAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.acceptAlert @skip-ios @skip-android', function() {
+  it('browser.acceptAlert', skip('ios', 'android'), function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -282,7 +282,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
 
   partials['browser.dismissAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.dismissAlert @skip-chrome @skip-ios @skip-android', function() {
+  it('browser.dismissAlert', skip('chrome', 'ios', 'android'), function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +

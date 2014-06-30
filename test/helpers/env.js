@@ -42,14 +42,14 @@ if(env.BROWSER === 'multi') {
 require('./mobile_env');
 
 env.EXPRESS_PORT = _(process.env.EXPRESS_PORT || 3000).toNumber().value();
-
-env.MIDWAY_ROOT_HOST = '127.0.0.1';
+env.PROXY_PORT = _(process.env.PROXY_PORT || 5050).toNumber().value();
 
 if(env.ANDROID){
   env.TIMEOUT = 300000;
 }
 
-env.MIDWAY_ROOT_URL = "http://" + env.MIDWAY_ROOT_HOST + ":" + env.EXPRESS_PORT;
+env.MIDWAY_ROOT_URL = "http://localhost:" + env.PROXY_PORT + '/' + 
+  env.EXPRESS_PORT;
 
 env.SAUCE_CONNECT = toBoolean(process.env.SAUCE_CONNECT);
 env.SAUCE = toBoolean(process.env.SAUCE) || env.SAUCE_CONNECT;
@@ -74,6 +74,7 @@ if(env.SAUCE){
   env.SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY;
   env.SAUCE_PLATFORM = process.env.SAUCE_PLATFORM || 'Linux';
   env.SAUCE_RECORD_VIDEO = toBoolean(process.env.SAUCE_RECORD_VIDEO);
+  env.TUNNEL_IDENTIFIER = process.env.TUNNEL_IDENTIFIER;
 
   if(env.SAUCE_CONNECT){
     env.REMOTE_CONFIG =
@@ -85,14 +86,18 @@ if(env.SAUCE){
         '@ondemand.saucelabs.com/wd/hub';
   }
 
-  env.DESIRED.platform = env.DESIRED.platform || env.SAUCE_PLATFORM;
+  if(!env.DESIRED.platformName) {
+    env.DESIRED.platform = env.DESIRED.platform || env.SAUCE_PLATFORM;
+  }
   env.DESIRED.build = env.SAUCE_JOB_ID;
   env.DESIRED["record-video"] = env.SAUCE_RECORD_VIDEO;
   env.DESIRED.tags = env.DESIRED.tags || [];
   env.DESIRED.tags.push('wd');
   if(env.TRAVIS_JOB_NUMBER){
     env.DESIRED.tags.push('travis');
-    env.DESIRED['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER;
+  }
+  if(env.TUNNEL_IDENTIFIER) {
+    env.DESIRED['tunnel-identifier'] = env.TUNNEL_IDENTIFIER;
   }
 
   // special case for window

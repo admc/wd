@@ -69,12 +69,13 @@ describe('api-exec ' + env.ENV_DESC, function() {
     '  <div class="line">line 2</div>\n' +
     '  <div class="line">line 3</div>\n' +
     '</div>\n';
-  it('browser.execute - els arg @skip-ios', function() {
+  it('browser.execute - els arg', skip('ios'), function() {
     var jsScript = prepareJs(
       'var els = arguments[0];\n' +
       'return $(els[1]).text();\n'
     );
     return browser
+      .sleep(500)
       .elementsByCss('#theDiv .line').then(function(els) {
         return browser
           .execute(jsScript, [els])
@@ -107,6 +108,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       'return $("#theDiv .line").get();\n'
     );
     return browser
+      .sleep(500)
       .execute(jsScript)
       .then(function(els) {
         return els[1].text().should.become('line 2');
@@ -124,7 +126,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  it('browser.safeExecute - args @skip-android', function() {
+  it('browser.safeExecute - args', skip('android'), function() {
     /* jshint evil: true */
     var jsScript = prepareJs(
       'var a = arguments[0], b = arguments[1];\n' +
@@ -139,7 +141,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  it('browser.executeAsync @skip-android @skip-ios', function() {
+  it('browser.executeAsync', skip('ios', 'android'), function() {
     var jsScript = prepareJs(
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
@@ -155,7 +157,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .executeAsync(jsScriptWithArgs, [10, 5]).should.become('OK 15');
   });
 
-  it('browser.safeExecuteAsync @skip-android @skip-ios', function() {
+  it('browser.safeExecuteAsync', skip('ios', 'android'), function() {
     var jsScript = prepareJs(
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
@@ -179,7 +181,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  it('browser.setAsyncScriptTimeout @skip-android @skip-ios', function() {
+  it('browser.setAsyncScriptTimeout', skip('ios', 'android'), function() {
     var jsScript = prepareJs(
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
@@ -198,7 +200,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
 
   partials['browser.waitForCondition'] =
     '<div id="theDiv"></div>\n';
-  it('browser.waitForCondition  @skip-android @skip-ios', function() {
+  it('browser.waitForCondition', skip('ios', 'android'), function() {
     var exprCond = "$('#theDiv .child').length > 0";
     return browser
       .executeAsync( prepareJs(
@@ -221,7 +223,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
 
   partials['browser.waitForConditionInBrowser'] =
     '<div id="theDiv"></div>\n';
-  it('browser.waitForConditionInBrowser  @skip-android @skip-ios', function() {
+  it('browser.waitForConditionInBrowser', skip('ios', 'android'), function() {
     var exprCond = "$('#theDiv .child').length > 0";
     return browser
       .executeAsync( prepareJs(

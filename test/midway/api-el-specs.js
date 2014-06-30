@@ -9,10 +9,17 @@ describe('api-el ' + env.ENV_DESC, function() {
   partials['browser.element'] =
     '<div name="theDiv">Hello World!</div>';
   it('browser.element', function() {
-    return Q.all([
-      browser.element("name", "theDiv").should.eventually.exist,
-      browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/)
-    ]);
+    var seq = [
+      function() { 
+        return browser.element("name", "theDiv").should.eventually.exist; },
+      function() { 
+        return browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/); },      
+    ];
+    return seq.reduce(Q.when, new Q());
+    // return Q.all([
+    //   browser.element("name", "theDiv").should.eventually.exist,
+    //   browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/)
+    // ]);
   });
 
   partials['browser.elementOrNull'] =
@@ -41,7 +48,7 @@ describe('api-el ' + env.ENV_DESC, function() {
 
   partials['browser.waitForElement'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForElement @skip-ios @skip-android', function() {
+  it('browser.waitForElement', skip('ios', 'android'), function() {
     var startMs = Date.now();
     return browser
       .executeAsync( prepareJs(
@@ -71,7 +78,7 @@ describe('api-el ' + env.ENV_DESC, function() {
 
   partials['browser.waitForVisible'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForVisible @skip-ios @skip-android', function() {
+  it('browser.waitForVisible', skip('ios', 'android'), function() {
     return browser
       .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +

@@ -1,8 +1,10 @@
 require('./env');
 require('colors');
+require('./skip');
 
 GLOBAL.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
+GLOBAL.uuidLib = require('node-uuid');
 
 if( env.TRAVIS ){
   console.log("Travis environment detected.");
@@ -37,15 +39,25 @@ wd.addAsyncMethod(
 );
 
 GLOBAL.midwayUrl = function(testSuite, cat, title){
-  if(!title) {
-    title = cat;
-    cat = undefined;
+  var uuid;
+  if(typeof testSuite === 'object') {
+    var opts = testSuite;
+    testSuite = opts.testSuite;
+    cat = opts.cat;
+    title = opts.title,
+    uuid = opts.uuid;
+  } else {
+    if(!title) {
+      title = cat;
+      cat = undefined;
+    }    
   }
   var cleanTitle = title.replace(/@[-\w]+/g, '').trim();
   return env.MIDWAY_ROOT_URL + '/test-page' +
     '?p=' + encodeURIComponent(cleanTitle) +
     '&ts=' + encodeURIComponent(testSuite) +
-    (cat? '&c=' +encodeURIComponent(cat) : '');
+    (cat? '&c=' +encodeURIComponent(cat) : '') +
+    (uuid? '&uuid=' +encodeURIComponent(uuid) : '');
 };
 
 GLOBAL.mergeDesired = function(desired, extra){

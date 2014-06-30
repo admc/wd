@@ -1,6 +1,6 @@
 /* global sauceJobTitle, mergeDesired */
 
-require('../helpers/setup');
+require('../../helpers/setup');
 
 function buildDesired(title, browser, platform) {
   var sauceExtra =  {
@@ -17,7 +17,7 @@ function buildDesired(title, browser, platform) {
   return desired;
 }
 
-describe('init ' + env.ENV_DESC + ' @multi', function() {
+describe('init ' + env.ENV_DESC,function() {
   this.timeout(env.TIMEOUT);
 
   var browser;
@@ -63,7 +63,7 @@ describe('init ' + env.ENV_DESC + ' @multi', function() {
 
   if(env.SAUCE){
 
-    it("setting browser platform to VISTA @saucelabs", function() {
+    it("setting browser platform to VISTA", function() {
       browser.defaultCapabilities.platform = 'VISTA';
       browser.defaultCapabilities.browserName = 'firefox';
 
@@ -72,7 +72,7 @@ describe('init ' + env.ENV_DESC + ' @multi', function() {
         .sessionCapabilities().should.eventually.have.property('platform', 'XP');
     });
 
-    it("setting browser platform to LINUX @saucelabs", function() {
+    it("setting browser platform to LINUX", function() {
       browser.defaultCapabilities.browserName = 'chrome';
       browser.defaultCapabilities.platform = 'LINUX';
 

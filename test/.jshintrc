@@ -18,7 +18,8 @@
     "S": false,
     "Q": false,
     "env": false,
-    "prepareJs": false
+    "prepareJs": false,
+    "skip": false
   },
   "immed": true,
   "latedef": true,
