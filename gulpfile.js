@@ -268,15 +268,19 @@ gulp.task('stop-sc', function(done) {
 });
 
 gulp.task('pre-midway', function() {
+  var seq = ['start-proxy'];
   if(args.sauce && !args['nosc']) {
-    return runSequence('start-sc', 'start-proxy');
+    seq.unshift('start-sc');
   }
+  return runSequence(seq);
 });
 
 gulp.task('post-midway', function() {
+  var seq = ['stop-proxy'];
   if(args.sauce && !args['nosc']) {
-    return runSequence('stop-sc', 'stop-proxy');
+    seq.unshift('stop-sc');
   }
+  return runSequence(seq);
 });
 
 gulp.task('travis', function() {
