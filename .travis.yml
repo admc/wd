@@ -34,9 +34,14 @@ matrix:
     - node_js: "0.11"
       env: CONFIG=chrome_e2e
 before_script:
+  - sudo sysctl -w net.ipv4.tcp_tw_reuse=1
+  - sudo sysctl -w net.ipv4.tcp_tw_recycle=1
+  - sudo sysctl -w net.ipv4.tcp_fin_timeout=15
   # - ./node_modules/.bin/install_sauce_connect
   # - ./node_modules/.bin/travis_start_sauce_connect
   - npm install -g gulp mocha bdd-with-opts
   - npm update
 script:
   - "gulp travis --config $CONFIG --sauce"
+
+lib/commands.js
