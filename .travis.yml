@@ -6,6 +6,8 @@ branches:
 language: node_js
 node_js:
   - "0.10"
+addons:
+  sauce_connect: true
 env:
   global:
     - secure: "P6rr9zRzJfodqw7dCKZAQtBi8rcMwYAhXwyk27k+8tRbKdoMyxPDGByo1EEW\n39Y7W53gmXYgjb6FZcwwJ/d+yr6DpZuxbcGt75HmsHltJPTJB4OzXQCliod+\nMRw6VQmHdnZVMS2yHBc4OXrVfM99o4k2uNcq4dapgX8K3oflY5A="
@@ -42,4 +44,4 @@ before_script:
   - npm install -g gulp mocha bdd-with-opts
   - npm update
 script:
-  - "gulp travis --config $CONFIG --sauce"
+  - "gulp travis --config $CONFIG --sauce --nosc"
