@@ -180,14 +180,16 @@ gulp.task('test', function() {
 var server;
 gulp.task('start-proxy', function(done) {
   var proxy = httpProxy.createProxyServer({});
+  var proxyQueue;
+  if(args.throttle) {
+    proxyQueue = async.queue(function(task, done) {
 
-  var proxyQueue = async.queue(function(task, done) {
-
-    proxy.web(task.req, task.res, { target: 'http://127.0.0.1:' + task.port });
-    task.res.on('finish', function() {
-      done();
-    });
-  }, 5);
+      proxy.web(task.req, task.res, { target: 'http://127.0.0.1:' + task.port });
+      task.res.on('finish', function() {
+        done();
+      });
+    }, parseInt(args.throttle, 10));   
+  }
   server = require('http').createServer(function(req, res) {
     try {
       if(req.url.match(/^\/favicon/)) {
@@ -202,7 +204,11 @@ gulp.task('start-proxy', function(done) {
       var port = parseInt(m[1]);
       url.pathname = url.pathname.replace(re, '/');
       req.url = url.format();
-      proxyQueue.push({req: req, res: res, port: port});
+      if(args.throttle) {
+        proxyQueue.push({req: req, res: res, port: port});
+      } else {
+        proxy.web(req, res, { target: 'http://127.0.0.1:' + port });
+      }
     } catch (err) {
       try{
         console.error('Proxy error for: ', req.url + ':' , err);
