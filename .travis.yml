@@ -43,5 +43,3 @@ before_script:
   - npm update
 script:
   - "gulp travis --config $CONFIG --sauce"
-
-lib/commands.js
