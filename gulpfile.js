@@ -250,7 +250,7 @@ gulp.task('start-sc', function(done) {
     username: process.env.SAUCE_USERNAME,
     accessKey: process.env.SAUCE_ACCESS_KEY,    
     //verbose: process.env.SAUCE_CONNECT_VERBOSE,
-    directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
+    //directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
     logger: function(mess) {console.log(mess);}
   };
   if(process.env.TRAVIS_JOB_NUMBER) {
