@@ -2,6 +2,11 @@
 
 ## 0.3.x Release
 
+### 0.3.4
+
+- error fix
+- http timeout fix 
+
 ### 0.3.3
 
   - new IME mjson methods.
