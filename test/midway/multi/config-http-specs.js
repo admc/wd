@@ -135,7 +135,6 @@ describe('config-http ' + env.ENV_DESC, function() {
     var relUrl = matcher[2];
     should.exist(relUrl);
     wd.configureHttp({baseUrl: baseUrl});
-
     promiseChainRemote();
     return browser
       .init(buildDesired( this.runnable().parent.title + " #1"))

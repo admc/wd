@@ -48,9 +48,6 @@ if(env.ANDROID){
   env.TIMEOUT = 300000;
 }
 
-env.MIDWAY_ROOT_URL = "http://localhost:" + env.PROXY_PORT + '/' + 
-  env.EXPRESS_PORT;
-
 env.SAUCE_CONNECT = toBoolean(process.env.SAUCE_CONNECT);
 env.SAUCE = toBoolean(process.env.SAUCE) || env.SAUCE_CONNECT;
 
@@ -60,6 +57,13 @@ env.TRAVIS_BUILD_NUMBER = process.env.TRAVIS_BUILD_NUMBER;
 
 if( env.TRAVIS_JOB_ID ){
   env.TRAVIS = true;
+}
+
+if(env.SAUCE) {
+  env.MIDWAY_ROOT_URL = "http://localhost:" + env.PROXY_PORT + '/' + 
+    env.EXPRESS_PORT;
+} else {
+  env.MIDWAY_ROOT_URL = "http://localhost:" +  env.EXPRESS_PORT;
 }
 
 if(env.SAUCE){

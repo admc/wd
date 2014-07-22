@@ -18,7 +18,8 @@ require('./test/helpers/env');
 args.browsers = (args.browser || 'chrome').split(',');
 args.sauce = args.sauce ? true : false;
 
-var BROWSERS = ['chrome', 'firefox', 'explorer'];
+var BROWSERS = ['chrome', 'firefox'];
+if (args.sauce) { BROWSERS.push('explorer'); }
 var MOBILE_BROWSERS = ['android', 'ios', 'iphone', 'ipad', 'android_phone'];
 process.env.SAUCE_CONNECT_VERSION = process.env.SAUCE_CONNECT_VERSION || '4.3';
 process.env.SAUCE_CONNECT_VERBOSE = false;
