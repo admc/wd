@@ -539,30 +539,10 @@ node_modules/.bin/install_chromedriver
 #Run the selenium server with chromedriver:
 node_modules/.bin/start_selenium_with_chromedriver
 
-cd wd
-npm install
-make test
+#Run the test
+gulp test
 
-# look at the results!
-```
-
-## Run the tests on Sauce Labs cloud!
-
-```
-# Install Sauce Connect
-node_modules/.bin/install_sauce_connect
-
-# Set the following env variales: SAUCE_USERNAME and SAUCE_ACCESS_KEY
-
-# Start Sauce Connect:
-node_modules/.bin/start_sauce_connect
-
-cd wd
-npm install
-make test_e2e_sauce # may be run without sauce connect
-make test_midway_sauce_connect
-
-# look at the results on Saucelabs site!
+//TODO: better doc + sauce test doc
 ```
 
 ## Adding new method / Contributing
