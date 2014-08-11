@@ -221,7 +221,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 List all available engines on the machine.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+availableIMEEngines(cb) -&gt; cb(err, engines)<br>
 </td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Get the name of the active IME engine.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+activeIMEEngine(cb) -&gt; cb(err, activeEngine)<br>
 </td>
 </tr>
 <tr>
@@ -239,7 +239,7 @@ GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessio
 Indicates whether IME input is active at the moment (not if it's available).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+activatedIMEEngine(cb) -&gt; cb(err, active)<br>
 </td>
 </tr>
 <tr>
@@ -248,7 +248,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 De-activates the currently-active IME engine.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+deactivateIMEEngine(cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -257,7 +257,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Make an engines that is available (appears on the listreturned by getAvailableEngines) active.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-NA
+activateIMEEngine(cb, engine) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -1221,20 +1221,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Perform touch action (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-<p>
-performTouch(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
-performTouch(touchGestures) -&gt; cb(err, touchStateObjects)<br>
-</p>
-<p>
-performTouchAction(element, touchGestures) -&gt; cb(err, touchStateObjects)<br>
-performTouchAction(touchGestures) -&gt; cb(err, touchStateObjects)<br>
-</p>
-<p>
-element.performTouch(touchGestures) -&gt; cb(err, touchStateObjects)<br>
-</p>
-<p>
-element.performTouchAction(touchGestures) -&gt; cb(err, touchStateObjects)<br>
-</p>
+performTouchAction(touchAction) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -1244,18 +1231,11 @@ Perform multitouch action (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-performMultiTouch(element, actions) -&gt; cb(err, touchStateObjects)<br>
-performMultiTouch(actions) -&gt; cb(err, touchStateObjects)<br>
+performMultiAction(element, multiAction) -&gt; cb(err, touchStateObjects)<br>
+performMultiAction(multiAction) -&gt; cb(err, touchStateObjects)<br>
 </p>
 <p>
-performMultiTouchAction(element, actions) -&gt; cb(err, touchStateObjects)<br>
-performMultiTouchAction(actions) -&gt; cb(err, touchStateObjects)<br>
-</p>
-<p>
-element.performMultiTouch(actions) -&gt; cb(err, touchStateObjects)<br>
-</p>
-<p>
-element.performMultiTouchAction(actions) -&gt; cb(err, touchStateObjects)<br>
+element.performMultiAction(actions) -&gt; cb(err, touchStateObjects)<br>
 </p>
 </td>
 </tr>
@@ -1391,10 +1371,10 @@ Push file to device (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-pushFileToDevice(pathOnDevice, base64Data, cb) -&gt; cb(isInstalled, err)<br>
+pushFileToDevice(pathOnDevice, base64Data, cb) -&gt; cb(err)<br>
 </p>
 <p>
-pushFile(pathOnDevice, base64Data, cb) -&gt; cb(isInstalled, err)<br>
+pushFile(pathOnDevice, base64Data, cb) -&gt; cb(err)<br>
 </p>
 </td>
 </tr>
@@ -1595,7 +1575,10 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Hide keyboard (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+hideKeyboard() -&gt; cb(err)<br>
 hideKeyboard(keyName, cb) -&gt; cb(err)<br>
+hideKeyboard({strategy: 'pressKey', key:'&lt;key&gt;'}) -&gt; cb(err)<br>
+hideKeyboard({strategy: 'tapOutside'}) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -1975,6 +1958,22 @@ wd
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 wd.removeMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/pull_folder
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+pullFolderFromDevice(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/pull_folder
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+pullFolder(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
 </td>
 </tr>
 </tbody>
