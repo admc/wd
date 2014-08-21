@@ -152,5 +152,21 @@ Get the status of the html5 application cache.
 NA
 </td>
 </tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/pull_folder
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+pullFolderFromDevice(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/pull_folder
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+pullFolder(pathOnDevice, cb) -&gt; cb(base64EncodedData, err)<br>
+</td>
+</tr>
 </tbody>
 </table>
