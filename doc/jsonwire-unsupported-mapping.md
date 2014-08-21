@@ -10,51 +10,6 @@
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/ime/available_engines">/session/:sessionId/ime/available_engines</a><br>
-List all available engines on the machine.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/ime/active_engine">/session/:sessionId/ime/active_engine</a><br>
-Get the name of the active IME engine.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/ime/activated">/session/:sessionId/ime/activated</a><br>
-Indicates whether IME input is active at the moment (not if it's available).
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/ime/deactivate">/session/:sessionId/ime/deactivate</a><br>
-De-activates the currently-active IME engine.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/ime/activate">/session/:sessionId/ime/activate</a><br>
-Make an engines that is available (appears on the listreturned by getAvailableEngines) active.
-</td>
-<td style="border: 1px solid #ccc; padding: 5px;">
-NA
-</td>
-</tr>
-<tr>
-<td style="border: 1px solid #ccc; padding: 5px;">
 GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id">/session/:sessionId/element/:id</a><br>
 Describe the identified element.
 </td>

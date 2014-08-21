@@ -109,6 +109,7 @@
   "POST /session/:sessionId/appium/device/app_installed": "Check if the app is installed (mjsonWire).",
   "POST /session/:sessionId/appium/device/push_file": "Push file to device (mjsonWire).",
   "POST /session/:sessionId/appium/device/pull_file": "Pull file from device (mjsonWire).",
+  "POST /session/:sessionId/appium/device/pull_folder": "Pull folder from device (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_airplane_mode": "Toggle airplane mode (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_wifi": "Toggle wifi (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_location_services": "Toggle location services (mjsonWire).",
