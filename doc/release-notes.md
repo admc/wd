@@ -2,10 +2,14 @@
 
 ## 0.3.x Release
 
+### 0.3.5
+
+  - mjson element.setText method
+
 ### 0.3.4
 
-- error fix
-- http timeout fix 
+  - error fix
+  - http timeout fix 
 
 ### 0.3.3
 
