@@ -2,6 +2,10 @@
 
 ## 0.3.x Release
 
+### 0.3.6
+
+  - added startActivity method
+
 ### 0.3.5
 
   - mjson element.setText method
