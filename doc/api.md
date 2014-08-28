@@ -1323,6 +1323,17 @@ toggleData(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/start_activity">/session/:sessionId/appium/device/start_activity</a><br>
+Start an Android activity (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+startActivity(options, cb) -&gt; cb(err)<br>
+Start an arbitrary Android activity during a session. The 'options' parameter should<br>
+implement the interface {appPackage, appActivity, [appWaitPackage], [appWaitActivity]}.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/launch">/session/:sessionId/appium/app/launch</a><br>
 Launch app (mjsonWire).
 </td>
@@ -1697,7 +1708,7 @@ extra
 <td style="border: 1px solid #ccc; padding: 5px;">
 Equivalent to the python sendKeys binding, but replaces texts instead of keeping original. Upload file if<br>
 a local file is detected, otherwise behaves like type.<br>
-element.replaceKeys(keys, cb) -&gt; cb(err)<br>
+element.setText(keys, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>

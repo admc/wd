@@ -114,6 +114,7 @@
   "POST /session/:sessionId/appium/device/toggle_wifi": "Toggle wifi (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_location_services": "Toggle location services (mjsonWire).",
   "POST /session/:sessionId/appium/device/toggle_data": "Toggle data (mjsonWire).",
+  "POST /session/:sessionId/appium/device/start_activity": "Start an Android activity (mjsonWire).",
   "POST /session/:sessionId/appium/app/launch": "Launch app (mjsonWire).",
   "POST /session/:sessionId/appium/app/close": "Close app (mjsonWire).",
   "POST /session/:sessionId/appium/app/reset": "Reset app (mjsonWire).",
