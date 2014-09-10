@@ -2,6 +2,10 @@
 
 ## 0.3.x Release
 
+### 0.3.7
+
+  - added getSettings() and updateSettings methods
+
 ### 0.3.6
 
   - added startActivity method
