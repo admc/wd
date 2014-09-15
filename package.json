@@ -1,11 +1,12 @@
 {
   "name": "wd",
   "description": "WebDriver/Selenium 2 node.js client",
-  "tags": [
-    "web",
+  "keywords": [
+    "testing",
     "automation",
-    "browser",
-    "javascript"
+    "webdriver",
+    "webdriverjs",
+    "selenium"
   ],
   "version": "0.3.7",
   "author": "Adam Christian <adam.christian@gmail.com>",
