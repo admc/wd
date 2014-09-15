@@ -1265,6 +1265,12 @@ lockDevice(seconds, cb) -&gt; cb(err)<br>
 <p>
 lock(seconds, cb) -&gt; cb(err)<br>
 </p>
+<p>
+unlockDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+unlock(cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1463,6 +1469,17 @@ toggleDataOnDevice(cb) -&gt; cb(err)<br>
 <p>
 toggleData(cb) -&gt; cb(err)<br>
 </p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/start_activity">/session/:sessionId/appium/device/start_activity</a><br>
+Start an Android activity (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+startActivity(options, cb) -&gt; cb(err)<br>
+Start an arbitrary Android activity during a session. The 'options' parameter should<br>
+implement the interface {appPackage, appActivity, [appWaitPackage], [appWaitActivity]}.<br>
 </td>
 </tr>
 <tr>
@@ -1841,7 +1858,7 @@ extra
 <td style="border: 1px solid #ccc; padding: 5px;">
 Equivalent to the python sendKeys binding, but replaces texts instead of keeping original. Upload file if<br>
 a local file is detected, otherwise behaves like type.<br>
-element.replaceKeys(keys, cb) -&gt; cb(err)<br>
+element.setText(keys, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
@@ -1982,6 +1999,30 @@ wd
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 wd.removeMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/is_locked
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+isLocked(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: GET /session/:sessionId/appium/settings
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+settings(cb) -&gt; cb(err, settingsObject)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/settings
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+updateSettings(settingsObject, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 </tbody>

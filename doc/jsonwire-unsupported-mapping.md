@@ -152,5 +152,29 @@ Get the status of the html5 application cache.
 NA
 </td>
 </tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/is_locked
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+isLocked(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: GET /session/:sessionId/appium/settings
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+settings(cb) -&gt; cb(err, settingsObject)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/settings
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+updateSettings(settingsObject, cb) -&gt; cb(err)<br>
+</td>
+</tr>
 </tbody>
 </table>
