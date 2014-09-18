@@ -11,15 +11,17 @@ describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer'), functi
       .setOrientation('LANDSCAPE');
   });
 
-  it('browser.settings', function() {
-    return browser
-      .settings();
-  });
+  if (!env.SAUCE) {    
+    it('browser.settings', function() {
+      return browser
+        .settings();
+    });
 
-  it('browser.updateSettings', function() {
-    return browser
-      .updateSettings({'cyberdelia': 'open'})
-      .settings().should.eventually.have.property('cyberdelia');
-  });
+    it('browser.updateSettings', function() {
+      return browser
+        .updateSettings({'cyberdelia': 'open'})
+        .settings().should.eventually.have.property('cyberdelia');
+    });    
+  }
 
 });

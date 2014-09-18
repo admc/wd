@@ -27,9 +27,10 @@ module.exports = function(that, partials) {
       .then(function() {
         return browser
           .init(desired)
+          .sleep(500)
           .catch(function() {
             // trying one more time
-            return browser.init(desired);
+            return browser.init(desired).sleep(500);
           });
       });
   });
