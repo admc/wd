@@ -1121,6 +1121,12 @@ lockDevice(seconds, cb) -&gt; cb(err)<br>
 <p>
 lock(seconds, cb) -&gt; cb(err)<br>
 </p>
+<p>
+unlockDevice(cb) -&gt; cb(err)<br>
+</p>
+<p>
+unlock(cb) -&gt; cb(err)<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1849,6 +1855,30 @@ wd
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 wd.removeMethod(name, func)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/device/is_locked
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+isLocked(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: GET /session/:sessionId/appium/settings
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+settings(cb) -&gt; cb(err, settingsObject)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+MISSING: POST /session/:sessionId/appium/settings
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+updateSettings(settingsObject, cb) -&gt; cb(err)<br>
 </td>
 </tr>
 </tbody>
