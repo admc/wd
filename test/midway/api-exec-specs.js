@@ -172,12 +172,12 @@ describe('api-exec ' + env.ENV_DESC, function() {
         .safeExecuteAsync(jsScript).should.become('OK')
         .then(function() {
           return browser.safeExecuteAsync('123 invalid<script')
-            .should.be.rejectedWith(/status: 13/);
+            .should.be.rejectedWith(/status: (13|17)/);
       })
         .safeExecuteAsync(jsScriptWithArgs, [10, 5]).should.become('OK 15')
         .then(function() {
           return browser.safeExecuteAsync('123 invalid<script', [10, 5])
-            .should.be.rejectedWith(/status: 13/);
+            .should.be.rejectedWith(/status: (13|17)/);
       });
   });
 
@@ -244,7 +244,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .waitForConditionInBrowser(exprCond).should.eventually.be.ok
       .then(function() {
         return browser.waitForConditionInBrowser("totally #} wrong == expr")
-          .should.be.rejectedWith(/status: 13/);
+          .should.be.rejectedWith(/status: (13|17)/);
       })
       .setAsyncScriptTimeout(0);
   });

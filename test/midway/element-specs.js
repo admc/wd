@@ -198,30 +198,35 @@ describe('element ' + env.ENV_DESC, function() {
       });
   });
 
-  partials['element.sendKeys'] =
-    '<div id="theDiv">\n' +
-    '  <textarea></textarea>\n' +
-    '  <input></input>\n' +
-    '</div>\n';
-  it('element.sendKeys', function() {
-    return browser
-      .elementByCss("#theDiv textarea").then(function(el) {
-        var sequence = [
-          function() { return el.sendKeys("keys").getValue().should.become("keys"); },
-          function() { return el.sendKeys([100136872.21, {}])
-            .getValue().should.become("keys100136872.21" + {}.toString()); }
-        ];
-        return sequence.reduce(Q.when, new Q());
-      })
-      .elementByCss("#theDiv input").then(function(el) {
-        var filePath = path.resolve("test/mocha.opts");
-        return el.sendKeys(filePath).getValue().then(function(val) {
-          val.should.include('mocha.opts');
-          // check that the path was transformed, as the file was uploaded
-          val.should.not.include(filePath);
+
+  if(!env.SAUCE) {
+    // weird stuff with typing on Sauce at the moment, commenting
+    // until browser has been upgraded.
+    partials['element.sendKeys'] =
+      '<div id="theDiv">\n' +
+      '  <textarea></textarea>\n' +
+      '  <input></input>\n' +
+      '</div>\n';
+    it('element.sendKeys', function() {
+      return browser
+        .elementByCss("#theDiv textarea").then(function(el) {
+          var sequence = [
+            function() { return el.sendKeys("keys").getValue().should.become("keys"); },
+            function() { return el.sendKeys([100136872.21, {}])
+              .getValue().should.become("keys100136872.21" + {}.toString()); }
+          ];
+          return sequence.reduce(Q.when, new Q());
+        })
+        .elementByCss("#theDiv input").then(function(el) {
+          var filePath = path.resolve("test/mocha.opts");
+          return el.sendKeys(filePath).getValue().then(function(val) {
+            val.should.include('mocha.opts');
+            // check that the path was transformed, as the file was uploaded
+            val.should.not.include(filePath);
+          });
         });
-      });
-  });
+    });
+  }
 
   partials['element.clear'] =
     '<div id="theDiv"><textarea>Not clear</textarea></div>\n';

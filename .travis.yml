@@ -3,8 +3,7 @@ notifications:
 branches:
   only:
     - master
-language: objective-c
-# language: node_js
+language: node_js
 node_js:
   - "0.10"
 # addons:
@@ -18,17 +17,19 @@ env:
     - HTTP_RETRIES=3
     - HTTP_RETRY_DELAY=60000
     - DEBUG_CONNECTION=1
-    - CONCURRENCY=10
+    - CONCURRENCY=15
+    # - THROTTLE=5
     - VERBOSE=1
     - SAUCE_CONNECT_VERSION='4.3'
+    - SAUCE_CONNECT_VERBOSE=1
   matrix:
     - CONFIG=unit
     - CONFIG=multi
     - CONFIG=chrome
     - CONFIG=firefox
     - CONFIG=explorer    
-    - CONFIG=iphone
-    - CONFIG=ipad
+    # - CONFIG=iphone
+    # - CONFIG=ipad
 matrix:
   include:
     - node_js: "0.11"
@@ -37,13 +38,6 @@ matrix:
     - node_js: "0.11"
       env: CONFIG=chrome_e2e
 before_script:
-  # - sudo sysctl -w net.ipv4.tcp_tw_reuse=1
-  # - sudo sysctl -w net.ipv4.tcp_tw_recycle=1
-  # - sudo sysctl -w net.ipv4.tcp_fin_timeout=15
-  # - ./node_modules/.bin/install_sauce_connect
-  # - ./node_modules/.bin/travis_start_sauce_connect
-  - ./install-node.sh
   - npm install -g gulp mocha bdd-with-opts
-  - npm install
 script:
   - "gulp travis --config $CONFIG --sauce"

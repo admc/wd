@@ -124,7 +124,6 @@ describe('wait-for-2 ' + env.ENV_DESC, function() {
       .should.eventually.have.length(2)
       .execute( removeChildren )
       .execute( appendChild, [env.BASE_TIME_UNIT] )
-      .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
       .waitForElements("css selector", "#theDiv .child", promisedElsAsserter,
          2 * env.BASE_TIME_UNIT, 200)
       .should.eventually.have.length(2);

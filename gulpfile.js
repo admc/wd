@@ -55,7 +55,6 @@ function buildMochaOpts(opts) {
     flags: {
       u: 'bdd-with-opts',
       R: 'spec',
-      b: true,
       //R: 'nyan',      
     },
     bin: path.join(__dirname,  'node_modules/.bin/mocha'),
@@ -182,7 +181,8 @@ var server;
 gulp.task('start-proxy', function(done) {
   var proxy = httpProxy.createProxyServer({});
   var proxyQueue;
-  if(args.throttle) {
+  var throttle = args.throttle || process.env.THROTTLE;
+  if(throttle) {
     proxyQueue = async.queue(function(task, done) {
 
       proxy.web(task.req, task.res, { target: 'http://127.0.0.1:' + task.port });
@@ -205,7 +205,7 @@ gulp.task('start-proxy', function(done) {
       var port = parseInt(m[1]);
       url.pathname = url.pathname.replace(re, '/');
       req.url = url.format();
-      if(args.throttle) {
+      if(throttle) {
         proxyQueue.push({req: req, res: res, port: port});
       } else {
         proxy.web(req, res, { target: 'http://127.0.0.1:' + port });
@@ -250,23 +250,34 @@ gulp.task('start-sc', function(done) {
   var opts = {
     username: process.env.SAUCE_USERNAME,
     accessKey: process.env.SAUCE_ACCESS_KEY,    
-    //verbose: process.env.SAUCE_CONNECT_VERBOSE,
+    verbose: process.env.SAUCE_CONNECT_VERBOSE,
     directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
     logger: function(mess) {console.log(mess);}
   };
   if(process.env.TRAVIS_JOB_NUMBER) {
     opts.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
   }
-  sauceConnectLauncher(opts, function (err, _sauceConnectProcess) {
-    if (err) {
-      console.error(err.message);
-      done(err);
-      return;
-    }
-    sauceConnectProcess = _sauceConnectProcess;
-    console.log("Sauce Connect ready");
-    done();
-  });
+  var startTunnel = function(done, n) {
+    sauceConnectLauncher(opts, function (err, _sauceConnectProcess) {
+      if (err) {
+        if(n > 0) {
+          console.log('retrying sauce connect in 20 secs.');
+          setTimeout(function() {
+            startTunnel(done, n-1);
+          }, 20000);          
+        } else {
+          console.error(err.message);
+          done(err);          
+        }
+        return;
+      }
+      sauceConnectProcess = _sauceConnectProcess;
+      console.log("Sauce Connect ready");
+      done();
+    });
+  };
+
+  startTunnel(done, 3);
 });
 
 gulp.task('stop-sc', function(done) {

@@ -69,8 +69,10 @@ describe('init ' + env.ENV_DESC,function() {
 
       return browser
         .init(buildDesired( this.runnable().parent.title + " #4"))
-        .sessionCapabilities().should.eventually.have.property('platform', 'XP');
-    });
+        .sessionCapabilities().then(function(caps) {
+          ['XP','WINDOWS'].should.include(caps.platform);
+        });
+   });
 
     it("setting browser platform to LINUX", function() {
       browser.defaultCapabilities.browserName = 'chrome';
@@ -78,7 +80,9 @@ describe('init ' + env.ENV_DESC,function() {
 
       return browser
         .init(buildDesired( this.runnable().parent.title + " #5"))
-        .sessionCapabilities().should.eventually.have.property('platform', 'linux');
+        .sessionCapabilities().then(function(caps) {
+          caps.platform.toLowerCase().should.equal('linux');
+        });
     });
 
     it("configuring explorer in desired @saucelabs", function() {
