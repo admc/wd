@@ -8,7 +8,7 @@
     "webdriverjs",
     "selenium"
   ],
-  "version": "0.3.8",
+  "version": "0.4.0",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
