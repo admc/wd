@@ -7,8 +7,7 @@ var gulp = require('gulp'),
     _ = require('lodash'),
     args   = require('yargs').argv,
     urlLib = require('url'),
-    SpawnMocha = require('spawn-mocha-parallel'),
-    through = require('through'),
+    mochaStream = require('spawn-mocha-parallel').mochaStream,
     httpProxy = require('http-proxy'),
     sauceConnectLauncher = require('sauce-connect-launcher'),
     async = require('async');
@@ -26,28 +25,6 @@ process.env.SAUCE_CONNECT_VERBOSE = false;
 
 var PROXY_PORT = 5050;
 var expressPort = 3000; // incremented after each test to avoid colision
-
-function mocha(opts) {
-  var spawnMocha = new SpawnMocha(opts);
-  var stream = through(function write(file) {
-    spawnMocha.add(file.path);
-  }, function() {});
-  var errors = [];
-  spawnMocha.on('error', function(err) {
-    console.error(err.toString());
-    errors.push(err);
-  }).on('end', function() {
-    if(errors.length > 0) {
-      console.error('ERROR SUMMARY: ');
-      _(errors).each(function(err) {
-        console.error(err.toString());
-      });
-      stream.emit('error', "Some tests failed.");
-    }
-    stream.emit('end');
-  });
-  return stream;
-}
 
 function buildMochaOpts(opts) {
   
@@ -102,33 +79,37 @@ gulp.task('lint', function() {
 
 gulp.task('test-unit', function () {
   var opts = buildMochaOpts({ unit: true });
+  var mocha = mochaStream(opts);
   return gulp.src('test/specs/**/*-specs.js', {read: false})
-    .pipe(mocha(opts))
-    .on('error', console.warn.bind(console));
+    .pipe(mocha)
+    .on('error',  console.warn.bind(console));
 });
 
 gulp.task('test-midway-multi', function () {
   var opts = buildMochaOpts({ midway: true, browser: 'multi' });
+  var mocha = mochaStream(opts);
   return gulp.src('test/midway/multi/**/*-specs.js', {
     read: false})
-    .pipe(mocha(opts))
+    .pipe(mocha)
     .on('error', console.warn.bind(console));
 });
 
 _(BROWSERS).each(function(browser) {
   gulp.task('test-midway-' + browser, function () {
     var opts = buildMochaOpts({ midway: true, browser: browser });
+    var mocha = mochaStream(opts);
     return gulp.src([
         'test/midway/**/*-specs.js',
         '!test/midway/multi/**'
       ], {read: false})
-      .pipe(mocha(opts))
+      .pipe(mocha)
       .on('error', console.warn.bind(console));      
   });
   gulp.task('test-e2e-' + browser, function () {
     var opts = buildMochaOpts({ browser: browser });
+    var mocha = mochaStream(opts);
     return gulp.src('test/e2e/**/*-specs.js', {read: false})
-      .pipe(mocha(opts))
+      .pipe(mocha)
       .on('error', console.warn.bind(console));
   });
 });
@@ -136,13 +117,14 @@ _(BROWSERS).each(function(browser) {
 _(MOBILE_BROWSERS).each(function(browser) {
   gulp.task('test-midway-' + browser, function () {
     var opts = buildMochaOpts({ midway: true, browser: browser });
+    var mocha = mochaStream(opts);
     return gulp.src([
       'test/midway/api-nav-specs.js',
       'test/midway/api-el-specs.js',
       'test/midway/api-exec-specs.js',
       'test/midway/mobile-specs.js',
     ], {read: false})
-    .pipe(mocha(opts))
+    .pipe(mocha)
     .on('error', console.warn.bind(console));
   });
 });
