@@ -2,6 +2,9 @@
 
 ## 0.3.x Release
 
+### 0.3.9
+  - package upgrade
+
 ### 0.3.8
   - added unlockDevice method
   - chainable tap
