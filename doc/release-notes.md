@@ -2,6 +2,10 @@
 
 ## 0.3.x Release
 
+### 0.3.10
+  - package upgrade
+  - wd-no-defaults cap
+
 ### 0.3.9
   - package upgrade
 
