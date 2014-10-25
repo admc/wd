@@ -42,8 +42,10 @@ describe("init tests", function() {
           .filteringRequestBody(function(requestBody) {
             requestBody = JSON.parse(requestBody);
             console.log(typeof requestBody);
-            console.log(requestBody);          
-            should.not.exist(requestBody.desiredCapabilities.javascriptEnabled);          
+            console.log(requestBody);
+            should.not.exist(requestBody.desiredCapabilities.javascriptEnabled);
+            should.not.exist(requestBody.desiredCapabilities.wdNoDefaults);
+            should.not.exist(requestBody.desiredCapabilities['no-defaults']);
             done();
             return "*";
           })
@@ -58,6 +60,8 @@ describe("init tests", function() {
 
     test('device');
     test('deviceName');
-
+    test('wd-no-defaults');
+    test('wdNoDefaults');
   });
 });
+
