@@ -2,6 +2,9 @@
 
 ## 0.3.x Release
 
+### 0.3.11
+  - http retry on EPIPE
+
 ### 0.3.10
   - package upgrade
   - wd-no-defaults cap
