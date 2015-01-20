@@ -24,6 +24,8 @@ Breaking changes: TouchAction/MultiAction api update. See [release note](https:/
 npm install wd
 ```
 
+Note: wd depends on selenium standalone server. If you're not sure what that means, use [selenium-standalone](https://www.npmjs.com/package/selenium-standalone) to install and start a selenium server.
+
 ## Authors
 
   - Adam Christian ([admc](http://github.com/admc))
