@@ -14,7 +14,8 @@
 - [Site](http://admc.io/wd/)
 - [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
 
-## [release notes](https://github.com/admc/wd/blob/master/doc/release-notes.md).
+## Release Notes
+[here](https://github.com/admc/wd/blob/master/doc/release-notes.md)
 
 ## Install
 
