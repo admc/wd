@@ -41,6 +41,7 @@ to install and start a selenium server.
   - Bernard Kobos ([bernii](https://github.com/bernii))
   - Jason Carr ([maudineormsby](https://github.com/maudineormsby))
   - Matti Schneider ([MattiSG](https://github.com/MattiSG))
+  - Hernan Lopes ([hernan604](https://github.com/hernan604))
 
 ## License
 
