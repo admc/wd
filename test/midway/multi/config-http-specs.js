@@ -158,7 +158,8 @@ describe('config-http ' + env.ENV_DESC, function() {
       .init(buildDesired( this.runnable().parent.title + " #2"))
       .then(function() {
         return browser
-          .get(relUrl).should.eventually.include('WD Tests - config-http')
+          .get(relUrl)
+          .should.eventually.include('WD Tests - config-http')
           .should.be.rejected;
       })
       .configureHttp({baseUrl: baseUrl})

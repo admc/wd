@@ -38,7 +38,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   var noExtraMethodCheck = function() {
     _(extraMethods).keys().each(function(name) {
       should.not.exist(wd.PromiseChainWebdriver.prototype[name]);
-    });
+    }).value();
   };
 
   var partials = {};
@@ -56,7 +56,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   afterEach(function() {
     _(extraMethods).keys().each(function(name) {
       wd.removeMethod(name);
-    });
+    }).value();
     noExtraMethodCheck();
   });
 

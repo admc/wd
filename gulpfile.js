@@ -112,7 +112,7 @@ _(BROWSERS).each(function(browser) {
       .pipe(mocha)
       .on('error', console.warn.bind(console));
   });
-});
+}).value();
 
 _(MOBILE_BROWSERS).each(function(browser) {
   gulp.task('test-midway-' + browser, function () {
@@ -127,13 +127,13 @@ _(MOBILE_BROWSERS).each(function(browser) {
     .pipe(mocha)
     .on('error', console.warn.bind(console));
   });
-});
+}).value();
 
 gulp.task('test-midway', function() {
   var midwayTestTasks = [];
   _(args.browsers).each(function(browser) {
     midwayTestTasks.push('test-midway-' + browser);
-  });
+  }).value();
   return runSequence('pre-midway', midwayTestTasks)
     .finally(function() {
       return runSequence('post-midway');
@@ -144,7 +144,7 @@ gulp.task('test-e2e', function() {
   var e2eTestTasks = [];
   _(args.browsers).chain().without('multi').each(function(browser) {
     e2eTestTasks.push('test-e2e-' + browser);
-  });
+  }).value();
   if(e2eTestTasks.length > 0){
     return runSequence(e2eTestTasks);
   }
@@ -155,7 +155,7 @@ gulp.task('test', function() {
   _(BROWSERS).each(function(browser) {
      seq.push('test-midway-' + browser);
      seq.push('test-e2e-' + browser);
-  });
+  }).value();
   return runSequence.apply(null, seq);
 });
 
