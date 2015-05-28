@@ -27,16 +27,16 @@ var PROXY_PORT = 5050;
 var expressPort = 3000; // incremented after each test to avoid colision
 
 function buildMochaOpts(opts) {
-  
+
   var mochaOpts = {
     flags: {
       u: 'bdd-with-opts',
       R: 'spec',
-      //R: 'nyan',      
+      //R: 'nyan',
     },
     bin: path.join(__dirname,  'node_modules/.bin/mocha'),
     concurrency: args.concurrency | process.env.CONCURRENCY || 3
-  };  
+  };
   if(args.grep) {
     mochaOpts.flags.g = args.grep;
   }
@@ -46,7 +46,7 @@ function buildMochaOpts(opts) {
       // unit test
       delete env.SAUCE;
       delete env.SAUCE_USERNAME;
-      delete env.SAUCE_ACCESS_KEY;    
+      delete env.SAUCE_ACCESS_KEY;
     } else {
       // midway + e2e tests
       env.BROWSER = opts.browser;
@@ -62,7 +62,7 @@ function buildMochaOpts(opts) {
       }
       if(process.env.TRAVIS_JOB_NUMBER) {
         env.TUNNEL_IDENTIFIER  = process.env.TRAVIS_JOB_NUMBER;
-      }    
+      }
     }
     return env;
   };
@@ -103,7 +103,7 @@ _(BROWSERS).each(function(browser) {
         '!test/midway/multi/**'
       ], {read: false})
       .pipe(mocha)
-      .on('error', console.warn.bind(console));      
+      .on('error', console.warn.bind(console));
   });
   gulp.task('test-e2e-' + browser, function () {
     var opts = buildMochaOpts({ browser: browser });
@@ -132,18 +132,18 @@ _(MOBILE_BROWSERS).each(function(browser) {
 gulp.task('test-midway', function() {
   var midwayTestTasks = [];
   _(args.browsers).each(function(browser) {
-    midwayTestTasks.push('test-midway-' + browser);    
+    midwayTestTasks.push('test-midway-' + browser);
   });
   return runSequence('pre-midway', midwayTestTasks)
     .finally(function() {
-      return runSequence('post-midway');  
+      return runSequence('post-midway');
     });
 });
 
 gulp.task('test-e2e', function() {
   var e2eTestTasks = [];
   _(args.browsers).chain().without('multi').each(function(browser) {
-    e2eTestTasks.push('test-e2e-' + browser);    
+    e2eTestTasks.push('test-e2e-' + browser);
   });
   if(e2eTestTasks.length > 0){
     return runSequence(e2eTestTasks);
@@ -171,7 +171,7 @@ gulp.task('start-proxy', function(done) {
       task.res.on('finish', function() {
         done();
       });
-    }, parseInt(args.throttle, 10));   
+    }, parseInt(args.throttle, 10));
   }
   server = require('http').createServer(function(req, res) {
     try {
@@ -217,11 +217,11 @@ gulp.task('stop-proxy', function(done) {
   var t = setTimeout(function() {
     done();
   }, 5000);
-  if(server) { 
+  if(server) {
     server.close(function() {
       clearTimeout(t);
       done();
-    }); 
+    });
   }
   else { done(); }
 });
@@ -231,7 +231,7 @@ var sauceConnectProcess = null;
 gulp.task('start-sc', function(done) {
   var opts = {
     username: process.env.SAUCE_USERNAME,
-    accessKey: process.env.SAUCE_ACCESS_KEY,    
+    accessKey: process.env.SAUCE_ACCESS_KEY,
     verbose: process.env.SAUCE_CONNECT_VERBOSE,
     directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
     logger: function(mess) {console.log(mess);}
@@ -246,10 +246,10 @@ gulp.task('start-sc', function(done) {
           console.log('retrying sauce connect in 20 secs.');
           setTimeout(function() {
             startTunnel(done, n-1);
-          }, 20000);          
+          }, 20000);
         } else {
           console.error(err.message);
-          done(err);          
+          done(err);
         }
         return;
       }
