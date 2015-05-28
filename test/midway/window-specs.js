@@ -103,15 +103,15 @@ describe('window ' + env.ENV_DESC, skip('explorer'), function() {
         return browser
           .setWindowSize(size.width - 10, size.height - 5)
           .getWindowSize().then(function(newSize) {
-            newSize.width.should.equal(size.width - 10);
-            newSize.height.should.equal(size.height - 5);
+            newSize.width.should.be.within(size.width - 11, size.width - 9);
+            newSize.height.should.be.within(size.height - 6, size.height - 4);
           })
           .windowHandle(function(handle) {
             return browser
               .setWindowSize(size.width - 15, size.height - 10, handle)
               .getWindowSize().then(function(newSize) {
-                newSize.width.should.equal(size.width - 15);
-                newSize.height.should.equal(size.height - 10);
+                newSize.width.should.be.within(size.width - 16, size.width - 14);
+                newSize.height.should.be.within(size.height - 11, size.height - 9);
               });
           });
       });
