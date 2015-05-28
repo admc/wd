@@ -97,7 +97,8 @@ describe('window ' + env.ENV_DESC, skip('explorer'), function() {
   });
 
   partials['browser.setWindowSize'] = "";
-  it('browser.setWindowSize', function() {
+  it('browser.setWindowSize', skip('chrome'), function() {
+    // bug with chrome
     return browser
       .getWindowSize().then(function(size) {
         return browser
