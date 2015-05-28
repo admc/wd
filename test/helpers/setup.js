@@ -69,7 +69,7 @@ GLOBAL.mergeDesired = function(desired, extra){
     } else {
       desired[key] = extra[key] || desired[key];
     }
-  });
+  }).value();
   return desired;
 };
 

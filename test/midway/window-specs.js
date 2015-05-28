@@ -19,7 +19,7 @@ describe('window ' + env.ENV_DESC, skip('explorer'), function() {
           if(i>0) {
             seq.push(function() { return browser.window(handle).close(); });
           }
-        });
+        }).value();
         if(handles.length > 0) {
           seq.push(function() {return browser.window(handles[0]);});
         }

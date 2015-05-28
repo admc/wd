@@ -53,7 +53,7 @@ describe('add-methods - async' + env.ENV_DESC, function() {
   var noExtraMethodCheck = function() {
     _(allExtraMethodNames).each(function(name) {
       should.not.exist(wd.Webdriver.prototype[name]);
-    });
+    }).value();
   };
 
   beforeEach(function() {
@@ -63,7 +63,7 @@ describe('add-methods - async' + env.ENV_DESC, function() {
   afterEach(function() {
     _(allExtraMethodNames).each(function(name) {
       wd.removeMethod(name);
-    });
+    }).value();
     noExtraMethodCheck();
   });
 
@@ -72,7 +72,7 @@ describe('add-methods - async' + env.ENV_DESC, function() {
   it('wd.addAsyncMethod', function(done) {
     _(extraAsyncMethods).each(function(method, name) {
       wd.addAsyncMethod(name, method);
-    });
+    }).value();
     browser.sleepAndElementById('theDiv', function(err, el) {
       if(err) { return done(err); }
       el.should.exist;
@@ -99,7 +99,7 @@ describe('add-methods - async' + env.ENV_DESC, function() {
   it('wd.addElementAsyncMethod', function(done) {
     _(extraElementAsyncMethods).each(function(method, name) {
       wd.addElementAsyncMethod(name, method);
-    });
+    }).value();
     browser.elementById('div1', function(err, el) {
       if(err) { return done(err); }
       el.textTwice(function(err, result) {

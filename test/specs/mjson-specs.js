@@ -297,7 +297,7 @@ describe("mjson tests", function() {
         var el;
         browser
           .elementById('random').then(function(_el) { el = _el; })
-          .then(function() { 
+          .then(function() {
             nock.cleanAll();
             server
               .post('/session/1234/touch/multi/perform', {
@@ -318,27 +318,27 @@ describe("mjson tests", function() {
             var a1 = new wd.TouchAction().tap({x: 100, y: 200});
             var a2 = new wd.TouchAction().tap({x: 50, y: 25});
             var ma = new wd.MultiAction().add(a1, a2);
-            return browser.performMultiAction(el, ma); 
+            return browser.performMultiAction(el, ma);
           })
           .then(function() {
             var a1 = new wd.TouchAction().tap({x: 100, y: 200});
             var a2 = new wd.TouchAction().tap({x: 50, y: 25});
             var ma = new wd.MultiAction().add(a1, a2);
-            return browser.performMultiAction(el, ma); 
+            return browser.performMultiAction(el, ma);
           })
           .then(function() {
             var a1 = new wd.TouchAction().tap({x: 100, y: 200});
             var a2 = new wd.TouchAction().tap({x: 50, y: 25});
             var ma = new wd.MultiAction().add(a1, a2);
-            return el.performMultiAction(ma);             
+            return el.performMultiAction(ma);
           })
           .then(function() {
             var a1 = new wd.TouchAction().tap({x: 100, y: 200});
             var a2 = new wd.TouchAction().tap({x: 50, y: 25});
             var ma = new wd.MultiAction(el).add(a1, a2);
-            return ma.perform();             
+            return ma.perform();
           })
-          .then(function() { 
+          .then(function() {
             nock.cleanAll();
             server
               .post('/session/1234/touch/multi/perform', {
@@ -1059,7 +1059,7 @@ describe("mjson tests", function() {
             el = _el;
             done();
           });
-        },        
+        },
         function(done) {
           nock.cleanAll();
           server
@@ -1081,7 +1081,7 @@ describe("mjson tests", function() {
         function(done) {
           var a1 = new wd.TouchAction().tap({x: 100, y: 200});
           var a2 = new wd.TouchAction().tap({x: 50, y: 25});
-          var ma = new wd.MultiAction().add(a1, a2);          
+          var ma = new wd.MultiAction().add(a1, a2);
           browser.performMultiAction(el, ma, function(err, res) {
             should.not.exist(err);
             res.should.exist;
@@ -1091,7 +1091,7 @@ describe("mjson tests", function() {
         function(done) {
           var a1 = new wd.TouchAction().tap({x: 100, y: 200});
           var a2 = new wd.TouchAction().tap({x: 50, y: 25});
-          var ma = new wd.MultiAction().add(a1, a2);          
+          var ma = new wd.MultiAction().add(a1, a2);
           el.performMultiAction(ma, function(err, res) {
             should.not.exist(err);
             res.should.exist;
@@ -1101,7 +1101,7 @@ describe("mjson tests", function() {
         function(done) {
           var a1 = new wd.TouchAction().tap({x: 100, y: 200});
           var a2 = new wd.TouchAction().tap({x: 50, y: 25});
-          var ma = new wd.MultiAction(el).add(a1, a2);          
+          var ma = new wd.MultiAction(el).add(a1, a2);
           ma.perform(function(err, res) {
             should.not.exist(err);
             res.should.exist;
@@ -1124,11 +1124,11 @@ describe("mjson tests", function() {
               value: [{'not sure': '0'}],
             });
           done();
-        },        
+        },
         function(done) {
           var a1 = new wd.TouchAction().tap({x: 100, y: 200});
           var a2 = new wd.TouchAction().tap({x: 50, y: 25});
-          var ma = new wd.MultiAction().add(a1, a2);          
+          var ma = new wd.MultiAction().add(a1, a2);
           browser.performMultiAction(ma, function(err, res) {
             should.not.exist(err);
             res.should.exist;
@@ -1138,7 +1138,7 @@ describe("mjson tests", function() {
         function(done) {
           var a1 = new wd.TouchAction().tap({x: 100, y: 200});
           var a2 = new wd.TouchAction().tap({x: 50, y: 25});
-          var ma = new wd.MultiAction(browser).add(a1, a2);          
+          var ma = new wd.MultiAction(browser).add(a1, a2);
           ma.perform(function(err, res) {
             should.not.exist(err);
             res.should.exist;
