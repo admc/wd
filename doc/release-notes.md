@@ -2,6 +2,12 @@
 
 ## 0.3.x Release
 
+### 0.3.12
+  - geolocation fix
+  - package update
+  - lodash upgrade
+  - doc fixes
+
 ### 0.3.11
   - http retry on EPIPE
 
