@@ -78,7 +78,7 @@
     "yargs": "~3.9.1"
   },
   "scripts": {
-    "test": "make test",
-    "test_sauce": "make test_e2e_sauce"
+    "test": "gulp test-unit",
+    "all_tests": "gulp test"
   }
 }

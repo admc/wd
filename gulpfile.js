@@ -32,7 +32,7 @@ function buildMochaOpts(opts) {
     flags: {
       u: 'bdd-with-opts',
       R: 'spec',
-      //R: 'nyan',
+      c: true
     },
     bin: path.join(__dirname,  'node_modules/.bin/mocha'),
     concurrency: args.concurrency | process.env.CONCURRENCY || 3
