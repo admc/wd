@@ -258,10 +258,10 @@ describe("mjson tests", function() {
               sessionId: '1234',
               value: {ELEMENT: '0'},
             })
-            .post('/session/1234/touch/perform', [
+            .post('/session/1234/touch/perform', {"actions": [
               {"action":"press","options":{x: 100, y: 5}},
               {"action":"release","options":{}}
-            ])
+            ]})
             .times(2)
             .reply(200, {
               status: 0,
@@ -1007,7 +1007,7 @@ describe("mjson tests", function() {
           sessionId: '1234',
           value: {ELEMENT: '0'},
         })
-        .post('/session/1234/touch/perform', [{"action":"tap","options":{}}])
+        .post('/session/1234/touch/perform', {"actions": [{"action":"tap","options":{}}]})
         .times(2)
         .reply(200, {
           status: 0,
