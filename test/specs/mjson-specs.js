@@ -985,6 +985,19 @@ describe("mjson tests", function() {
           .activeIMEEngine()
           .nodeify(done);
       });
+
+      it("getDeviceTime", function (done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/appium/device/system_time')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .getDeviceTime()
+          .nodeify(done);
+      });
     });
   });
 
