@@ -172,7 +172,7 @@ node lib/bin.js shell
 Then within the shell:
 ```
 ): wd shell
-> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey")
+> x = wd.remote() or wd.remote("ondemand.saucelabs.com", 80, "username", "apikey") or wd.remote("hub.browserstack.com", 80, "username", "apikey")
 
 > x.init() or x.init({desired capabilities override})
 > x.get("http://www.url.com")
@@ -208,6 +208,8 @@ var browser = wd.remote();
 var browser = wd.remote('localhost');
 // or
 var browser = wd.remote('localhost', 8888);
+// or
+var browser = wd.remote("hub.browserstack.com", 80, "username", "apikey");
 // or
 var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
 ```
@@ -247,6 +249,8 @@ var browser = wd.remote({
 ```js
 var browser = wd.remote('http://localhost:4444/wd/hub');
 // or
+var browser = wd.remote('http://user:apiKey@hub.browserstack.com/wd/hub');
+// or
 var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 ```
 
@@ -257,6 +261,8 @@ var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 ```js
 var url = require('url');
 var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
+// or
+var browser = wd.remote(url.parse('http://user:apiKey@hub.browserstack.com:80/wd/hub'));
 // or
 var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 ```
@@ -529,7 +535,7 @@ Sauce Labs cloud.
 
 ### Appium
 
-Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms/appium).
+Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms/appium) or [BrowserStack](https://www.browserstack.com/automate).
 
 ## Run the tests!
 
