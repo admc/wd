@@ -52,10 +52,8 @@ describe('promise no-chain ' + env.ENV_DESC, function() {
     return browser.elementById("submit").then(function(el) {
       return browser.clickElement(el);
     }).then(function() {
-      /* jshint evil: true */
       return browser.eval("window.location.href");
     }).should.eventually.include("http://");
   });
 
 });
-

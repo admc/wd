@@ -14,9 +14,11 @@ describe('basic ' + env.ENV_DESC, function() {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['e2e']
     };
+    var desired = mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null );
+    desired.allowW3C = true;
     return browser
       .configureLogging()
-      .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ));
+      .init(desired);
   });
 
   beforeEach(function() {
@@ -41,9 +43,24 @@ describe('basic ' + env.ENV_DESC, function() {
 
   it("submit element should be clicked", function() {
     return browser
-      .elementById("submit")
-      .click()
-      .eval("window.location.href").should.eventually.include("http://");
+      .elementByCss("#submit")
+      .click();
   });
 
+  it("should send keys", function () {
+    return browser
+      .elementByCss("#comments")
+      .sendKeys("Hello world");
+  });
+
+  it("should retrieve the page source", function () {
+    return browser
+      .source()
+      .should.eventually.include('<html');
+  });
+
+  it("should retrieve screenshot", function () {
+    return browser
+      .takeScreenshot();
+  });
 });

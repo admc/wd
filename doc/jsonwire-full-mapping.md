@@ -427,6 +427,7 @@ elementByTagName(value, cb) -&gt; cb(err, element)<br>
 elementByXPath(value, cb) -&gt; cb(err, element)<br>
 elementByCss(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -452,6 +453,7 @@ elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 elementsByIosUIAutomation(value, cb) -&gt; cb(err, elements)<br>
+elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
 elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -470,6 +472,7 @@ elementByTagNameOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChainOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdOrNull(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -488,6 +491,7 @@ elementByTagNameIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChainIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdIfExists(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -506,6 +510,7 @@ hasElementByTagName(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByCss(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByIosUIAutomation(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByIosClassChain(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAndroidUIAutomator(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAccessibilityId(value, cb) -&gt; cb(err, boolean)<br>
 </p>
@@ -549,6 +554,7 @@ element.elementByTagName(value, cb) -&gt; cb(err, element)<br>
 element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
 element.elementByCss(value, cb) -&gt; cb(err, element)<br>
 element.elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+element.elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
 element.elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 element.elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -574,6 +580,7 @@ element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByIosUIAUtomation(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -1016,7 +1023,7 @@ Flick on the touch screen using finger motion events.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-flick(xSpeed, ySpeed, swipe, cb) -&gt; cb(err)<br>
+flick(xspeed, yspeed, swipe, cb) -&gt; cb(err)<br>
 Flicks, starting anywhere on the screen.<br>
 flick(element, xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 Flicks, starting at element center.<br>
@@ -1303,6 +1310,18 @@ metastate is optional.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/long_press_keycode">/session/:sessionId/appium/device/long_press_keycode</a><br>
+Press and hold a particular key code on the device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+longPressKeycode(keycode, metastate, cb) -&gt; cb(err)<br>
+metastate is optional.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/rotate">/session/:sessionId/appium/device/rotate</a><br>
 Rotate device (mjsonWire).
 </td>
@@ -1507,6 +1526,28 @@ implement the interface {appPackage, appActivity, [appWaitPackage], [appWaitActi
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/get_clipboard">/session/:sessionId/appium/device/get_clipboard</a><br>
+Get the content of the system clipboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getClipboard(contentType, cb) -&gt; cb(err)<br>
+Return clipboard content as base64-encoded string or an empty string if the clipboard is empty<br>
+The type of the content to get: plaintext, image, url. Android supports only plaintext<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/set_clipboard">/session/:sessionId/appium/device/set_clipboard</a><br>
+Set the content of the system clipboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setClipboard(content, contentType, cb) -&gt; cb(err)<br>
+Content is the actual base64 encoded clipboard content<br>
+Supported content type: plaintext, image, url. Android supports only plaintext<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/launch">/session/:sessionId/appium/app/launch</a><br>
 Launch app (mjsonWire).
 </td>
@@ -1625,6 +1666,15 @@ setNetworkConnection(type, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/appium/device/is_keyboard_shown">/session/:sessionId/appium/device/is_keyboard_shown</a><br>
+Whether or not the soft keyboard is shown (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+isKeyboardShown() -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/hide_keyboard">/session/:sessionId/appium/device/hide_keyboard</a><br>
 Hide keyboard (mjsonWire).
 </td>
@@ -1642,6 +1692,27 @@ Open Notifications (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 openNotifications(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/performanceData/types">/session/:sessionId/appium/performanceData/types</a><br>
+Get the types of system state which is supported like cpu, memory, network traffic, and battery (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getSupportedPerformanceDataTypes(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/getPerformanceData">/session/:sessionId/appium/getPerformanceData</a><br>
+Get the system state like cpu, memory, network traffic, and battery (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+getPerformanceData(packageName, dataType, dataReadTimeout, cb) -&gt; cb(err)<br>
+dataReadTimeout is optional.<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1783,6 +1854,7 @@ waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el
 waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByIosClassChain(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
@@ -1804,6 +1876,7 @@ waitForElementsByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, e
 waitForElementsByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
 waitForElementsByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
 waitForElementsByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementsByIosClassChain(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementsByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementsByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>

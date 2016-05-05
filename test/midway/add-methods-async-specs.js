@@ -1,4 +1,5 @@
 require('../helpers/setup');
+var _ = require('lodash');
 
 describe('add-methods - async' + env.ENV_DESC, function() {
   var browser;
@@ -47,7 +48,7 @@ describe('add-methods - async' + env.ENV_DESC, function() {
   };
 
   var allExtraMethodNames = _.union(
-    _(extraAsyncMethods).keys().value()
+    _(extraAsyncMethods).keys()
   );
 
   var noExtraMethodCheck = function() {

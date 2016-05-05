@@ -2,7 +2,6 @@
 // run with: mocha --harmony examples/promise/mocha-harmony.js
 
 /* global describe, it, before , beforeEach, after*/
-/* jshint moz: true, evil: true */
 
 require('colors');
 var chai = require("chai");
@@ -57,4 +56,3 @@ describe("mocha with generators", function() {
   }));
 
 });
-

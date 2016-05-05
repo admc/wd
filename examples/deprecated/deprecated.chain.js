@@ -22,7 +22,6 @@ browser.on('http', function(meth, path, data) {
   console.log(' > ' + meth.magenta, path, (data || '').grey);
 });
 
-/* jshint evil: true */
 browser
   .chain()
   .init({ browserName: 'chrome' })

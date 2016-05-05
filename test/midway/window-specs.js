@@ -1,4 +1,5 @@
 require('../helpers/setup');
+var _ = require('lodash');
 
 // disabling because of random errors on sauce
 describe('window ' + env.ENV_DESC, skip('explorer'), function() {

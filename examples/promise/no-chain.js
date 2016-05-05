@@ -34,7 +34,6 @@ browser
   })
   .then(function (el) { return browser.clickElement(el); })
   .then(function () {
-    /* jshint evil: true */
     return browser.eval("window.location.href");
   })
   .then(function (href) { href.should.include('guinea-pig2'); })

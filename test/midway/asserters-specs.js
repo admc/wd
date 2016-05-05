@@ -45,7 +45,7 @@ describe('asserters ' + env.ENV_DESC, function() {
     return browser
       .execute( appendChild, [env.BASE_TIME_UNIT] )
       .elementByCss("#theDiv .child").should.be.rejectedWith(/status: 7/)
-      .waitForElementByCss("#theDiv .child", asserters.nonEmptyText ,2 * env.BASE_TIME_UNIT)
+      .waitForElementByCss("#theDiv .child", asserters.nonEmptyText, 2 * env.BASE_TIME_UNIT)
       .text().should.become('a waitFor child');
   });
 

@@ -7,7 +7,6 @@ describe("async callback tests", function() {
 
   before(function(done) {
     server = nock('http://127.0.0.1:5555').filteringRequestBody(/.*/, '*');
-    server.log(console.log);
     server.post('/wd/hub/session', '*').reply(303, "OK", {
       'Location': '/wd/hub/session/1234'
     }).get('/wd/hub/session/1234').reply(200, {
@@ -63,7 +62,6 @@ describe("promise tests", function() {
   var server, browser;
   before(function(done) {
     server = nock('http://127.0.0.1:5555').filteringRequestBody(/.*/, '*');
-    server.log(console.log);
     server.post('/wd/hub/session', '*').reply(303, "OK", {
       'Location': '/wd/hub/session/1234'
     }).get('/wd/hub/session/1234').reply(200, {

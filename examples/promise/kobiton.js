@@ -1,23 +1,25 @@
-var username = process.env.SAUCE_USERNAME || "SAUCE_USERNAME";
-var accessKey = process.env.SAUCE_ACCESS_KEY || "SAUCE_ACCESS_KEY";
+var username = process.env.KOBITON_USERNAME || "KOBITON_USERNAME";
+var accessKey = process.env.KOBITON_ACCESS_KEY || "KOBITON_ACCESS_KEY";
 
 require('colors');
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
+
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd;
-try {
-  wd = require('wd');
-} catch( err ) {
-  wd = require('../../lib/main');
+var wd = require('wd');
+
+var kobitonServer = {
+  protocol: 'https',
+  host: 'api.kobiton.com',
+  auth: process.env.KOBITON_USERNAME + ':' + process.env.KOBITON_ACCESS_KEY
 }
 
 // enables chai assertion chaining
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-var browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, username, accessKey);
+var browser = wd.promiseChainRemote(kobitonServer);
 
 // optional extra logging
 browser.on('status', function(info) {
@@ -31,21 +33,25 @@ browser.on('http', function(meth, path, data) {
 });
 
 var desired = {
-  browserName:'iexplore',
-  version:'9',
-  platform:'Windows 2008',
-  tags: ["examples"],
-  name: "This is an example test"
+  sessionName: 'Automation test session',
+  sessionDescription: 'This is an example for Automation Test on Android device',
+  deviceOrientation:  'portrait',
+  captureScreenshots: true,
+  browserName:        'chrome',
+  deviceGroup:        'KOBITON',
+  deviceName:         'Galaxy Note5',
+  platformVersion:    '6.0.1',
+  platformName:       'Android'
 };
 
 browser
   .init(desired)
-  .get("http://admc.io/wd/test-pages/guinea-pig.html")
+  .get('http://admc.io/wd/test-pages/guinea-pig.html')
   .title()
     .should.become('WD Tests')
   .elementById('i am a link')
   .click()
-  .eval("window.location.href")
+  .eval('window.location.href')
     .should.eventually.include('guinea-pig2')
   .fin(function() { return browser.quit(); })
   .done();

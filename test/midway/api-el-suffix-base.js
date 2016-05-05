@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 // spliting the test cause it takes too long, list of possible suffixes below
 // var suffixes =
 //   ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText',
@@ -8,6 +9,10 @@ require('../helpers/setup');
 exports.test = function function_name (
   suffix, extraDesc, suffixPartials, criterias, _skip) {
     describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, _skip, function() {
+      beforeEach(function(done) {
+          setTimeout(done, 1000);
+      });
+
       var partials = {};
 
       var browser;
@@ -16,10 +21,9 @@ exports.test = function function_name (
       var elementFuncName = 'element' + suffix;
       partials['browser.' + elementFuncName]  = suffixPartials.one;
       it('browser.' + elementFuncName, function() {
-        return Q.all([
-          browser[elementFuncName](criterias.valid).should.eventually.exist,
-          browser[elementFuncName](criterias.invalid).should.be.rejectedWith(/status: 7/)
-        ]);
+        return browser
+            [elementFuncName](criterias.valid).should.eventually.exist
+            [elementFuncName](criterias.invalid).should.be.rejectedWith(/status: 7/)
       });
 
       var elementFuncNameOrNull = 'element' + suffix + 'OrNull';
@@ -67,30 +71,31 @@ exports.test = function function_name (
           });
       });
 
-      var waitForVisibleFuncName = 'waitForVisible' + suffix;
-      partials['browser.' + waitForVisibleFuncName]  = '<div id="theDiv"></div>';
-      it('browser.' + waitForVisibleFuncName, function() {
-        return browser
-          .executeAsync(
-            'var args = Array.prototype.slice.call( arguments, 0 );\n' +
-            'var done = args[args.length -1];\n' +
-            '$("#theDiv").append(args[0]);\n' +
-            '$("#theDiv .child").hide();\n' +
-            'setTimeout(function() {\n' +
-            ' $("#theDiv .child").show();\n' +
-            '}, args[1]);\n' +
-            'done();\n',
-            [suffixPartials.child, env.BASE_TIME_UNIT]
-          )
-          [elementFuncName](criterias.child).should.eventually.exist
-          [waitForVisibleFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
-          .should.be.fulfilled
-          .then(function() {
-            return browser
-              [waitForVisibleFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
-                .should.be.rejectedWith(/Element didn\'t become visible/);
-          });
-      });
+      //waitForVisible has been deprecated in webdriver
+      // var waitForVisibleFuncName = 'waitForVisible' + suffix;
+      // partials['browser.' + waitForVisibleFuncName]  = '<div id="theDiv"></div>';
+      // it('browser.' + waitForVisibleFuncName, function() {
+      //   return browser
+      //     .executeAsync(
+      //       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+      //       'var done = args[args.length -1];\n' +
+      //       '$("#theDiv").append(args[0]);\n' +
+      //       '$("#theDiv .child").hide();\n' +
+      //       'setTimeout(function() {\n' +
+      //       ' $("#theDiv .child").show();\n' +
+      //       '}, args[1]);\n' +
+      //       'done();\n',
+      //       [suffixPartials.child, env.BASE_TIME_UNIT]
+      //     )
+      //     [elementFuncName](criterias.child).should.eventually.exist
+      //     [waitForVisibleFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
+      //     .should.be.fulfilled
+      //     .then(function() {
+      //       return browser
+      //         [waitForVisibleFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
+      //           .should.be.rejectedWith(/Element didn\'t become visible/);
+      //     });
+      // });
 
       var elementsFuncName = 'elements' + suffix;
       partials['browser.' + elementsFuncName]  = suffixPartials.several;
@@ -111,4 +116,3 @@ exports.test = function function_name (
 
     });
 };
-

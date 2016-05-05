@@ -1,4 +1,5 @@
 var Args = require('vargs').Constructor;
+var _ = require('lodash');
 
 global.skip = function () {
   var cat = null;

@@ -102,6 +102,155 @@ describe("mjson tests", function() {
 
     });
 
+
+    describe("by ios class chain", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-ios class chain","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: '0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-ios class chain","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .element('-ios class chain', 'random stuff')
+            .should.eventually.exist
+          .elementByIosClassChain('random stuff')
+            .should.eventually.exist
+          .elementByIosClassChainOrNull('random stuff')
+            .should.eventually.exist
+          .elementByIosClassChainIfExists('random stuff')
+            .should.eventually.exist
+          .hasElementByIosClassChain('random stuff')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios class chain","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .elements('-ios class chain', 'random stuff')
+            .should.eventually.exist
+          .elementsByIosClassChain('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios class chain","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .waitForElement('-ios class chain', 'random stuff')
+            .should.eventually.exist
+          .waitForElementByIosClassChain('random stuff')
+            .should.eventually.exist
+          .waitForElementsByIosClassChain('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
+    describe("by ios predicate string", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-ios predicate string","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: '0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-ios predicate string","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .element('-ios predicate string', 'random stuff')
+            .should.eventually.exist
+          .elementByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .elementByIosPredicateStringOrNull('random stuff')
+            .should.eventually.exist
+          .elementByIosPredicateStringIfExists('random stuff')
+            .should.eventually.exist
+          .hasElementByIosPredicateString('random stuff')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios predicate string","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .elements('-ios predicate string', 'random stuff')
+            .should.eventually.exist
+          .elementsByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios predicate string","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .waitForElement('-ios predicate string', 'random stuff')
+            .should.eventually.exist
+          .waitForElementByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .waitForElementsByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
     describe("by android uiautomator", function() {
 
       it("element methods should work", function(done) {
@@ -170,6 +319,80 @@ describe("mjson tests", function() {
           .waitForElementByAndroidUIAutomator('random stuff')
             .should.eventually.exist
           .waitForElementsByAndroidUIAutomator('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
+    describe("by android datamatcher", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-android datamatcher","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: '0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-android datamatcher","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .element('-android datamatcher', 'random stuff')
+            .should.eventually.exist
+          .elementByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .elementByAndroidDataMatcherOrNull('random stuff')
+            .should.eventually.exist
+          .elementByAndroidDataMatcherIfExists('random stuff')
+            .should.eventually.exist
+          .hasElementByAndroidDataMatcher('random stuff')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-android datamatcher","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .elements('-android datamatcher', 'random stuff')
+            .should.eventually.exist
+          .elementsByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-android datamatcher","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .waitForElement('-android datamatcher', 'random stuff')
+            .should.eventually.exist
+          .waitForElementByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .waitForElementsByAndroidDataMatcher('random stuff')
             .should.eventually.exist
           .nodeify(done);
       });
@@ -250,6 +473,80 @@ describe("mjson tests", function() {
 
     });
 
+    describe("by image", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-image","value":"iVBOR"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: 'appium-image-element-0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .element('-image', 'iVBOR')
+            .should.eventually.exist
+          .elementByImage('iVBOR')
+            .should.eventually.exist
+          .elementByImageOrNull('iVBOR')
+            .should.eventually.exist
+          .elementByImageIfExists('iVBOR')
+            .should.eventually.exist
+          .hasElementByImage('iVBOR')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .elements('-image', 'iVBOR')
+            .should.eventually.exist
+          .elementsByImage('iVBOR')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .waitForElement('-image', 'iVBOR')
+            .should.eventually.exist
+          .waitForElementByImage('iVBOR')
+            .should.eventually.exist
+          .waitForElementsByImage('iVBOR')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
     describe("actions", function() {
 
       it("touch actions should work", function(done) {
@@ -274,7 +571,7 @@ describe("mjson tests", function() {
               // TODO check what the return is like
               value: [{'not sure': '0'}],
             });
-          var el;
+          var el; // eslint-disable-line no-unused-vars
           return browser
             .elementById('random').then(function(_el) { el=_el; })
             .then(function() {
@@ -372,6 +669,106 @@ describe("mjson tests", function() {
             return ma.perform();
           })
           .nodeify(done);
+      });
+
+      it('w3c actions should work', function (done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/actions', {
+            actions: [{
+              type: "pointer",
+              id: "finger1",
+              parameters: {
+                pointerType: "touch"
+              },
+              actions: [{
+                type: "pointerMove",
+                duration: 0,
+                x: 100,
+                y: 100
+              }, {
+                type: "pointerDown",
+                button: 0
+              }, {
+                type: "pause",
+                duration: 500
+              }, {
+                type: "pointerMove",
+                duration: 1000,
+                  origin: "pointer",
+                  x: -50,
+                  y: 100
+              }, {
+                  type: "pointerUp",
+                  button: 0
+              }]
+            }, {
+              type: "pointer",
+              id: "finger2",
+              parameters: {
+                  "pointerType": "touch"
+              },
+              actions: [{
+                  type: "pointerMove",
+                  "duration": 0,
+                  "x": 200,
+                  "y": 200
+              }, {
+                  type: "pointerDown",
+                  button: 0
+              }, {
+                  type: "pause",
+                  "duration": 300
+              }, {
+                  type: "pointerMove",
+                  "duration": 1000,
+                  "origin": "pointer",
+                  "x": 50,
+                  "y": 100
+              }, {
+                  type: "pointerUp",
+                  button: 0
+              }]
+            }]
+        })
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: null,
+          });
+        var actions = new wd.W3CActions(browser);
+        var touchInput = actions.addTouchInput();
+        touchInput.pointerMove({duration: 0, x: 100, y: 100});
+        touchInput.pointerDown({button: 0});
+        touchInput.pause({duration: 500});
+        touchInput.pointerMove({duration: 1000, origin: 'pointer', x: -50, y: 100});
+        touchInput.pointerUp({button: 0});
+        var secondTouchInput = actions.addTouchInput();
+        secondTouchInput.pointerMove({duration: 0, x: 200, y: 200});
+        secondTouchInput.pointerDown({button: 0});
+        secondTouchInput.pause({duration: 300});
+        secondTouchInput.pointerMove({duration: 1000, origin: 'pointer', x: 50, y: 100});
+        secondTouchInput.pointerUp({button: 0});
+        actions.perform(browser)
+          .then(function (value) {
+            should.equal(value, null);
+          }).nodeify(done);
+      });
+
+      it('w3c release should work', function (done) {
+        nock.cleanAll();
+        server
+          .delete('/session/1234/actions')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: null,
+          });
+
+        browser.releaseW3CActions()
+          .then(function (value) {
+            should.equal(value, null);
+          }).nodeify(done);
       });
     });
 
@@ -499,6 +896,60 @@ describe("mjson tests", function() {
             .pressKeycode(3, "abcd")
             .nodeify(done);
         });
+
+        it("keycode + metastate + flags", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/press_keycode', {keycode: 3, metastate: "abcd", flags: 8224})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .pressKeycode(3, "abcd", [0x20, 0x2000])
+            .nodeify(done);
+        });
+      });
+
+      describe("longPressKeycode", function() {
+        it("keycode only", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/long_press_keycode', {keycode: 3})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .longPressKeycode(3)
+            .nodeify(done);
+        });
+
+        it("keycode + metastate", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/long_press_keycode', {keycode: 3, metastate: "abcd"})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .longPressKeycode(3, "abcd")
+            .nodeify(done);
+        });
+
+        it("keycode + metastate + flags", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/long_press_keycode', {keycode: 3, metastate: "abcd", flags: 8224})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .longPressKeycode(3, "abcd", [32, 8192])
+            .nodeify(done);
+        });
       });
 
       describe("rotateDevice", function() {
@@ -572,16 +1023,14 @@ describe("mjson tests", function() {
         nock.cleanAll();
         server
           .get('/session/1234/appium/device/current_package')
-          .times(2)
+          .times(1)
           .reply(200, {
             status: 0,
             sessionId: '1234',
             value: 'org.fake.package'
           });
         browser
-          .getCurrentDeviceActivity()
-          .should.become('org.fake.package')
-          .getCurrentActivity()
+          .getCurrentPackage()
           .should.become('org.fake.package')
           .nodeify(done);
       });
@@ -631,6 +1080,21 @@ describe("mjson tests", function() {
             .should.eventually.be.ok
           .isAppInstalled("coolApp")
             .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("isKeyboardShown", function(done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/appium/device/is_keyboard_shown')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: true
+          });
+        browser
+          .isKeyboardShown()
+          .should.become(true)
           .nodeify(done);
       });
 
@@ -1076,6 +1540,105 @@ describe("mjson tests", function() {
           .getDeviceTime()
           .nodeify(done);
       });
+
+      it("getClipboard", function (done) {
+        nock.cleanAll();
+        server
+          .post(
+            '/session/1234/appium/device/get_clipboard',
+            {contentType: 'plaintext'}
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: 'testing'
+          });
+        browser
+          .getClipboard('plaintext')
+            .should.eventually.equal('testing')
+          .nodeify(done);
+      });
+
+      it("setClipboard", function (done) {
+        nock.cleanAll();
+        var base64Data = new Buffer.from('Hello').toString('base64');
+        server
+          .post(
+            '/session/1234/appium/device/set_clipboard',
+            {content: base64Data, contentType: 'plaintext'}
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .setClipboard(base64Data, 'plaintext')
+          .nodeify(done);
+      });
+
+      it("getSupportedPerformanceDataTypes", function (done) {
+        nock.cleanAll();
+        var supportedTypes = [
+          'cpuinfo',
+          'memoryinfo',
+          'batteryinfo',
+          'networkinfo'
+        ]
+        server
+          .post('/session/1234/appium/performanceData/types')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: supportedTypes
+          });
+        browser
+          .getSupportedPerformanceDataTypes()
+          .should.become(supportedTypes)
+          .nodeify(done);
+      });
+
+      it("getPerformanceData", function (done) {
+        nock.cleanAll();
+        server
+          .post(
+            '/session/1234/appium/getPerformanceData',
+            {
+              packageName: 'org.fake.package',
+              dataType: 'batteryinfo'
+            }
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [["power"], ["75"]]
+          });
+        browser
+          .getPerformanceData('org.fake.package', 'batteryinfo')
+          .should.become([["power"], ["75"]])
+          .nodeify(done);
+      });
+
+      it("getPerformanceData + dataReadTimeout", function (done) {
+        nock.cleanAll();
+        server
+          .post(
+            '/session/1234/appium/getPerformanceData',
+            {
+              packageName: 'org.fake.package',
+              dataType: 'batteryinfo',
+              dataReadTimeout: 5
+            }
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [["power"], ["75"]]
+          });
+        browser
+          .getPerformanceData('org.fake.package', 'batteryinfo', 5)
+          .should.become([["power"], ["75"]])
+          .nodeify(done);
+      });
     });
   });
 
@@ -1110,7 +1673,7 @@ describe("mjson tests", function() {
           // TODO check what the return is like
           value: [{'not sure': '0'}],
         });
-      var el;
+      var el; // eslint-disable-line no-unused-vars
       async.series([
         function(done) {
           browser.elementById('random', function(err, _el) {

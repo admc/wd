@@ -2,6 +2,7 @@
 
 require('../helpers/setup');
 var PromiseSimple = require('promise-simple');
+var _ = require('lodash');
 
 describe('ext-promises ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);

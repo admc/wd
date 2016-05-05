@@ -1,40 +1,50 @@
 var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    jshintStylish = require('jshint-stylish'),
     Q = require('q'),
-    runSequence = Q.denodeify(require('run-sequence')),
     path = require('path'),
     _ = require('lodash'),
-    args   = require('yargs').argv,
+    args = require('yargs').argv,
     urlLib = require('url'),
     mochaStream = require('spawn-mocha-parallel').mochaStream,
     httpProxy = require('http-proxy'),
     sauceConnectLauncher = require('sauce-connect-launcher'),
-    async = require('async');
+    async = require('async'),
+    log = require('fancy-log'),
+    eslint = require('gulp-eslint'),
+    gulpIf = require('gulp-if'),
+    debug = require('gulp-debug');
 
 require('./test/helpers/env');
+
+
+var VERBOSE = !!process.env.VERBOSE;
 
 args.browsers = (args.browser || 'chrome').split(',');
 args.sauce = args.sauce ? true : false;
 
 var BROWSERS = ['chrome', 'firefox'];
 if (args.sauce) { BROWSERS.push('explorer'); }
+
 var MOBILE_BROWSERS = ['android', 'ios', 'iphone', 'ipad', 'android_phone'];
-process.env.SAUCE_CONNECT_VERSION = process.env.SAUCE_CONNECT_VERSION || '4.3';
+
+process.env.SAUCE_CONNECT_VERSION = process.env.SAUCE_CONNECT_VERSION || '4.5.1';
 process.env.SAUCE_CONNECT_VERBOSE = false;
 
 var PROXY_PORT = 5050;
-var expressPort = 3000; // incremented after each test to avoid colision
+var expressPort = 3000; // incremented after each test to avoid collision
+
+var debugLog = log.bind(log);
+var warnLog = log.warn.bind(log);
+var errorLog = log.error.bind(log);
 
 function buildMochaOpts(opts) {
-
   var mochaOpts = {
     flags: {
       u: 'bdd-with-opts',
       R: 'spec',
-      c: true
+      c: true,
     },
-    bin: path.join(__dirname,  'node_modules/.bin/mocha'),
+    exit: true,
+    bin: path.join(__dirname,  'node_modules/.bin/' + ((process.platform !== "win32") ? 'mocha' : 'mocha.cmd')),
     concurrency: args.concurrency | process.env.CONCURRENCY || 3
   };
   if(args.grep) {
@@ -69,98 +79,120 @@ function buildMochaOpts(opts) {
   return mochaOpts;
 }
 
+function runSequence (...args) {
+  args = _.flattenDeep(args);
+  return Q.Promise(function (resolve) {
+    if (args.length === 0) {
+      return resolve();
+    }
+    // do the tasks in series
+    (gulp.series(...args, function finishSequence (done) {
+      done();
+      resolve();
+    }))();
+  });
+}
+
 gulp.task('lint', function() {
-//  return gulp.src(['lib/**/*.js','test/**/*.js','browser-scripts/**/*.js'])
-  return gulp.src(['lib/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter(jshintStylish))
-    .pipe(jshint.reporter('fail'));
+  var opts = {
+    fix: process.argv.indexOf('--fix') !== -1,
+  };
+  return gulp.src(['*.js', 'lib/**/*.js', 'test/**/*.js', '!node_modules', '!**/node_modules', '!build/**'])
+    .pipe(gulpIf(!!process.env.VERBOSE, debug()))
+    .pipe(eslint(opts))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+    .pipe(gulpIf(function (file) {
+      return file.eslint && file.eslint.fixed;
+    }, gulp.dest(process.cwd())));
 });
 
-gulp.task('test-unit', function () {
+gulp.task('test:unit', function () {
   var opts = buildMochaOpts({ unit: true });
   var mocha = mochaStream(opts);
   return gulp.src('test/specs/**/*-specs.js', {read: false})
+    .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mocha)
-    .on('error',  console.warn.bind(console));
+    .on('error', warnLog);
 });
 
-gulp.task('test-midway-multi', function () {
+gulp.task('test:midway:multi', function () {
   var opts = buildMochaOpts({ midway: true, browser: 'multi' });
   var mocha = mochaStream(opts);
   return gulp.src('test/midway/multi/**/*-specs.js', {
     read: false})
+    .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mocha)
-    .on('error', console.warn.bind(console));
+    .on('error', warnLog);
 });
 
+// create a test:midway: and test:e2e: task for each browser
 _(BROWSERS).each(function(browser) {
-  gulp.task('test-midway-' + browser, function () {
+  gulp.task(`test:midway:${browser}`, function () {
     var opts = buildMochaOpts({ midway: true, browser: browser });
     var mocha = mochaStream(opts);
     return gulp.src([
-        'test/midway/**/*-specs.js',
-        '!test/midway/multi/**'
-      ], {read: false})
+      'test/midway/**/*-specs.js',
+      '!test/midway/multi/**'
+    ], {read: false})
+      .pipe(gulpIf(VERBOSE, debug()))
       .pipe(mocha)
-      .on('error', console.warn.bind(console));
+      .on('error', errorLog);
   });
-  gulp.task('test-e2e-' + browser, function () {
+  gulp.task(`test:e2e:${browser}`, function () {
     var opts = buildMochaOpts({ browser: browser });
     var mocha = mochaStream(opts);
     return gulp.src('test/e2e/**/*-specs.js', {read: false})
+      .pipe(gulpIf(VERBOSE, debug()))
       .pipe(mocha)
-      .on('error', console.warn.bind(console));
+      .on('error', errorLog);
   });
 });
 
-_(MOBILE_BROWSERS).each(function(browser) {
-  gulp.task('test-midway-' + browser, function () {
+// create a test:midway: task for each mobile browser
+_(MOBILE_BROWSERS).each(function (browser) {
+  gulp.task(`test:midway:${browser}`, function () {
     var opts = buildMochaOpts({ midway: true, browser: browser });
-    var mocha = mochaStream(opts);
     return gulp.src([
       'test/midway/api-nav-specs.js',
       'test/midway/api-el-specs.js',
       'test/midway/api-exec-specs.js',
       'test/midway/mobile-specs.js',
     ], {read: false})
-    .pipe(mocha)
-    .on('error', console.warn.bind(console));
+    .pipe(gulpIf(VERBOSE, debug()))
+    .pipe(mochaStream(opts))
+    .on('error', errorLog);
   });
 });
 
-gulp.task('test-midway', function() {
-  var midwayTestTasks = [];
-  _(args.browsers).each(function(browser) {
-    midwayTestTasks.push('test-midway-' + browser);
-  });
-  return runSequence('pre-midway', midwayTestTasks)
-    .finally(function() {
-      return runSequence('post-midway');
+gulp.task('test:midway', function() {
+  const midwayTestTasks = _.map(args.browsers, (browser) =>`test:midway:${browser}`);
+  return runSequence('pre:midway', ...midwayTestTasks)
+    .finally(function () {
+      return runSequence('post:midway');
     });
 });
 
-gulp.task('test-e2e', function() {
+gulp.task('test:e2e', function() {
   var e2eTestTasks = [];
   _(args.browsers).chain().without('multi').each(function(browser) {
-    e2eTestTasks.push('test-e2e-' + browser);
+    e2eTestTasks.push(`test:e2e:${browser}`);
   });
-  if(e2eTestTasks.length > 0){
+  // if (e2eTestTasks.length > 0) {
     return runSequence(e2eTestTasks);
-  }
+  // }
 });
 
 gulp.task('test', function() {
-  var seq = ['lint', 'test-unit', 'test-midway-multi'];
+  var seq = ['lint', 'test:unit', 'test:midway:multi'];
   _(BROWSERS).each(function(browser) {
-     seq.push('test-midway-' + browser);
-     seq.push('test-e2e-' + browser);
+     seq.push(`test:midway:${browser}`, `test:e2e:${browser}`);
   });
   return runSequence.apply(null, seq);
 });
 
 var server;
-gulp.task('start-proxy', function(done) {
+gulp.task('proxy:start', function(done) {
   var proxy = httpProxy.createProxyServer({});
   var proxyQueue;
   var throttle = args.throttle || process.env.THROTTLE;
@@ -194,7 +226,7 @@ gulp.task('start-proxy', function(done) {
       }
     } catch (err) {
       try{
-        console.error('Proxy error for: ', req.url + ':' , err);
+        log.error('Proxy error for: ', req.url + ':' , err);
         res.writeHead(500, {
           'Content-Type': 'text/plain'
         });
@@ -204,57 +236,59 @@ gulp.task('start-proxy', function(done) {
   });
 
   server.on('error', function(err) {
-    console.error('Proxy error: ', err);
+    log.error(`Proxy error: ${err}`);
   });
 
-  console.log("listening on port", PROXY_PORT);
+  log("Listening on port", PROXY_PORT);
   server.listen(PROXY_PORT, done);
 });
 
-gulp.task('stop-proxy', function(done) {
-  // stop proxy, exit after 5 ec if hanging
+gulp.task('proxy:stop', function(done) {
+  // stop proxy, exit after 5 sec if hanging
   done = _.once(done);
-  var t = setTimeout(function() {
+  var timeout = setTimeout(function () {
     done();
   }, 5000);
-  if(server) {
-    server.close(function() {
-      clearTimeout(t);
+  if (server) {
+    server.close(function () {
+      clearTimeout(timeout);
       done();
     });
   }
-  else { done(); }
+  else {
+    done();
+  }
 });
 
 var sauceConnectProcess = null;
 
-gulp.task('start-sc', function(done) {
+gulp.task('sc:start', function (done) {
   var opts = {
     username: process.env.SAUCE_USERNAME,
     accessKey: process.env.SAUCE_ACCESS_KEY,
     verbose: process.env.SAUCE_CONNECT_VERBOSE,
     directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
-    logger: function(mess) {console.log(mess);}
+    logger: debugLog,
   };
-  if(process.env.TRAVIS_JOB_NUMBER) {
+  if (process.env.TRAVIS_JOB_NUMBER) {
     opts.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
   }
-  var startTunnel = function(done, n) {
+  var startTunnel = function (done, n) {
     sauceConnectLauncher(opts, function (err, _sauceConnectProcess) {
       if (err) {
-        if(n > 0) {
-          console.log('retrying sauce connect in 20 secs.');
-          setTimeout(function() {
-            startTunnel(done, n-1);
+        if (n > 0) {
+          log('retrying sauce connect in 20 secs.');
+          setTimeout(function () {
+            startTunnel(done, n - 1);
           }, 20000);
         } else {
-          console.error(err.message);
+          log.error(err.message);
           done(err);
         }
         return;
       }
       sauceConnectProcess = _sauceConnectProcess;
-      console.log("Sauce Connect ready");
+      log("Sauce Connect ready");
       done();
     });
   };
@@ -262,48 +296,49 @@ gulp.task('start-sc', function(done) {
   startTunnel(done, 3);
 });
 
-gulp.task('stop-sc', function(done) {
-  if(sauceConnectProcess) { sauceConnectProcess.close(done); }
-  else { done(); }
+gulp.task('sc:stop', function (done) {
+  if(sauceConnectProcess) {
+    sauceConnectProcess.close(done);
+  } else {
+    done();
+  }
 });
 
-gulp.task('pre-midway', function() {
-  var seq = ['start-proxy'];
-  if(args.sauce && !args['nosc']) {
-    seq.unshift('start-sc');
-  }
+gulp.task('pre:midway', function() {
+  var seq = args.sauce && !args['nosc']
+    ? ['sc:start', 'proxy:start']
+    : ['proxy:start'];
   return runSequence(seq);
 });
 
-gulp.task('post-midway', function() {
-  var seq = ['stop-proxy'];
-  if(args.sauce && !args['nosc']) {
-    seq.unshift('stop-sc');
-  }
+gulp.task('post:midway', function () {
+  var seq = args.sauce && !args['nosc']
+    ? ['sc:stop', 'proxy:stop']
+    : ['proxy:stop'];
   return runSequence(seq);
 });
 
 gulp.task('travis', function() {
   var seq;
-  switch(args.config) {
+  switch (args.config) {
     case 'unit':
-      return runSequence(['test-unit']);
+      return runSequence(['test:unit']);
     case 'multi':
       args.browsers= [args.config];
-      return runSequence(['test-midway']);
+      return runSequence(['test:midway']);
     case 'chrome':
     case 'firefox':
     case 'explorer':
       args.browsers= [args.config];
-      return runSequence(['test-midway','test-e2e']);
+      return runSequence(['test:midway', 'test:e2e']);
     case 'iphone':
     case 'ipad':
     case 'android_phone':
       args.browsers= [args.config];
-      return runSequence(['test-midway']);
+      return runSequence(['test:midway']);
     case 'chrome_e2e':
       args.browsers= ['chrome'];
-      return runSequence(['test-e2e']);
+      return runSequence(['test:e2e']);
   }
   return runSequence.apply(null, seq);
 });

@@ -1,6 +1,6 @@
-# WD.js 
+# WD.js
 
-[![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd) 
+[![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd)
 [![Downloads](http://img.shields.io/npm/dm/wd.svg)](https://npmjs.org/package/wd)
 [![Dependency Status](https://david-dm.org/admc/wd.svg)](https://david-dm.org/admc/wd)
 [![devDependency Status](https://david-dm.org/admc/wd/dev-status.svg)](https://david-dm.org/admc/wd#info=devDependencies)
@@ -14,7 +14,7 @@
 - [Site](http://admc.io/wd/)
 - [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
 
-This library is designed to be a maleable implementation of the webdriver protocol in Node, exposing functionality via a number of programming paradigms. If you are looking for a more opinionated library, you might find [webdriver.io](http://webdriver.io/) interesting.
+This library is designed to be a maleable implementation of the webdriver protocol in Node, exposing functionality via a number of programming paradigms. If you are looking for a more polished, opinionated and active library - I would suggest [webdriver.io](http://webdriver.io/).
 
 ## Release Notes
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md)
@@ -25,7 +25,7 @@ This library is designed to be a maleable implementation of the webdriver protoc
 npm install wd
 ```
 
-Note: WD.js does not start the selenium server. You may use the  [selenium-standalone](https://www.npmjs.com/package/selenium-standalone) package 
+Note: WD.js does not start the selenium server. You may use the  [selenium-standalone](https://www.npmjs.com/package/selenium-standalone) package
 to install and start a selenium server.
 
 ## Authors
@@ -84,7 +84,6 @@ browser.init({browserName:'chrome'}, function() {
       title.should.include('WD');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          /* jshint evil: true */
           browser.eval("window.location.href", function(err, href) {
             href.should.include('guinea-pig2');
             browser.quit();
@@ -258,6 +257,8 @@ var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 var browser = wd.remote('http://user:apiKey@hub.browserstack.com/wd/hub');
 // or
 var browser = wd.remote('http://key:secret@hub.testingbot.com/wd/hub');
+// or
+var browser = wd.remote('https://user:apiKey@api.kobiton.com/wd/hub');
 ```
 
 #### Url object created via url.parse
@@ -273,6 +274,8 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 var browser = wd.remote(url.parse('http://user:apiKey@hub.browserstack.com:80/wd/hub'));
 // or
 var browser = wd.remote(url.parse('http://key:secret@hub.testingbot.com:80/wd/hub'));
+// or
+var browser = wd.remote(url.parse('https://user:apiKey@api.kobiton.com/wd/hub'));
 ```
 
 #### Defaults
@@ -551,6 +554,7 @@ Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms
 # Install the Selenium server, Chromedriver connect
 node_modules/.bin/install_selenium
 node_modules/.bin/install_chromedriver
+# NOTE: You may need to upgrade /tmp/sv-selenium/chromedriver to match your Chrome version!
 
 #Run the selenium server with chromedriver:
 node_modules/.bin/start_selenium_with_chromedriver
@@ -594,6 +598,3 @@ npm publish
 ## Test Coverage
 
 [test coverage](http://admc.io/wd/istanbul/coverage/lcov-report/lib/index.html)
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/admc/wd/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

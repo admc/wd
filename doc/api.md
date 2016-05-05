@@ -10,7 +10,7 @@
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/status">/status</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-status">/status</a><br>
 Query the server's current status.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -19,7 +19,7 @@ status(cb) -&gt; cb(err, status)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session">/session</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-session">/session</a><br>
 Create a new session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -30,7 +30,7 @@ absent, depending on driver.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessions">/sessions</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessions">/sessions</a><br>
 Returns a list of the currently active sessions.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -45,7 +45,7 @@ altSessionCapabilities(cb) -&gt; cb(err, capabilities)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId">/session/:sessionId</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionid">/session/:sessionId</a><br>
 Retrieve the capabilities of the specified session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -54,7 +54,7 @@ sessionCapabilities(cb) -&gt; cb(err, capabilities)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId">/session/:sessionId</a><br>
+DELETE <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#delete-sessionsessionid">/session/:sessionId</a><br>
 Delete the session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -64,7 +64,7 @@ Destroy the browser.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts">/session/:sessionId/timeouts</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidtimeouts">/session/:sessionId/timeouts</a><br>
 Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -80,7 +80,7 @@ setCommandTimeout(ms, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts/async_script">/session/:sessionId/timeouts/async_script</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidtimeouts">/session/:sessionId/timeouts/async_script</a><br>
 Set the amount of time, in milliseconds, that asynchronous scripts executed by /session/:sessionId/execute_async are permitted to run before they are aborted and a |Timeout| error is returned to the client.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -89,7 +89,7 @@ setAsyncScriptTimeout(ms, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts/implicit_wait">/session/:sessionId/timeouts/implicit_wait</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidtimeoutsimplicit_wait">/session/:sessionId/timeouts/implicit_wait</a><br>
 Set the amount of time the driver should wait when searching for elements.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -98,7 +98,7 @@ setImplicitWaitTimeout(ms, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handle">/session/:sessionId/window_handle</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidwindow_handle">/session/:sessionId/window_handle</a><br>
 Retrieve the current window handle.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -107,7 +107,7 @@ windowHandle(cb) -&gt; cb(err, handle)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handles">/session/:sessionId/window_handles</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidwindow_handles">/session/:sessionId/window_handles</a><br>
 Retrieve the list of all window handles available to the session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -116,7 +116,7 @@ windowHandles(cb) -&gt; cb(err, arrayOfHandles)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/url">/session/:sessionId/url</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidurl">/session/:sessionId/url</a><br>
 Retrieve the URL of the current page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -125,7 +125,7 @@ url(cb) -&gt; cb(err, url)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/url">/session/:sessionId/url</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidurl">/session/:sessionId/url</a><br>
 Navigate to a new URL.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -135,7 +135,7 @@ Get a new url.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/forward">/session/:sessionId/forward</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidforward">/session/:sessionId/forward</a><br>
 Navigate forwards in the browser history, if possible.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -144,7 +144,7 @@ forward(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/back">/session/:sessionId/back</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidback">/session/:sessionId/back</a><br>
 Navigate backwards in the browser history, if possible.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -153,7 +153,7 @@ back(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/refresh">/session/:sessionId/refresh</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidrefresh">/session/:sessionId/refresh</a><br>
 Refresh the current page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -162,7 +162,7 @@ refresh(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute">/session/:sessionId/execute</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidexecute">/session/:sessionId/execute</a><br>
 Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -189,7 +189,7 @@ safeEval(code, cb) -&gt; cb(err, value)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute_async">/session/:sessionId/execute_async</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidexecute_async">/session/:sessionId/execute_async</a><br>
 Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -208,7 +208,7 @@ args: script argument array (optional)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/screenshot">/session/:sessionId/screenshot</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidscreenshot">/session/:sessionId/screenshot</a><br>
 Take a screenshot of the current page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -217,7 +217,7 @@ takeScreenshot(cb) -&gt; cb(err, screenshot)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/ime/available_engines">/session/:sessionId/ime/available_engines</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidimeavailable_engines">/session/:sessionId/ime/available_engines</a><br>
 List all available engines on the machine.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -226,7 +226,7 @@ availableIMEEngines(cb) -&gt; cb(err, engines)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/ime/active_engine">/session/:sessionId/ime/active_engine</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidimeactive_engine">/session/:sessionId/ime/active_engine</a><br>
 Get the name of the active IME engine.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -235,7 +235,7 @@ activeIMEEngine(cb) -&gt; cb(err, activeEngine)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/ime/activated">/session/:sessionId/ime/activated</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidimeactivated">/session/:sessionId/ime/activated</a><br>
 Indicates whether IME input is active at the moment (not if it's available).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -244,7 +244,7 @@ activatedIMEEngine(cb) -&gt; cb(err, active)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/ime/deactivate">/session/:sessionId/ime/deactivate</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidimedeactivate">/session/:sessionId/ime/deactivate</a><br>
 De-activates the currently-active IME engine.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -253,7 +253,7 @@ deactivateIMEEngine(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/ime/activate">/session/:sessionId/ime/activate</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidimeactivate">/session/:sessionId/ime/activate</a><br>
 Make an engines that is available (appears on the listreturned by getAvailableEngines) active.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -262,7 +262,7 @@ activateIMEEngine(cb, engine) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/frame">/session/:sessionId/frame</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidframe">/session/:sessionId/frame</a><br>
 Change focus to another frame on the page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -271,7 +271,7 @@ frame(frameRef, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window">/session/:sessionId/window</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidwindow">/session/:sessionId/window</a><br>
 Change focus to another window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -280,7 +280,7 @@ window(name, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/window">/session/:sessionId/window</a><br>
+DELETE <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#delete-sessionsessionidwindow">/session/:sessionId/window</a><br>
 Close the current window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -289,7 +289,7 @@ close(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/size">/session/:sessionId/window/:windowHandle/size</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidwindowwindowhandlesize">/session/:sessionId/window/:windowHandle/size</a><br>
 Change the size of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -307,7 +307,7 @@ handle: window handle to set size for (optional, default: 'current')<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/size">/session/:sessionId/window/:windowHandle/size</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidwindowwindowhandlesize">/session/:sessionId/window/:windowHandle/size</a><br>
 Get the size of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -318,7 +318,7 @@ handle: window handle to get size (optional, default: 'current')<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/position">/session/:sessionId/window/:windowHandle/position</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidwindowwindowhandleposition">/session/:sessionId/window/:windowHandle/position</a><br>
 Change the position of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -331,7 +331,7 @@ handle: window handle to set position for (optional, default: 'current')<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/position">/session/:sessionId/window/:windowHandle/position</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidwindowwindowhandleposition">/session/:sessionId/window/:windowHandle/position</a><br>
 Get the position of the specified window.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -342,7 +342,7 @@ handle: window handle to get position (optional, default: 'current')<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/maximize">/session/:sessionId/window/:windowHandle/maximize</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidwindowwindowhandlemaximize">/session/:sessionId/window/:windowHandle/maximize</a><br>
 Maximize the specified window if not already maximized.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -351,7 +351,7 @@ maximize(handle, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidcookie">/session/:sessionId/cookie</a><br>
 Retrieve all cookies visible to the current page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -360,7 +360,7 @@ allCookies() -&gt; cb(err, cookies)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidcookie">/session/:sessionId/cookie</a><br>
 Set a cookie.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -373,7 +373,7 @@ path, domain, secure, expiry<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/cookie">/session/:sessionId/cookie</a><br>
+DELETE <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#delete-sessionsessionidcookie">/session/:sessionId/cookie</a><br>
 Delete all cookies visible to the current page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -382,7 +382,7 @@ deleteAllCookies(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/cookie/:name">/session/:sessionId/cookie/:name</a><br>
+DELETE <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#delete-sessionsessionidcookiename">/session/:sessionId/cookie/:name</a><br>
 Delete the cookie with the given name.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -391,7 +391,7 @@ deleteCookie(name, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/source">/session/:sessionId/source</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidsource">/session/:sessionId/source</a><br>
 Get the current page source.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -400,7 +400,7 @@ source(cb) -&gt; cb(err, source)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/title">/session/:sessionId/title</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidtitle">/session/:sessionId/title</a><br>
 Get the current page title.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -409,7 +409,7 @@ title(cb) -&gt; cb(err, title)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelement">/session/:sessionId/element</a><br>
 Search for an element on the page, starting from the document root.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -427,6 +427,7 @@ elementByTagName(value, cb) -&gt; cb(err, element)<br>
 elementByXPath(value, cb) -&gt; cb(err, element)<br>
 elementByCss(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -434,7 +435,7 @@ elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/elements">/session/:sessionId/elements</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelements">/session/:sessionId/elements</a><br>
 Search for multiple elements on the page, starting from the document root.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -452,6 +453,8 @@ elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 elementsByIosUIAutomation(value, cb) -&gt; cb(err, elements)<br>
+elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
+elementsByIosPredicateString(value, cb) -&gt; cb(err, elements)<br>
 elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -470,6 +473,8 @@ elementByTagNameOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChainOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByIosPredicateStringOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdOrNull(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -488,6 +493,8 @@ elementByTagNameIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChainIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByIosPredicateStringIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdIfExists(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -506,6 +513,8 @@ hasElementByTagName(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByCss(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByIosUIAutomation(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByIosClassChain(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByIosPredicateString(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAndroidUIAutomator(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAccessibilityId(value, cb) -&gt; cb(err, boolean)<br>
 </p>
@@ -513,7 +522,7 @@ hasElementByAccessibilityId(value, cb) -&gt; cb(err, boolean)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active">/session/:sessionId/element/active</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementactive">/session/:sessionId/element/active</a><br>
 Get the element on the page that currently has focus.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -522,7 +531,7 @@ active(cb) -&gt; cb(err, element)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/element">/session/:sessionId/element/:id/element</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidelement">/session/:sessionId/element/:id/element</a><br>
 Search for an element on the page, starting from the identified element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -540,6 +549,8 @@ element.elementByTagName(value, cb) -&gt; cb(err, element)<br>
 element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
 element.elementByCss(value, cb) -&gt; cb(err, element)<br>
 element.elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+element.elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
+element.elementByIosPredicateString(value, cb) -&gt; cb(err, element)<br>
 element.elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 element.elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -547,7 +558,7 @@ element.elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/elements">/session/:sessionId/element/:id/elements</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidelements">/session/:sessionId/element/:id/elements</a><br>
 Search for multiple elements on the page, starting from the identified element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -565,6 +576,8 @@ element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByIosUIAUtomation(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByIosPredicateString(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -572,7 +585,7 @@ element.elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click">/session/:sessionId/element/:id/click</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidclick">/session/:sessionId/element/:id/click</a><br>
 Click on an element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -586,7 +599,7 @@ element.click(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/submit">/session/:sessionId/element/:id/submit</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidsubmit">/session/:sessionId/element/:id/submit</a><br>
 Submit a FORM element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -601,7 +614,7 @@ element.submit(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/text">/session/:sessionId/element/:id/text</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidtext">/session/:sessionId/element/:id/text</a><br>
 Returns the visible text for the element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -624,7 +637,7 @@ element.textPresent(searchText, cb) -&gt; cb(err, boolean)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/value">/session/:sessionId/element/:id/value</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidvalue">/session/:sessionId/element/:id/value</a><br>
 Send a sequence of key strokes to an element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -643,7 +656,7 @@ element.keys(keys, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/keys">/session/:sessionId/keys</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidkeys">/session/:sessionId/keys</a><br>
 Send a sequence of key strokes to the active element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -654,7 +667,7 @@ special key map: wd.SPECIAL_KEYS (see lib/special-keys.js)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/name">/session/:sessionId/element/:id/name</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidname">/session/:sessionId/element/:id/name</a><br>
 Query for an element's tag name.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -668,7 +681,7 @@ element.getTagName(cb) -&gt; cb(err, name)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/clear">/session/:sessionId/element/:id/clear</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidclear">/session/:sessionId/element/:id/clear</a><br>
 Clear a TEXTAREA or text INPUT element's value.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -682,7 +695,7 @@ element.clear(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/selected">/session/:sessionId/element/:id/selected</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidselected">/session/:sessionId/element/:id/selected</a><br>
 Determine if an OPTION element, or an INPUT element of type checkbox or radiobutton is currently selected.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -696,7 +709,7 @@ element.isSelected(cb) -&gt; cb(err, selected)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/enabled">/session/:sessionId/element/:id/enabled</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidenabled">/session/:sessionId/element/:id/enabled</a><br>
 Determine if an element is currently enabled.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -710,7 +723,7 @@ element.isEnabled(cb) -&gt; cb(err, enabled)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/attribute/:name">/session/:sessionId/element/:id/attribute/:name</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidattributename">/session/:sessionId/element/:id/attribute/:name</a><br>
 Get the value of an element's attribute.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -731,7 +744,7 @@ element.getValue(cb) -&gt; cb(err, value)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/equals/:other">/session/:sessionId/element/:id/equals/:other</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidequalsother">/session/:sessionId/element/:id/equals/:other</a><br>
 Test if two element IDs refer to the same DOM element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -745,7 +758,7 @@ equalsElement(element, other , cb) -&gt; cb(err, value)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/displayed">/session/:sessionId/element/:id/displayed</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementiddisplayed">/session/:sessionId/element/:id/displayed</a><br>
 Determine if an element is currently displayed.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -759,7 +772,7 @@ element.isDisplayed(cb) -&gt; cb(err, displayed)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location">/session/:sessionId/element/:id/location</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidlocation">/session/:sessionId/element/:id/location</a><br>
 Determine an element's location on the page.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -776,7 +789,7 @@ element.getLocationInView(cb) -&gt; cb(err, location)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location_in_view">/session/:sessionId/element/:id/location_in_view</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidlocation_in_view">/session/:sessionId/element/:id/location_in_view</a><br>
 Determine an element's location on the screen once it has been scrolled into view.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -785,7 +798,7 @@ getLocationInView(element, cb) -&gt; cb(err, location)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/size">/session/:sessionId/element/:id/size</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidsize">/session/:sessionId/element/:id/size</a><br>
 Determine an element's size in pixels.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -799,7 +812,7 @@ element.getSize(cb) -&gt; cb(err, size)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName">/session/:sessionId/element/:id/css/:propertyName</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidelementidcsspropertyname">/session/:sessionId/element/:id/css/:propertyName</a><br>
 Query the value of an element's computed CSS property.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -813,7 +826,7 @@ element.getComputedCss(cssProperty , cb) -&gt; cb(err, value)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/orientation">/session/:sessionId/orientation</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidorientation">/session/:sessionId/orientation</a><br>
 Get the current browser orientation.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -822,7 +835,7 @@ getOrientation(cb) -&gt; cb(err, orientation)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/orientation">/session/:sessionId/orientation</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidorientation">/session/:sessionId/orientation</a><br>
 Set the browser orientation.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -831,7 +844,7 @@ setOrientation(orientation) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/alert_text">/session/:sessionId/alert_text</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidalert_text">/session/:sessionId/alert_text</a><br>
 Gets the text of the currently displayed JavaScript alert(), confirm(), or prompt() dialog.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -840,7 +853,7 @@ alertText(cb) -&gt; cb(err, text)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/alert_text">/session/:sessionId/alert_text</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidalert_text">/session/:sessionId/alert_text</a><br>
 Sends keystrokes to a JavaScript prompt() dialog.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -849,7 +862,7 @@ alertKeys(keys, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/accept_alert">/session/:sessionId/accept_alert</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidaccept_alert">/session/:sessionId/accept_alert</a><br>
 Accepts the currently displayed alert dialog.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -858,7 +871,7 @@ acceptAlert(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/dismiss_alert">/session/:sessionId/dismiss_alert</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessioniddismiss_alert">/session/:sessionId/dismiss_alert</a><br>
 Dismisses the currently displayed alert dialog.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -867,7 +880,7 @@ dismissAlert(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/moveto">/session/:sessionId/moveto</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidmoveto">/session/:sessionId/moveto</a><br>
 Move the mouse by an offset of the specificed element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -884,7 +897,7 @@ xoffset and y offset are optional.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/click">/session/:sessionId/click</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidclick">/session/:sessionId/click</a><br>
 Click any mouse button (at the coordinates set by the last moveto command).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -895,7 +908,7 @@ Buttons: {left: 0, middle: 1 , right: 2}<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttondown">/session/:sessionId/buttondown</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidbuttondown">/session/:sessionId/buttondown</a><br>
 Click and hold the left mouse button (at the coordinates set by the last moveto command).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -907,7 +920,7 @@ LEFT if not specified.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/buttonup">/session/:sessionId/buttonup</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidbuttonup">/session/:sessionId/buttonup</a><br>
 Releases the mouse button previously held (where the mouse is currently at).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -919,7 +932,7 @@ LEFT if not specified.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/doubleclick">/session/:sessionId/doubleclick</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessioniddoubleclick">/session/:sessionId/doubleclick</a><br>
 Double-clicks at the current mouse coordinates (set by moveto).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -933,7 +946,7 @@ element.doubleClick(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/click">/session/:sessionId/touch/click</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidtouchclick">/session/:sessionId/touch/click</a><br>
 Single tap on the touch enabled device.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -948,12 +961,12 @@ element.tap(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/flick">/session/:sessionId/touch/flick</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidtouchflick">/session/:sessionId/touch/flick</a><br>
 Flick on the touch screen using finger motion events.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-flick(xSpeed, ySpeed, swipe, cb) -&gt; cb(err)<br>
+flick(xspeed, yspeed, swipe, cb) -&gt; cb(err)<br>
 Flicks, starting anywhere on the screen.<br>
 flick(element, xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 Flicks, starting at element center.<br>
@@ -965,7 +978,7 @@ element.flick(xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/location">/session/:sessionId/location</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidlocation">/session/:sessionId/location</a><br>
 Get the current geo location.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -974,7 +987,7 @@ getGeoLocation(cb) -&gt; cb(err, geoLocationObj)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/location">/session/:sessionId/location</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidlocation">/session/:sessionId/location</a><br>
 Set the current geo location.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -983,7 +996,7 @@ setGeoLocation(lat, lon, alt, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidlocal_storage">/session/:sessionId/local_storage</a><br>
 Set the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -993,7 +1006,7 @@ setLocalStorageKey(key, value, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/local_storage">/session/:sessionId/local_storage</a><br>
+DELETE <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#delete-sessionsessionidlocal_storage">/session/:sessionId/local_storage</a><br>
 Clear the storage.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -1003,7 +1016,7 @@ clearLocalStorage(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/local_storage/key/:key">/session/:sessionId/local_storage/key/:key</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidlocal_storagekeykey">/session/:sessionId/local_storage/key/:key</a><br>
 Get the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -1013,7 +1026,7 @@ getLocalStorageKey(key, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-DELETE <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/local_storage/key/:key">/session/:sessionId/local_storage/key/:key</a><br>
+DELETE <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#delete-sessionsessionidlocal_storagekeykey">/session/:sessionId/local_storage/key/:key</a><br>
 Remove the storage item for the given key.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -1023,13 +1036,10 @@ removeLocalStorageKey(key, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/log">/session/:sessionId/log</a><br>
+POST <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidlog">/session/:sessionId/log</a><br>
 Get the log for a given log type.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-<p>
-scroll(xOffset, yOffset, cb) -&gt; cb(err)<br>
-</p>
 <p>
 log(logType, cb) -&gt; cb(err, arrayOfLogs)<br>
 </p>
@@ -1037,7 +1047,7 @@ log(logType, cb) -&gt; cb(err, arrayOfLogs)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
-GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/log/types">/session/:sessionId/log/types</a><br>
+GET <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#get-sessionsessionidlogtypes">/session/:sessionId/log/types</a><br>
 Get available log types.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -1153,6 +1163,18 @@ Send key event to device (mjsonWire).
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
 pressKeycode(keycode, metastate, cb) -&gt; cb(err)<br>
+metastate is optional.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/long_press_keycode">/session/:sessionId/appium/device/long_press_keycode</a><br>
+Press and hold a particular key code on the device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+longPressKeycode(keycode, metastate, cb) -&gt; cb(err)<br>
 metastate is optional.<br>
 </p>
 </td>
@@ -1363,6 +1385,28 @@ implement the interface {appPackage, appActivity, [appWaitPackage], [appWaitActi
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/get_clipboard">/session/:sessionId/appium/device/get_clipboard</a><br>
+Get the content of the system clipboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getClipboard(contentType, cb) -&gt; cb(err)<br>
+Return clipboard content as base64-encoded string or an empty string if the clipboard is empty<br>
+The type of the content to get: plaintext, image, url. Android supports only plaintext<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/set_clipboard">/session/:sessionId/appium/device/set_clipboard</a><br>
+Set the content of the system clipboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setClipboard(content, contentType, cb) -&gt; cb(err)<br>
+Content is the actual base64 encoded clipboard content<br>
+Supported content type: plaintext, image, url. Android supports only plaintext<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/launch">/session/:sessionId/appium/app/launch</a><br>
 Launch app (mjsonWire).
 </td>
@@ -1481,6 +1525,15 @@ setNetworkConnection(type, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/appium/device/is_keyboard_shown">/session/:sessionId/appium/device/is_keyboard_shown</a><br>
+Whether or not the soft keyboard is shown (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+isKeyboardShown() -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/hide_keyboard">/session/:sessionId/appium/device/hide_keyboard</a><br>
 Hide keyboard (mjsonWire).
 </td>
@@ -1498,6 +1551,27 @@ Open Notifications (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 openNotifications(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/performanceData/types">/session/:sessionId/appium/performanceData/types</a><br>
+Get the types of system state which is supported like cpu, memory, network traffic, and battery (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getSupportedPerformanceDataTypes(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/getPerformanceData">/session/:sessionId/appium/getPerformanceData</a><br>
+Get the system state like cpu, memory, network traffic, and battery (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+getPerformanceData(packageName, dataType, dataReadTimeout, cb) -&gt; cb(err)<br>
+dataReadTimeout is optional.<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -1639,6 +1713,7 @@ waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el
 waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByIosClassChain(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
@@ -1660,6 +1735,7 @@ waitForElementsByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, e
 waitForElementsByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
 waitForElementsByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
 waitForElementsByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementsByIosClassChain(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementsByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementsByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>

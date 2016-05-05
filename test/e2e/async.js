@@ -52,11 +52,9 @@ describe('async' + env.ENV_DESC, function() {
   });
 
   it("eval", function(done) {
-    /* jshint evil: true */
     browser.eval("window.location.href", function(err, href) {
       href.should.include('http');
       done(null);
     });
   });
 });
-

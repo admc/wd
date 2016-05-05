@@ -4,6 +4,7 @@ var imageinfo = require('imageinfo');
 var path = require('path');
 var fs = require('fs');
 var tmp = require('../../lib/tmp');
+var assert = require('assert');
 
 describe('api-various ' + env.ENV_DESC, function() {
   var partials = {};

@@ -1,4 +1,5 @@
 require('../helpers/setup');
+var _ = require('lodash');
 
 describe('add-methods - promise-no-chain' + env.ENV_DESC, function() {
   var browser;
@@ -83,8 +84,8 @@ describe('add-methods - promise-no-chain' + env.ENV_DESC, function() {
   };
 
   var allExtraMethodNames = _.union(
-    _(extraAsyncMethods).keys().value(),
-    _(extraPromiseNoChainMethods).keys().value()
+    _(extraAsyncMethods).keys(),
+    _(extraPromiseNoChainMethods).keys()
   );
 
   var noExtraMethodCheck = function() {
