@@ -323,7 +323,7 @@ browser.detach();
 
 ### Capabilities
 
-[doc here](https://code.google.com/p/selenium/wiki/DesiredCapabilities).
+[doc here](https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities).
 
 ### Element function chaining (using promise chains)
 
