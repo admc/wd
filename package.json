@@ -43,7 +43,7 @@
     "lib": "./lib"
   },
   "dependencies": {
-    "archiver": "~0.14.0",
+    "archiver": "~1.0.0",
     "async": "~1.0.0",
     "lodash": "~3.9.3",
     "q": "~1.4.1",
