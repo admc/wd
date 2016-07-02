@@ -38,7 +38,5 @@ matrix:
   allow_failures:
     - node_js: "5"
       env: CONFIG=chrome_e2e
-before_script:
-  - npm install -g gulp mocha bdd-with-opts
 script:
-  - "gulp travis --config $CONFIG --sauce"
+  - "node_modules/.bin/gulp travis --config $CONFIG --sauce"
