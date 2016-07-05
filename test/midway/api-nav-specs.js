@@ -96,7 +96,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     '  <div class="div2" href="#">div 1</div>\n' +
     '  <div class="current"></div>\n' +
     '</div>\n';
-  it('browser.moveTo', skip('ios', 'android'), function() {
+  it('browser.moveTo', skip('ios', 'android')(function() {
     if(true || env.BROWSER === 'explorer') {
       // cannot get hover to work in explorer
       return browser
@@ -138,11 +138,11 @@ describe('api-nav ' + env.ENV_DESC, function() {
             .elementByCss('#theDiv .current').text().should.become('div 1');
         });
     }
-  });
+  }));
 
   partials['browser.buttonDown/browser.buttonUp'] =
     '<div id="theDiv"><a>hold me</a><div class="res"></div></div>\n';
-  it('browser.buttonDown/browser.buttonUp', skip('ios', 'android'), function() {
+  it('browser.buttonDown/browser.buttonUp', skip('ios', 'android')(function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -171,14 +171,14 @@ describe('api-nav ' + env.ENV_DESC, function() {
           .buttonUp(0)
           .elementByCss('#theDiv .res').text().should.become('button up');
       });
-  });
+  }));
 
   partials['browser.click'] =
     '<div id="theDiv">\n' +
     '  <div class="numOfClicks">not clicked</div>\n' +
     '  <div class="buttonNumber">not clicked</div>\n' +
     '</div>\n';
-  it('browser.click', skip('ios', 'android'), function() {
+  it('browser.click', skip('ios', 'android')(function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -217,13 +217,13 @@ describe('api-nav ' + env.ENV_DESC, function() {
             }
           });
       });
-  });
+  }));
 
   partials['browser.doubleclick'] =
     '<div id="theDiv">\n' +
     '  <div>not clicked</div>\n' +
     '</div>\n';
-  it('browser.doubleclick', skip('ios', 'android'), function() {
+  it('browser.doubleclick', skip('ios', 'android')(function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -240,7 +240,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
           .doubleclick()
           .elementByCss('#theDiv div').text().should.become('doubleclicked');
       });
-  });
+  }));
 
   if(!env.SAUCE) {
     // weird stuff with keying spaces on Sauce at the moment, commenting
@@ -260,7 +260,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
         .elementByCss("#theDiv input").type("not cleared")
         .getValue().should.become('not cleared')
         .elementByCss("#theDiv input").clear().getValue().should.become('');
-    });    
+    });
   }
 
   it('browser.title', function() {
@@ -269,7 +269,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
 
   partials['browser.acceptAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.acceptAlert', skip('ios', 'android'), function() {
+  it('browser.acceptAlert', skip('ios', 'android')(function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -282,11 +282,11 @@ describe('api-nav ' + env.ENV_DESC, function() {
       )
       .elementByCss("#theDiv a").click()
       .acceptAlert();
-  });
+  }));
 
   partials['browser.dismissAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.dismissAlert', skip('chrome', 'ios', 'android'), function() {
+  it('browser.dismissAlert', skip('chrome', 'ios', 'android')(function() {
     return browser
       .execute( prepareJs(
         'jQuery( function() {\n' +
@@ -299,6 +299,6 @@ describe('api-nav ' + env.ENV_DESC, function() {
       )
       .elementByCss("#theDiv a").click()
       .dismissAlert();
-  });
+  }));
 
 });

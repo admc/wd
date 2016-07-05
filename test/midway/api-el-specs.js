@@ -10,10 +10,10 @@ describe('api-el ' + env.ENV_DESC, function() {
     '<div name="theDiv">Hello World!</div>';
   it('browser.element', function() {
     var seq = [
-      function() { 
+      function() {
         return browser.element("name", "theDiv").should.eventually.exist; },
-      function() { 
-        return browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/); },      
+      function() {
+        return browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/); },
     ];
     return seq.reduce(Q.when, new Q());
     // return Q.all([
@@ -48,7 +48,7 @@ describe('api-el ' + env.ENV_DESC, function() {
 
   partials['browser.waitForElement'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForElement', skip('ios', 'android'), function() {
+  it('browser.waitForElement', skip('ios', 'android')(function() {
     var startMs = Date.now();
     return browser
       .executeAsync( prepareJs(
@@ -74,11 +74,11 @@ describe('api-el ' + env.ENV_DESC, function() {
           .waitForElement("css selector", "#wrongsel .child", 0.1 * env.BASE_TIME_UNIT)
           .should.be.rejectedWith('Element condition wasn\'t satisfied!');
       });
-  });
+  }));
 
   partials['browser.waitForVisible'] =
     '<div id="theDiv"></div>';
-  it('browser.waitForVisible', skip('ios', 'android'), function() {
+  it('browser.waitForVisible', skip('ios', 'android')(function() {
     return browser
       .executeAsync( prepareJs(
         'var args = Array.prototype.slice.call( arguments, 0 );\n' +
@@ -100,7 +100,7 @@ describe('api-el ' + env.ENV_DESC, function() {
           .should.be.rejectedWith(/Element didn\'t become visible/);
 
       });
-  });
+  }));
 
   partials['browser.elements'] =
     '<div>\n' +
