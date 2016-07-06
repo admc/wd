@@ -30,7 +30,7 @@ function buildMochaOpts(opts) {
 
   var mochaOpts = {
     flags: {
-      u: 'bdd-with-opts',
+      u: 'bdd',
       R: 'spec',
       c: true
     },

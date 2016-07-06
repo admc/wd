@@ -1,7 +1,7 @@
 require('../helpers/setup');
 
 // disabling because of random errors on sauce
-describe('window ' + env.ENV_DESC, skip('explorer'), function() {
+describe('window ' + env.ENV_DESC, skip('explorer')(function() {
 
   beforeEach(function() {
     return browser.windowHandles().should.eventually.have.length.below(2);
@@ -97,7 +97,7 @@ describe('window ' + env.ENV_DESC, skip('explorer'), function() {
   });
 
   partials['browser.setWindowSize'] = "";
-  it('browser.setWindowSize', skip('chrome'), function() {
+  it('browser.setWindowSize', skip('chrome')(function() {
     // bug with chrome
     return browser
       .getWindowSize().then(function(size) {
@@ -116,7 +116,7 @@ describe('window ' + env.ENV_DESC, skip('explorer'), function() {
               });
           });
       });
-  });
+  }));
 
   partials['browser.getWindowPosition'] = "";
   it('browser.getWindowPosition', function() {
@@ -153,4 +153,4 @@ describe('window ' + env.ENV_DESC, skip('explorer'), function() {
       });
   });
 
-});
+}));

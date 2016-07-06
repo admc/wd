@@ -1,4 +1,4 @@
 --require ./test/helpers/quit-gracefully
---ui bdd-with-opts
+--ui bdd
 --reporter spec
 --timeout 60000

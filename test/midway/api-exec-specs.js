@@ -69,7 +69,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
     '  <div class="line">line 2</div>\n' +
     '  <div class="line">line 3</div>\n' +
     '</div>\n';
-  it('browser.execute - els arg', skip('ios'), function() {
+  it('browser.execute - els arg', skip('ios')(function() {
     var jsScript = prepareJs(
       'var els = arguments[0];\n' +
       'return $(els[1]).text();\n'
@@ -81,7 +81,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
           .execute(jsScript, [els])
           .should.become('line 2');
       });
-  });
+  }));
 
   partials['browser.execute - el return'] =
     '<div id="theDiv"></div>';
@@ -126,7 +126,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
       });
   });
 
-  it('browser.safeExecute - args', skip('android'), function() {
+  it('browser.safeExecute - args', skip('android')(function() {
     /* jshint evil: true */
     var jsScript = prepareJs(
       'var a = arguments[0], b = arguments[1];\n' +
@@ -139,9 +139,9 @@ describe('api-exec ' + env.ENV_DESC, function() {
         return browser
           .safeExecute('invalid-code> here', [6, 4]).should.be.rejectedWith(/status: 13/);
       });
-  });
+  }));
 
-  it('browser.executeAsync', skip('ios', 'android'), function() {
+  it('browser.executeAsync', skip('ios', 'android')(function() {
     var jsScript = prepareJs(
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
@@ -155,9 +155,9 @@ describe('api-exec ' + env.ENV_DESC, function() {
     return browser
       .executeAsync(jsScript).should.become('OK')
       .executeAsync(jsScriptWithArgs, [10, 5]).should.become('OK 15');
-  });
+  }));
 
-  it('browser.safeExecuteAsync', skip('ios', 'android'), function() {
+  it('browser.safeExecuteAsync', skip('ios', 'android')(function() {
     var jsScript = prepareJs(
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
@@ -179,9 +179,9 @@ describe('api-exec ' + env.ENV_DESC, function() {
           return browser.safeExecuteAsync('123 invalid<script', [10, 5])
             .should.be.rejectedWith(/status: (13|17)/);
       });
-  });
+  }));
 
-  it('browser.setAsyncScriptTimeout', skip('ios', 'android'), function() {
+  it('browser.setAsyncScriptTimeout', skip('ios', 'android')(function() {
     var jsScript = prepareJs(
       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
       'var done = args[args.length -1];\n' +
@@ -195,12 +195,12 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .setAsyncScriptTimeout( 2* env.BASE_TIME_UNIT )
       .executeAsync( jsScript, [env.BASE_TIME_UNIT])
       .setAsyncScriptTimeout(0);
-  });
+  }));
 
 
   partials['browser.waitForCondition'] =
     '<div id="theDiv"></div>\n';
-  it('browser.waitForCondition', skip('ios', 'android'), function() {
+  it('browser.waitForCondition', skip('ios', 'android')(function() {
     var exprCond = "$('#theDiv .child').length > 0";
     return browser
       .executeAsync( prepareJs(
@@ -219,11 +219,11 @@ describe('api-exec ' + env.ENV_DESC, function() {
       .then(function() {
         return browser.waitForCondition('$wrong expr!!!').should.be.rejectedWith(/status: 13/);
       });
-  });
+  }));
 
   partials['browser.waitForConditionInBrowser'] =
     '<div id="theDiv"></div>\n';
-  it('browser.waitForConditionInBrowser', skip('ios', 'android'), function() {
+  it('browser.waitForConditionInBrowser', skip('ios', 'android')(function() {
     var exprCond = "$('#theDiv .child').length > 0";
     return browser
       .executeAsync( prepareJs(
@@ -247,6 +247,6 @@ describe('api-exec ' + env.ENV_DESC, function() {
           .should.be.rejectedWith(/status: (13|17)/);
       })
       .setAsyncScriptTimeout(0);
-  });
+  }));
 
 });

@@ -1,17 +1,17 @@
 require('../helpers/setup');
 
-describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer'), function() {
+describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer')(function() {
   var partials = {};
 
   var browser;
   require('./midway-base')(this, partials).then(function(_browser) { browser = _browser; });
 
-  it('browser.setOrientation', skip('ios'), function() {
+  it('browser.setOrientation', skip('ios')(function() {
     return browser
       .setOrientation('LANDSCAPE');
-  });
+  }));
 
-  if (!env.SAUCE) {    
+  if (!env.SAUCE) {
     it('browser.settings', function() {
       return browser
         .settings();
@@ -21,7 +21,7 @@ describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer'), functi
       return browser
         .updateSettings({'cyberdelia': 'open'})
         .settings().should.eventually.have.property('cyberdelia');
-    });    
+    });
   }
 
-});
+}));

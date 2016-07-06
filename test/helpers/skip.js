@@ -19,6 +19,20 @@ GLOBAL.skip = function () {
     var re = new RegExp( '^' + skipConfig + '$','i');
     return (env.BROWSER || "").match(re) || (cat||"").match(re);
   });
-  return found ? {pending: true} : {};
+  if(found) {
+    return function(testFunction) {
+      return function() {
+        if (this.skip) {  // Inside it() test case.
+          this.skip();
+        } else {  // Inside describe() test group.
+          before(function() {
+            this.skip();
+          });
+          testFunction.call(this);
+        }
+      };
+    }
+  } else {
+    return _.identity;
+  }
 };
-

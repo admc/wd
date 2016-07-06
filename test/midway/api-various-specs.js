@@ -81,7 +81,7 @@ describe('api-various ' + env.ENV_DESC, function() {
 
   partials['browser.dismissAlert'] =
     '<div id="theDiv"><a>click me</a></div>\n';
-  it('browser.dismissAlert', skip('chrome'), function() {
+  it('browser.dismissAlert', skip('chrome')(function() {
     return browser
       .execute(
         'jQuery( function() {\n' +
@@ -94,7 +94,7 @@ describe('api-various ' + env.ENV_DESC, function() {
       )
       .elementByCss("#theDiv a").click()
       .dismissAlert();
-  });
+  }));
 
   it('browser.takeScreenshot', function() {
     return browser
@@ -139,7 +139,7 @@ describe('api-various ' + env.ENV_DESC, function() {
   });
 
   // cookie don't seem to work in explorer
-  it('browser.<cookie methods>', skip('explorer'), function() {
+  it('browser.<cookie methods>', skip('explorer')(function() {
     return browser
       .deleteAllCookies()
       .allCookies().should.eventually.deep.equal([])
@@ -184,7 +184,7 @@ describe('api-various ' + env.ENV_DESC, function() {
         secure: true
       })
       .deleteAllCookies();
-  });
+  }));
 
   it('browser.<localStorage methods>', function() {
     return browser
