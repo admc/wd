@@ -47,7 +47,7 @@
     "async": "~1.0.0",
     "lodash": "~3.9.3",
     "q": "~1.4.1",
-    "request": "~2.55.0",
+    "request": "~2.74.0",
     "underscore.string": "~3.0.3",
     "vargs": "~0.1.0"
   },
