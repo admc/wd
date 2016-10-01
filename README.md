@@ -211,9 +211,9 @@ var browser = wd.remote('localhost');
 // or
 var browser = wd.remote('localhost', 8888);
 // or
-var browser = wd.remote("hub.browserstack.com", 80, "username", "apikey");
-// or
 var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
+// or
+var browser = wd.remote("hub.browserstack.com", 80, "username", "apikey");
 ```
 #### Named parameters
 
@@ -251,9 +251,9 @@ var browser = wd.remote({
 ```js
 var browser = wd.remote('http://localhost:4444/wd/hub');
 // or
-var browser = wd.remote('http://user:apiKey@hub.browserstack.com/wd/hub');
-// or
 var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
+// or
+var browser = wd.remote('http://user:apiKey@hub.browserstack.com/wd/hub');
 ```
 
 #### Url object created via url.parse
@@ -264,9 +264,9 @@ var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 var url = require('url');
 var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
 // or
-var browser = wd.remote(url.parse('http://user:apiKey@hub.browserstack.com:80/wd/hub'));
-// or
 var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
+// or
+var browser = wd.remote(url.parse('http://user:apiKey@hub.browserstack.com:80/wd/hub'));
 ```
 
 #### Defaults
