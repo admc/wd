@@ -8,24 +8,24 @@ var desireds = {
 };
 
 desireds.appium.android_phone = {
-  browserName: 'chrome',
-  'appium-version': '1.1',
-  platformName: 'Android',
-  platformVersion: '4.3',
-  deviceName: 'Android Emulator',
+    platformName: 'Android',
+    platformVersion: '5.1',
+    appiumVersion: '1.5.3',
+    deviceName: 'Android Emulator',
+    browserName: 'Browser',
+    deviceOrientation: 'portrait'
 };
 
 // TODO
 // desireds.appium.android_tablet = _.merge(_.clone(desireds.appium.android_phone), {'device-type': 'tablet'});
 
 desireds.appium.iphone = {
-  browserName: '',
-  'appium-version': '1.1',
-  platformName: 'iOS',
-  platformVersion: '7.1',
-  deviceName: 'iPhone Simulator',
-  app: 'safari',
-  'device-orientation': 'portrait'
+    platformName: 'iOS',
+    platformVersion: '9.3',
+    appiumVersion: '1.5.3',
+    deviceName: 'iPhone Simulator',
+    browserName: 'Safari',
+    deviceOrientation: 'portrait'
 };
 
 desireds.appium.ipad = _.merge(_.clone(desireds.appium.iphone), {deviceName: 'iPad Simulator'});
