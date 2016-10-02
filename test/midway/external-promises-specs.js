@@ -38,7 +38,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   var noExtraMethodCheck = function() {
     _(extraMethods).keys().each(function(name) {
       should.not.exist(wd.PromiseChainWebdriver.prototype[name]);
-    }).value();
+    });
   };
 
   var partials = {};
@@ -56,7 +56,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   afterEach(function() {
     _(extraMethods).keys().each(function(name) {
       wd.removeMethod(name);
-    }).value();
+    });
     noExtraMethodCheck();
   });
 
@@ -97,7 +97,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   it('addPromisedMethod (alt promise)', function() {
     _(extraMethods).each(function(method, name) {
       wd.addPromiseChainMethod(name, method);
-    }).value();
+    });
 
     browser = newPromiseChainRemote();
     return initAndGet(this, '#1').then(function() {
@@ -114,7 +114,7 @@ describe('ext-promises ' + env.ENV_DESC, function() {
   it('addPromisedMethod (mixed promise)', function() {
     _(extraMethods).each(function(method, name) {
       wd.addPromiseChainMethod(name, method);
-    }).value();
+    });
 
     browser = newPromiseChainRemote();
     return initAndGet(this, '#2').then(function() {

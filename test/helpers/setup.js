@@ -2,9 +2,9 @@ require('./env');
 require('colors');
 require('./skip');
 
-GLOBAL.wd = require('../../lib/main');
+global.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
-GLOBAL.uuidLib = require('node-uuid');
+global.uuidLib = require('node-uuid');
 
 if( env.TRAVIS ){
   console.log("Travis environment detected.");
@@ -38,7 +38,7 @@ wd.addAsyncMethod(
   }
 );
 
-GLOBAL.midwayUrl = function(testSuite, cat, title){
+global.midwayUrl = function(testSuite, cat, title){
   var uuid;
   if(typeof testSuite === 'object') {
     var opts = testSuite;
@@ -50,7 +50,7 @@ GLOBAL.midwayUrl = function(testSuite, cat, title){
     if(!title) {
       title = cat;
       cat = undefined;
-    }    
+    }
   }
   var cleanTitle = title.replace(/@[-\w]+/g, '').trim();
   return env.MIDWAY_ROOT_URL + '/test-page' +
@@ -60,7 +60,7 @@ GLOBAL.midwayUrl = function(testSuite, cat, title){
     (uuid? '&uuid=' +encodeURIComponent(uuid) : '');
 };
 
-GLOBAL.mergeDesired = function(desired, extra){
+global.mergeDesired = function(desired, extra){
   desired = _.clone(desired);
   if(!extra) { return desired; }
   _(extra).each(function(value, key) {
@@ -69,11 +69,11 @@ GLOBAL.mergeDesired = function(desired, extra){
     } else {
       desired[key] = extra[key] || desired[key];
     }
-  }).value();
+  });
   return desired;
 };
 
-GLOBAL.sauceJobTitle = function(title) {
+global.sauceJobTitle = function(title) {
   return (env.TRAVIS_JOB_NUMBER? '[' + env.TRAVIS_JOB_NUMBER + '] ' : '') +
     title
       .replace(/\(.*\)/g,'')
@@ -81,23 +81,23 @@ GLOBAL.sauceJobTitle = function(title) {
       .trim();
 };
 
-GLOBAL.prepareJs = function(script) {
+global.prepareJs = function(script) {
   if(env.ANDROID){
     script = utils.inlineJs(script);
   }
   return script;
 };
 
-GLOBAL.Q = GLOBAL.wd.Q;
+global.Q = global.wd.Q;
 
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
-GLOBAL.AssertionError = chai.AssertionError;
-GLOBAL.expect = chai.expect;
-GLOBAL.should = chai.should();
+global.AssertionError = chai.AssertionError;
+global.expect = chai.expect;
+global.should = chai.should();
 
-GLOBAL.Express = require("./express-helper").Express;
+global.Express = require("./express-helper").Express;
 
 wd.configureHttp(env.HTTP_CONFIG);

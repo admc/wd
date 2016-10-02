@@ -1,4 +1,4 @@
-/*global _:true, Q:true */ 
+/*global _:true, Q:true */
 var Mocha = require('mocha'),
     fs = require('fs'),
     path = require('path'),
@@ -24,7 +24,7 @@ function runSpecs(dir, mochaConfig) {
     _(mochaConfig).each(function(opt) {
       var optName = opt.shift();
       mocha[optName].apply(mocha, opt);
-    }).value();
+    });
     mocha.run(function(err) {
       // Need to cleanup require cache otherwise the test won't run twice
       // and there may be some weird side effects cause with have some global
@@ -40,7 +40,7 @@ function runSpecs(dir, mochaConfig) {
         })
         .each(function(key) {
           delete require.cache[path.resolve(key)];
-        }).value();
+        });
       done(err);
     });
   });

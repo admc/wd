@@ -1,7 +1,7 @@
-GLOBAL._ = require('../../lib/lodash');
+global._ = require('../../lib/lodash');
 
-/*global env:true */ 
-var env = GLOBAL.env = {};
+/*global env:true */
+var env = global.env = {};
 
 var toBoolean = function(str) {
   return _(str).toBoolean().value();
@@ -60,7 +60,7 @@ if( env.TRAVIS_JOB_ID ){
 }
 
 if(env.SAUCE) {
-  env.MIDWAY_ROOT_URL = "http://localhost:" + env.PROXY_PORT + '/' + 
+  env.MIDWAY_ROOT_URL = "http://localhost:" + env.PROXY_PORT + '/' +
     env.EXPRESS_PORT;
 } else {
   env.MIDWAY_ROOT_URL = "http://localhost:" +  env.EXPRESS_PORT;

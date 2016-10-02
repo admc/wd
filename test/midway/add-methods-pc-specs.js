@@ -106,7 +106,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
           return _this.text();
         }).then(function(text) {
           result += text;
-          return result;          
+          return result;
         });
     }
   };
@@ -122,7 +122,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
       should.not.exist(wd.Webdriver.prototype[name]);
       should.not.exist(wd.PromiseWebdriver.prototype[name]);
       should.not.exist(wd.PromiseChainWebdriver.prototype[name]);
-    }).value();
+    });
   };
 
   beforeEach(function() {
@@ -132,7 +132,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   afterEach(function() {
     _(allExtraMethodNames).each(function(name) {
       wd.removeMethod(name);
-    }).value();
+    });
     noExtraMethodCheck();
   });
 
@@ -149,7 +149,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   it('wd.addPromisedMethod (chain)', function() {
     _(extraPromiseChainMethods).each(function(method, name) {
       wd.addPromiseChainMethod(name, method);
-    }).value();
+    });
     return browser
       .sleepAndElementById('theDiv')
       .should.be.fulfilled
@@ -174,7 +174,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   it('wd.addElementPromisedMethod (chain)', function() {
     _(extraElementPromiseChainMethods).each(function(method, name) {
       wd.addElementPromiseChainMethod(name, method);
-    }).value();
+    });
     return browser
       .elementById('div1')
       .textTwice()
@@ -186,7 +186,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   it('wd.addPromisedMethod (no-chain)', function() {
     _(extraPromiseNoChainMethods).each(function(method, name) {
       wd.addPromiseMethod(name, method);
-    }).value();
+    });
     return browser
       .sleepAndElementById('theDiv')
       .should.be.fulfilled
@@ -211,7 +211,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   it('wd.addElementPromisedMethod (no-chain)', function() {
     _(extraElementPromiseNoChainMethods).each(function(method, name) {
       wd.addElementPromiseMethod(name, method);
-    }).value();
+    });
     return browser
       .elementById('div1')
       .textTwice()
@@ -223,7 +223,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   it('wd.addAsyncMethod', function() {
     _(extraAsyncMethods).each(function(method, name) {
       wd.addAsyncMethod(name, method);
-    }).value();
+    });
     return browser
       // .sleepAndElementById('theDiv')
       //   .should.be.fulfilled
@@ -250,7 +250,7 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   it('wd.addElementAsyncMethod', function() {
     _(extraElementAsyncMethods).each(function(method, name) {
       wd.addElementAsyncMethod(name, method);
-    }).value();
+    });
     return browser
       .elementById('div1')
       .textTwice()

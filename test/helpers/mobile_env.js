@@ -44,9 +44,9 @@ _(devices).each(function(_devices, _cat) {
         device = _device;
         cat = _cat;
       }
-    }).value();
+    });
   }
-}).value();
+});
 
 if(device){
   env.BROWSER_SKIP = cat;

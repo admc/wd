@@ -1,6 +1,6 @@
 var Args = require('vargs').Constructor;
 
-GLOBAL.skip = function () {
+global.skip = function () {
   var cat = null;
   var patterns = {
     'iphone': 'ios',
@@ -13,7 +13,7 @@ GLOBAL.skip = function () {
     if((env.BROWSER || "").match(re)) {
         cat = _cat;
     }
-  }).value();
+  });
   var args = new Args(arguments);
   var found = _(args.all).find(function(skipConfig) {
     var re = new RegExp( '^' + skipConfig + '$','i');
