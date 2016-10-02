@@ -1,5 +1,5 @@
 var devices = {};
-devices.android = ['android_phone', 'android_tablet'];
+devices.android = ['android_phone'];
 devices.ios = ['iphone', 'ipad'];
 
 var desireds = {
@@ -15,9 +15,6 @@ desireds.appium.android_phone = {
     browserName: 'Browser',
     deviceOrientation: 'portrait'
 };
-
-// TODO
-// desireds.appium.android_tablet = _.merge(_.clone(desireds.appium.android_phone), {'device-type': 'tablet'});
 
 desireds.appium.iphone = {
     platformName: 'iOS',

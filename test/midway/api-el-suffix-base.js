@@ -6,9 +6,8 @@
 require('../helpers/setup');
 
 exports.test = function function_name (
-  suffix, extraDesc, suffixPartials, criterias, skip) {
-
-    describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, skip, function() {
+  suffix, extraDesc, suffixPartials, criterias, _skip) {
+    describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, _skip, function() {
       var partials = {};
 
       var browser;

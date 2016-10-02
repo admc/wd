@@ -52,7 +52,7 @@
     "vargs": "0.1.0"
   },
   "devDependencies": {
-    "bdd-with-opts": "1.1.0",
+    "bdd-with-opts": "1.1.1",
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
     "colors": "1.1.2",

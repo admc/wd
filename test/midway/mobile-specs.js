@@ -1,6 +1,8 @@
 require('../helpers/setup');
 
-describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer'), function() {
+
+describe('mobile ' + env.ENV_DESC,
+    skip('chrome', 'firefox', 'explorer', env.SAUCE ? 'ios' : undefined), function() {
   var partials = {};
 
   var browser;
@@ -11,7 +13,7 @@ describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer'), functi
       .setOrientation('LANDSCAPE');
   });
 
-  if (!env.SAUCE) {    
+  if (!env.SAUCE) {
     it('browser.settings', function() {
       return browser
         .settings();
@@ -21,7 +23,7 @@ describe('mobile ' + env.ENV_DESC, skip('chrome', 'firefox', 'explorer'), functi
       return browser
         .updateSettings({'cyberdelia': 'open'})
         .settings().should.eventually.have.property('cyberdelia');
-    });    
+    });
   }
 
 });

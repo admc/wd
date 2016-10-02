@@ -30,6 +30,7 @@ env:
     - CONFIG=explorer
     - CONFIG=iphone
     - CONFIG=ipad
+    - CONFIG=android_phone
 matrix:
   include:
     - node_js: "5"

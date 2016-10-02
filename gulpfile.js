@@ -298,6 +298,7 @@ gulp.task('travis', function() {
       return runSequence(['test-midway','test-e2e']);
     case 'iphone':
     case 'ipad':
+    case 'android_phone':
       args.browsers= [args.config];
       return runSequence(['test-midway']);
     case 'chrome_e2e':

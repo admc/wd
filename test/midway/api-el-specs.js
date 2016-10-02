@@ -1,6 +1,6 @@
 require('../helpers/setup');
 
-describe('api-el ' + env.ENV_DESC, function() {
+describe('api-el ' + env.ENV_DESC, skip('ios'), function() {
   var partials = {};
 
   var browser;
@@ -10,10 +10,10 @@ describe('api-el ' + env.ENV_DESC, function() {
     '<div name="theDiv">Hello World!</div>';
   it('browser.element', function() {
     var seq = [
-      function() { 
+      function() {
         return browser.element("name", "theDiv").should.eventually.exist; },
-      function() { 
-        return browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/); },      
+      function() {
+        return browser.element("name", "theDiv2").should.be.rejectedWith(/status: 7/); },
     ];
     return seq.reduce(Q.when, new Q());
     // return Q.all([
