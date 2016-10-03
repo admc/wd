@@ -1,5 +1,17 @@
 # Release Notes
 
+## 1.0.x Release
+
+### 1.0.0
+- upgraded all dependencies
+- code fixes for new dependencies
+- NodeJS v6 targeted version, tested against v5 in CI
+
+## 0.4.x Release
+
+### 0.4.0
+  - touch action
+
 ## 0.3.x Release
 
 ### 0.3.12
