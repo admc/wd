@@ -55,8 +55,18 @@ to install and start a selenium server.
 ```js
 ...
 
+options = {
+    browserName:'chrome'
+    , chromeOptions: {
+      binary: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      , args: ['--window-size=10,10']
+    }
+    , tags : ["examples"]
+    , name: "This is an example test"
+  }
+
 browser
-  .init({browserName:'chrome'})
+  .init(options)
   .get("http://admc.io/wd/test-pages/guinea-pig.html")
   .title()
     .should.become('WD Tests')
