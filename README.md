@@ -14,7 +14,7 @@
 - [Site](http://admc.io/wd/)
 - [Mailing List](https://groups.google.com/forum/#!forum/wdjs)
 
-This library is designed to be a maleable implementation of the webdriver protocol in Node, exposing functionality via a number of programming paradigms. If you are looking for a more polished, opinionated and active library - I would suggest [webdriver.io](http://webdriver.io/).
+This library is designed to be a maleable implementation of the webdriver protocol in Node, exposing functionality via a number of programming paradigms. If you are looking for a more opinionated library, you might find [webdriver.io](http://webdriver.io/) interesting.
 
 ## Release Notes
 [here](https://github.com/admc/wd/blob/master/doc/release-notes.md)
