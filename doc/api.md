@@ -1479,6 +1479,15 @@ openNotifications(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/simulator/touch_id">/session/:sessionId/appium/simulator/touch_id</a><br>
+TouchID (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+touchId(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 extra
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">

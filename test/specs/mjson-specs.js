@@ -387,6 +387,20 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("touchId", function(done){
+        nock.cleanAll();
+        server
+          .post('/session/1234/appium/simulator/touch_id', {match: true})
+          .times(1)
+          .reply(200, {
+            sessionId: '1234',
+          });
+
+        browser
+          .touchId(true)
+          .nodeify(done);
+      });
+
       it("lockDevice", function(done) {
         nock.cleanAll();
         server
