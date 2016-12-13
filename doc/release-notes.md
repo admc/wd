@@ -1,5 +1,13 @@
 # Release Notes
 
+## 1.1.x Release
+
+### 1.1.0
+- added followAllRedirects option to all http requests
+- added touch_id method
+- case insensitive setOrientation
+- use Array.isArray() internally
+
 ## 1.0.x Release
 
 ### 1.0.0
