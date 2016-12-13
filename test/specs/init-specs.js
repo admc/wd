@@ -13,7 +13,12 @@ describe("init tests", function() {
       server.log(console.log);
       server.post('/session', '*').reply(303, "OK", {
         'Location': '/session/1234'
+      }).get('/session/1234').reply(200, {
+        status: 0,
+        sessionId: '1234',
+        value: {}
       });
+
       browser = wd.remote('http://localhost:9515/');
       browser.init({}, function(err) {
         should.not.exist(err);
@@ -51,6 +56,7 @@ describe("init tests", function() {
           })
           .post('/session', '*')
           .reply(303, "OK", { 'Location': '/session/1234' });
+
         browser = wd.remote('http://localhost:4444');
         var desired = {};
         desired[deviceKey] = 'iPhone';

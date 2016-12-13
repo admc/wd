@@ -10,6 +10,10 @@ describe("async callback tests", function() {
     server.log(console.log);
     server.post('/wd/hub/session', '*').reply(303, "OK", {
       'Location': '/wd/hub/session/1234'
+    }).get('/wd/hub/session/1234').reply(200, {
+      status: 0,
+      sessionId: '1234',
+      value: {}
     });
 
     browser = wd.remote({
@@ -62,7 +66,12 @@ describe("promise tests", function() {
     server.log(console.log);
     server.post('/wd/hub/session', '*').reply(303, "OK", {
       'Location': '/wd/hub/session/1234'
+    }).get('/wd/hub/session/1234').reply(200, {
+      status: 0,
+      sessionId: '1234',
+      value: {}
     });
+
     browser = wd.promiseChainRemote({
       port: 5555
     });

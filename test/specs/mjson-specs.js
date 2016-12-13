@@ -16,7 +16,12 @@ describe("mjson tests", function() {
     before(function(done) {
       server.post('/session').reply(303, "OK", {
         'Location': '/session/1234'
+      }).get('/session/1234').reply(200, {
+          status: 0,
+          sessionId: '1234',
+          value: {}
       });
+
       browser = wd.promiseChainRemote('http://localhost:5555/');
       browser
         .init()
@@ -1020,6 +1025,10 @@ describe("mjson tests", function() {
     before(function(done) {
       server.post('/session').reply(303, "OK", {
         'Location': '/session/1234'
+      }).get('/session/1234').reply(200, {
+          status: 0,
+          sessionId: '1234',
+          value: {}
       });
       browser = wd.remote('http://localhost:5555/');
       browser.init(done);
