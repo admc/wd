@@ -47,7 +47,7 @@
     "async": "2.0.1",
     "lodash": "4.16.2",
     "q": "1.4.1",
-    "request": "2.75.0",
+    "request": "2.79.0",
     "underscore.string": "3.3.4",
     "vargs": "0.1.0"
   },
@@ -69,12 +69,12 @@
     "mocha": "3.1.0",
     "mu2": "0.5.21",
     "nock": "8.0.0",
-    "node-uuid": "1.4.7",
     "promise-simple": "0.1.0",
     "run-sequence": "1.2.2",
     "sauce-connect-launcher": "0.16.0",
     "spawn-mocha-parallel": "1.3.1",
     "sv-selenium": "0.3.1",
+    "uuid": "3.0.1",
     "yargs": "6.0.0"
   },
   "scripts": {
