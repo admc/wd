@@ -45,10 +45,8 @@
   "dependencies": {
     "archiver": "1.3.0",
     "async": "2.0.1",
-    "lodash": "4.16.2",
     "q": "1.4.1",
     "request": "2.75.0",
-    "underscore.string": "3.3.4",
     "vargs": "0.1.0"
   },
   "devDependencies": {
@@ -66,6 +64,7 @@
     "istanbul": "0.4.5",
     "jshint": "2.9.3",
     "jshint-stylish": "2.2.1",
+    "lodash": "4.16.2",
     "mocha": "3.1.0",
     "mu2": "0.5.21",
     "nock": "8.0.0",

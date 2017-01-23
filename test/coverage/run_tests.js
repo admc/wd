@@ -2,7 +2,6 @@
 var Mocha = require('mocha'),
     fs = require('fs'),
     path = require('path'),
-    _ = require('./lodash'),
     Q = require('Q');
 
 var sauceUsername = process.env.SAUCE_USERNAME;
@@ -21,7 +20,7 @@ function runSpecs(dir, mochaConfig) {
     mocha.ui('bdd');
     mocha.bail(false);
     mocha.reporter('dot');
-    _(mochaConfig).each(function(opt) {
+    mochaConfig.forEach(function(opt) {
       var optName = opt.shift();
       mocha[optName].apply(mocha, opt);
     });
@@ -30,15 +29,14 @@ function runSpecs(dir, mochaConfig) {
       // and there may be some weird side effects cause with have some global
       // state in our test setup helpers.
       // see https://github.com/visionmedia/mocha/issues/736
-      _(require.cache)
-        .keys()
+      Object.keys(require.cache)
         .filter(function(key) {
           return  key.match(/test\/helper/) ||
                   key.match(/test\/unit/) ||
                   key.match(/test\/e2e/) ||
                   key.match(/test\/midway/);
         })
-        .each(function(key) {
+        .forEach(function(key) {
           delete require.cache[path.resolve(key)];
         });
       done(err);
