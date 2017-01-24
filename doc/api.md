@@ -826,7 +826,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Set the browser orientation.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-setOrientation(cb) -&gt; cb(err, orientation)<br>
+setOrientation(orientation) -&gt; cb(err)<br>
 </td>
 </tr>
 <tr>
