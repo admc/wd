@@ -4,7 +4,7 @@ require('./skip');
 
 global.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
-global.uuidLib = require('node-uuid');
+global.uuidLib = require('uuid');
 
 if( env.TRAVIS ){
   console.log("Travis environment detected.");
