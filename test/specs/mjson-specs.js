@@ -406,6 +406,20 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it.only("toggleTouchIdEnrollment", function(done){
+        nock.cleanAll();
+        server
+          .post('/session/1234/appium/simulator/toggle_touch_id_enrollment')
+          .times(1)
+          .reply(200, {
+            sessionId: '1234',
+          });
+
+        browser
+          .toggleTouchIdEnrollment(true)
+          .nodeify(done);
+      });
+
       it("lockDevice", function(done) {
         nock.cleanAll();
         server
