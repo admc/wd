@@ -406,7 +406,7 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
-      it.only("toggleTouchIdEnrollment", function(done){
+      it("toggleTouchIdEnrollment", function(done){
         nock.cleanAll();
         server
           .post('/session/1234/appium/simulator/toggle_touch_id_enrollment')
