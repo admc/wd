@@ -223,16 +223,19 @@ The parameters used are similar to those in the [url](http://nodejs.org/docs/lat
 var browser = wd.remote()
 // or
 var browser = wd.remote({
-  hostname: '127.0.0.1',
+  host: '127.0.0.1',
   port: 4444,
-  user: 'username',
-  pwd: 'password',
+  username: 'username',
+  accessKey: 'password',
 });
-// or
+// or include everything
 var browser = wd.remote({
-  hostname: '127.0.0.1',
+  host: '127.0.0.1',
   port: 4444,
-  auth: 'username:password',
+  username: 'username',
+  accessKey: 'password',
+  https: false,
+  path: '/wd/hub'
 });
 ```
 
