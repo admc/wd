@@ -60,7 +60,7 @@
     "dox": "0.9.0",
     "express": "4.14.0",
     "gulp": "3.9.1",
-    "gulp-jshint": "2.0.1",
+    "gulp-jshint": "2.0.4",
     "hbs": "4.0.1",
     "http-proxy": "1.15.1",
     "imageinfo": "1.0.4",
