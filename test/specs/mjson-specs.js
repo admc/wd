@@ -568,6 +568,24 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("getCurrentPackage", function(done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/appium/device/current_package')
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: 'org.fake.package'
+          });
+        browser
+          .getCurrentDeviceActivity()
+          .should.become('org.fake.package')
+          .getCurrentActivity()
+          .should.become('org.fake.package')
+          .nodeify(done);
+      });
+
       it("installAppOnDevice", function(done) {
         nock.cleanAll();
         server
