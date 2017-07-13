@@ -1342,6 +1342,17 @@ getCurrentActivity(cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/appium/device/current_activity">/session/:sessionId/appium/device/current_package</a><br>
+Get current package (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+getCurrentPackage(cb) -&gt; cb(err)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/install_app">/session/:sessionId/appium/device/install_app</a><br>
 Install app (mjsonWire).
 </td>

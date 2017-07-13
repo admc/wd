@@ -105,6 +105,7 @@
   "POST /session/:sessionId/appium/device/press_keycode": "Send key event to device (mjsonWire).",
   "POST /session/:sessionId/appium/device/rotate": "Rotate device (mjsonWire).",
   "GET /session/:sessionId/appium/device/current_activity": "Get current activity (mjsonWire).",
+  "GET /session/:sessionId/appium/device/current_package": "Get current package (mjsonWire).",
   "POST /session/:sessionId/appium/device/install_app": "Install app (mjsonWire).",
   "POST /session/:sessionId/appium/device/remove_app": "Remove app (mjsonWire).",
   "POST /session/:sessionId/appium/device/app_installed": "Check if the app is installed (mjsonWire).",
