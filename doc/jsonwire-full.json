@@ -129,5 +129,13 @@
   "POST /session/:sessionId/network_connection": "Set appium selendroid network connection type (mjsonWire).",
   "POST /session/:sessionId/appium/device/hide_keyboard": "Hide keyboard (mjsonWire).",
   "POST /session/:sessionId/appium/device/open_notifications": "Open Notifications (mjsonWire).",
+  "POST /session/:sessionId/appium/device/finger_print": "Send fingerprint (mjsonWire).",
+  "POST /session/:sessionId/appium/device/send_sms": "Send sms to Android emulator (mjsonWire).",
+  "POST /session/:sessionId/appium/device/gsm_call": "Send GSM call to Android emulator (mjsonWire).",
+  "POST /session/:sessionId/appium/device/gsm_signal": "Set GSM signal strenght on Android emulator (mjsonWire).",
+  "POST /session/:sessionId/appium/device/gsm_voice": "Set GSM state  fingerprint (mjsonWire).",
+  "POST /session/:sessionId/appium/device/power_capacity": "Set battery percent on Android emulator (mjsonWire).",
+  "POST /session/:sessionId/appium/device/power_ac": "Set state of power charger on Android emulator(mjsonWire).",
+  "POST /session/:sessionId/appium/device/network_speed": "Set Android emulator network speed (mjsonWire).",
   "POST /session/:sessionId/simulator/touch_id": "Simulate iOS touchID (mjsonWire)"
 }

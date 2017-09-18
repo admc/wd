@@ -2,6 +2,9 @@
 
 ## 1.1.x Release
 
+### 1.4.1
+- added new methods released on appium 1.7.0 for android emulators
+
 ### 1.1.1
 - added followAllRedirects option to all http requests
 - added touch_id method
@@ -59,7 +62,7 @@ note: 1.1.0 was skipped
 ### 0.3.4
 
   - error fix
-  - http timeout fix 
+  - http timeout fix
 
 ### 0.3.3
 
@@ -76,8 +79,8 @@ note: 1.1.0 was skipped
 
 ### 0.3.0
 
-  - TouchAction/MultiAction update now works like the [W3 specs](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#multiactions-1). 
-  See the following sample: 
+  - TouchAction/MultiAction update now works like the [W3 specs](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#multiactions-1).
+  See the following sample:
 
 ```js
 TouchAction a1 = (new wd.TouchAction(driver)).press({el: el}).release();
@@ -111,7 +114,7 @@ ma.perform();
   - configurable default chaining scope
 
 ### 0.2.21
-  - better sauce job update logic 
+  - better sauce job update logic
 
 ### 0.2.20
   - configurable sauce rest root
@@ -133,9 +136,9 @@ ma.perform();
 
 ### 0.2.15
   - extra mobile/appium method
-  - command arguments bugfix 
+  - command arguments bugfix
 
-### 0.2.14 
+### 0.2.14
   - no defaults for appium
   - better mobile examples
 
