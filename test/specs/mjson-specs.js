@@ -406,6 +406,20 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("toggleTouchIdEnrollment", function(done){
+        nock.cleanAll();
+        server
+          .post('/session/1234/appium/simulator/toggle_touch_id_enrollment')
+          .times(1)
+          .reply(200, {
+            sessionId: '1234',
+          });
+
+        browser
+          .toggleTouchIdEnrollment(true)
+          .nodeify(done);
+      });
+
       it("lockDevice", function(done) {
         nock.cleanAll();
         server
@@ -456,6 +470,33 @@ describe("mjson tests", function() {
             });
           browser
             .pressDeviceKey(3)
+            .nodeify(done);
+        });
+      });
+
+      describe("pressKeycode", function() {
+        it("keycode only", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/press_keycode', {keycode: 3})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .pressKeycode(3)
+            .nodeify(done);
+        });
+        it("keycode + metastate", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/press_keycode', {keycode: 3, metastate: "abcd"})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .pressKeycode(3, "abcd")
             .nodeify(done);
         });
       });
@@ -524,6 +565,24 @@ describe("mjson tests", function() {
           .should.become('.activities.PeopleActivity')
           .getCurrentActivity()
           .should.become('.activities.PeopleActivity')
+          .nodeify(done);
+      });
+
+      it("getCurrentPackage", function(done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/appium/device/current_package')
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: 'org.fake.package'
+          });
+        browser
+          .getCurrentDeviceActivity()
+          .should.become('org.fake.package')
+          .getCurrentActivity()
+          .should.become('org.fake.package')
           .nodeify(done);
       });
 

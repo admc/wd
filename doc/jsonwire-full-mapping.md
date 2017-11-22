@@ -1276,16 +1276,28 @@ unlock(cb) -&gt; cb(err)<br>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/keyevent">/session/:sessionId/appium/device/keyevent</a><br>
-Send key event to device (mjsonWire).
+Send key event to device (DEPRECATED) (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
 deviceKeyEvent(keycode, metastate, cb) -&gt; cb(err)<br>
-metastate is optional<br>
+metastate is optional. DEPRECATED: use pressKeycode instead.<br>
 </p>
 <p>
 pressDeviceKey(keycode, metastate, cb) -&gt; cb(err)<br>
-metastate is optional<br>
+metastate is optional. DEPRECATED: use pressKeycode instead.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/press_keycode">/session/:sessionId/appium/device/press_keycode</a><br>
+Send key event to device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+pressKeycode(keycode, metastate, cb) -&gt; cb(err)<br>
+metastate is optional.<br>
 </p>
 </td>
 </tr>
@@ -1325,6 +1337,17 @@ getCurrentDeviceActivity(cb) -&gt; cb(err)<br>
 </p>
 <p>
 getCurrentActivity(cb) -&gt; cb(err)<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/appium/device/current_activity">/session/:sessionId/appium/device/current_package</a><br>
+Get current package (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+getCurrentPackage(cb) -&gt; cb(err)<br>
 </p>
 </td>
 </tr>

@@ -178,7 +178,7 @@ _(jsonDocs).each(function (jsonDoc) {
 });
 
 var output = '';
-mu.compileAndRender( 'mapping-template.htm', {mapping: resMapping})
+mu.compileAndRender('mapping-template.htm', {mapping: resMapping})
   .on('data', function (data) {
     output += data.toString();
   })
