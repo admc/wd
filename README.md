@@ -258,6 +258,8 @@ var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 var browser = wd.remote('http://user:apiKey@hub.browserstack.com/wd/hub');
 // or
 var browser = wd.remote('http://key:secret@hub.testingbot.com/wd/hub');
+// or
+var browser = wd.remote('https://user:apiKey@api.kobiton.com/wd/hub');
 ```
 
 #### Url object created via url.parse
@@ -273,6 +275,8 @@ var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/
 var browser = wd.remote(url.parse('http://user:apiKey@hub.browserstack.com:80/wd/hub'));
 // or
 var browser = wd.remote(url.parse('http://key:secret@hub.testingbot.com:80/wd/hub'));
+// or
+var browser = wd.remote(url.parse('https://user:apiKey@api.kobiton.com/wd/hub'));
 ```
 
 #### Defaults
