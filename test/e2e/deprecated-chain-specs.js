@@ -22,7 +22,7 @@ describe('deprecated chain - full' + env.ENV_DESC, function() {
     else { done(); }
   });
 
-  it("full chaining should work", function(done) {
+  it("full chaining should work", skip('chrome', 'firefox'), function(done) {
     this.timeout(env.INIT_TIMEOUT);
     var sauceExtra = {
       name: sauceJobTitle(this.runnable().parent.title),
@@ -76,7 +76,7 @@ describe('deprecated chain - partial' + env.ENV_DESC, function() {
     });
   });
 
-  it("partial chaining should work", function(done) {
+  it("partial chaining should work", skip('chrome', 'firefox'), function(done) {
     /* jshint evil: true */
     browser.chain()
       .title(function(err, title) {
@@ -99,7 +99,7 @@ describe('deprecated chain - partial' + env.ENV_DESC, function() {
   });
 
   var asyncCallCompleted = false;
-  it("browser.queueAddAsync", function(done) {
+  it("browser.queueAddAsync", skip('chrome', 'firefox'), function(done) {
     browser.chain()
       .title(function(err, title) {
         title.should.include('WD');
