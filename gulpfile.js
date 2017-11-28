@@ -151,7 +151,7 @@ gulp.task('test-e2e', function() {
 });
 
 gulp.task('test', function() {
-  var seq = ['lint', 'test-unit', 'test-midway-multi'];
+  var seq = ['test-unit', 'test-midway-multi'];
   _(BROWSERS).each(function(browser) {
      seq.push('test-midway-' + browser);
      seq.push('test-e2e-' + browser);
