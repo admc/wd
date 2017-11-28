@@ -1,6 +1,6 @@
 /* global sauceJobTitle, mergeDesired, midwayUrl, Express, uuidLib */
 
-module.exports = function(that, partials) {
+module.exports = function(that, partials, timeout) {
 
   that.timeout(env.TIMEOUT);
 
@@ -9,6 +9,13 @@ module.exports = function(that, partials) {
   var browser;
   var allPassed = true;
   var express;
+
+  before(function () {
+    if (timeout) {
+      wd.configureDOM({timeout: timeout});
+    }
+  });
+
   before(function(done) {
     express = new Express( __dirname + '/assets', partials );
     express.start(done);

@@ -579,9 +579,7 @@ describe("mjson tests", function() {
             value: 'org.fake.package'
           });
         browser
-          .getCurrentDeviceActivity()
-          .should.become('org.fake.package')
-          .getCurrentActivity()
+          .getCurrentPackage()
           .should.become('org.fake.package')
           .nodeify(done);
       });

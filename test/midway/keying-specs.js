@@ -109,7 +109,7 @@ describe('keying ' + env.ENV_DESC, function() {
 
   if(!env.SAUCE) { // alt key seems to have no effect
     partials['keying [altKey]'] = keyingPartial;
-    it('keying [altKey]', function() {
+    it('keying [altKey]', skip('chrome'), function() {
       return browser
         .elementByCss("#theDiv input").type([altKey, 'Hello', altKey])
           .getValue().then(function(val) {
