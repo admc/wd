@@ -427,6 +427,7 @@ elementByTagName(value, cb) -&gt; cb(err, element)<br>
 elementByXPath(value, cb) -&gt; cb(err, element)<br>
 elementByCss(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -452,6 +453,7 @@ elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 elementsByIosUIAutomation(value, cb) -&gt; cb(err, elements)<br>
+elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
 elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -470,6 +472,7 @@ elementByTagNameOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChainOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdOrNull(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -488,6 +491,7 @@ elementByTagNameIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByIosClassChainIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdIfExists(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -506,6 +510,7 @@ hasElementByTagName(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByCss(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByIosUIAutomation(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByIosClassChain(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAndroidUIAutomator(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAccessibilityId(value, cb) -&gt; cb(err, boolean)<br>
 </p>
@@ -540,6 +545,7 @@ element.elementByTagName(value, cb) -&gt; cb(err, element)<br>
 element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
 element.elementByCss(value, cb) -&gt; cb(err, element)<br>
 element.elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
+element.elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
 element.elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 element.elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -565,6 +571,7 @@ element.elementsByTagName(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByIosUIAUtomation(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -1639,6 +1646,7 @@ waitForElementByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el
 waitForElementByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementByIosClassChain(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>
@@ -1660,6 +1668,7 @@ waitForElementsByTagName(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, e
 waitForElementsByXPath(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
 waitForElementsByCss(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, els)<br>
 waitForElementsByIosUIAutomation(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
+waitForElementsByIosClassChain(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementsByAndroidUIAutomator(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 waitForElementsByAccessibilityId(value, asserter, timeout, pollFreq, cb) -&gt; cb(err, el)<br>
 asserter, timeout, pollFreq are optional, opts may be passed instead,<br>

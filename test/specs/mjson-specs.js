@@ -102,6 +102,81 @@ describe("mjson tests", function() {
 
     });
 
+
+    describe("by ios class chain", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-ios class chain","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: '0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-ios class chain","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .element('-ios class chain', 'random stuff')
+            .should.eventually.exist
+          .elementByIosClassChain('random stuff')
+            .should.eventually.exist
+          .elementByIosClassChainOrNull('random stuff')
+            .should.eventually.exist
+          .elementByIosClassChainIfExists('random stuff')
+            .should.eventually.exist
+          .hasElementByIosClassChain('random stuff')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios class chain","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .elements('-ios class chain', 'random stuff')
+            .should.eventually.exist
+          .elementsByIosClassChain('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios class chain","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .waitForElement('-ios class chain', 'random stuff')
+            .should.eventually.exist
+          .waitForElementByIosClassChain('random stuff')
+            .should.eventually.exist
+          .waitForElementsByIosClassChain('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
     describe("by android uiautomator", function() {
 
       it("element methods should work", function(done) {
@@ -572,16 +647,14 @@ describe("mjson tests", function() {
         nock.cleanAll();
         server
           .get('/session/1234/appium/device/current_package')
-          .times(2)
+          .times(1)
           .reply(200, {
             status: 0,
             sessionId: '1234',
             value: 'org.fake.package'
           });
         browser
-          .getCurrentDeviceActivity()
-          .should.become('org.fake.package')
-          .getCurrentActivity()
+          .getCurrentPackage()
           .should.become('org.fake.package')
           .nodeify(done);
       });
