@@ -80,7 +80,6 @@
   },
   "scripts": {
     "test": "gulp test-unit",
-    "all_tests": "gulp test",
-    "install": "node scripts/build-browser-scripts"
+    "all_tests": "gulp test"
   }
 }
