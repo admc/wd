@@ -1149,6 +1149,41 @@ describe("mjson tests", function() {
           .getDeviceTime()
           .nodeify(done);
       });
+
+      it("getClipboard", function (done) {
+        nock.cleanAll();
+        server
+          .post(
+            '/session/1234/appium/device/get_clipboard',
+            {contentType: 'plaintext'}
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: 'testing'
+          });
+        browser
+          .getClipboard('plaintext')
+            .should.eventually.equal('testing')
+          .nodeify(done);
+      });
+
+      it("setClipboard", function (done) {
+        nock.cleanAll();
+        var base64Data = new Buffer.from('Hello').toString('base64');
+        server
+          .post(
+            '/session/1234/appium/device/set_clipboard',
+            {content: base64Data, contentType: 'plaintext'}
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234'
+          });
+        browser
+          .setClipboard(base64Data, 'plaintext')
+          .nodeify(done);
+      });
     });
   });
 

@@ -1514,6 +1514,28 @@ implement the interface {appPackage, appActivity, [appWaitPackage], [appWaitActi
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/get_clipboard">/session/:sessionId/appium/device/get_clipboard</a><br>
+Get the content of the system clipboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getClipboard(contentType, cb) -&gt; cb(err)<br>
+Return clipboard content as base64-encoded string or an empty string if the clipboard is empty<br>
+The type of the content to get: plaintext, image, url. Android supports only plaintext<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/set_clipboard">/session/:sessionId/appium/device/set_clipboard</a><br>
+Set the content of the system clipboard (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setClipboard(content, contentType, cb) -&gt; cb(err)<br>
+Content is the actual base64 encoded clipboard content<br>
+Supported content type: plaintext, image, url. Android supports only plaintext<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/app/launch">/session/:sessionId/appium/app/launch</a><br>
 Launch app (mjsonWire).
 </td>

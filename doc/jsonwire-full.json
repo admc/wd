@@ -137,5 +137,7 @@
   "POST /session/:sessionId/appium/device/power_capacity": "Set battery percent on Android emulator (mjsonWire).",
   "POST /session/:sessionId/appium/device/power_ac": "Set state of power charger on Android emulator(mjsonWire).",
   "POST /session/:sessionId/appium/device/network_speed": "Set Android emulator network speed (mjsonWire).",
+  "POST /session/:sessionId/appium/device/get_clipboard": "Get the content of the system clipboard (mjsonWire).",
+  "POST /session/:sessionId/appium/device/set_clipboard": "Set the content of the system clipboard (mjsonWire).",
   "POST /session/:sessionId/simulator/touch_id": "Simulate iOS touchID (mjsonWire)"
 }
