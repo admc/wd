@@ -707,6 +707,21 @@ describe("mjson tests", function() {
           .nodeify(done);
       });
 
+      it("isKeyboardShown", function(done) {
+        nock.cleanAll();
+        server
+          .get('/session/1234/appium/device/is_keyboard_shown')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: true
+          });
+        browser
+          .isKeyboardShown()
+          .should.become(true)
+          .nodeify(done);
+      });
+
       it("hideDeviceKeyboard, passing key", function(done) {
         nock.cleanAll();
         server

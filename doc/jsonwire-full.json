@@ -127,6 +127,7 @@
   "POST /session/:sessionId/appium/element/:elementId?/value": "Set element immediate value (mjsonWire).",
   "GET /session/:sessionId/network_connection": "Get appium selendroid network connection type (mjsonWire).",
   "POST /session/:sessionId/network_connection": "Set appium selendroid network connection type (mjsonWire).",
+  "GET /session/:sessionId/appium/device/is_keyboard_shown": "Whether or not the soft keyboard is shown (mjsonWire).",
   "POST /session/:sessionId/appium/device/hide_keyboard": "Hide keyboard (mjsonWire).",
   "POST /session/:sessionId/appium/device/open_notifications": "Open Notifications (mjsonWire).",
   "POST /session/:sessionId/appium/device/finger_print": "Send fingerprint (mjsonWire).",
