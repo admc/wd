@@ -1510,6 +1510,15 @@ setNetworkConnection(type, cb) -&gt; cb(err)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/appium/device/is_keyboard_shown">/session/:sessionId/appium/device/is_keyboard_shown</a><br>
+Whether or not the soft keyboard is shown (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+isKeyboardShown() -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/hide_keyboard">/session/:sessionId/appium/device/hide_keyboard</a><br>
 Hide keyboard (mjsonWire).
 </td>
