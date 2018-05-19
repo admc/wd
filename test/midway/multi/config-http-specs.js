@@ -59,7 +59,8 @@ describe('config-http ' + env.ENV_DESC, function() {
       retries: env.HTTP_RETRIES || 10,
       retryDelay: env.HTTP_RETRY_DELAY || 50,
       baseUrl: 'http://example.com',
-      proxy: undefined
+      proxy: undefined,
+      rejectUnauthorized: true
     };
 
     var newConfig2 = _(newConfig).clone();
@@ -89,7 +90,8 @@ describe('config-http ' + env.ENV_DESC, function() {
       retries: env.HTTP_RETRIES || 10,
       retryDelay: env.HTTP_RETRY_DELAY || 50,
       baseUrl: 'http://example3.com',
-      proxy: undefined
+      proxy: undefined,
+      rejectUnauthorized: true
     };
 
     var newConfig2 = _(newConfig).clone();
@@ -116,7 +118,8 @@ describe('config-http ' + env.ENV_DESC, function() {
         retries: env.HTTP_RETRIES || 10,
         retryDelay: env.HTTP_RETRY_DELAY || 50,
         baseUrl: 'http://example.com/',
-        proxy: undefined
+        proxy: undefined,
+        rejectUnauthorized: true
     };
     if(newConfig.retryDelay = wdCurrent.retryDelay) { newConfig.retryDelay++; }
     return browser

@@ -6,3 +6,4 @@ temp
 .npmignore
 *.log
 build/
+.idea
