@@ -1055,7 +1055,7 @@ describe("mjson tests", function() {
           });
         browser
           .setNetworkConnection(5)
-            .should.eventually.equal(5)
+            .should.become(5)
           .nodeify(done);
       });
 
@@ -1179,7 +1179,7 @@ describe("mjson tests", function() {
           });
         browser
           .getClipboard('plaintext')
-            .should.eventually.equal('testing')
+            .should.become('testing')
           .nodeify(done);
       });
 

@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     _ = require('lodash'),
     args   = require('yargs').argv,
     urlLib = require('url'),
-    mochaStream = require('spawn-mocha-parallel').mochaStream,
+    mochaStream = require('gulp-spawn-mocha'),
     httpProxy = require('http-proxy'),
     sauceConnectLauncher = require('sauce-connect-launcher'),
     async = require('async');
@@ -20,7 +20,6 @@ args.sauce = args.sauce ? true : false;
 var BROWSERS = ['chrome', 'firefox'];
 if (args.sauce) { BROWSERS.push('explorer'); }
 var MOBILE_BROWSERS = ['android', 'ios', 'iphone', 'ipad', 'android_phone'];
-process.env.SAUCE_CONNECT_VERSION = process.env.SAUCE_CONNECT_VERSION || '4.3';
 process.env.SAUCE_CONNECT_VERBOSE = false;
 
 var PROXY_PORT = 5050;
