@@ -555,6 +555,7 @@ Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms
 # Install the Selenium server, Chromedriver connect
 node_modules/.bin/install_selenium
 node_modules/.bin/install_chromedriver
+# NOTE: You may need to upgrade /tmp/sv-selenium/chromedriver to match your Chrome version!
 
 #Run the selenium server with chromedriver:
 node_modules/.bin/start_selenium_with_chromedriver
