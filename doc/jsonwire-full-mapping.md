@@ -1310,6 +1310,18 @@ metastate is optional.<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/long_press_keycode">/session/:sessionId/appium/device/long_press_keycode</a><br>
+Press and hold a particular key code on the device (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+longPressKeycode(keycode, metastate, cb) -&gt; cb(err)<br>
+metastate is optional.<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/device/rotate">/session/:sessionId/appium/device/rotate</a><br>
 Rotate device (mjsonWire).
 </td>
@@ -1680,6 +1692,27 @@ Open Notifications (mjsonWire).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 openNotifications(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/performanceData/types">/session/:sessionId/appium/performanceData/types</a><br>
+Get the types of system state which is supported like cpu, memory, network traffic, and battery (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getSupportedPerformanceDataTypes(cb) -&gt; cb(err)<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/appium/getPerformanceData">/session/:sessionId/appium/getPerformanceData</a><br>
+Get the system state like cpu, memory, network traffic, and battery (mjsonWire).
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+getPerformanceData(packageName, dataType, dataReadTimeout, cb) -&gt; cb(err)<br>
+dataReadTimeout is optional.<br>
+</p>
 </td>
 </tr>
 <tr>

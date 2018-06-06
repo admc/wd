@@ -576,6 +576,34 @@ describe("mjson tests", function() {
         });
       });
 
+      describe("longPressKeycode", function() {
+        it("keycode only", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/long_press_keycode', {keycode: 3})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .longPressKeycode(3)
+            .nodeify(done);
+        });
+
+        it("keycode + metastate", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/long_press_keycode', {keycode: 3, metastate: "abcd"})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .longPressKeycode(3, "abcd")
+            .nodeify(done);
+        });
+      });
+
       describe("rotateDevice", function() {
         it("without element", function(done) {
           nock.cleanAll();
@@ -1197,6 +1225,70 @@ describe("mjson tests", function() {
           });
         browser
           .setClipboard(base64Data, 'plaintext')
+          .nodeify(done);
+      });
+
+      it("getSupportedPerformanceDataTypes", function (done) {
+        nock.cleanAll();
+        var supportedTypes = [
+          'cpuinfo',
+          'memoryinfo',
+          'batteryinfo',
+          'networkinfo'
+        ]
+        server
+          .post('/session/1234/appium/performanceData/types')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: supportedTypes
+          });
+        browser
+          .getSupportedPerformanceDataTypes()
+          .should.become(supportedTypes)
+          .nodeify(done);
+      });
+
+      it("getPerformanceData", function (done) {
+        nock.cleanAll();
+        server
+          .post(
+            '/session/1234/appium/getPerformanceData',
+            {
+              packageName: 'org.fake.package',
+              dataType: 'batteryinfo'
+            }
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [["power"], ["75"]]
+          });
+        browser
+          .getPerformanceData('org.fake.package', 'batteryinfo')
+          .should.become([["power"], ["75"]])
+          .nodeify(done);
+      });
+
+      it("getPerformanceData + dataReadTimeout", function (done) {
+        nock.cleanAll();
+        server
+          .post(
+            '/session/1234/appium/getPerformanceData',
+            {
+              packageName: 'org.fake.package',
+              dataType: 'batteryinfo',
+              dataReadTimeout: 5
+            }
+          )
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [["power"], ["75"]]
+          });
+        browser
+          .getPerformanceData('org.fake.package', 'batteryinfo', 5)
+          .should.become([["power"], ["75"]])
           .nodeify(done);
       });
     });

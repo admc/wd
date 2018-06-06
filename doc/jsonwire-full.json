@@ -103,6 +103,7 @@
   "POST /session/:sessionId/appium/device/lock": "Lock device (mjsonWire).",
   "POST /session/:sessionId/appium/device/keyevent": "Send key event to device (DEPRECATED) (mjsonWire).",
   "POST /session/:sessionId/appium/device/press_keycode": "Send key event to device (mjsonWire).",
+  "POST /session/:sessionId/appium/device/long_press_keycode": "Press and hold a particular key code on the device (mjsonWire).",
   "POST /session/:sessionId/appium/device/rotate": "Rotate device (mjsonWire).",
   "GET /session/:sessionId/appium/device/current_activity": "Get current activity (mjsonWire).",
   "GET /session/:sessionId/appium/device/current_package": "Get current package (mjsonWire).",
@@ -140,5 +141,7 @@
   "POST /session/:sessionId/appium/device/network_speed": "Set Android emulator network speed (mjsonWire).",
   "POST /session/:sessionId/appium/device/get_clipboard": "Get the content of the system clipboard (mjsonWire).",
   "POST /session/:sessionId/appium/device/set_clipboard": "Set the content of the system clipboard (mjsonWire).",
+  "POST /session/:sessionId/appium/performanceData/types": "Get the types of system state which is supported like cpu, memory, network traffic, and battery (mjsonWire).",
+  "POST /session/:sessionId/appium/getPerformanceData": "Get the system state like cpu, memory, network traffic, and battery (mjsonWire).",
   "POST /session/:sessionId/simulator/touch_id": "Simulate iOS touchID (mjsonWire)"
 }
