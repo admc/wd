@@ -2,7 +2,7 @@
 var Mocha = require('mocha'),
     fs = require('fs'),
     path = require('path'),
-    _ = require('./lodash'),
+    _ = require('lodash'),
     Q = require('Q');
 
 var sauceUsername = process.env.SAUCE_USERNAME;

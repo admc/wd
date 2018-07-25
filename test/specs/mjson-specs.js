@@ -325,6 +325,49 @@ describe("mjson tests", function() {
 
     });
 
+    describe("by image", function() {
+      it("should find an image by path", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/appium/compare_images', {
+            mode: 'matchTemplate',
+            firstImage: 'foo',
+            secondImage: 'bar',
+            options: {
+              threshold: 0.2
+            }
+          })
+          .times(1)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {
+              rect: {
+                x: 1,
+                y: 2,
+                width: 100,
+                height: 200
+              }
+            }
+          });
+        server
+          .get('/session/1234/screenshot')
+          .times(1)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: 'foo'
+          });
+        browser
+          .elementByImage('bar').then(function(imgEl) {
+            imgEl.rect.should.eql({x: 1, y: 2, width: 100, height: 200});
+            imgEl.x.should.eql(51);
+            imgEl.y.should.eql(102);
+          })
+          .nodeify(done);
+      });
+    });
+
     describe("actions", function() {
 
       it("touch actions should work", function(done) {

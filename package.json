@@ -8,7 +8,7 @@
     "webdriverjs",
     "selenium"
   ],
-  "version": "1.9.0",
+  "version": "1.10.1",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -49,7 +49,6 @@
     "mkdirp": "^0.5.1",
     "q": "1.4.1",
     "request": "2.85.0",
-    "underscore.string": "3.3.4",
     "vargs": "0.1.0"
   },
   "devDependencies": {
