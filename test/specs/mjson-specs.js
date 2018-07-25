@@ -326,46 +326,77 @@ describe("mjson tests", function() {
     });
 
     describe("by image", function() {
-      it("should find an image by path", function(done) {
+
+      it("element methods should work", function(done) {
         nock.cleanAll();
         server
-          .post('/session/1234/appium/compare_images', {
-            mode: 'matchTemplate',
-            firstImage: 'foo',
-            secondImage: 'bar',
-            options: {
-              threshold: 0.2
-            }
-          })
-          .times(1)
+          .post('/session/1234/element', {"using":"-image","value":"iVBOR"})
+          .times(2)
           .reply(200, {
             status: 0,
             sessionId: '1234',
-            value: {
-              rect: {
-                x: 1,
-                y: 2,
-                width: 100,
-                height: 200
-              }
-            }
+            value: {ELEMENT: 'appium-image-element-0'},
           });
         server
-          .get('/session/1234/screenshot')
-          .times(1)
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(3)
           .reply(200, {
             status: 0,
             sessionId: '1234',
-            value: 'foo'
+            value: [{ELEMENT: 'appium-image-element-0'}],
           });
         browser
-          .elementByImage('bar').then(function(imgEl) {
-            imgEl.rect.should.eql({x: 1, y: 2, width: 100, height: 200});
-            imgEl.x.should.eql(51);
-            imgEl.y.should.eql(102);
-          })
+          .element('-image', 'iVBOR')
+            .should.eventually.exist
+          .elementByImage('iVBOR')
+            .should.eventually.exist
+          .elementByImageOrNull('iVBOR')
+            .should.eventually.exist
+          .elementByImageIfExists('iVBOR')
+            .should.eventually.exist
+          .hasElementByImage('iVBOR')
+            .should.eventually.be.ok
           .nodeify(done);
       });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .elements('-image', 'iVBOR')
+            .should.eventually.exist
+          .elementsByImage('iVBOR')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .waitForElement('-image', 'iVBOR')
+            .should.eventually.exist
+          .waitForElementByImage('iVBOR')
+            .should.eventually.exist
+          .waitForElementsByImage('iVBOR')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
     });
 
     describe("actions", function() {
