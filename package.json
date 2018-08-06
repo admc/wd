@@ -8,7 +8,7 @@
     "webdriverjs",
     "selenium"
   ],
-  "version": "1.9.0",
+  "version": "1.10.3",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -35,12 +35,12 @@
   "engines": [
     "node"
   ],
-  "main": "./lib/main",
+  "main": "lib/main",
   "bin": {
-    "wd": "./lib/bin.js"
+    "wd": "lib/bin.js"
   },
   "directories": {
-    "lib": "./lib"
+    "lib": "lib"
   },
   "dependencies": {
     "archiver": "2.1.1",
@@ -49,7 +49,6 @@
     "mkdirp": "^0.5.1",
     "q": "1.4.1",
     "request": "2.85.0",
-    "underscore.string": "3.3.4",
     "vargs": "0.1.0"
   },
   "devDependencies": {
@@ -75,6 +74,7 @@
     "sauce-connect-launcher": "0.16.0",
     "spawn-mocha-parallel": "1.3.1",
     "sv-selenium": "0.3.1",
+    "underscore.string": "^3.3.4",
     "uuid": "3.0.1",
     "yargs": "6.0.0"
   },

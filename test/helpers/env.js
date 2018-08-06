@@ -1,24 +1,23 @@
-global._ = require('../../lib/lodash');
+var _ = require('lodash');
+var underscoreString = require('underscore.string');
+var toNumber = underscoreString.toNumber;
+var toBoolean = underscoreString.toBoolean;
 
 /*global env:true */
 var env = global.env = {};
 
-var toBoolean = function(str) {
-  return _(str).toBoolean().value();
-};
-
 env.VERBOSE = toBoolean(process.env.VERBOSE);
-env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 500).toNumber().value();
-env.TIMEOUT = _(process.env.TIMEOUT || 60000).toNumber().value();
+env.BASE_TIME_UNIT = toNumber(process.env.BASE_TIME_UNIT || 500);
+env.TIMEOUT = toNumber(process.env.TIMEOUT || 60000);
 env.SHORT = toBoolean(process.env.SHORT);
 
 env.HTTP_CONFIG = {};
 if(process.env.HTTP_TIMEOUT)
-  { env.HTTP_CONFIG.timeout = _(process.env.HTTP_TIMEOUT).toNumber().value(); }
+  { env.HTTP_CONFIG.timeout = toNumber(process.env.HTTP_TIMEOUT); }
 if(process.env.HTTP_RETRIES)
-  { env.HTTP_CONFIG.retries = _(process.env.HTTP_RETRIES).toNumber().value(); }
+  { env.HTTP_CONFIG.retries = toNumber(process.env.HTTP_RETRIES); }
 if(process.env.HTTP_RETRY_DELAY)
-  { env.HTTP_CONFIG.retryDelay = _(process.env.HTTP_RETRY_DELAY).toNumber().value(); }
+  { env.HTTP_CONFIG.retryDelay = toNumber(process.env.HTTP_RETRY_DELAY); }
 
 env.DEBUG_CONNECTION = process.env.DEBUG_CONNECTION;
 
@@ -41,8 +40,8 @@ if(env.BROWSER === 'multi') {
 
 require('./mobile_env');
 
-env.EXPRESS_PORT = _(process.env.EXPRESS_PORT || 3000).toNumber().value();
-env.PROXY_PORT = _(process.env.PROXY_PORT || 5050).toNumber().value();
+env.EXPRESS_PORT = toNumber(process.env.EXPRESS_PORT || 3000);
+env.PROXY_PORT = toNumber(process.env.PROXY_PORT || 5050);
 
 if(env.ANDROID){
   env.TIMEOUT = 300000;
@@ -67,8 +66,8 @@ if(env.SAUCE) {
 }
 
 if(env.SAUCE){
-  env.BASE_TIME_UNIT = _(process.env.BASE_TIME_UNIT || 4000).toNumber().value();
-  env.TIMEOUT = _(process.env.TIMEOUT || 600000).toNumber().value();
+  env.BASE_TIME_UNIT = toNumber(process.env.BASE_TIME_UNIT || 4000);
+  env.TIMEOUT = toNumber(process.env.TIMEOUT || 600000);
 
   env.SAUCE_JOB_ID =
     env.TRAVIS_BUILD_NUMBER ||

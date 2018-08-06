@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var devices = {};
 devices.android = ['android_phone'];
 devices.ios = ['iphone', 'ipad'];

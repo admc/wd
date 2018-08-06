@@ -325,6 +325,80 @@ describe("mjson tests", function() {
 
     });
 
+    describe("by image", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-image","value":"iVBOR"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: 'appium-image-element-0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .element('-image', 'iVBOR')
+            .should.eventually.exist
+          .elementByImage('iVBOR')
+            .should.eventually.exist
+          .elementByImageOrNull('iVBOR')
+            .should.eventually.exist
+          .elementByImageIfExists('iVBOR')
+            .should.eventually.exist
+          .hasElementByImage('iVBOR')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .elements('-image', 'iVBOR')
+            .should.eventually.exist
+          .elementsByImage('iVBOR')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-image","value":"iVBOR"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: 'appium-image-element-0'}],
+          });
+        browser
+          .waitForElement('-image', 'iVBOR')
+            .should.eventually.exist
+          .waitForElementByImage('iVBOR')
+            .should.eventually.exist
+          .waitForElementsByImage('iVBOR')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
     describe("actions", function() {
 
       it("touch actions should work", function(done) {

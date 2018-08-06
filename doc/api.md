@@ -1035,9 +1035,6 @@ Get the log for a given log type.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-scroll(xOffset, yOffset, cb) -&gt; cb(err)<br>
-</p>
-<p>
 log(logType, cb) -&gt; cb(err, arrayOfLogs)<br>
 </p>
 </td>
