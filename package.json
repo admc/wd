@@ -36,6 +36,7 @@
     "node"
   ],
   "main": "lib/main",
+  "typings": "lib/main",
   "bin": {
     "wd": "lib/bin.js"
   },
