@@ -522,6 +522,89 @@ describe("mjson tests", function() {
           })
           .nodeify(done);
       });
+
+      it('w3c actions should work', function (done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/actions', {
+            actions: [{
+              type: "pointer",
+              id: "finger1",
+              parameters: {
+                pointerType: "touch"
+              },
+              actions: [{
+                type: "pointerMove",
+                duration: 0,
+                x: 100,
+                y: 100
+              }, {
+                type: "pointerDown",
+                button: 0
+              }, {
+                type: "pause",
+                duration: 500
+              }, {
+                type: "pointerMove",
+                duration: 1000,
+                  origin: "pointer",
+                  x: -50,
+                  y: 100
+              }, {
+                  type: "pointerUp",
+                  button: 0
+              }]
+            }, {
+              type: "pointer",
+              id: "finger2",
+              parameters: {
+                  "pointerType": "touch"
+              },
+              actions: [{
+                  type: "pointerMove",
+                  "duration": 0,
+                  "x": 200,
+                  "y": 200
+              }, {
+                  type: "pointerDown",
+                  button: 0
+              }, {
+                  type: "pause",
+                  "duration": 300
+              }, {
+                  type: "pointerMove",
+                  "duration": 1000,
+                  "origin": "pointer",
+                  "x": 50,
+                  "y": 100
+              }, {
+                  type: "pointerUp",
+                  button: 0
+              }]
+            }]
+        })
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: null,
+          });
+        var actions = new wd.W3CActions(browser);
+        var touchInput = actions.addTouchInput();
+        touchInput.pointerMove({duration: 0, x: 100, y: 100});
+        touchInput.pointerDown({button: 0});
+        touchInput.pause({duration: 500});
+        touchInput.pointerMove({duration: 1000, origin: 'pointer', x: -50, y: 100});
+        touchInput.pointerUp({button: 0});
+        var secondTouchInput = actions.addTouchInput();
+        secondTouchInput.pointerMove({duration: 0, x: 200, y: 200});
+        secondTouchInput.pointerDown({button: 0});
+        secondTouchInput.pause({duration: 300});
+        secondTouchInput.pointerMove({duration: 1000, origin: 'pointer', x: 50, y: 100});
+        secondTouchInput.pointerUp({button: 0});
+        actions.perform(browser)
+          .then(function (value) {
+          }).nodeify(done);
+      });
     });
 
     describe("device methods", function() {

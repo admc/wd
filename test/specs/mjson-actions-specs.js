@@ -374,9 +374,11 @@ describe("mjson action tests", function() {
           w3cActions.addInputDevice(touchInputOne);
           w3cActions.addInputDevice(touchInputTwo);
 
-          w3cActions.toJSON().should.eql({
+          var actionsAsJson = JSON.parse(JSON.stringify(w3cActions.toJSON()));
+
+          actionsAsJson.should.eql({
             actions: [
-              {type: "pointer", id: "mouse", parameters: {pointerType: "mouse"}, actions: []},
+              {type: "pointer", id: "default mouse", parameters: {pointerType: "mouse"}, actions: []},
               {type: "key", id: "keyboard", actions: []},
               {type: "pointer", id: "finger1", parameters: {pointerType: "touch"}, actions: []},
               {type: "pointer", id: "finger2", parameters: {pointerType: "touch"}, actions: []}
