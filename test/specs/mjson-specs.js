@@ -603,6 +603,23 @@ describe("mjson tests", function() {
         secondTouchInput.pointerUp({button: 0});
         actions.perform(browser)
           .then(function (value) {
+            should.equal(value, null);
+          }).nodeify(done);
+      });
+
+      it('w3c release should work', function (done) {
+        nock.cleanAll();
+        server
+          .delete('/session/1234/actions')
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: null,
+          });
+        
+        browser.releaseW3CActions()
+          .then(function (value) {
+            should.equal(value, null);
           }).nodeify(done);
       });
     });
