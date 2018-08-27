@@ -454,6 +454,7 @@ elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 elementsByIosUIAutomation(value, cb) -&gt; cb(err, elements)<br>
 elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
+elementsByIosPredicateString(value, cb) -&gt; cb(err, elements)<br>
 elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
@@ -473,6 +474,7 @@ elementByXPathOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByCssOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByIosClassChainOrNull(value, cb) -&gt; cb(err, element)<br>
+elementByIosPredicateStringOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorOrNull(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdOrNull(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -492,6 +494,7 @@ elementByXPathIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByCssIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByIosUIAutomationIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByIosClassChainIfExists(value, cb) -&gt; cb(err, element)<br>
+elementByIosPredicateStringIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAndroidUIAutomatorIfExists(value, cb) -&gt; cb(err, element)<br>
 elementByAccessibilityIdIfExists(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -511,6 +514,7 @@ hasElementByXPath(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByCss(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByIosUIAutomation(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByIosClassChain(value, cb) -&gt; cb(err, boolean)<br>
+hasElementByIosPredicateString(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAndroidUIAutomator(value, cb) -&gt; cb(err, boolean)<br>
 hasElementByAccessibilityId(value, cb) -&gt; cb(err, boolean)<br>
 </p>
@@ -546,6 +550,7 @@ element.elementByXPath(value, cb) -&gt; cb(err, element)<br>
 element.elementByCss(value, cb) -&gt; cb(err, element)<br>
 element.elementByIosUIAutomation(value, cb) -&gt; cb(err, element)<br>
 element.elementByIosClassChain(value, cb) -&gt; cb(err, element)<br>
+element.elementByIosPredicateString(value, cb) -&gt; cb(err, element)<br>
 element.elementByAndroidUIAutomator(value, cb) -&gt; cb(err, element)<br>
 element.elementByAccessibilityId(value, cb) -&gt; cb(err, element)<br>
 </p>
@@ -572,6 +577,7 @@ element.elementsByXPath(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByCss(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByIosUIAUtomation(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByIosClassChain(value, cb) -&gt; cb(err, elements)<br>
+element.elementsByIosPredicateString(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAndroidUIAutomator(value, cb) -&gt; cb(err, elements)<br>
 element.elementsByAccessibilityId(value, cb) -&gt; cb(err, elements)<br>
 </p>
