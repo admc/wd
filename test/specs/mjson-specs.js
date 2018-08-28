@@ -177,6 +177,80 @@ describe("mjson tests", function() {
 
     });
 
+    describe("by ios predicate string", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-ios predicate string","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: '0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-ios predicate string","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .element('-ios predicate string', 'random stuff')
+            .should.eventually.exist
+          .elementByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .elementByIosPredicateStringOrNull('random stuff')
+            .should.eventually.exist
+          .elementByIosPredicateStringIfExists('random stuff')
+            .should.eventually.exist
+          .hasElementByIosPredicateString('random stuff')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios predicate string","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .elements('-ios predicate string', 'random stuff')
+            .should.eventually.exist
+          .elementsByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-ios predicate string","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .waitForElement('-ios predicate string', 'random stuff')
+            .should.eventually.exist
+          .waitForElementByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .waitForElementsByIosPredicateString('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
     describe("by android uiautomator", function() {
 
       it("element methods should work", function(done) {

@@ -32,6 +32,19 @@ wd.elementsByIosClassChain('XCUIElementTypeWindow/XCUIElementTypeAny[`value == "
 });
 ```
 
+#### -ios predicate Locator Strategy ####
+
+Find elements in iOS applications using the [WebDriverAgent Predicate API](https://github.com/facebook/WebDriverAgent/wiki/Predicate-Queries-Construction-Rules)
+
+eg:
+```
+wd.elementsByIosPredicateString('type IN {`XCUIElementTypeIcon`,`XCUIElementTypeImage`} AND visible == 1', function(err, el){
+  el.getAttribute('name', function(err, name){
+    console.log(name);
+  });
+});
+```
+
 #### -android uiautomator Locator Strategy ####
 
 Find elements in android applications using the [UiSelector Class](http://developer.android.com/tools/help/uiautomator/UiSelector.html)
