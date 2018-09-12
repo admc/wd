@@ -20,7 +20,7 @@ env:
     - CONCURRENCY=15
     # - THROTTLE=5
     - VERBOSE=1
-    - SAUCE_CONNECT_VERSION='4.3'
+    - SAUCE_CONNECT_VERSION='4.5.1'
     - SAUCE_CONNECT_VERBOSE=1
   matrix:
     - CONFIG=unit
