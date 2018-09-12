@@ -1,4 +1,5 @@
 require('../helpers/setup');
+var _ = require('lodash');
 
 
 describe('mobile ' + env.ENV_DESC,

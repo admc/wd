@@ -1,4 +1,6 @@
 require('../helpers/setup');
+var _ = require('lodash');
+
 
 describe('api-exec ' + env.ENV_DESC, function() {
   var partials = {};

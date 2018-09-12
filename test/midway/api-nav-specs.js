@@ -1,4 +1,5 @@
 require('../helpers/setup');
+var _ = require('lodash');
 
 describe('api-nav ' + env.ENV_DESC, function() {
   var partials = {};

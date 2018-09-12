@@ -1,6 +1,7 @@
 /* global sauceJobTitle, mergeDesired, midwayUrl, Express */
 
 require('../../helpers/setup');
+var _ = require('lodash');
 
 function buildDesired(title) {
   var sauceExtra =  {

@@ -1,4 +1,5 @@
 require('../helpers/setup');
+var _ = require('lodash');
 
 describe('api-el ' + env.ENV_DESC, skip('ios'), function() {
   var partials = {};
