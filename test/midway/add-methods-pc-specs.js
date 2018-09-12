@@ -1,4 +1,6 @@
 require('../helpers/setup');
+var _ = require('lodash');
+
 
 describe('add-methods - promise-chain' + env.ENV_DESC, function() {
 
