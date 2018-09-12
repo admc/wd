@@ -70,7 +70,7 @@ describe('init ' + env.ENV_DESC,function() {
       return browser
         .init(buildDesired( this.runnable().parent.title + " #4"))
         .sessionCapabilities().then(function(caps) {
-          ['XP','WINDOWS'].should.include(caps.platform);
+          ['XP','WINDOWS', 'ANY'].should.include(caps.platform);
         });
    });
 
