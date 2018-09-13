@@ -45,6 +45,7 @@
   "dependencies": {
     "archiver": "2.1.1",
     "async": "2.0.1",
+    "gulp-spawn-mocha": "^5.0.1",
     "lodash": "4.17.10",
     "mkdirp": "^0.5.1",
     "q": "1.4.1",
