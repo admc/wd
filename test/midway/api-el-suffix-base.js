@@ -67,30 +67,31 @@ exports.test = function function_name (
           });
       });
 
-      var waitForVisibleFuncName = 'waitForVisible' + suffix;
-      partials['browser.' + waitForVisibleFuncName]  = '<div id="theDiv"></div>';
-      it('browser.' + waitForVisibleFuncName, function() {
-        return browser
-          .executeAsync(
-            'var args = Array.prototype.slice.call( arguments, 0 );\n' +
-            'var done = args[args.length -1];\n' +
-            '$("#theDiv").append(args[0]);\n' +
-            '$("#theDiv .child").hide();\n' +
-            'setTimeout(function() {\n' +
-            ' $("#theDiv .child").show();\n' +
-            '}, args[1]);\n' +
-            'done();\n',
-            [suffixPartials.child, env.BASE_TIME_UNIT]
-          )
-          [elementFuncName](criterias.child).should.eventually.exist
-          [waitForVisibleFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
-          .should.be.fulfilled
-          .then(function() {
-            return browser
-              [waitForVisibleFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
-                .should.be.rejectedWith(/Element didn\'t become visible/);
-          });
-      });
+      //waitForVisible has been deprecated in webdriver
+      // var waitForVisibleFuncName = 'waitForVisible' + suffix;
+      // partials['browser.' + waitForVisibleFuncName]  = '<div id="theDiv"></div>';
+      // it('browser.' + waitForVisibleFuncName, function() {
+      //   return browser
+      //     .executeAsync(
+      //       'var args = Array.prototype.slice.call( arguments, 0 );\n' +
+      //       'var done = args[args.length -1];\n' +
+      //       '$("#theDiv").append(args[0]);\n' +
+      //       '$("#theDiv .child").hide();\n' +
+      //       'setTimeout(function() {\n' +
+      //       ' $("#theDiv .child").show();\n' +
+      //       '}, args[1]);\n' +
+      //       'done();\n',
+      //       [suffixPartials.child, env.BASE_TIME_UNIT]
+      //     )
+      //     [elementFuncName](criterias.child).should.eventually.exist
+      //     [waitForVisibleFuncName](criterias.child, 2 * env.BASE_TIME_UNIT)
+      //     .should.be.fulfilled
+      //     .then(function() {
+      //       return browser
+      //         [waitForVisibleFuncName]("__wrongsel", 0.1 * env.BASE_TIME_UNIT)
+      //           .should.be.rejectedWith(/Element didn\'t become visible/);
+      //     });
+      // });
 
       var elementsFuncName = 'elements' + suffix;
       partials['browser.' + elementsFuncName]  = suffixPartials.several;
