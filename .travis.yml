@@ -5,7 +5,7 @@ branches:
     - master
 language: node_js
 node_js:
-  - "6"
+  - "10"
 # addons:
 #   sauce_connect: true
 env:
@@ -28,15 +28,15 @@ env:
     - CONFIG=chrome
     - CONFIG=firefox
     - CONFIG=explorer
-    - CONFIG=iphone
-    - CONFIG=ipad
-    - CONFIG=android_phone
-matrix:
-  include:
-    - node_js: "5"
-      env: CONFIG=chrome_e2e
-  allow_failures:
-    - node_js: "5"
-      env: CONFIG=chrome_e2e
+    # - CONFIG=iphone
+    # - CONFIG=ipad
+    # - CONFIG=android_phone
+# matrix:
+#   include:
+#     - node_js: "5"
+#       env: CONFIG=chrome_e2e
+#   allow_failures:
+#     - node_js: "5"
+#       env: CONFIG=chrome_e2e
 script:
   - "node_modules/.bin/gulp travis --config $CONFIG --sauce"
