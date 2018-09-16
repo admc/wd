@@ -690,7 +690,7 @@ describe("mjson tests", function() {
             sessionId: '1234',
             value: null,
           });
-        
+
         browser.releaseW3CActions()
           .then(function (value) {
             should.equal(value, null);
@@ -822,6 +822,19 @@ describe("mjson tests", function() {
             .pressKeycode(3, "abcd")
             .nodeify(done);
         });
+
+        it("keycode + metastate + flags", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/press_keycode', {keycode: 3, metastate: "abcd", flags: 8224})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .pressKeycode(3, "abcd", [0x20, 0x2000])
+            .nodeify(done);
+        });
       });
 
       describe("longPressKeycode", function() {
@@ -848,6 +861,19 @@ describe("mjson tests", function() {
             });
           browser
             .longPressKeycode(3, "abcd")
+            .nodeify(done);
+        });
+
+        it("keycode + metastate + flags", function(done) {
+          nock.cleanAll();
+          server
+            .post('/session/1234/appium/device/long_press_keycode', {keycode: 3, metastate: "abcd", flags: 8224})
+            .reply(200, {
+              status: 0,
+              sessionId: '1234',
+            });
+          browser
+            .longPressKeycode(3, "abcd", [32, 8192])
             .nodeify(done);
         });
       });
