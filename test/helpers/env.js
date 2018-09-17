@@ -75,7 +75,7 @@ if(env.SAUCE){
     Math.round(new Date().getTime() / (1000*60));
   env.SAUCE_USERNAME = process.env.SAUCE_USERNAME;
   env.SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY;
-  //env.SAUCE_PLATFORM = process.env.SAUCE_PLATFORM || 'Linux';
+  env.SAUCE_PLATFORM = process.env.SAUCE_PLATFORM || 'Linux';
   env.SAUCE_RECORD_VIDEO = toBoolean(process.env.SAUCE_RECORD_VIDEO);
   env.TUNNEL_IDENTIFIER = process.env.TUNNEL_IDENTIFIER;
 
