@@ -38,7 +38,7 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
       }).size() > 0){
         var orderTag = _(wd_v.tags).filter(function (t) {
           return t.type === 'docOrder';
-        }).value();
+        });
         var order = 1000000;
         if (orderTag.length > 0){
          order =  parseInt(orderTag[0].string, 10);
@@ -47,7 +47,7 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
           return l !== '';
         }).map(function (l) {
             return {line: l};
-        }).value();
+        });
         current.wd_doc.push({
           'desc': desc,
           'order': order
@@ -58,7 +58,7 @@ _(jsonWireFull).each(function (jw_v, jw_k) {
 
   current.wd_doc = _(current.wd_doc).sortBy(function (docItem) {
     return docItem.order;
-  }).value();
+  });
   current.wd_doc0 = current.wd_doc.length === 0;
   current.wd_doc1 = current.wd_doc.length === 1? current.wd_doc : null;
   current.wd_docN = current.wd_doc.length > 1? current.wd_doc: null;
@@ -87,7 +87,7 @@ _(jsonDocs).each(function (jsonDoc) {
         return  l !== '';
       }).map(function (l) {
         return {line: l};
-      }).value();
+      });
       current.wd_doc.push({ 'desc': desc });
       current.wd_doc1 = current.wd_doc;
 
@@ -113,7 +113,7 @@ _(jsonDocs).each(function (jsonDoc) {
         return  l !== '';
       }).map(function (l) {
         return {line: l};
-      }).value();
+      });
       current.wd_doc.push({ 'desc': desc });
       current.wd_doc1 = current.wd_doc;
 
@@ -139,7 +139,7 @@ _(jsonDocs).each(function (jsonDoc) {
         return  l !== '';
       }).map(function (l) {
         return {line: l};
-      }).value();
+      });
       current.wd_doc.push({ 'desc': desc });
       current.wd_doc1 = current.wd_doc;
 
@@ -168,7 +168,7 @@ _(jsonDocs).each(function (jsonDoc) {
           return  l !== '';
         }).map(function (l) {
           return {line: l};
-        }).value();
+        });
         current.wd_doc.push({desc: desc});
         current.wd_doc1 = current.wd_doc;
         resMapping.push(current);
