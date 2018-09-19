@@ -48,7 +48,7 @@ describe('add-methods - async' + env.ENV_DESC, function() {
   };
 
   var allExtraMethodNames = _.union(
-    _(extraAsyncMethods).keys()
+    _(extraAsyncMethods).keys().value()
   );
 
   var noExtraMethodCheck = function() {

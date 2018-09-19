@@ -114,9 +114,9 @@ describe('add-methods - promise-chain' + env.ENV_DESC, function() {
   };
 
   var allExtraMethodNames = _.union(
-    _(extraAsyncMethods).keys(),
-    _(extraPromiseChainMethods).keys(),
-    _(extraPromiseNoChainMethods).keys()
+    _(extraAsyncMethods).keys().value(),
+    _(extraPromiseChainMethods).keys().value(),
+    _(extraPromiseNoChainMethods).keys().value()
   );
 
   var noExtraMethodCheck = function() {
