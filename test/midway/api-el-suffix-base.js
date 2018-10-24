@@ -8,6 +8,10 @@ require('../helpers/setup');
 exports.test = function function_name (
   suffix, extraDesc, suffixPartials, criterias, _skip) {
     describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, _skip, function() {
+      beforeEach(function(done) {
+          setTimeout(function() { console.log('timeout'); done(); }, 1000);
+      });
+
       var partials = {};
 
       var browser;
@@ -16,10 +20,9 @@ exports.test = function function_name (
       var elementFuncName = 'element' + suffix;
       partials['browser.' + elementFuncName]  = suffixPartials.one;
       it('browser.' + elementFuncName, function() {
-        return Q.all([
-          browser[elementFuncName](criterias.valid).should.eventually.exist,
-          browser[elementFuncName](criterias.invalid).should.be.rejectedWith(/status: 7/)
-        ]);
+        return browser
+            [elementFuncName](criterias.valid).should.eventually.exist
+            [elementFuncName](criterias.invalid).should.be.rejectedWith(/status: 7/)
       });
 
       var elementFuncNameOrNull = 'element' + suffix + 'OrNull';

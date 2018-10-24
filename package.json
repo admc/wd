@@ -48,7 +48,7 @@
     "lodash": "4.17.10",
     "mkdirp": "^0.5.1",
     "q": "1.4.1",
-    "request": "2.85.0",
+    "request": "2.88.0",
     "vargs": "0.1.0"
   },
   "devDependencies": {

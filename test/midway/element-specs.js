@@ -3,6 +3,10 @@ require('../helpers/setup');
 var path = require('path');
 
 describe('element ' + env.ENV_DESC, function() {
+  beforeEach(function(done) {
+    setTimeout(function() { console.log('timeout'); done(); }, 500);
+  });
+
   var partials = {};
 
   var browser;
@@ -103,10 +107,7 @@ describe('element ' + env.ENV_DESC, function() {
   it('element.isDisplayed', function() {
     return browser
       .elementByCss("#theDiv .displayed").then(function(el) {
-        return Q.all([
-            el.isDisplayed().should.eventually.be.ok,
-            el.displayed().should.eventually.be.ok,
-          ]);
+        return el.isDisplayed().should.eventually.be.ok;
       })
       .elementByCss("#theDiv .hidden").then(function(el) {
         return el.isDisplayed().should.eventually.not.be.ok;
@@ -121,10 +122,7 @@ describe('element ' + env.ENV_DESC, function() {
   it('element.isEnabled', function() {
     return browser
       .elementByCss("#theDiv .enabled").then(function(el) {
-        return Q.all([
-            el.isEnabled().should.eventually.be.ok,
-            el.enabled().should.eventually.be.ok,
-          ]);
+        return el.isEnabled().should.eventually.be.ok;
       })
       .elementByCss("#theDiv .disabled").then(function(el) {
         return el.isEnabled().should.eventually.not.be.ok;
