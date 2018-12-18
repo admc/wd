@@ -1,5 +1,5 @@
 {
-  "name": "dpgraham-wd",
+  "name": "wd",
   "description": "WebDriver/Selenium 2 node.js client",
   "keywords": [
     "testing",
@@ -8,7 +8,7 @@
     "webdriverjs",
     "selenium"
   ],
-  "version": "1.11.2",
+  "version": "1.11.1",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
