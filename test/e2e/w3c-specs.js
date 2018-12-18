@@ -15,7 +15,7 @@ describe.only('basic ' + env.ENV_DESC, function() {
       tags: ['e2e']
     };
     var desired = mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null );
-    desired.forceW3C = true;
+    desired.allowW3C = true;
     return browser
       .configureLogging()
       .init(desired);
