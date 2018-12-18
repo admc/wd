@@ -43,7 +43,7 @@ describe('async' + env.ENV_DESC, function() {
     });
   });
 
-  it.only("should get element", function(done) {
+  it("should get element", function(done) {
     browser.elementById('submit', function(err, el) {
       should.not.exist(err);
       should.exist(el);
