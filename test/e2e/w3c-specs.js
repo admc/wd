@@ -2,7 +2,7 @@
 
 require('../helpers/setup');
 
-describe.only('basic ' + env.ENV_DESC, function() {
+describe('basic ' + env.ENV_DESC, function() {
   this.timeout(env.TIMEOUT);
 
   var browser;
