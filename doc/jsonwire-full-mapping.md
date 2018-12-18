@@ -1023,7 +1023,7 @@ Flick on the touch screen using finger motion events.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 <p>
-flick(xSpeed, ySpeed, swipe, cb) -&gt; cb(err)<br>
+flick(xspeed, yspeed, swipe, cb) -&gt; cb(err)<br>
 Flicks, starting anywhere on the screen.<br>
 flick(element, xoffset, yoffset, speed, cb) -&gt; cb(err)<br>
 Flicks, starting at element center.<br>
