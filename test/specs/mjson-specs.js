@@ -325,6 +325,80 @@ describe("mjson tests", function() {
 
     });
 
+    describe("by android datamatcher", function() {
+
+      it("element methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/element', {"using":"-android datamatcher","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: {ELEMENT: '0'},
+          });
+        server
+          .post('/session/1234/elements', {"using":"-android datamatcher","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .element('-android datamatcher', 'random stuff')
+            .should.eventually.exist
+          .elementByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .elementByAndroidDataMatcherOrNull('random stuff')
+            .should.eventually.exist
+          .elementByAndroidDataMatcherIfExists('random stuff')
+            .should.eventually.exist
+          .hasElementByAndroidDataMatcher('random stuff')
+            .should.eventually.be.ok
+          .nodeify(done);
+      });
+
+      it("elements methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-android datamatcher","value":"random stuff"})
+          .times(2)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .elements('-android datamatcher', 'random stuff')
+            .should.eventually.exist
+          .elementsByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+      it("wait methods should work", function(done) {
+        nock.cleanAll();
+        server
+          .post('/session/1234/elements', {"using":"-android datamatcher","value":"random stuff"})
+          .times(3)
+          .reply(200, {
+            status: 0,
+            sessionId: '1234',
+            value: [{ELEMENT: '0'}],
+          });
+        browser
+          .waitForElement('-android datamatcher', 'random stuff')
+            .should.eventually.exist
+          .waitForElementByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .waitForElementsByAndroidDataMatcher('random stuff')
+            .should.eventually.exist
+          .nodeify(done);
+      });
+
+    });
+
     describe("by accessibility id", function() {
 
       it("element methods should work", function(done) {
