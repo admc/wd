@@ -34,7 +34,7 @@ function buildMochaOpts(opts) {
       R: 'spec',
       c: true
     },
-    bin: path.join(__dirname,  'node_modules/.bin/mocha'),
+    bin: path.join(__dirname,  'node_modules/.bin/' + ((process.platform !== "win32") ? 'mocha' : 'mocha.cmd')),
     concurrency: args.concurrency | process.env.CONCURRENCY || 3
   };
   if(args.grep) {
