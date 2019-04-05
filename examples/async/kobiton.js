@@ -15,7 +15,7 @@ try {
 var kobitonServer = {
   protocol: 'https',
   host: 'api.kobiton.com',
-  auth = process.env.KOBITON_USERNAME + ':' + process.env.KOBITON_ACCESS_KEY
+  auth: process.env.KOBITON_USERNAME + ':' + process.env.KOBITON_ACCESS_KEY,
 }
 
 var browser = wd.remote(kobitonServer);
@@ -49,7 +49,6 @@ browser.init(desired, function() {
       title.should.include('WD');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          /* jshint evil: true */
           browser.eval('window.location.href', function(err, href) {
             href.should.include('guinea-pig2');
             browser.quit();

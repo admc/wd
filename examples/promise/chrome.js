@@ -27,7 +27,6 @@ browser.on('http', function(meth, path, data) {
   console.log(' > ' + meth.magenta, path, (data || '').grey);
 });
 
-/* jshint evil: true */
 browser
   .init({browserName:'chrome'})
   .get("http://admc.io/wd/test-pages/guinea-pig.html")

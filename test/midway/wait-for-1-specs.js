@@ -1,4 +1,6 @@
 require('../helpers/setup');
+var assert = require('assert');
+var AssertionError = assert.AssertionError
 
 describe('wait-for-1 ' + env.ENV_DESC, function() {
   var Asserter = wd.Asserter;

@@ -1,10 +1,8 @@
-var _ = require('lodash');
 var underscoreString = require('underscore.string');
 var toNumber = underscoreString.toNumber;
 var toBoolean = underscoreString.toBoolean;
 
-/*global env:true */
-var env = global.env = {};
+var env = global.env = {}; // eslint-disable-line no-unused-vars
 
 env.VERBOSE = toBoolean(process.env.VERBOSE);
 env.BASE_TIME_UNIT = toNumber(process.env.BASE_TIME_UNIT || 500);

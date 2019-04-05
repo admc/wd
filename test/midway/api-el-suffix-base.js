@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 // spliting the test cause it takes too long, list of possible suffixes below
 // var suffixes =
 //   ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText',
@@ -115,4 +116,3 @@ exports.test = function function_name (
 
     });
 };
-

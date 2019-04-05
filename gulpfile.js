@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    jshintStylish = require('jshint-stylish'),
+    eslint = require('gulp-eslint'),
+    gulpIf = require('gulp-if'),
+    debug = require('gulp-debug'),
     Q = require('q'),
     runSequence = Q.denodeify(require('run-sequence')),
     path = require('path'),
@@ -70,11 +71,15 @@ function buildMochaOpts(opts) {
 }
 
 gulp.task('lint', function() {
-//  return gulp.src(['lib/**/*.js','test/**/*.js','browser-scripts/**/*.js'])
-  return gulp.src(['lib/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter(jshintStylish))
-    .pipe(jshint.reporter('fail'));
+  let opts = {
+    fix: process.argv.indexOf('--fix') !== -1,
+  };
+  return gulp.src(['lib/**/*.js', 'test/**/*.js', '!node_modules', '!**/node_modules', '!build/**'])
+    .pipe(gulpIf(!!process.env.VERBOSE, debug()))
+    .pipe(eslint(opts))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+    .pipe(gulpIf((file) => file.eslint && file.eslint.fixed, gulp.dest(process.cwd())));
 });
 
 gulp.task('test-unit', function () {

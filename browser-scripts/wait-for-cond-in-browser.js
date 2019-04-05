@@ -1,4 +1,3 @@
-/* jshint evil:true */
 var args = Array.prototype.slice.call(arguments, 0);
 var condExpr = args[0], timeout = args[1],
     poll = args[2], cb = args[3];

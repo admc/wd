@@ -21,7 +21,7 @@ Express.prototype.start = function(done) {
       content = _this.partials[req.query.p];
     }
     res.render('test-page', {
-      testSuite: req.query.ts? req.query.ts.replace(/\@[\w\-]+/g,'') : '',
+      testSuite: req.query.ts? req.query.ts.replace(/@[\w-]+/g,'') : '',
       testTitle: (req.query.c? req.query.c + ' - ': '') + req.query.p,
       content: content,
       uuid: req.query.uuid

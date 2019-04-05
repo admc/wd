@@ -59,13 +59,13 @@
     "dox": "0.9.0",
     "express": "^4.16.3",
     "gulp": "^3.9.1",
-    "gulp-jshint": "^2.1.0",
+    "gulp-debug": "^4.0.0",
+    "gulp-eslint": "^5.0.0",
+    "gulp-if": "^2.0.2",
     "hbs": "4.0.1",
     "http-proxy": "1.15.1",
     "imageinfo": "1.0.4",
     "istanbul": "0.4.5",
-    "jshint": "^2.9.6",
-    "jshint-stylish": "2.2.1",
     "mocha": "^5.2.0",
     "mu2": "0.5.21",
     "nock": "8.0.0",
@@ -81,6 +81,8 @@
   "scripts": {
     "test": "gulp test-unit",
     "all_tests": "gulp test",
-    "install": "node scripts/build-browser-scripts"
+    "install": "node scripts/build-browser-scripts",
+    "lint": "gulp lint",
+    "lint:fix": "gulp lint --fix"
   }
 }

@@ -40,7 +40,7 @@ describe('wait-for-timeout ' + env.ENV_DESC, function() {
 
   var timeoutErrorAsserter = new Asserter(
     function(browser, cb) {
-      browser.text(function(err, text) {
+      browser.text(function(err /*, text */) {
         if(err) { return cb(err); }
         cb( new Error("Pretending to be a timeout error"), false, "Error branch" );
       });

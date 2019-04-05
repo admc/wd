@@ -78,7 +78,7 @@ global.sauceJobTitle = function(title) {
   return (env.TRAVIS_JOB_NUMBER? '[' + env.TRAVIS_JOB_NUMBER + '] ' : '') +
     title
       .replace(/\(.*\)/g,'')
-      .replace(/\@[\w\-]+/g,'')
+      .replace(/@[\w-]+/g,'')
       .trim();
 };
 

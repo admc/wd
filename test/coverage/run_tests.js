@@ -1,9 +1,7 @@
 /*global _:true, Q:true */
 var Mocha = require('mocha'),
     fs = require('fs'),
-    path = require('path'),
-    _ = require('lodash'),
-    Q = require('Q');
+    path = require('path');
 
 var sauceUsername = process.env.SAUCE_USERNAME;
 var sauceAccessKey = process.env.SAUCE_ACCESS_KEY;

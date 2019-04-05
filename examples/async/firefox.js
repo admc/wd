@@ -28,7 +28,6 @@ browser.init({browserName:'firefox'}, function() {
       title.should.include('WD');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          /* jshint evil: true */
           browser.eval("window.location.href", function(err, href) {
             href.should.include('guinea-pig2');
             browser.quit();
