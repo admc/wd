@@ -56,6 +56,17 @@ wd.elementsByAndroidUIAutomator('new UiSelector().clickable(true)', function(err
 });
 ```
 
+#### -android datamatcher Locator Strategy ####
+
+Find elements in android applications using Espresso [Data Matcher](https://developer.android.com/reference/android/support/test/espresso/DataInteraction)
+
+e.g.:
+```
+wd.elementsByAndroidDataMatcher(JSON.stringify({name: "hasEntry", args: ["title", "ViewTitle"]})', function(err, els){
+  console.log("number of clickable elements:", els.length);
+});
+```
+
 #### accessibility id ####
 
 Find elements by whatever identifier is used by the platforms Accessibility framework.
