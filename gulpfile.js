@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     runSequence = Q.denodeify(require('run-sequence')),
     path = require('path'),
     _ = require('lodash'),
-    args   = require('yargs').argv,
+    args = require('yargs').argv,
     urlLib = require('url'),
     mochaStream = require('spawn-mocha-parallel').mochaStream,
     httpProxy = require('http-proxy'),
@@ -114,28 +114,24 @@ _(BROWSERS).each(function(browser) {
   });
 });
 
-_(MOBILE_BROWSERS).each(function(browser) {
-  gulp.task('test-midway-' + browser, function () {
+_(MOBILE_BROWSERS).each(function (browser) {
+  gulp.task(`test-midway-${browser}`, function () {
     var opts = buildMochaOpts({ midway: true, browser: browser });
-    var mocha = mochaStream(opts);
     return gulp.src([
       'test/midway/api-nav-specs.js',
       'test/midway/api-el-specs.js',
       'test/midway/api-exec-specs.js',
       'test/midway/mobile-specs.js',
     ], {read: false})
-    .pipe(mocha)
+    .pipe(mochaStream(opts))
     .on('error', console.warn.bind(console));
   });
 });
 
 gulp.task('test-midway', function() {
-  var midwayTestTasks = [];
-  _(args.browsers).each(function(browser) {
-    midwayTestTasks.push('test-midway-' + browser);
-  });
+  const midwayTestTasks = _.map(args.browsers, (browser) =>`test-midway-${browser}`);
   return runSequence('pre-midway', midwayTestTasks)
-    .finally(function() {
+    .finally(function () {
       return runSequence('post-midway');
     });
 });
@@ -228,7 +224,7 @@ gulp.task('stop-proxy', function(done) {
 
 var sauceConnectProcess = null;
 
-gulp.task('start-sc', function(done) {
+gulp.task('start-sc', function (done) {
   var opts = {
     username: process.env.SAUCE_USERNAME,
     accessKey: process.env.SAUCE_ACCESS_KEY,
@@ -239,7 +235,7 @@ gulp.task('start-sc', function(done) {
   if(process.env.TRAVIS_JOB_NUMBER) {
     opts.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
   }
-  var startTunnel = function(done, n) {
+  var startTunnel = function (done, n) {
     sauceConnectLauncher(opts, function (err, _sauceConnectProcess) {
       if (err) {
         if(n > 0) {
@@ -262,7 +258,7 @@ gulp.task('start-sc', function(done) {
   startTunnel(done, 3);
 });
 
-gulp.task('stop-sc', function(done) {
+gulp.task('stop-sc', function (done) {
   if(sauceConnectProcess) { sauceConnectProcess.close(done); }
   else { done(); }
 });
@@ -285,7 +281,7 @@ gulp.task('post-midway', function() {
 
 gulp.task('travis', function() {
   var seq;
-  switch(args.config) {
+  switch (args.config) {
     case 'unit':
       return runSequence(['test-unit']);
     case 'multi':
