@@ -10,7 +10,6 @@ describe("init tests", function() {
 
     before(function(done) {
       server = nock('http://localhost:9515').filteringRequestBody(/.*/, '*');
-      server.log(console.log);
       server.post('/session', '*').reply(303, "OK", {
         'Location': '/session/1234'
       }).get('/session/1234').reply(200, {
@@ -42,12 +41,9 @@ describe("init tests", function() {
     function test(deviceKey) {
       it("should not have selenium defaults (passing " + deviceKey + ")", function(done) {
         server = nock('http://localhost:4444');
-        server.log(console.log);
         server
           .filteringRequestBody(function(requestBody) {
             requestBody = JSON.parse(requestBody);
-            console.log(typeof requestBody);
-            console.log(requestBody);
             should.not.exist(requestBody.desiredCapabilities.javascriptEnabled);
             should.not.exist(requestBody.desiredCapabilities.wdNoDefaults);
             should.not.exist(requestBody.desiredCapabilities['no-defaults']);
@@ -70,4 +66,3 @@ describe("init tests", function() {
     test('wdNoDefaults');
   });
 });
-

@@ -10,9 +10,15 @@ var gulp = require('gulp'),
     mochaStream = require('spawn-mocha-parallel').mochaStream,
     httpProxy = require('http-proxy'),
     sauceConnectLauncher = require('sauce-connect-launcher'),
-    async = require('async');
+    async = require('async'),
+    log = require('fancy-log')
+    gulpIf = require('gulp-if')
+    debug = require('gulp-debug');
 
 require('./test/helpers/env');
+
+
+const VERBOSE = !!process.env.VERBOSE;
 
 args.browsers = (args.browser || 'chrome').split(',');
 args.sauce = args.sauce ? true : false;
@@ -26,14 +32,18 @@ process.env.SAUCE_CONNECT_VERBOSE = false;
 var PROXY_PORT = 5050;
 var expressPort = 3000; // incremented after each test to avoid colision
 
-function buildMochaOpts(opts) {
+var debugLog = log.bind(log);
+var warnLog = log.warn.bind(log);
+var errorLog = log.error.bind(log);
 
+function buildMochaOpts(opts) {
   var mochaOpts = {
     flags: {
       u: 'bdd-with-opts',
       R: 'spec',
-      c: true
+      c: true,
     },
+    exit: true,
     bin: path.join(__dirname,  'node_modules/.bin/' + ((process.platform !== "win32") ? 'mocha' : 'mocha.cmd')),
     concurrency: args.concurrency | process.env.CONCURRENCY || 3
   };
@@ -81,8 +91,9 @@ gulp.task('test-unit', function () {
   var opts = buildMochaOpts({ unit: true });
   var mocha = mochaStream(opts);
   return gulp.src('test/specs/**/*-specs.js', {read: false})
+    .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mocha)
-    .on('error',  console.warn.bind(console));
+    .on('error', warnLog);
 });
 
 gulp.task('test-midway-multi', function () {
@@ -90,8 +101,9 @@ gulp.task('test-midway-multi', function () {
   var mocha = mochaStream(opts);
   return gulp.src('test/midway/multi/**/*-specs.js', {
     read: false})
+    .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mocha)
-    .on('error', console.warn.bind(console));
+    .on('error', warnLog);
 });
 
 _(BROWSERS).each(function(browser) {
@@ -99,18 +111,20 @@ _(BROWSERS).each(function(browser) {
     var opts = buildMochaOpts({ midway: true, browser: browser });
     var mocha = mochaStream(opts);
     return gulp.src([
-        'test/midway/**/*-specs.js',
-        '!test/midway/multi/**'
-      ], {read: false})
+      'test/midway/**/*-specs.js',
+      '!test/midway/multi/**'
+    ], {read: false})
+      .pipe(gulpIf(VERBOSE, debug()))
       .pipe(mocha)
-      .on('error', console.warn.bind(console));
+      .on('error', errorLog);
   });
   gulp.task('test-e2e-' + browser, function () {
     var opts = buildMochaOpts({ browser: browser });
     var mocha = mochaStream(opts);
     return gulp.src('test/e2e/**/*-specs.js', {read: false})
+      .pipe(gulpIf(VERBOSE, debug()))
       .pipe(mocha)
-      .on('error', console.warn.bind(console));
+      .on('error', errorLog);
   });
 });
 
@@ -123,8 +137,9 @@ _(MOBILE_BROWSERS).each(function (browser) {
       'test/midway/api-exec-specs.js',
       'test/midway/mobile-specs.js',
     ], {read: false})
+    .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mochaStream(opts))
-    .on('error', console.warn.bind(console));
+    .on('error', errorLog);
   });
 });
 
@@ -190,7 +205,7 @@ gulp.task('start-proxy', function(done) {
       }
     } catch (err) {
       try{
-        console.error('Proxy error for: ', req.url + ':' , err);
+        log.error('Proxy error for: ', req.url + ':' , err);
         res.writeHead(500, {
           'Content-Type': 'text/plain'
         });
@@ -200,26 +215,28 @@ gulp.task('start-proxy', function(done) {
   });
 
   server.on('error', function(err) {
-    console.error('Proxy error: ', err);
+    log.error('Proxy error: ', err);
   });
 
-  console.log("listening on port", PROXY_PORT);
+  log("Listening on port", PROXY_PORT);
   server.listen(PROXY_PORT, done);
 });
 
 gulp.task('stop-proxy', function(done) {
-  // stop proxy, exit after 5 ec if hanging
+  // stop proxy, exit after 5 sec if hanging
   done = _.once(done);
-  var t = setTimeout(function() {
+  var timeout = setTimeout(function () {
     done();
   }, 5000);
-  if(server) {
-    server.close(function() {
-      clearTimeout(t);
+  if (server) {
+    server.close(function () {
+      clearTimeout(timeout);
       done();
     });
   }
-  else { done(); }
+  else {
+    done();
+  }
 });
 
 var sauceConnectProcess = null;
@@ -230,27 +247,27 @@ gulp.task('start-sc', function (done) {
     accessKey: process.env.SAUCE_ACCESS_KEY,
     verbose: process.env.SAUCE_CONNECT_VERBOSE,
     directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
-    logger: function(mess) {console.log(mess);}
+    logger: debugLog,
   };
-  if(process.env.TRAVIS_JOB_NUMBER) {
+  if (process.env.TRAVIS_JOB_NUMBER) {
     opts.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
   }
   var startTunnel = function (done, n) {
     sauceConnectLauncher(opts, function (err, _sauceConnectProcess) {
       if (err) {
-        if(n > 0) {
-          console.log('retrying sauce connect in 20 secs.');
-          setTimeout(function() {
-            startTunnel(done, n-1);
+        if (n > 0) {
+          log('retrying sauce connect in 20 secs.');
+          setTimeout(function () {
+            startTunnel(done, n - 1);
           }, 20000);
         } else {
-          console.error(err.message);
+          log.error(err.message);
           done(err);
         }
         return;
       }
       sauceConnectProcess = _sauceConnectProcess;
-      console.log("Sauce Connect ready");
+      log("Sauce Connect ready");
       done();
     });
   };
@@ -259,21 +276,24 @@ gulp.task('start-sc', function (done) {
 });
 
 gulp.task('stop-sc', function (done) {
-  if(sauceConnectProcess) { sauceConnectProcess.close(done); }
-  else { done(); }
+  if(sauceConnectProcess) {
+    sauceConnectProcess.close(done);
+  } else {
+    done();
+  }
 });
 
 gulp.task('pre-midway', function() {
   var seq = ['start-proxy'];
-  if(args.sauce && !args['nosc']) {
+  if (args.sauce && !args['nosc']) {
     seq.unshift('start-sc');
   }
   return runSequence(seq);
 });
 
-gulp.task('post-midway', function() {
+gulp.task('post-midway', function () {
   var seq = ['stop-proxy'];
-  if(args.sauce && !args['nosc']) {
+  if (args.sauce && !args['nosc']) {
     seq.unshift('stop-sc');
   }
   return runSequence(seq);

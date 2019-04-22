@@ -21,14 +21,14 @@ module.exports = function(that, partials) {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['midway']
     };
-    var desired = mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null );
+    var desired = mergeDesired(env.DESIRED, env.SAUCE ? sauceExtra : null);
     return browser
       .configureLogging()
-      .then(function() {
+      .then(function () {
         return browser
           .init(desired)
           .sleep(500)
-          .catch(function() {
+          .catch(function () {
             // trying one more time
             return browser.init(desired).sleep(500);
           });
@@ -40,7 +40,7 @@ module.exports = function(that, partials) {
     var url = midwayUrl({
       testSuite: this.currentTest.parent.title,
       title: this.currentTest.title,
-      uuid: uuid  
+      uuid: uuid
     });
     return browser
       .get(url)
@@ -52,7 +52,8 @@ module.exports = function(that, partials) {
           .get(url)
           .sleep(500)
           .waitForElementById(uuid, 10000, 500);
-      }).sleep(100);
+      })
+      .sleep(100);
   });
 
   afterEach(function() {

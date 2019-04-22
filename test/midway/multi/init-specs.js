@@ -24,7 +24,6 @@ describe('init ' + env.ENV_DESC,function() {
 
   before(function() {
     browser = wd.promiseChainRemote(env.REMOTE_CONFIG);
-    setTimeout(function(){ console.log('timeout'); }, 500);
     return browser.configureLogging();
   });
 

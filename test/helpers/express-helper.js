@@ -1,5 +1,7 @@
 var express = require('express');
 var http = require('http');
+var log = require('fancy-log');
+
 
 function Express(rootDir, partials) {
   this.rootDir = rootDir;
@@ -30,7 +32,7 @@ Express.prototype.start = function(done) {
 
   this.app.use(express["static"](this.rootDir + '/public'));
   this.server = http.createServer(this.app);
-  console.log('server listening on', env.EXPRESS_PORT);
+  log('Server listening on', env.EXPRESS_PORT);
   this.server.listen(env.EXPRESS_PORT, done);
 };
 

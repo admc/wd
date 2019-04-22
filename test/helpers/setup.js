@@ -2,16 +2,18 @@ require('./env');
 require('colors');
 require('./skip');
 
+var log = require('fancy-log');
+
 global.wd = require('../../lib/main');
 var utils = require('../../lib/utils');
 global.uuidLib = require('uuid');
 var _ = require('lodash');
 
-if( env.TRAVIS ){
-  console.log("Travis environment detected.");
-  console.log("TRAVIS_BUILD_NUMBER --> ", env.TRAVIS_BUILD_NUMBER);
-  console.log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
-  console.log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
+if (env.TRAVIS){
+  log("Travis environment detected.");
+  log("TRAVIS_BUILD_NUMBER --> ", env.TRAVIS_BUILD_NUMBER);
+  log("TRAVIS_JOB_NUMBER --> ", env.TRAVIS_JOB_NUMBER);
+  log("TRAVIS_JOB_ID --> ", env.TRAVIS_JOB_ID);
 }
 
 // monkey patching
@@ -20,18 +22,18 @@ wd.addAsyncMethod(
   function (done){
   if(env.VERBOSE) {
     this.on('status', function(info) {
-      console.log(info.cyan);
+      log(info.cyan);
     });
     this.on('command', function(eventType, command, response) {
-      console.log(' > ' + eventType.cyan, command, (response || '').grey);
+      log(' > ' + eventType.cyan, command, (response || '').grey);
     });
     this.on('http', function(meth, path, data) {
-      console.log(' > ' + meth.magenta, path, (data || '').grey);
+      log(' > ' + meth.magenta, path, (data || '').grey);
     });
   }
   if(env.DEBUG_CONNECTION) {
     this.on('connection', function(message) {
-      console.log('connection > ' + message );
+      log('connection > ' + message );
     });
   }
 

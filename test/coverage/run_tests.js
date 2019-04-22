@@ -3,7 +3,8 @@ var Mocha = require('mocha'),
     fs = require('fs'),
     path = require('path'),
     _ = require('lodash'),
-    Q = require('Q');
+    Q = require('Q')
+    log = require('fancy-log');
 
 var sauceUsername = process.env.SAUCE_USERNAME;
 var sauceAccessKey = process.env.SAUCE_ACCESS_KEY;
@@ -48,46 +49,46 @@ function runSpecs(dir, mochaConfig) {
 
 var sequence = [
   function() {
-    console.log('running unit tests');
+    log('running unit tests');
     delete process.env.SAUCE_USERNAME;
     delete process.env.SAUCE_ACCESS_KEY;
     return runSpecs('test/specs');
   },
   function() {
-    console.log('running midway tests(chrome)');
+    log('running midway tests(chrome)');
     process.env.SAUCE_USERNAME = sauceUsername;
     process.env.SAUCE_ACCESS_KEY = sauceAccessKey;
     process.env.BROWSER='chrome';
     return runSpecs('test/midway', [['grep',/@skip-chrome|@multi/],['invert']]);
   },
   function() {
-    console.log('running midway tests(firefox)');
+    log('running midway tests(firefox)');
     process.env.BROWSER='firefox';
     return runSpecs('test/midway', [['grep',/@skip-firefox|@multi/],['invert']]);
   },
   function() {
-    console.log('running midway tests(multi)');
+    log('running midway tests(multi)');
     process.env.BROWSER='chrome';
     return runSpecs('test/midway', [['grep',/@multi/]]);
   },
   function() {
-    console.log('running e2e tests(chrome)');
+    log('running e2e tests(chrome)');
     process.env.BROWSER='chrome';
     return runSpecs('test/e2e', [['grep',/@skip-chrome/],['invert']]);
   },
  function() {
-    console.log('running e2e tests(firefox)');
+    log('running e2e tests(firefox)');
     process.env.BROWSER='firefox';
     return runSpecs('test/e2e', [['grep',/@skip-firefox/],['invert']]);
   },
   function() {
-    console.log('running sauce e2e tests(chrome)');
+    log('running sauce e2e tests(chrome)');
     process.env.SAUCE=1;
     process.env.BROWSER='chrome';
     return runSpecs('test/e2e', [['grep',/@skip-chrome/],['invert']]);
   },
  function() {
-    console.log('running sauce e2e tests(firefox)');
+    log('running sauce e2e tests(firefox)');
     process.env.BROWSER='firefox';
     return runSpecs('test/e2e', [['grep',/@skip-firefox/],['invert']]);
   }
