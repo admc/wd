@@ -61,7 +61,8 @@
     "dox": "^0.9.0",
     "express": "^4.16.3",
     "gulp": "^3.9.1",
-    "gulp-debug": "^4.0.0",
+    "gulp-debug": "^3.0.0",
+    "gulp-eslint": "^4.0.0",
     "gulp-if": "^2.0.2",
     "hbs": "^4.0.0",
     "http-proxy": "^1.15.1",
@@ -83,6 +84,8 @@
     "test": "gulp test-unit",
     "all_tests": "gulp test",
     "install": "node scripts/build-browser-scripts",
-    "clean": "rm -rf node_modules && rm -f package-lock.json && npm install"
+    "clean": "rm -rf node_modules && rm -f package-lock.json && npm install",
+    "lint": "gulp lint",
+    "lint:fix": "gulp lint --fix"
   }
 }
