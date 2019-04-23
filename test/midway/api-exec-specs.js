@@ -11,7 +11,6 @@ describe('api-exec ' + env.ENV_DESC, function() {
   partials['browser.eval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';
   it('browser.eval', function() {
-    /* jshint evil: true */
     return browser
       .eval('1+2').should.become(3)
       .eval('document.title').should.eventually.include("WD Tests")
@@ -22,7 +21,6 @@ describe('api-exec ' + env.ENV_DESC, function() {
   partials['browser.safeEval'] =
     '<div id="eval"><ul><li>line 1</li><li>line 2</li></ul></div>';
   it('browser.safeEval', function() {
-    /* jshint evil: true */
     return browser
       .safeEval('1+2').should.become(3)
       .safeEval('document.title').should.eventually.include("WD Tests")
@@ -35,7 +33,6 @@ describe('api-exec ' + env.ENV_DESC, function() {
   });
 
   it('browser.execute', function() {
-    /* jshint evil: true */
     var jsScript = prepareJs(
       'var a = arguments[0], b = arguments[1];\n' +
       'window.wd_sync_execute_test = \'It worked! \' + (a+b)'
@@ -118,7 +115,6 @@ describe('api-exec ' + env.ENV_DESC, function() {
   });
 
   it('browser.safeExecute - noargs', function() {
-    /* jshint evil: true */
     return browser
       .safeExecute('window.wd_sync_execute_test = "It worked!"')
       .eval('window.wd_sync_execute_test').should.become('It worked!')
@@ -129,7 +125,6 @@ describe('api-exec ' + env.ENV_DESC, function() {
   });
 
   it('browser.safeExecute - args', skip('android'), function() {
-    /* jshint evil: true */
     var jsScript = prepareJs(
       'var a = arguments[0], b = arguments[1];\n' +
       'window.wd_sync_execute_test = \'It worked! \' + (a+b)'

@@ -28,7 +28,6 @@ describe('deprecated chain - full' + env.ENV_DESC, function() {
       name: sauceJobTitle(this.runnable().parent.title),
       tags: ['e2e']
     };
-    /* jshint evil: true */
     browser.chain()
       .init(mergeDesired(env.DESIRED, env.SAUCE? sauceExtra : null ))
       .get("http://admc.io/wd/test-pages/guinea-pig.html")
@@ -77,7 +76,6 @@ describe('deprecated chain - partial' + env.ENV_DESC, function() {
   });
 
   it("partial chaining should work", function(done) {
-    /* jshint evil: true */
     browser.chain()
       .title(function(err, title) {
         title.should.include('WD');
@@ -119,4 +117,3 @@ describe('deprecated chain - partial' + env.ENV_DESC, function() {
   });
 
 });
-

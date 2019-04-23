@@ -63,13 +63,10 @@
     "gulp": "^3.9.1",
     "gulp-debug": "^4.0.0",
     "gulp-if": "^2.0.2",
-    "gulp-jshint": "^2.1.0",
     "hbs": "^4.0.0",
     "http-proxy": "^1.15.1",
     "imageinfo": "^1.0.4",
     "istanbul": "^0.4.5",
-    "jshint": "^2.9.6",
-    "jshint-stylish": "^2.2.1",
     "mocha": "^5.2.0",
     "mu2": "^0.5.21",
     "nock": "^10.0.0",
@@ -85,6 +82,7 @@
   "scripts": {
     "test": "gulp test-unit",
     "all_tests": "gulp test",
-    "install": "node scripts/build-browser-scripts"
+    "install": "node scripts/build-browser-scripts",
+    "clean": "rm -rf node_modules && rm -f package-lock.json && npm install"
   }
 }

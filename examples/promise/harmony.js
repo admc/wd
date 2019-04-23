@@ -3,8 +3,6 @@
 //
 // This demos how to mix promise chain and generators
 
-/* jshint moz: true, evil: true */
-
 require('colors');
 var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");

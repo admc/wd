@@ -1,6 +1,6 @@
-# WD.js 
+# WD.js
 
-[![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd) 
+[![NPM version](http://img.shields.io/npm/v/wd.svg)](https://npmjs.org/package/wd)
 [![Downloads](http://img.shields.io/npm/dm/wd.svg)](https://npmjs.org/package/wd)
 [![Dependency Status](https://david-dm.org/admc/wd.svg)](https://david-dm.org/admc/wd)
 [![devDependency Status](https://david-dm.org/admc/wd/dev-status.svg)](https://david-dm.org/admc/wd#info=devDependencies)
@@ -25,7 +25,7 @@ This library is designed to be a maleable implementation of the webdriver protoc
 npm install wd
 ```
 
-Note: WD.js does not start the selenium server. You may use the  [selenium-standalone](https://www.npmjs.com/package/selenium-standalone) package 
+Note: WD.js does not start the selenium server. You may use the  [selenium-standalone](https://www.npmjs.com/package/selenium-standalone) package
 to install and start a selenium server.
 
 ## Authors
@@ -84,7 +84,6 @@ browser.init({browserName:'chrome'}, function() {
       title.should.include('WD');
       browser.elementById('i am a link', function(err, el) {
         browser.clickElement(el, function() {
-          /* jshint evil: true */
           browser.eval("window.location.href", function(err, href) {
             href.should.include('guinea-pig2');
             browser.quit();

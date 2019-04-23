@@ -38,7 +38,6 @@ var desired = {
   name: "This is an example test"
 };
 
-/* jshint evil: true */
 browser
   .init(desired)
   .get("http://admc.io/wd/test-pages/guinea-pig.html")

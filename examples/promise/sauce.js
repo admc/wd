@@ -35,7 +35,6 @@ var desired = {
   name: "example test"
 };
 
-/* jshint evil: true */
 browser
   .init(desired)
   .sauceJobUpdate({tags:['example']})

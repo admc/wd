@@ -1,6 +1,4 @@
 var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    jshintStylish = require('jshint-stylish'),
     Q = require('q'),
     runSequence = Q.denodeify(require('run-sequence')),
     path = require('path'),
@@ -79,12 +77,8 @@ function buildMochaOpts(opts) {
   return mochaOpts;
 }
 
-gulp.task('lint', function() {
-//  return gulp.src(['lib/**/*.js','test/**/*.js','browser-scripts/**/*.js'])
-  return gulp.src(['lib/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter(jshintStylish))
-    .pipe(jshint.reporter('fail'));
+gulp.task('lint', function(done) {
+  done();
 });
 
 gulp.task('test-unit', function () {
