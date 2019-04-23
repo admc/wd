@@ -69,10 +69,12 @@ if(env.SAUCE){
   env.BASE_TIME_UNIT = toNumber(process.env.BASE_TIME_UNIT || 4000);
   env.TIMEOUT = toNumber(process.env.TIMEOUT || 600000);
 
+  env.TEST_TIME = Math.round(new Date().getTime() / (1000*60));
+
   env.SAUCE_JOB_ID =
     env.TRAVIS_BUILD_NUMBER ||
     process.env.SAUCE_JOB_ID ||
-    Math.round(new Date().getTime() / (1000*60));
+    env.TEST_TIME;
   env.SAUCE_USERNAME = process.env.SAUCE_USERNAME;
   env.SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY;
   env.SAUCE_PLATFORM = process.env.SAUCE_PLATFORM || 'Linux';

@@ -9,7 +9,7 @@ exports.test = function function_name (
   suffix, extraDesc, suffixPartials, criterias, _skip) {
     describe('api-el-' + extraDesc + ' ' + env.ENV_DESC, _skip, function() {
       beforeEach(function(done) {
-          setTimeout(function() { console.log('timeout'); done(); }, 1000);
+          setTimeout(done, 1000);
       });
 
       var partials = {};
@@ -115,4 +115,3 @@ exports.test = function function_name (
 
     });
 };
-

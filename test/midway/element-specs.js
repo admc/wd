@@ -4,7 +4,7 @@ var path = require('path');
 
 describe('element ' + env.ENV_DESC, function() {
   beforeEach(function(done) {
-    setTimeout(function() { console.log('timeout'); done(); }, 500);
+    setTimeout(done, 500);
   });
 
   var partials = {};
