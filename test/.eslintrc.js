@@ -14,5 +14,6 @@ module.exports = {
     "skip": "readonly",
     "Q": "readonly",
     "prepareJs": "readonly",
+    "AssertionError": "readonly"
   }
 };

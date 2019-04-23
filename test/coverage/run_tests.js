@@ -1,9 +1,8 @@
-/*global _:true, Q:true */
 var Mocha = require('mocha'),
     fs = require('fs'),
     path = require('path'),
     _ = require('lodash'),
-    Q = require('Q')
+    Q = require('Q'),
     log = require('fancy-log');
 
 var sauceUsername = process.env.SAUCE_USERNAME;
@@ -22,7 +21,7 @@ function runSpecs(dir, mochaConfig) {
     mocha.ui('bdd');
     mocha.bail(false);
     mocha.reporter('dot');
-    _(mochaConfig).each(function(opt) {
+    _.each(mochaConfig, function(opt) {
       var optName = opt.shift();
       mocha[optName].apply(mocha, opt);
     });
@@ -30,7 +29,7 @@ function runSpecs(dir, mochaConfig) {
       // Need to cleanup require cache otherwise the test won't run twice
       // and there may be some weird side effects cause with have some global
       // state in our test setup helpers.
-      // see https://github.com/visionmedia/mocha/issues/736
+      // see https://github.com/mochajs/mocha/issues/736
       _(require.cache)
         .keys()
         .filter(function(key) {

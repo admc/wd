@@ -57,8 +57,8 @@ describe('wait-for-2 ' + env.ENV_DESC, function() {
   it('browser.waitForElement - asserter - matching element not the first element', function() {
       var appendChild =
         'setTimeout(function() {\n' +
-        ' $("#theDiv").append(' + 
-            '"<div class=\\"child\\" style=\\"display:none;\\">a waitFor child 1</div>' + 
+        ' $("#theDiv").append(' +
+            '"<div class=\\"child\\" style=\\"display:none;\\">a waitFor child 1</div>' +
             '<div class=\\"child\\">a waitFor child 2</div>");\n' +
         '}, arguments[0]);\n';
     return browser
@@ -70,14 +70,14 @@ describe('wait-for-2 ' + env.ENV_DESC, function() {
 
   partials['browser.waitForElements'] = page;
   it('browser.waitForElements', function() {
-    var childs =   
+    var childs =
       '<div class="child">child 1</div>' +
       '<div class="child">child 2</div>' +
       '<div class="child">child 3</div>' +
       '<div class="child">child 4</div>';
     var appendChild =
       'setTimeout(function() {\n' +
-      ' $("#theDiv").append("' + childs.replace(/\"/g, '\\"' ) + '");\n' +
+      ' $("#theDiv").append("' + childs.replace(/"/g, '\\"' ) + '");\n' +
       '}, arguments[0]);\n';
 
     return browser
@@ -98,14 +98,14 @@ describe('wait-for-2 ' + env.ENV_DESC, function() {
 
   partials['browser.waitForElements - asserter'] = page;
   it('browser.waitForElements - asserter', function() {
-    var childs =   
+    var childs =
       '<div class="child">child 1</div>' +
       '<div class="child">child 2 OK</div>' +
       '<div class="child">child 3</div>' +
       '<div class="child">child 4 OK</div>';
     var appendChild =
       'setTimeout(function() {\n' +
-      ' $("#theDiv").append("' + childs.replace(/\"/g, '\\"' ) + '");\n' +
+      ' $("#theDiv").append("' + childs.replace(/"/g, '\\"' ) + '");\n' +
       '}, arguments[0]);\n';
 
     return browser
@@ -155,14 +155,14 @@ describe('wait-for-2 ' + env.ENV_DESC, function() {
 
   partials['browser.waitForElementsByCss'] = page;
   it('browser.waitForElementsByCss', function() {
-    var childs =   
+    var childs =
       '<div class="child">child 1</div>' +
       '<div class="child">child 2</div>' +
       '<div class="child">child 3</div>' +
       '<div class="child">child 4</div>';
     var appendChild =
       'setTimeout(function() {\n' +
-      ' $("#theDiv").append("' + childs.replace(/\"/g, '\\"' ) + '");\n' +
+      ' $("#theDiv").append("' + childs.replace(/"/g, '\\"' ) + '");\n' +
       '}, arguments[0]);\n';
     return browser
 

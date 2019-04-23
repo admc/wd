@@ -1,6 +1,7 @@
 /* global sauceJobTitle, mergeDesired */
 
 require('../helpers/setup');
+var _ = require('lodash');
 
 // Testing sauce specific method, it doesn't work
 // in regular selenium
@@ -52,5 +53,3 @@ if(env.SAUCE){
   });
 
 }
-
-

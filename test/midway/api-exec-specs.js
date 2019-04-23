@@ -1,5 +1,4 @@
 require('../helpers/setup');
-var _ = require('lodash');
 
 
 describe('api-exec ' + env.ENV_DESC, function() {
@@ -188,7 +187,7 @@ describe('api-exec ' + env.ENV_DESC, function() {
     );
     return browser
       .setAsyncScriptTimeout( env.BASE_TIME_UNIT/2 )
-      .executeAsync( jsScript, [env.BASE_TIME_UNIT]).should.be.rejectedWith(/status\: 28/)
+      .executeAsync( jsScript, [env.BASE_TIME_UNIT]).should.be.rejectedWith(/status: 28/)
       .setAsyncScriptTimeout( 2* env.BASE_TIME_UNIT )
       .executeAsync( jsScript, [env.BASE_TIME_UNIT])
       .setAsyncScriptTimeout(0);

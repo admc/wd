@@ -571,7 +571,7 @@ describe("mjson tests", function() {
               // TODO check what the return is like
               value: [{'not sure': '0'}],
             });
-          var el;
+          var el; // eslint-disable-line no-unused-vars
           return browser
             .elementById('random').then(function(_el) { el=_el; })
             .then(function() {
@@ -1673,7 +1673,7 @@ describe("mjson tests", function() {
           // TODO check what the return is like
           value: [{'not sure': '0'}],
         });
-      var el;
+      var el; // eslint-disable-line no-unused-vars
       async.series([
         function(done) {
           browser.elementById('random', function(err, _el) {

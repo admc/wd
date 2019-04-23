@@ -122,7 +122,7 @@ describe('config-http ' + env.ENV_DESC, function() {
         proxy: undefined,
         rejectUnauthorized: true
     };
-    if(newConfig.retryDelay = wdCurrent.retryDelay) { newConfig.retryDelay++; }
+    if(newConfig.retryDelay === wdCurrent.retryDelay) { newConfig.retryDelay++; }
     return browser
       .configureHttp( newConfig).then(function() {
         browser._httpConfig.should.deep.equal(newConfig);
@@ -189,7 +189,7 @@ describe('config-http ' + env.ENV_DESC, function() {
           .get(relUrl).should.eventually.include('WD Tests - config-http')
           .should.be.rejected;
       })
-      .configureHttp({baseUrl: baseUrl})      
+      .configureHttp({baseUrl: baseUrl})
       .get(relUrl).title().should.eventually.include('WD Tests - config-http')
       .get(url).title().should.eventually.include('WD Tests - config-http');
   });
