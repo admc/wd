@@ -54,7 +54,6 @@ describe('mocha spec examples', function() {
     });
 
     it("submit element should be clicked", function() {
-      /* jshint evil: true */
       return browser
         .elementById("submit")
         .click()
@@ -102,7 +101,6 @@ describe('mocha spec examples', function() {
     });
 
     it("submit element should be clicked", function(done) {
-      /* jshint evil: true */
       browser
         .elementById("submit")
         .click()

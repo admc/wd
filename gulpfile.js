@@ -1,6 +1,4 @@
 var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    jshintStylish = require('jshint-stylish'),
     Q = require('q'),
     runSequence = Q.denodeify(require('run-sequence')),
     path = require('path'),
@@ -11,8 +9,9 @@ var gulp = require('gulp'),
     httpProxy = require('http-proxy'),
     sauceConnectLauncher = require('sauce-connect-launcher'),
     async = require('async'),
-    log = require('fancy-log')
-    gulpIf = require('gulp-if')
+    log = require('fancy-log'),
+    eslint = require('gulp-eslint'),
+    gulpIf = require('gulp-if'),
     debug = require('gulp-debug');
 
 require('./test/helpers/env');
@@ -80,11 +79,17 @@ function buildMochaOpts(opts) {
 }
 
 gulp.task('lint', function() {
-//  return gulp.src(['lib/**/*.js','test/**/*.js','browser-scripts/**/*.js'])
-  return gulp.src(['lib/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter(jshintStylish))
-    .pipe(jshint.reporter('fail'));
+  var opts = {
+    fix: process.argv.indexOf('--fix') !== -1,
+  };
+  return gulp.src(['lib/**/*.js', 'test/**/*.js', '!node_modules', '!**/node_modules', '!build/**'])
+    .pipe(gulpIf(!!process.env.VERBOSE, debug()))
+    .pipe(eslint(opts))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+    .pipe(gulpIf(function (file) {
+      return file.eslint && file.eslint.fixed;
+    }, gulp.dest(process.cwd())));
 });
 
 gulp.task('test-unit', function () {

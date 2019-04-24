@@ -1,5 +1,5 @@
 require('../helpers/setup');
-var _ = require('lodash');
+
 
 describe('api-el ' + env.ENV_DESC, skip('ios'), function() {
   var partials = {};
@@ -98,7 +98,7 @@ describe('api-el ' + env.ENV_DESC, skip('ios'), function() {
       .then(function() {
         return browser
           .waitForVisible("css selector", "#wrongsel .child", 0.1 * env.BASE_TIME_UNIT)
-          .should.be.rejectedWith(/Element didn\'t become visible/);
+          .should.be.rejectedWith(/Element didn't become visible/);
 
       });
   });

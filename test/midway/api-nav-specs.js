@@ -1,5 +1,5 @@
 require('../helpers/setup');
-var _ = require('lodash');
+
 
 describe('api-nav ' + env.ENV_DESC, function() {
   var partials = {};
@@ -61,7 +61,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
         if(Date.now() - startMs < env.BASE_TIME_UNIT){
           return browser
             .elementByCss('#setWaitTimeout .child')
-            .should.be.rejectedWith(/status\: 7/);
+            .should.be.rejectedWith(/status: 7/);
         }
       })
       .setImplicitWaitTimeout(2 * env.BASE_TIME_UNIT)
@@ -98,7 +98,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
     '  <div class="current"></div>\n' +
     '</div>\n';
   it('browser.moveTo', skip('ios', 'android'), function() {
-    if(true || env.BROWSER === 'explorer') {
+    if(env.BROWSER === 'explorer') {
       // cannot get hover to work in explorer
       return browser
         .elementByCss('#theDiv .div1').then(function(div1) {
@@ -261,7 +261,7 @@ describe('api-nav ' + env.ENV_DESC, function() {
         .elementByCss("#theDiv input").type("not cleared")
         .getValue().should.become('not cleared')
         .elementByCss("#theDiv input").clear().getValue().should.become('');
-    });    
+    });
   }
 
   it('browser.title', function() {

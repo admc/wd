@@ -21,4 +21,4 @@ env:
     # - CONFIG=ipad
     # - CONFIG=android_phone
 script:
-  - npx gulp travis --config $CONFIG --sauce
+  - npm run lint && npx gulp travis --config $CONFIG --sauce

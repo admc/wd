@@ -58,7 +58,6 @@ describe('promise chain ' + env.ENV_DESC, function() {
   });
 
    it("clicking submit should work", function() {
-    /* jshint evil: true */
     return browser
       .elementById("submit")
       .click()
