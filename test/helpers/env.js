@@ -2,7 +2,7 @@ var underscoreString = require('underscore.string');
 var toNumber = underscoreString.toNumber;
 var toBoolean = underscoreString.toBoolean;
 
-/*global env:true */
+
 var env = global.env = {};
 
 env.VERBOSE = toBoolean(process.env.VERBOSE);
