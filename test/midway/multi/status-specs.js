@@ -32,7 +32,7 @@ describe('status ' + env.ENV_DESC, function() {
   });
 
   it("browser.status", function() {
-    return browser.status().should.eventually.exist;
+    return browser.status().ZXCZXC.should.eventually.exist;
   });
 
   if(!env.SAUCE) { // this cannot work in a cloud env

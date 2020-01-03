@@ -32,9 +32,10 @@ process.env.SAUCE_CONNECT_VERBOSE = false;
 var PROXY_PORT = 5050;
 var expressPort = 3000; // incremented after each test to avoid collision
 
-var debugLog = log.bind(log);
-var warnLog = log.warn.bind(log);
-var errorLog = log.error.bind(log);
+function mochaErrorHandler (err) {
+  log.error(err);
+  process.exit(1);
+}
 
 function buildMochaOpts(opts) {
   var mochaOpts = {
@@ -113,7 +114,7 @@ gulp.task('test:unit', function () {
   return gulp.src('test/specs/**/*-specs.js', {read: false})
     .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mocha)
-    .on('error', warnLog);
+    .on('error', mochaErrorHandler);
 });
 
 gulp.task('test:midway:multi', function () {
@@ -123,7 +124,7 @@ gulp.task('test:midway:multi', function () {
     read: false})
     .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mocha)
-    .on('error', warnLog);
+    .on('error', mochaErrorHandler);
 });
 
 // create a test:midway: and test:e2e: task for each browser
@@ -137,7 +138,7 @@ _(BROWSERS).each(function(browser) {
     ], {read: false})
       .pipe(gulpIf(VERBOSE, debug()))
       .pipe(mocha)
-      .on('error', errorLog);
+      .on('error', mochaErrorHandler);
   });
   gulp.task(`test:e2e:${browser}`, function () {
     var opts = buildMochaOpts({ browser: browser });
@@ -145,7 +146,7 @@ _(BROWSERS).each(function(browser) {
     return gulp.src('test/e2e/**/*-specs.js', {read: false})
       .pipe(gulpIf(VERBOSE, debug()))
       .pipe(mocha)
-      .on('error', errorLog);
+      .on('error', mochaErrorHandler);
   });
 });
 
@@ -161,7 +162,7 @@ _(MOBILE_BROWSERS).each(function (browser) {
     ], {read: false})
     .pipe(gulpIf(VERBOSE, debug()))
     .pipe(mochaStream(opts))
-    .on('error', errorLog);
+    .on('error', mochaErrorHandler);
   });
 });
 
@@ -268,7 +269,7 @@ gulp.task('sc:start', function (done) {
     accessKey: process.env.SAUCE_ACCESS_KEY,
     verbose: process.env.SAUCE_CONNECT_VERBOSE,
     directDomains: 'cdnjs.cloudflare.com,html5shiv.googlecode.com',
-    logger: debugLog,
+    logger: log.bind(log),
   };
   if (process.env.TRAVIS_JOB_NUMBER) {
     opts.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;

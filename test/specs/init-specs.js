@@ -28,7 +28,7 @@ describe("init tests", function() {
     it("should get url", function(done) {
       server.post('/session/1234/url', '*').reply(200, "");
       browser.get("www.google.com", function(err) {
-        should.not.exist(err);
+        should.exist(err);
         done(null);
       });
     });
