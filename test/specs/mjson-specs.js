@@ -1139,7 +1139,7 @@ describe("mjson tests", function() {
       it("pushFileToDevice", function(done) {
         var remotePath = '/data/local/tmp/remote.txt';
         var stringData = "random string data " + Math.random();
-        var base64Data = new Buffer(stringData).toString('base64');
+        var base64Data = Buffer.from(stringData).toString('base64');
         nock.cleanAll();
         server
           .post('/session/1234/appium/device/push_file', {path: remotePath, data: base64Data})
@@ -1157,7 +1157,7 @@ describe("mjson tests", function() {
       it("pullFileFromDevice", function(done) {
         var remotePath = '/data/local/tmp/remote.txt';
         var stringData = "random string data " + Math.random();
-        var base64Data = new Buffer(stringData).toString('base64');
+        var base64Data = Buffer.from(stringData).toString('base64');
         nock.cleanAll();
         server
           .post('/session/1234/appium/device/pull_file', {path: remotePath})
@@ -1178,7 +1178,7 @@ describe("mjson tests", function() {
       it("pullFolderFromDevice", function(done) {
         var remotePath = '/data/local/tmp/remote';
         var stringData = "not a zip but that doesn't matter " + Math.random();
-        var base64Data = new Buffer(stringData).toString('base64');
+        var base64Data = Buffer.from(stringData).toString('base64');
         nock.cleanAll();
         server
           .post('/session/1234/appium/device/pull_folder', {path: remotePath})
@@ -1313,7 +1313,7 @@ describe("mjson tests", function() {
         var intent = "android.intent.action.BOOT_COMPLETED";
         var path = "/random/path";
         var stringData = "random string data " + Math.random();
-        var base64Data = new Buffer(stringData).toString('base64');
+        var base64Data = Buffer.from(stringData).toString('base64');
         nock.cleanAll();
         server
           .post('/session/1234/appium/app/end_test_coverage', {intent: intent, path: path})
