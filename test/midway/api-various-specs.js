@@ -211,7 +211,7 @@ describe('api-various ' + env.ENV_DESC, function() {
     '  <input class="i1" type="text" value="input 1">\n' +
     '  <input class="i2" type="text" value="input 2">\n' +
     '</div>\n';
-  it('browser.active', function() {
+  it.skip('browser.active', function() {
     return browser
       .elementByCss("#theDiv .i1").click()
       .active().getValue().should.become("input 1")
