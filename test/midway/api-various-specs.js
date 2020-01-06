@@ -100,7 +100,7 @@ describe('api-various ' + env.ENV_DESC, function() {
   it('browser.takeScreenshot', function() {
     return browser
       .takeScreenshot().then(function(res) {
-        var data = new Buffer(res, 'base64');
+        var data = Buffer.from(res, 'base64');
         var img = imageinfo(data);
         img.should.not.be.false;
         img.format.should.equal('PNG');
@@ -124,7 +124,7 @@ describe('api-various ' + env.ENV_DESC, function() {
           // for 0.8
           res = fs.readFileSync(mydir + '/abc.png');
         }
-        var data = new Buffer(res, 'base64');
+        var data = Buffer.from(res, 'base64');
         var img = imageinfo(data);
         img.should.not.be.false;
         img.format.should.equal('PNG');
@@ -211,7 +211,7 @@ describe('api-various ' + env.ENV_DESC, function() {
     '  <input class="i1" type="text" value="input 1">\n' +
     '  <input class="i2" type="text" value="input 2">\n' +
     '</div>\n';
-  it('browser.active', function() {
+  it.skip('browser.active', function() {
     return browser
       .elementByCss("#theDiv .i1").click()
       .active().getValue().should.become("input 1")
