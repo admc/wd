@@ -1,6 +1,11 @@
 language: node_js
 node_js:
   - "10"
+addons:
+  sauce_connect:
+    username: "wdjs"
+  jwt:
+    secure: "Rd/8FnJNEwa5GArBrMyH4pQwFY4m7uFoG9Napnk5geitFnlYvN7xolxPw4mwhYDjqk9RjRRfqJA1OZVFGg8wR+7pDIrriKeQKc+nws5n8aUlWbc++qitIx5gnM/InXZwPh7ALOfUYCZVmbWbpg7DLwP2qsjuCVgB50UuvSHG7ZI="
 env:
   global:
     - TIMEOUT=600000
@@ -21,4 +26,4 @@ env:
     # - CONFIG=ipad
     # - CONFIG=android_phone
 script:
-  - npm run lint && npx gulp travis --config $CONFIG --sauce
+  - npm run lint && npx gulp travis --config $CONFIG --sauce --nosc
