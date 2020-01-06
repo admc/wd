@@ -306,7 +306,7 @@ gulp.task('sc:stop', function (done) {
 });
 
 gulp.task('pre:midway', function() {
-  var seq = args.sauce && !args['nosc']
+  var seq = args.sauce && !args.nosc
     ? ['sc:start', 'proxy:start']
     : ['proxy:start'];
   return runSequence(seq);

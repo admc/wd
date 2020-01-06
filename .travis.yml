@@ -1,6 +1,11 @@
 language: node_js
 node_js:
   - "10"
+addons:
+  sauce_connect:
+    username: "wdjs"
+  jwt:
+    secure: "Rd/8FnJNEwa5GArBrMyH4pQwFY4m7uFoG9Napnk5geitFnlYvN7xolxPw4mwhYDjqk9RjRRfqJA1OZVFGg8wR+7pDIrriKeQKc+nws5n8aUlWbc++qitIx5gnM/InXZwPh7ALOfUYCZVmbWbpg7DLwP2qsjuCVgB50UuvSHG7ZI="
 env:
   global:
     - TIMEOUT=600000
@@ -11,8 +16,6 @@ env:
     - VERBOSE=1
     - SAUCE_CONNECT_VERSION='4.5.4'
     - SAUCE_CONNECT_VERBOSE=1
-    - secure: B+e8mwV3mp5+Y28ZFcva37uZ8Q+r8oyc2Zb+mQ4T3haTZSKJ1jK5l1/x3MPxjMB24B2d+ratVybdhekFgIs6zFf8b4/N5X7uEKVZtGW+uKVgARwllzGJqgvvswaw9ZQRHn15Wje7EkidAsr2MrwhIs/PbWbkndDufdY/5S6aaII=
-    - secure: Kl6K7Mbzgr1R9M4ugJvPcrIKm+kMmSjrocBj6ZsWisPKX1BlS2MpZLVkB2y9liP81g+5UQk1wnHcri8aBGlACjfIQa5uwS7thS2YjZm+Q2fPUG9w8UKsG8rF/VUBR8J0kewNtJPTf/C/RujhT33HmrAM1R0VH89ETDm2zkiSD/g=
   matrix:
     - CONFIG=unit
     - CONFIG=multi
@@ -23,4 +26,4 @@ env:
     # - CONFIG=ipad
     # - CONFIG=android_phone
 script:
-  - npm run lint && npx gulp travis --config $CONFIG --sauce
+  - npm run lint && npx gulp travis --config $CONFIG --sauce --nosc
