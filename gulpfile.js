@@ -178,10 +178,8 @@ gulp.task('test:e2e', function() {
   var e2eTestTasks = [];
   _(args.browsers).chain().without('multi').each(function(browser) {
     e2eTestTasks.push(`test:e2e:${browser}`);
-  });
-  // if (e2eTestTasks.length > 0) {
-    return runSequence(e2eTestTasks);
-  // }
+  }).value();
+  return runSequence(e2eTestTasks);
 });
 
 gulp.task('test', function() {
