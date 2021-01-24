@@ -8,7 +8,7 @@
     "webdriverjs",
     "selenium"
   ],
-  "version": "1.13.0",
+  "version": "1.14.0",
   "author": "Adam Christian <adam.christian@gmail.com>",
   "contributors": [
     "Ruben Daniels (https://github.com/javruben)",
@@ -22,7 +22,8 @@
     "Santiago Suarez Ordonez (https://github.com/santiycr)",
     "Bernard Kobos (https://github.com/bernii)",
     "Jason Carr (https://github.com/maudineormsby)",
-    "Matti Schneider <hi@mattischneider.fr> (https://github.com/MattiSG)"
+    "Matti Schneider <hi@mattischneider.fr> (https://github.com/MattiSG)",
+    "David Koller (https://github.com/appit-online)"
   ],
   "repository": {
     "type": "git",
