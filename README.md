@@ -210,6 +210,8 @@ var browser = wd.remote('localhost');
 // or
 var browser = wd.remote('localhost', 8888);
 // or
+var browser = wd.remote("hub.lambdatest.com", 80, "username", "apikey");
+// or
 var browser = wd.remote("ondemand.saucelabs.com", 80, "username", "apikey");
 // or
 var browser = wd.remote("hub.browserstack.com", 80, "username", "apikey");
@@ -252,6 +254,9 @@ var browser = wd.remote({
 ```js
 var browser = wd.remote('http://localhost:4444/wd/hub');
 // or
+// or
+var browser = wd.remote('http://user:apiKey@hub.lambdatest.com/wd/hub');
+//or
 var browser = wd.remote('http://user:apiKey@ondemand.saucelabs.com/wd/hub');
 // or
 var browser = wd.remote('http://user:apiKey@hub.browserstack.com/wd/hub');
@@ -268,6 +273,8 @@ var browser = wd.remote('https://user:apiKey@api.kobiton.com/wd/hub');
 ```js
 var url = require('url');
 var browser = wd.remote(url.parse('http://localhost:4444/wd/hub'));
+//or
+var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com/wd/hub'));
 // or
 var browser = wd.remote(url.parse('http://user:apiKey@ondemand.saucelabs.com:80/wd/hub'));
 // or
@@ -546,7 +553,7 @@ Sauce Labs cloud.
 
 ### Appium
 
-Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms/appium) or [BrowserStack](https://www.browserstack.com/automate).
+Android and iOS work locally and on [Sauce Labs](https://saucelabs.com/platforms/appium) or [LambdaTest](https://www.lambdatest.com/selenium-automation) or [BrowserStack](https://www.browserstack.com/automate).
 
 ## Run the tests!
 
