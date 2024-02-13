@@ -44,12 +44,12 @@
     "lib": "./lib"
   },
   "dependencies": {
+    "@cypress/request": "^3.0.1",
     "archiver": "^3.0.0",
     "async": "^2.0.0",
     "lodash": "^4.0.0",
     "mkdirp": "^0.5.1",
     "q": "^1.5.1",
-    "request": "2.88.0",
     "vargs": "^0.1.0"
   },
   "devDependencies": {
